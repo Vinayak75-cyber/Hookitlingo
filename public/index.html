@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hookitlingo — Learn Korean &amp; Japanese, One File at a Time</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Razorpay Checkout SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+/* ===== TOKENS ===== */
+:root{
+  --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941;
+  --border:#4a3550;
+  --text:#f6ecec; --text-dim:#c7b2c4; --text-faint:#8f7a91;
+  --vermilion:#e58aa2; --vermilion-dim:#5a2c3a;
+  --celadon:#5fa688; --celadon-dim:#2a4a3d;
+  --gold:#d9ab5c; --gold-dim:#5c471e;
+  --inkblue:#a084c9; --inkblue-dim:#3a2c50;
+  --petal:#f3b6c6;
+  --radius:16px; --radius-sm:10px;
+  --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --kr:"Noto Serif KR","Apple SD Gothic Neo","Malgun Gothic","Nanum Gothic",sans-serif;
+  --maxw:1080px;
+}
+html[data-theme="light"]{
+  --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6;
+  --border:#eccabb;
+  --text:#3a2530; --text-dim:#79576a; --text-faint:#a98a9c;
+  --vermilion:#c8546f; --vermilion-dim:#f6dae2;
+  --celadon:#3f7d63; --celadon-dim:#d9ece2;
+  --gold:#a4762b; --gold-dim:#f2e2c2;
+  --inkblue:#75509f; --inkblue-dim:#e7ddf2;
+  --petal:#e59fb2;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--text); font-family:var(--sans);
+  font-size:16px; line-height:1.65; transition:background .3s,color .3s;
+  background:
+    radial-gradient(1100px 620px at 12% -8%, color-mix(in srgb, var(--vermilion) 16%, transparent), transparent 58%),
+    radial-gradient(900px 520px at 104% 6%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 55%),
+    var(--ink);
+  background-attachment:fixed;
+  min-height:100vh;
+}
+::selection{background:var(--vermilion); color:#fff;}
+h1,h2,h3{font-family:var(--serif); font-weight:600; letter-spacing:.2px; margin:0 0 .4em;}
+p{margin:0 0 1em;}
+a{color:var(--celadon);}
+.kr{font-family:var(--kr);}
+button{font-family:var(--sans); cursor:pointer;}
+
+/* Petals */
+.petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.petal{position:absolute; top:-8%; will-change:transform; animation:petal-fall linear infinite;}
+.petal svg{display:block; filter:drop-shadow(0 1px 1px rgba(0,0,0,.08));}
+@keyframes petal-fall{
+  0%{transform:translate(0,-10vh) rotate(0deg);}
+  100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}
+}
+@media (prefers-reduced-motion: reduce){ .petals{display:none;} }
+@media(max-width:900px){ .petals .petal:nth-child(even){display:none;} }
+
+/* Top Bar */
+#topbar{
+  position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between;
+  gap:14px; padding:18px 5vw 22px; max-width:var(--maxw); margin:0 auto;
+}
+.brand{display:flex; align-items:center; gap:12px;}
+.brand-block{
+  width:46px;height:46px;border-radius:50%; flex:none; position:relative;
+  background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--vermilion) 88%, #fff 12%), var(--vermilion) 72%);
+  display:flex;align-items:center;justify-content:center; font-family:var(--kr); font-weight:700; font-size:20px; color:#fff9f7;
+  transform:rotate(-7deg);
+  box-shadow:0 4px 12px color-mix(in srgb, var(--vermilion) 50%, transparent), inset 0 0 0 2px color-mix(in srgb, #fff 22%, transparent);
+}
+.brand-txt strong{display:block; font-family:var(--serif); font-size:1.3em; letter-spacing:.2px;}
+.brand-txt span{display:block; font-size:.68em; color:var(--text-faint); letter-spacing:.14em; text-transform:uppercase;}
+.topbtn{
+  background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); border-radius:8px;
+  padding:7px 12px; font-size:.85em; display:flex; align-items:center; gap:5px;
+}
+.topbtn:hover{color:var(--text); border-color:var(--celadon);}
+.top-actions{display:flex; gap:8px; align-items:center;}
+.topbtn-support{
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+  border:1px solid transparent; color:#fff; font-weight:600;
+}
+.topbtn-support:hover{filter:brightness(1.07); color:#fff;}
+
+/* Support Modal */
+.hkl-overlay{
+  position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
+  padding:20px; background:rgba(15,8,17,.55); backdrop-filter:blur(3px);
+  opacity:0; pointer-events:none; transition:opacity .25s ease;
+}
+.hkl-overlay.open{opacity:1; pointer-events:auto;}
+.hkl-card{
+  position:relative; width:100%; max-width:400px; background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:32px 26px 26px; box-shadow:0 30px 70px rgba(0,0,0,.4);
+  transform:translateY(14px) scale(.98); transition:transform .3s cubic-bezier(.2,.9,.2,1); text-align:center;
+}
+.hkl-overlay.open .hkl-card{transform:translateY(0) scale(1);}
+.hkl-close{
+  position:absolute; top:12px; right:14px; background:none; border:none; color:var(--text-faint);
+  font-size:1.2em; line-height:1; padding:6px;
+}
+.hkl-close:hover{color:var(--text);}
+.hkl-icon{font-size:2.4em; margin-bottom:10px;}
+.hkl-card h3{font-size:1.3em; margin-bottom:10px;}
+.hkl-card p{color:var(--text-dim); font-size:.92em; margin-bottom:20px;}
+.hkl-actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
+.hkl-btn{border-radius:999px; padding:11px 20px; font-size:.88em; font-weight:700; border:1px solid transparent;}
+.hkl-btn-yes{background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%)); color:#fff;}
+.hkl-btn-yes:hover{filter:brightness(1.07);}
+.hkl-btn-no{background:var(--surface2); border-color:var(--border); color:var(--text-dim);}
+.hkl-btn-no:hover{color:var(--text); border-color:var(--text-faint);}
+.hkl-amounts{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;}
+.hkl-amt{
+  background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm);
+  padding:14px 8px; font-family:var(--serif); font-size:1.2em; font-weight:600; color:var(--text);
+  transition:border-color .2s, background .2s, color .2s;
+}
+.hkl-amt:hover{border-color:var(--vermilion);}
+.hkl-amt.selected{border-color:var(--vermilion); background:var(--vermilion-dim); color:var(--vermilion);}
+.hkl-custom-row{
+  display:flex; align-items:center; gap:6px; background:var(--surface2); border:1px solid var(--border);
+  border-radius:var(--radius-sm); padding:10px 14px; margin-bottom:20px;
+}
+.hkl-custom-row span{color:var(--text-faint); font-weight:600;}
+.hkl-custom-row input{
+  flex:1; background:none; border:none; outline:none; color:var(--text); font-family:var(--serif);
+  font-size:1.1em; font-weight:600; min-width:0;
+}
+.hkl-back{background:none; border:none; color:var(--text-faint); font-size:.8em; margin-bottom:14px; padding:2px;}
+.hkl-back:hover{color:var(--text);}
+.hkl-pay-btn{
+  width:100%; background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+  color:#fff; border-radius:999px; padding:13px; font-size:.95em; font-weight:700; border:none;
+}
+.hkl-pay-btn:disabled{opacity:.4; cursor:default;}
+.hkl-secure-note{margin-top:14px; font-size:.72em; color:var(--text-faint); margin-bottom:0;}
+.hkl-loading-spinner{
+  width:40px; height:40px; border:3px solid var(--border);
+  border-top-color:var(--vermilion); border-radius:50%;
+  animation:spin 1s linear infinite; margin:20px auto;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* Thank-you screen — bigger card + bowing character */
+.hkl-card--thanks{ max-width:480px; padding:44px 34px 36px; }
+.hkl-bow-char{ width:150px; height:auto; display:block; margin:0 auto 8px; overflow:visible; }
+.hkl-bow-upper{
+  transform-box: fill-box;
+  transform-origin: 50% 88%;
+  animation: hklBow 2.3s ease-in-out;
+}
+@keyframes hklBow{
+  0%   { transform: rotate(0deg); }
+  32%  { transform: rotate(24deg); }
+  58%  { transform: rotate(24deg); }
+  100% { transform: rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce){ .hkl-bow-upper{ animation:none; } }
+
+/* Hero */
+.hero{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:30px 5vw 20px; text-align:center;}
+.hero .eyebrow{font-size:.78em; letter-spacing:.16em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:14px;}
+.hero h1{font-size:clamp(2.2em,5vw,3.4em); margin-bottom:14px;}
+.hero h1 .accent{color:var(--gold); font-style:italic;}
+.hero .sub{color:var(--text-dim); font-size:1.15em; max-width:620px; margin:0 auto 8px;}
+.hero .sub2{color:var(--text-faint); font-size:.92em; max-width:560px; margin:0 auto;}
+
+/* Culture cards */
+.culture-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px; max-width:var(--maxw); margin:36px auto 10px; padding:0 5vw;}
+.cul-card{
+  position:relative; overflow:hidden; display:block; text-decoration:none; color:var(--text);
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:28px 26px;
+  transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.cul-card:hover{transform:translateY(-5px);}
+.cul-korean{border-color:color-mix(in srgb, var(--inkblue) 40%, var(--border));}
+.cul-korean:hover{border-color:var(--inkblue); box-shadow:0 24px 55px color-mix(in srgb, var(--inkblue) 22%, transparent);}
+.cul-japanese{border-color:color-mix(in srgb, var(--vermilion) 40%, var(--border));}
+.cul-japanese:hover{border-color:var(--vermilion); box-shadow:0 24px 55px color-mix(in srgb, var(--vermilion) 22%, transparent);}
+.cul-locked{cursor:default; opacity:.68;}
+.cul-locked:hover{transform:none; box-shadow:none;}
+.cul-emblem{position:absolute; top:-34px; right:-34px; width:140px; height:140px; opacity:.4; pointer-events:none;}
+.cul-flag{font-size:2.3em; margin-bottom:8px; line-height:1;}
+.cul-title{font-size:1.5em; margin-bottom:14px; display:flex; align-items:baseline; gap:9px; flex-wrap:wrap;}
+.cul-title .native{font-family:var(--kr);}
+.cul-title .en{font-family:var(--serif); color:var(--text-dim); font-size:.6em; font-weight:400;}
+.cul-fact,.cul-tip{font-size:.9em; color:var(--text-dim); margin-bottom:10px;}
+.cul-fact strong,.cul-tip strong{font-family:var(--serif); font-style:italic; font-weight:600;}
+.cul-korean .cul-fact strong,.cul-korean .cul-tip strong{color:var(--inkblue);}
+.cul-japanese .cul-fact strong,.cul-japanese .cul-tip strong{color:var(--vermilion);}
+.cul-stats{display:flex; gap:14px; margin:16px 0 18px; font-size:.76em; color:var(--text-faint); text-transform:uppercase; letter-spacing:.05em;}
+.cul-cta{font-weight:700; font-size:.92em; padding:11px 18px; border-radius:999px; text-align:center; color:#fff;}
+.cul-korean .cul-cta{background:linear-gradient(135deg,var(--inkblue), color-mix(in srgb, var(--inkblue) 55%, var(--celadon) 45%));}
+.cul-japanese .cul-cta{background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));}
+.cul-cta.locked{background:var(--surface2); color:var(--text-faint); border:1px solid var(--border);}
+
+/* Footer */
+footer{position:relative; z-index:2; text-align:center; padding:30px 5vw 50px; color:var(--text-faint); font-size:.82em;}
+footer .fnote{max-width:520px; margin:0 auto 10px;}
+footer a{color:var(--text-faint); text-decoration:underline;}
+
+@media(max-width:640px){#topbar{flex-direction:column; align-items:flex-start;}}
+</style>
+</head>
+<body>
+
+<div class="petals no-print" id="petals" aria-hidden="true"></div>
+
+<div id="topbar">
+  <div class="brand">
+    <div class="brand-block kr">虎</div>
+    <div class="brand-txt"><strong>Hookitlingo</strong><span>Korean &amp; Japanese, one file at a time</span></div>
+  </div>
+  <div class="top-actions">
+    <button class="topbtn topbtn-support" id="supportBtn">💛 Support</button>
+    <button class="topbtn" id="themeBtn">☾ Dark</button>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">Hookitlingo</div>
+  <h1>Which culture do you wanna <span class="accent">dive into</span>?</h1>
+  <p class="sub">Every course is a single downloadable file — chapters, quizzes, flashcards, and audio all embedded inside it.</p>
+  <p class="sub2">No installs, no accounts, no internet required once it's on your device.</p>
+</div>
+
+<div class="culture-grid">
+  <a class="cul-card cul-korean" href="roadmap.html">
+    <div class="cul-emblem" aria-hidden="true"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 2 A48 48 0 0 1 50 98 A24 24 0 0 1 50 50 A24 24 0 0 0 50 2Z" fill="var(--vermilion)"/>
+      <path d="M50 2 A48 48 0 0 0 50 98 A24 24 0 0 0 50 50 A24 24 0 0 1 50 2Z" fill="var(--inkblue)"/>
+      <circle cx="50" cy="26" r="8" fill="var(--inkblue)"/>
+      <circle cx="50" cy="74" r="8" fill="var(--vermilion)"/>
+    </svg></div>
+    <div class="cul-flag">🇰🇷</div>
+    <div class="cul-title"><span class="native">한국어</span><span class="en">Korean</span></div>
+    <p class="cul-fact"><strong>Fun fact —</strong> Hangeul, Korea's alphabet, was designed in 1443 under King Sejong — one of the only writing systems on Earth with a known inventor and invention date.</p>
+    <p class="cul-tip"><strong>Tip —</strong> Master Hangeul first. Once you can read it fluently, every course after it moves noticeably faster.</p>
+    <div class="cul-stats"><span>3 courses live</span><span>19 planned</span></div>
+    <div class="cul-cta">Explore the Korean Roadmap →</div>
+  </a>
+
+  <div class="cul-card cul-japanese cul-locked">
+    <div class="cul-emblem" aria-hidden="true"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="34" fill="var(--vermilion)"/>
+    </svg></div>
+    <div class="cul-flag">🇯🇵</div>
+    <div class="cul-title"><span class="native">日本語</span><span class="en">Japanese</span></div>
+    <p class="cul-fact"><strong>Fun fact —</strong> Japanese blends three scripts in a single sentence — Hiragana, Katakana, and Kanji — each carrying a different job.</p>
+    <p class="cul-tip"><strong>Tip —</strong> Hiragana and Katakana are each learnable in a weekend. Kanji is the long game that follows.</p>
+    <div class="cul-stats"><span>🔒 Coming soon</span></div>
+    <div class="cul-cta locked">In Development</div>
+  </div>
+</div>
+
+<!-- Support / Donation Modal -->
+<div class="hkl-overlay" id="hklOverlay">
+  <div class="hkl-card">
+    <button class="hkl-close" id="hklClose" aria-label="Close">✕</button>
+    <div id="hklBody"></div>
+  </div>
+</div>
+
+<footer>
+  <p class="fnote">Each file works completely offline once downloaded. Progress, XP, and badges save locally in your browser — if a course doesn't seem to save your progress, check that your browser allows local storage for files opened from disk.</p>
+  <p>Powered by Hookitlingo</p>
+</footer>
+
+<script>
+/* ============================================================
+   Theme toggle
+   ============================================================ */
+const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', ThemeState.theme);
+  document.getElementById('themeBtn').textContent = ThemeState.theme === 'dark' ? '☾ Dark' : '☀ Light';
+}
+document.getElementById('themeBtn').onclick = () => {
+  ThemeState.theme = ThemeState.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('hkl_site_theme', ThemeState.theme);
+  applyTheme();
+};
+applyTheme();
+
+/* ============================================================
+   Petals
+   ============================================================ */
+(function spawnPetals(){
+  const host = document.getElementById('petals');
+  if(!host) return;
+  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
+  const count = window.innerWidth < 700 ? 10 : 18;
+  for(let i=0;i<count;i++){
+    const size = 10 + Math.random()*12;
+    const left = Math.random()*100;
+    const dur = 10 + Math.random()*12;
+    const delay = -(Math.random()*dur);
+    const drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)];
+    const rotStart = Math.round(Math.random()*360);
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
+    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
+    host.appendChild(p);
+  }
+})();
+
+/* ============================================================
+   SUPPORT MODAL — Backend-secured Razorpay Checkout
+   ============================================================ */
+(function(){
+  const AMOUNTS = [99, 199, 499, 999];
+  let selected = null;
+
+  const overlay = document.getElementById('hklOverlay');
+  const body = document.getElementById('hklBody');
+  const card = document.querySelector('.hkl-card');
+
+  function setBigCard(big){ card.classList.toggle('hkl-card--thanks', big); }
+
+  function speakThanks(){
+    try{
+      if(!('speechSynthesis' in window)) return;
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance('감사합니다');
+      u.lang = 'ko-KR';
+      u.rate = 0.9;
+      speechSynthesis.speak(u);
+    }catch(e){ console.warn('Speech synthesis unavailable', e); }
+  }
+
+  // Detect if running locally or on Render
+  const API_BASE = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3000' 
+    : ''; // Same origin when deployed
+
+  function openModal(){ setBigCard(false); renderAsk(); overlay.classList.add('open'); }
+  function closeModal(){ overlay.classList.remove('open'); speechSynthesis.cancel(); }
+
+  function renderAsk(){
+    setBigCard(false);
+    body.innerHTML = `
+      <div class="hkl-icon">🌸</div>
+      <h3>Keep Hookitlingo free for everyone?</h3>
+      <p>Every course here is free, forever, with no ads. If Hookitlingo has helped you learn Korean, a small contribution helps fund new lessons — completely optional.</p>
+      <div class="hkl-actions">
+        <button class="hkl-btn hkl-btn-yes" id="hklYes">Yes, I'd like to help 💛</button>
+        <button class="hkl-btn hkl-btn-no" id="hklNo">Not right now</button>
+      </div>`;
+    document.getElementById('hklYes').onclick = renderAmounts;
+    document.getElementById('hklNo').onclick = renderBye;
+  }
+
+  function renderAmounts(){
+    selected = null;
+    setBigCard(false);
+    body.innerHTML = `
+      <button class="hkl-back" id="hklBack">← back</button>
+      <div class="hkl-icon">🌸</div>
+      <h3>Choose an amount</h3>
+      <p>Every rupee goes straight toward building the next set of courses.</p>
+      <div class="hkl-amounts" id="hklAmounts">
+        ${AMOUNTS.map(a=>`<button class="hkl-amt" data-amt="${a}">₹${a}</button>`).join('')}
+      </div>
+      <div class="hkl-custom-row">
+        <span>₹</span>
+        <input type="number" min="1" placeholder="Custom amount" id="hklCustom">
+      </div>
+      <button class="hkl-pay-btn" id="hklPay" disabled>Continue to payment</button>
+      <p class="hkl-secure-note">🔒 Handled securely by Razorpay. Hookitlingo never sees or stores your card details.</p>`;
+
+    document.getElementById('hklBack').onclick = renderAsk;
+    const payBtn = document.getElementById('hklPay');
+    const customInput = document.getElementById('hklCustom');
+
+    document.querySelectorAll('.hkl-amt').forEach(btn=>{
+      btn.onclick = () => {
+        document.querySelectorAll('.hkl-amt').forEach(b=>b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selected = { type:'preset', amount: btn.dataset.amt };
+        customInput.value = '';
+        payBtn.disabled = false;
+      };
+    });
+
+    customInput.oninput = () => {
+      document.querySelectorAll('.hkl-amt').forEach(b=>b.classList.remove('selected'));
+      const v = parseFloat(customInput.value);
+      if(v > 0){ selected = { type:'custom', amount: v }; payBtn.disabled = false; }
+      else { selected = null; payBtn.disabled = true; }
+    };
+
+    payBtn.onclick = () => {
+      if(!selected) return;
+      initiatePayment(selected);
+    };
+  }
+
+  function renderBye(){
+    setBigCard(false);
+    body.innerHTML = `
+      <div class="hkl-icon">😢</div>
+      <h3>No worries!</h3>
+      <p>Thanks for learning with us anyway — enjoy the courses.</p>`;
+    setTimeout(closeModal, 1600);
+  }
+
+  // ============================================================
+  // BACKEND-SECURED PAYMENT FLOW
+  // ============================================================
+  async function initiatePayment(sel){
+    const amount = sel.type === 'preset' ? parseInt(sel.amount) : parseFloat(sel.amount);
+    const amountInPaise = Math.round(amount * 100);
+    const amountDisplay = `₹${amount}`;
+
+    // Show loading
+    body.innerHTML = `
+      <div class="hkl-icon">🌸</div>
+      <h3>Preparing secure checkout...</h3>
+      <div class="hkl-loading-spinner"></div>
+      <p class="hkl-secure-note">You're contributing <strong style="color:var(--vermilion)">${amountDisplay}</strong></p>
+    `;
+
+    try {
+      // Step 1: Call backend to create a verified order
+      const orderRes = await fetch(`${API_BASE}/api/create-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: amountInPaise })
+      });
+
+      if(!orderRes.ok){
+        const err = await orderRes.json();
+        throw new Error(err.error || 'Failed to create order');
+      }
+
+      const { orderId, amount: verifiedAmount, currency, key } = await orderRes.json();
+
+      // Step 2: Open Razorpay Checkout with verified order
+      const options = {
+        key: key,
+        amount: verifiedAmount,
+        currency: currency,
+        name: "Hookitlingo",
+        description: "Support Hookitlingo",
+        order_id: orderId, // This locks the amount — user CANNOT tamper
+        image: "https://hookitlingo.com/logo.png", // Optional: your logo URL
+        theme: {
+          color: "#e58aa2" // Sakura/vermilion theme
+        },
+        prefill: {
+          name: "",
+          email: "",
+          contact: ""
+        },
+        handler: async function(response) {
+          // Step 3: Verify payment signature with backend
+          await verifyPayment(response, orderId);
+        },
+        modal: {
+          ondismiss: function() {
+            // User closed checkout — return to amount selection
+            renderAmounts();
+          }
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+
+    } catch(err){
+      console.error('Payment initiation failed:', err);
+      body.innerHTML = `
+        <div class="hkl-icon">😢</div>
+        <h3>Something went wrong</h3>
+        <p>${err.message}</p>
+        <button class="hkl-btn hkl-btn-yes" id="hklRetry">Try again</button>
+      `;
+      document.getElementById('hklRetry').onclick = renderAmounts;
+    }
+  }
+
+  async function verifyPayment(response, orderId){
+    body.innerHTML = `
+      <div class="hkl-icon">🌸</div>
+      <h3>Verifying payment...</h3>
+      <div class="hkl-loading-spinner"></div>
+    `;
+
+    try {
+      const verifyRes = await fetch(`${API_BASE}/api/verify-payment`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId: response.razorpay_order_id || orderId,
+          paymentId: response.razorpay_payment_id,
+          signature: response.razorpay_signature
+        })
+      });
+
+      const result = await verifyRes.json();
+
+      if(result.verified){
+        setBigCard(true);
+        body.innerHTML = `
+          <svg class="hkl-bow-char" viewBox="0 0 160 210" xmlns="http://www.w3.org/2000/svg">
+            <g class="hkl-bow-lower">
+              <path d="M50 108 L110 108 L142 205 L18 205 Z" fill="var(--vermilion)"/>
+              <path d="M50 108 L110 108 L124 150 L36 150 Z" fill="color-mix(in srgb, var(--vermilion) 80%, #fff 20%)" opacity=".45"/>
+            </g>
+            <g class="hkl-bow-upper">
+              <ellipse cx="38" cy="118" rx="17" ry="27" fill="var(--gold)"/>
+              <ellipse cx="122" cy="118" rx="17" ry="27" fill="var(--gold)"/>
+              <circle cx="80" cy="85" r="11" fill="#2b1c22"/>
+              <rect x="64" y="83" width="32" height="3" rx="1.5" fill="var(--gold)"/>
+              <circle cx="80" cy="54" r="27" fill="#2b1c22"/>
+              <circle cx="80" cy="60" r="26" fill="#f2d9c4"/>
+              <path d="M68 58 q4 4 8 0" stroke="#2b1c22" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M84 58 q4 4 8 0" stroke="#2b1c22" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M74 68 Q80 72 86 68" stroke="#2b1c22" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <ellipse cx="65" cy="64" rx="4" ry="2.5" fill="var(--vermilion)" opacity=".5"/>
+              <ellipse cx="95" cy="64" rx="4" ry="2.5" fill="var(--vermilion)" opacity=".5"/>
+              <rect x="72" y="76" width="16" height="16" fill="#f2d9c4"/>
+              <rect x="56" y="88" width="48" height="26" rx="12" fill="#fdf6ee"/>
+              <path d="M64 97 L94 112 M94 97 L64 112" stroke="var(--vermilion)" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="79" cy="104" r="5" fill="var(--vermilion)"/>
+              <path d="M74 108 L69 126" stroke="var(--vermilion)" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M84 108 L90 126" stroke="var(--vermilion)" stroke-width="3.5" stroke-linecap="round"/>
+            </g>
+          </svg>
+          <h3>Thank you for your support!</h3>
+          <p>Your contribution of <strong style="color:var(--vermilion)">₹${selected.amount}</strong> helps keep Hookitlingo free for everyone.</p>
+          <p style="font-size:.8em; color:var(--text-faint);">Payment ID: <code>${result.paymentId}</code></p>
+        `;
+        speakThanks();
+        setTimeout(closeModal, 4800);
+      } else {
+        throw new Error('Payment verification failed');
+      }
+
+    } catch(err){
+      console.error('Verification failed:', err);
+      body.innerHTML = `
+        <div class="hkl-icon">⚠️</div>
+        <h3>Verification failed</h3>
+        <p>We couldn't verify your payment. If you were charged, please contact us.</p>
+        <button class="hkl-btn hkl-btn-yes" id="hklRetry">Try again</button>
+      `;
+      document.getElementById('hklRetry').onclick = renderAmounts;
+    }
+  }
+
+  document.getElementById('supportBtn').onclick = openModal;
+  document.getElementById('hklClose').onclick = closeModal;
+  overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+})();
+</script>
+</body>
+</html>
