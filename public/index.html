@@ -92,6 +92,10 @@ button{font-family:var(--sans); cursor:pointer;}
   border:1px solid transparent; color:#fff; font-weight:600;
 }
 .topbtn-support:hover{filter:brightness(1.07); color:#fff;}
+.topbtn-contact{
+  background:var(--surface2); border:1px solid var(--celadon); color:var(--celadon); font-weight:600;
+}
+.topbtn-contact:hover{background:var(--celadon-dim); color:var(--text);}
 
 /* Support Modal */
 .hkl-overlay{
@@ -210,7 +214,15 @@ footer{position:relative; z-index:2; text-align:center; padding:30px 5vw 50px; c
 footer .fnote{max-width:520px; margin:0 auto 10px;}
 footer a{color:var(--text-faint); text-decoration:underline;}
 
-@media(max-width:640px){#topbar{flex-direction:column; align-items:flex-start;}}
+@media(max-width:640px){
+  #topbar{flex-direction:column; align-items:flex-start;}
+  .top-actions{width:100%; flex-wrap:wrap; gap:8px;}
+  .top-actions .topbtn{flex:1 1 auto; justify-content:center; font-size:.8em; padding:8px 10px; white-space:nowrap;}
+}
+@media(max-width:380px){
+  .top-actions{gap:6px;}
+  .top-actions .topbtn{font-size:.74em; padding:7px 6px;}
+}
 </style>
 </head>
 <body>
@@ -224,6 +236,7 @@ footer a{color:var(--text-faint); text-decoration:underline;}
   </div>
   <div class="top-actions">
     <button class="topbtn topbtn-support" id="supportBtn">💛 Support</button>
+    <button class="topbtn topbtn-contact" id="contactBtn">✉️ Contact</button>
     <button class="topbtn" id="themeBtn">☾ Dark</button>
   </div>
 </div>
@@ -269,6 +282,21 @@ footer a{color:var(--text-faint); text-decoration:underline;}
   <div class="hkl-card">
     <button class="hkl-close" id="hklClose" aria-label="Close">✕</button>
     <div id="hklBody"></div>
+  </div>
+</div>
+
+<!-- Contact Modal -->
+<div class="hkl-overlay" id="contactOverlay">
+  <div class="hkl-card">
+    <button class="hkl-close" id="contactClose" aria-label="Close">✕</button>
+    <div class="hkl-icon">🌸</div>
+    <h3>Contact Us</h3>
+    <p>Have a question, feedback, or a concern about a course? We'd genuinely love to hear from you — reach out anytime and we'll get back to you as soon as we can.</p>
+    <p style="font-family:var(--serif); font-size:1.2em; font-weight:600; color:var(--vermilion); margin-bottom:22px;">hookitlingo@gmail.com</p>
+    <div class="hkl-actions">
+      <a class="hkl-btn hkl-btn-yes" href="mailto:hookitlingo@gmail.com" style="text-decoration:none; display:inline-block;">Email Us</a>
+      <button class="hkl-btn hkl-btn-no" id="contactCloseBtn">Close</button>
+    </div>
   </div>
 </div>
 
@@ -566,6 +594,21 @@ applyTheme();
   document.getElementById('hklClose').onclick = closeModal;
   overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(); });
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+})();
+
+/* ============================================================
+   CONTACT MODAL
+   ============================================================ */
+(function(){
+  const contactOverlay = document.getElementById('contactOverlay');
+  function openContact(){ contactOverlay.classList.add('open'); }
+  function closeContact(){ contactOverlay.classList.remove('open'); }
+
+  document.getElementById('contactBtn').onclick = openContact;
+  document.getElementById('contactClose').onclick = closeContact;
+  document.getElementById('contactCloseBtn').onclick = closeContact;
+  contactOverlay.addEventListener('click', (e)=>{ if(e.target === contactOverlay) closeContact(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeContact(); });
 })();
 </script>
 </body>
