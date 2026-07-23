@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국어 조사 워크북 — The Korean Particles Workbook</title>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLEMFRK6XH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WLEMFRK6XH');
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e2; --paper2:#efe6cf; --paper3:#e7dabd;
+  --ink:#241f19; --ink-soft:#6d6047; --ink-faint:#a99a78; --guide:#cdbe95;
+  --seal:#a8342a; --seal-dim:#e9d3ce;
+  --inkblue:#333e5c; --inkblue-dim:#dfe2ec;
+  --celadon:#4b7a63; --celadon-dim:#dde9e0;
+  --gold:#a4762b; --gold-dim:#f2e2c2;
+  --vermilion:#b8503c; --vermilion-dim:#f0dcd3;
+  --locact:#7a4a4c; --locact-dim:#ecdcdb;
+  --also:#8d8438; --also-dim:#ece7cd;
+  --only:#9c5c37; --only-dim:#ecdccb;
+  --serif-kr:"Noto Serif KR", serif; --serif-en:"Source Serif 4", Georgia, serif; --mono:"IBM Plex Mono", monospace;
+}
+*{box-sizing:border-box;}
+html{background:#4a4436;}
+body{margin:0; font-family:var(--serif-en); color:var(--ink); background:#4a4436; -webkit-font-smoothing:antialiased;}
+.kr{font-family:var(--serif-kr);}
+
+#toolbar{position:sticky; top:0; z-index:100; display:flex; align-items:center; gap:14px; padding:12px 22px; background:var(--ink); color:var(--paper); box-shadow:0 4px 16px rgba(0,0,0,.35);}
+#toolbar strong{font-family:var(--serif-kr); font-size:1.05em; letter-spacing:.02em;}
+#toolbar .spacer{flex:1;}
+#toolbar button{font-family:var(--serif-en); font-size:.85em; background:var(--seal); color:#fdf6ee; border:none; padding:8px 16px; border-radius:3px; cursor:pointer;}
+#toolbar button.secondary{background:transparent; border:1px solid #786c50; color:var(--paper);}
+#toolbar button:hover{filter:brightness(1.08);}
+#toolbar .hint{font-size:.75em; color:#b7ac8f;}
+
+#book{max-width:920px; margin:34px auto 90px; padding:0 16px;}
+.page{
+  background:var(--paper);
+  background-image:radial-gradient(circle at 18% 12%, rgba(168,52,42,0.035), transparent 40%),
+    repeating-linear-gradient(0deg, rgba(36,31,25,0.015) 0px, rgba(36,31,25,0.015) 1px, transparent 1px, transparent 2px);
+  width:100%; aspect-ratio:210/297; min-height:1050px; padding:52px 56px 40px; margin:0 auto 28px; position:relative;
+  box-shadow:0 18px 40px rgba(0,0,0,.45), 0 2px 0 rgba(0,0,0,.15); border:1px solid #d8c9a3; display:flex; flex-direction:column;
+}
+.page::before{content:''; position:absolute; inset:0; pointer-events:none; box-shadow:inset 0 0 60px rgba(90,74,40,.10);}
+
+.seal{position:absolute; top:44px; right:52px; width:64px; height:64px; border-radius:50%; border:2.5px solid var(--seal); color:var(--seal); font-family:var(--serif-kr); font-weight:700;
+  display:flex; align-items:center; justify-content:center; text-align:center; line-height:1.05; transform:rotate(-8deg); font-size:.72em; opacity:.88;
+  background:radial-gradient(circle at 35% 30%, rgba(168,52,42,.06), transparent 70%);}
+.seal small{display:block; font-family:var(--mono); font-size:.62em; font-weight:500; margin-top:1px;}
+
+.pg-eyebrow{font-family:var(--mono); font-size:.68em; letter-spacing:.16em; text-transform:uppercase; color:var(--seal); margin-bottom:6px;}
+.pg-title{font-family:var(--serif-kr); font-weight:700; font-size:1.55em; margin:0 0 4px; padding-right:80px;}
+.pg-sub{color:var(--ink-soft); font-size:.9em; margin:0 0 16px; max-width:640px;}
+.pg-body{flex:1;}
+.pg-footer{margin-top:auto; padding-top:14px; border-top:1px solid var(--paper3); display:flex; align-items:center; justify-content:space-between; font-family:var(--mono); font-size:.68em; color:var(--ink-faint);}
+.pg-footer .chk{display:flex; align-items:center; gap:6px;}
+.pg-footer .chk .box{width:11px; height:11px; border:1.3px solid var(--ink-faint); display:inline-block;}
+
+h4{font-family:var(--serif-kr); font-size:1.02em; margin:0 0 6px; font-weight:600;}
+p{margin:0 0 .75em; font-size:.92em; line-height:1.52;}
+
+/* particle chips, colored exactly like the course */
+.p-chip{display:inline-block; padding:2px 9px; border-radius:4px; font-family:var(--serif-kr); font-weight:600; color:#fff; font-size:.92em;}
+.p-subj{background-color:var(--inkblue);}
+.p-topic{background-color:var(--celadon);}
+.p-obj{background-color:var(--gold);}
+.p-loc{background-color:var(--vermilion);}
+.p-locact{background-color:var(--locact);}
+.p-also{background-color:var(--also);}
+.p-only{background-color:var(--only);}
+
+.legend{display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 14px;}
+.legend .item{display:flex; align-items:center; gap:5px; font-size:.72em; color:var(--ink-soft); font-family:var(--mono);}
+.legend .dot{width:10px; height:10px; border-radius:3px; display:inline-block;}
+
+.sentence-card{border:1px solid var(--paper3); border-radius:6px; padding:10px 14px; margin:10px 0; background:rgba(255,255,255,.32);}
+.sentence-card .kr-line{font-family:var(--serif-kr); font-size:1.15em; margin-bottom:2px;}
+.sentence-card .rom{font-family:var(--mono); font-size:.72em; color:var(--seal); margin-bottom:3px;}
+.sentence-card .eng{font-size:.82em; color:var(--ink-soft);}
+
+.write-line-block{margin:8px 0 14px;}
+.write-line{border-bottom:1px solid var(--ink-faint); height:28px; position:relative; margin-bottom:2px;}
+.write-line.dotted{border-bottom:1px dashed var(--guide);}
+
+table.wk{width:100%; border-collapse:collapse; font-size:.85em; margin:10px 0;}
+table.wk th{font-family:var(--mono); font-size:.7em; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); text-align:left; padding:5px 8px; border-bottom:1.3px solid var(--ink);}
+table.wk td{padding:7px 8px; border-bottom:1px solid var(--paper3); vertical-align:top;}
+table.wk td.kr-cell{font-family:var(--serif-kr); font-size:1.08em;}
+table.wk td.blank{border-bottom:1px solid var(--ink-faint); min-width:80px;}
+
+.callout{border-left:3px solid var(--celadon); background:var(--celadon-dim); padding:9px 13px; border-radius:0 6px 6px 0; font-size:.84em; margin:11px 0;}
+.callout.stamp{border-color:var(--seal); background:var(--seal-dim);}
+.callout.trap{border-color:var(--gold); background:var(--gold-dim);}
+.callout b{font-family:var(--serif-kr);}
+
+.two-col{display:flex; gap:26px;}
+.two-col > div{flex:1;}
+.mini-label{font-family:var(--mono); font-size:.66em; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft); margin:14px 0 6px;}
+
+/* minimal-pair boxes */
+.pair-box{border:1px solid var(--paper3); border-radius:6px; padding:10px 14px; margin:8px 0; background:rgba(255,255,255,.28);}
+.pair-box .kr{font-size:1.1em;}
+.pair-arrow{text-align:center; font-family:var(--mono); font-size:.8em; color:var(--ink-faint); margin:2px 0;}
+
+/* attach-the-particle strip */
+.attach-row{display:flex; align-items:center; gap:4px; margin:8px 0; font-size:1.0em;}
+.attach-row .noun{font-family:var(--serif-kr); font-size:1.15em;}
+.attach-row .slot{width:52px; height:34px; border:1.3px dashed var(--ink-faint); border-radius:4px; display:inline-block;}
+.attach-row .eng{font-size:.78em; color:var(--ink-soft); margin-left:8px;}
+
+/* scramble strips */
+.scramble-strip{display:flex; gap:8px; flex-wrap:wrap; margin:8px 0 4px;}
+.scramble-chip{border:1.3px solid var(--ink-faint); border-radius:5px; padding:5px 11px; font-family:var(--serif-kr); font-size:1.02em; background:rgba(255,255,255,.4);}
+
+/* TOC */
+.toc-group{margin-bottom:12px;}
+.toc-group h4{color:var(--seal); border-bottom:1px solid var(--paper3); padding-bottom:4px;}
+.toc-row{display:flex; justify-content:space-between; font-size:.82em; padding:3px 0; border-bottom:1px dotted var(--paper3);}
+.toc-row .n{color:var(--ink-faint); font-family:var(--mono); font-size:.85em;}
+
+/* cover */
+.cover-page{align-items:center; text-align:center; justify-content:center;}
+.cover-page .brandmark{width:120px; height:120px; border-radius:50%; margin:0 auto 26px;
+  background:radial-gradient(circle at 32% 26%, #4c5a83, var(--inkblue) 74%);
+  display:flex; align-items:center; justify-content:center; font-family:var(--serif-kr); font-weight:900; font-size:2.5em; color:#f2f0e8;
+  box-shadow:0 10px 30px rgba(51,62,92,.35); transform:rotate(-4deg);}
+.cover-page h1{font-family:var(--serif-kr); font-size:2.3em; margin:0 0 6px; font-weight:900;}
+.cover-page .eng{font-family:var(--serif-en); font-style:italic; color:var(--ink-soft); font-size:1.08em; margin-bottom:26px;}
+.cover-page .meta-line{font-family:var(--mono); font-size:.78em; color:var(--ink-faint); letter-spacing:.06em;}
+.fillline{display:inline-block; min-width:200px; border-bottom:1px solid var(--ink); margin:0 6px;}
+
+table.logtable{width:100%; border-collapse:collapse; font-size:.8em;}
+table.logtable th{font-family:var(--mono); font-size:.66em; text-transform:uppercase; color:var(--ink-soft); border-bottom:1.3px solid var(--ink); padding:6px;}
+table.logtable td{border-bottom:1px solid var(--paper3); padding:8px 6px; height:24px;}
+
+.cheat-grid{display:flex; gap:12px; flex-wrap:wrap;}
+.cheat-card{flex:1; min-width:150px; border:1px solid var(--paper3); border-radius:6px; padding:10px 12px; background:rgba(255,255,255,.3);}
+.cheat-card h4{font-size:.85em; margin:4px 0 3px;}
+.cheat-card p{font-size:.74em; margin:0 0 4px; color:var(--ink-soft);}
+.cheat-card .ex{font-family:var(--serif-kr); font-size:.82em;}
+
+.cert-page{align-items:center; text-align:center; justify-content:center; border:6px double var(--seal); padding:70px 56px;}
+.cert-page h1{font-family:var(--serif-kr); font-size:2em; margin-bottom:2px;}
+.cert-page .sub{font-family:var(--mono); letter-spacing:.16em; text-transform:uppercase; font-size:.7em; color:var(--ink-soft); margin-bottom:28px;}
+.cert-page .name-line{border-bottom:1.4px solid var(--ink); display:inline-block; min-width:340px; margin:16px 0 30px; font-family:var(--serif-kr); font-size:1.25em; padding-bottom:6px;}
+
+@media print{
+  html,body{background:#fff;}
+  #toolbar{display:none;}
+  #book{max-width:none; margin:0; padding:0;}
+  .page{box-shadow:none; border:none; margin:0; width:210mm; min-height:297mm; aspect-ratio:auto; page-break-after:always; padding:16mm 18mm 14mm;}
+  .page:last-child{page-break-after:auto;}
+}
+@page{ size:A4; margin:0; }
+@media screen and (max-width:760px){
+  .page{padding:34px 26px 26px;}
+  .two-col{flex-direction:column;}
+  .cheat-grid{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <strong>한국어 조사 — Korean Particles Workbook</strong>
+  <span class="hint">A daily paper companion to the Korean Particles course</span>
+  <div class="spacer"></div>
+  <span class="hint" id="pageCount"></span>
+  <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
+  <button onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<div id="book"></div>
+
+<script>
+/* ============================================================
+   BUILDERS
+   ============================================================ */
+let pageNum = 0;
+function seal(label, small){ return '<div class="seal">'+label+(small?'<small>'+small+'</small>':'')+'</div>'; }
+function pageOpen(eyebrow, title, sub, sealLabel, sealSmall){
+  pageNum++;
+  return '<section class="page">'
+    + (sealLabel!==false ? seal(sealLabel||'助','조사') : '')
+    + '<div class="pg-eyebrow">'+eyebrow+'</div>'
+    + '<h1 class="pg-title">'+title+'</h1>'
+    + (sub? '<p class="pg-sub">'+sub+'</p>' : '')
+    + '<div class="pg-body">';
+}
+function pageClose(footNote){
+  return '</div><div class="pg-footer"><span class="chk"><span class="box"></span> practiced today</span>'
+    + '<span>'+(footNote||'한국어 조사 워크북')+'</span>'
+    + '<span>p.'+pageNum+'</span></div></section>';
+}
+function chip(kr, cls){ return '<span class="p-chip '+cls+'">'+kr+'</span>'; }
+function legend(items){
+  const map = {subj:['New info (이/가)','p-subj'], topic:['Known / topic (은/는)','p-topic'], obj:['Object (을/를)','p-obj'],
+    loc:['At/in \u2014 existence, time (에)','p-loc'], locact:['At \u2014 action happens (에서)','p-locact'],
+    also:['Also (도)','p-also'], only:['Only (만)','p-only']};
+  return '<div class="legend">'+items.map(function(k){ return '<span class="item"><span class="dot" style="background:var(--'+({subj:'inkblue',topic:'celadon',obj:'gold',loc:'vermilion',locact:'locact',also:'also',only:'only'}[k])+')"></span>'+map[k][0]+'</span>'; }).join('')+'</div>';
+}
+function sentenceCard(kr, rom, eng){
+  return '<div class="sentence-card"><div class="kr-line">'+kr+'</div><div class="rom">'+rom+'</div><div class="eng">'+eng+'</div></div>';
+}
+function writeLines(n, dotted){
+  let out = '<div class="write-line-block">';
+  for(let i=0;i<n;i++) out += '<div class="write-line'+(dotted?' dotted':'')+'"></div>';
+  return out+'</div>';
+}
+function attachRow(noun, eng){
+  return '<div class="attach-row"><span class="noun">'+noun+'</span><span class="slot"></span><span class="eng">'+eng+'</span></div>';
+}
+function scrambleStrip(chips){
+  return '<div class="scramble-strip">'+chips.map(function(c){ return '<span class="scramble-chip">'+c+'</span>'; }).join('')+'</div>';
+}
+
+let HTML = '';
+
+/* --- Cover --- */
+HTML += '<section class="page cover-page">'
+ + '<div class="brandmark">助</div>'
+ + '<div class="pg-eyebrow" style="text-align:center">Hookitlingo — Companion Volume</div>'
+ + '<h1>한국어 조사</h1>'
+ + '<div class="eng">The Korean Particles Workbook</div>'
+ + '<p style="max-width:460px;margin:0 auto 24px;color:var(--ink-soft)">Particles are the tiny studs that let Korean words click into any role, in any order. This book walks beside the Korean Particles course, unit for unit \u2014 every particle, every boss battle, every stacking rule gets fixed into memory here, by hand.</p>'
+ + '<div class="meta-line">NAME <span class="fillline"></span></div>'
+ + '<div class="meta-line" style="margin-top:10px">START DATE <span class="fillline" style="min-width:120px"></span></div>'
+ + '</section>';
+
+/* --- How to use --- */
+HTML += pageOpen('Before You Begin','How to Use This Workbook','A short read \u2014 then straight to the pencil.', '使用法','안내');
+HTML += '<div class="two-col">'
+ + '<div><h4>The daily ritual</h4><ol style="padding-left:1.1em;font-size:.88em;">'
+ + '<li style="margin-bottom:6px">Open the matching unit in the course app and read the example sentences aloud first.</li>'
+ + '<li style="margin-bottom:6px">Study the color-coded chip for that particle \u2014 the color is the same in this book and the course.</li>'
+ + '<li style="margin-bottom:6px">Do the attach / choose / rewrite drills on paper before checking the course\u2019s answers.</li>'
+ + '<li style="margin-bottom:6px">Check the box in the footer once you\u2019ve done all three.</li>'
+ + '</ol></div>'
+ + '<div><h4>Why writing matters</h4><p>Particles are reflexes, not vocabulary \u2014 you don\u2019t have time to think "vowel or consonant?" mid-sentence in real conversation. Writing the attachment by hand, over and over, is what turns the rule into a reflex.</p>'
+ + '<div class="callout stamp"><b>A teacher\u2019s note \u2014</b> Every Boss Battle unit in this book has a minimal-pair box: the exact same sentence, one particle swapped, meaning changed. Don\u2019t rush past these \u2014 they are the single highest-leverage exercise in the whole book.</div></div>'
+ + '</div>';
+HTML += pageClose();
+
+/* --- Study log --- */
+HTML += pageOpen('Before You Begin','My Study Log','Fill in one row after every session.', '記錄','기록');
+HTML += '<table class="logtable"><tr><th>Date</th><th>Unit / Page</th><th>Minutes</th><th>Confidence (1\u20135)</th><th>Note to self</th></tr>';
+for(let i=0;i<18;i++) HTML += '<tr><td></td><td></td><td></td><td></td><td></td></tr>';
+HTML += '</table>';
+HTML += pageClose();
+
+/* --- TOC --- */
+(function(){
+  const toc = [
+    {group:'Foundations', rows:['Unit 0 \u2014 Studs, Not Slots','Unit 1 \u2014 \uc774/\uac00: Breaking News','Unit 2 \u2014 \uc740/\ub294: Old Friend','Unit 3 \u2014 Boss Battle: \uc774/\uac00 vs \uc740/\ub294']},
+    {group:'Core Particles', rows:['Unit 4 \u2014 \uc744/\ub97c: The Object','Unit 5 \u2014 \uc5d0: Where & When','Unit 6 \u2014 \uc5d0\uc11c: Where It Happens','Unit 7 \u2014 Boss Battle: \uc5d0 vs \uc5d0\uc11c']},
+    {group:'Nuance', rows:['Unit 8 \u2014 \ub3c4: Also','Unit 9 \u2014 \ub9cc: Only','Unit 10 \u2014 Stacking & Combos']},
+    {group:'Listening & Story', rows:['Unit 11 \u2014 Ear Training','Unit 12 \u2014 Finale: Sora\u2019s Last Day']},
+    {group:'Practice & Finish', rows:['Particle Cheat Sheet','Sentence-Building Drill','Final Written Assessment','Certificate']},
+  ];
+  HTML += pageOpen('Contents','목차 · Table of Contents', '', '目次','차례');
+  HTML += '<div style="columns:2; column-gap:34px;">';
+  toc.forEach(function(g){
+    HTML += '<div class="toc-group"><h4>'+g.group+'</h4>';
+    g.rows.forEach(function(r){ HTML += '<div class="toc-row"><span>'+r+'</span><span class="n">\u25a1</span></div>'; });
+    HTML += '</div>';
+  });
+  HTML += '</div>';
+  HTML += pageClose();
+})();
+
+/* --- Unit 0 --- */
+(function(){
+  HTML += pageOpen('Foundations','Unit 0 \u2014 Studs, Not Slots','Why Korean can scramble its word order and still make perfect sense.', '固','기초');
+  HTML += '<p>In English, meaning lives in word order. In Korean, meaning lives in tiny suffixes glued onto nouns \u2014 <b>particles</b>. Once every noun has its particle attached, word order becomes flexible, like LEGO studs that click into a role no matter where you place the brick.</p>';
+  HTML += sentenceCard('소라가 사과를 먹어요.', 'Sora-ga sagwa-reul meogeoyo.', 'Sora eats the apple.');
+  HTML += sentenceCard('사과를 소라가 먹어요.', 'Sagwa-reul Sora-ga meogeoyo.', 'Sora eats the apple. (same meaning, reordered for emphasis)');
+  HTML += '<div class="callout trap"><b>Don\u2019t \u2014</b> memorize a fixed "sentence order" the way English textbooks teach SVO. Memorize the particles instead; the order takes care of itself.</div>';
+  HTML += '<div class="mini-label">Copy each sentence once, then swap the word order yourself on the blank line</div>';
+  HTML += writeLines(1);
+  HTML += '<p style="font-size:.8em;color:var(--ink-faint);margin-top:-8px">소라가 사과를 먹어요. \u2192 rewrite with 사과를 first</p>';
+  HTML += writeLines(1);
+  HTML += pageClose('studs not slots');
+})();
+
+/* --- Unit 1: 이/가 --- */
+(function(){
+  HTML += pageOpen('Foundations','Unit 1 \u2014 '+chip('이/가','p-subj')+': Breaking News','가 after a vowel, 이 after a consonant (batchim). Marks new or focused information.', '新','신정보');
+  HTML += legend(['subj']);
+  HTML += sentenceCard('소라'+chip('가','p-subj')+' 왔어요.', 'Sora-ga wasseoyo.', 'Sora arrived. (ends in a vowel \u2192 가)');
+  HTML += sentenceCard('선생님'+chip('이','p-subj')+' 왔어요.', 'Seonsaengnim-i wasseoyo.', 'The teacher arrived. (ends in a consonant \u2192 이)');
+  HTML += '<div class="callout"><b>Mnemonic \u2014</b> 이/가 = news-reporter voice. Whatever gets 이/가 is the headline.</div>';
+  HTML += '<div class="mini-label">Attach the particle \u2014 write 이 or 가 in the slot</div>';
+  HTML += attachRow('고양이','there is a cat (ends in a vowel)')
+   + attachRow('책','there is a book (ends in \u3131)')
+   + attachRow('친구','a friend arrived (ends in a vowel)')
+   + attachRow('선생님','the teacher arrived (ends in a consonant)');
+  HTML += '<div class="mini-label">Fill in the blank</div>';
+  HTML += '<table class="wk"><tr><th>Sentence</th><th>Your answer</th></tr>'
+   + '<tr><td class="kr-cell">소라___ 공항에 왔어요. (first time we hear about her)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">고양이___ 있어요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">책___ 있어요.</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose('이/가');
+})();
+
+/* --- Unit 2: 은/는 --- */
+(function(){
+  HTML += pageOpen('Foundations','Unit 2 \u2014 '+chip('은/는','p-topic')+': Old Friend','는 after a vowel, 은 after a consonant (batchim). Marks the topic \u2014 known information.', '舊','구정보');
+  HTML += legend(['topic']);
+  HTML += sentenceCard('소라'+chip('는','p-topic')+' 학생이에요.', 'Sora-neun haksaeng-ieyo.', 'As for Sora, she\u2019s a student. (already introduced)');
+  HTML += sentenceCard('저'+chip('는','p-topic')+' 커피를 좋아해요.', 'Jeo-neun keopi-reul joahaeyo.', 'As for me, I like coffee.');
+  HTML += '<div class="callout"><b>Mnemonic \u2014</b> 은/는 = catching up with an old friend. Whatever gets 는 is already on the table. It also does contrast duty: "저는 커피를 좋아해요, 친구는 안 좋아해요."</div>';
+  HTML += '<div class="mini-label">Attach the particle \u2014 write 은 or 는 in the slot</div>';
+  HTML += attachRow('저','as for me (ends in a vowel)')
+   + attachRow('선생님','as for the teacher (ends in a consonant)')
+   + attachRow('소라','as for Sora (ends in a vowel)')
+   + attachRow('학교','as for school (ends in a vowel)');
+  HTML += '<div class="mini-label">Fill in the blank</div>';
+  HTML += '<table class="wk"><tr><th>Sentence</th><th>Your answer</th></tr>'
+   + '<tr><td class="kr-cell">소라___ 학생이에요. (we already know Sora)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">저___ 학교에 가요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">선생님___ 바빠요.</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose('은/는');
+})();
+
+/* --- Unit 3: Boss Battle 이/가 vs 은/는 --- */
+(function(){
+  HTML += pageOpen('Foundations','Unit 3 \u2014 Boss Battle: '+chip('이/가','p-subj')+' vs '+chip('은/는','p-topic'),'The single biggest wall for beginners \u2014 new information vs. known information.', '對','대결');
+  HTML += '<p>The classic fairy-tale pattern:</p>';
+  HTML += sentenceCard('어떤 학생'+chip('이','p-subj')+' 도서관에 있었어요.', 'Eotteon haksaeng-i doseogwan-e isseosseoyo.', 'A student was at the library. (new \u2014 first mention)');
+  HTML += sentenceCard('그 학생'+chip('은','p-topic')+' 책을 읽었어요.', 'Geu haksaeng-eun chaek-eul ilgeosseoyo.', 'That student read a book. (known \u2014 same student, now the topic)');
+  HTML += '<div class="callout trap"><b>Common mistake \u2014</b> learners overuse 는 everywhere because it "sounds normal." But 가/이 is what gives a story its narrative snap when something new happens.</div>';
+  HTML += '<div class="mini-label">Minimal pair \u2014 same sentence, particle swapped. Write how the meaning shifts.</div>';
+  HTML += '<div class="pair-box"><div class="kr">소라'+chip('가','p-subj')+' 왔어요.</div><p style="margin:2px 0 0;font-size:.78em;color:var(--ink-soft)">"Sora is the one who arrived." (answers "who arrived?")</p></div>';
+  HTML += '<div class="pair-arrow">\u2193 same words, particle swapped \u2193</div>';
+  HTML += '<div class="pair-box"><div class="kr">소라'+chip('는','p-topic')+' 왔어요.</div><p style="margin:2px 0 0;font-size:.78em;color:var(--ink-soft)">"As for Sora, she arrived (unlike others)." \u2014 write the contrast you hear here:</p></div>';
+  HTML += writeLines(1);
+  HTML += '<div class="mini-label">Fill in the blank</div>';
+  HTML += '<table class="wk"><tr><th>Sentence</th><th>Your answer</th></tr>'
+   + '<tr><td class="kr-cell">어떤 사람___ 공원에 있었어요. (first mention)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">그 사람___ 강아지를 좋아해요. (now known)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">무슨 일___ 있어요? (brand new situation)</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose('boss battle');
+})();
+
+/* --- Unit 4: 을/를 --- */
+(function(){
+  HTML += pageOpen('Core Particles','Unit 4 \u2014 '+chip('을/를','p-obj')+': The Object','를 after a vowel, 을 after a consonant (batchim). Marks the direct object.', '的','목적어');
+  HTML += legend(['obj']);
+  HTML += sentenceCard('소라는 커피'+chip('를','p-obj')+' 마셔요.', 'Sora-neun keopi-reul masyeoyo.', 'Sora drinks coffee. (커피 ends in a vowel \u2192 를)');
+  HTML += sentenceCard('소라는 밥'+chip('을','p-obj')+' 먹어요.', 'Sora-neun bap-eul meogeoyo.', 'Sora eats a meal. (밥 ends in \u3142 \u2192 을)');
+  HTML += '<div class="callout"><b>Ear training \u2014</b> in fast casual speech, 을/를 is the particle most often dropped: "저 밥 먹어" instead of "저는 밥을 먹어요." More in Unit 11.</div>';
+  HTML += '<div class="mini-label">Attach the particle \u2014 write 을 or 를 in the slot</div>';
+  HTML += attachRow('사과','likes apples (ends in a vowel)')
+   + attachRow('책','reads a book (ends in \u3131)')
+   + attachRow('영화','watches a movie (ends in a vowel)');
+  HTML += '<div class="mini-label">Error hunt \u2014 one particle is wrong. Cross it out and write the fix.</div>';
+  HTML += '<p class="kr" style="font-size:1.1em">소라는 밥<u>이</u> 먹어요. \u2192 <span class="blank" style="display:inline-block;min-width:60px;border-bottom:1px solid var(--ink-faint)">&nbsp;</span></p>';
+  HTML += pageClose('을/를');
+})();
+
+/* --- Unit 5: 에 --- */
+(function(){
+  HTML += pageOpen('Core Particles','Unit 5 \u2014 '+chip('에','p-loc')+': Where & When','Static location, destination, and points in time \u2014 a pin dropped on a map or a calendar.', '點','시공');
+  HTML += legend(['loc']);
+  HTML += sentenceCard('소라는 카페'+chip('에','p-loc')+' 있어요.', 'Sora-neun kape-e isseoyo.', 'Sora is at the cafe. (existence)');
+  HTML += sentenceCard('소라는 아침'+chip('에','p-loc')+' 커피를 마셔요.', 'Sora-neun achim-e keopi-reul masyeoyo.', 'Sora drinks coffee in the morning. (time point)');
+  HTML += '<div class="callout"><b>Fun fact \u2014</b> 에 does double duty \u2014 space AND time \u2014 because both are "a fixed point something is anchored to."</div>';
+  HTML += '<div class="mini-label">Fill in the blank</div>';
+  HTML += '<table class="wk"><tr><th>Sentence</th><th>Your answer</th></tr>'
+   + '<tr><td class="kr-cell">소라는 도서관___ 있어요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">저녁___ 집에 가요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">소라는 서울___ 왔어요.</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += '<div class="mini-label">Write your own \u2014 one place sentence, one time sentence</div>';
+  HTML += writeLines(2);
+  HTML += pageClose('에');
+})();
+
+/* --- Unit 6: 에서 --- */
+(function(){
+  HTML += pageOpen('Core Particles','Unit 6 \u2014 '+chip('에서','p-locact')+': Where It Happens','Marks where an action takes place \u2014 and "from" a place of origin.', '動','행위장소');
+  HTML += legend(['locact']);
+  HTML += sentenceCard('소라는 카페'+chip('에서','p-locact')+' 커피를 마셔요.', 'Sora-neun kape-eseo keopi-reul masyeoyo.', 'Sora drinks coffee at the cafe. (action happening there)');
+  HTML += sentenceCard('저는 서울'+chip('에서','p-locact')+' 왔어요.', 'Jeo-neun Seoul-eseo wasseoyo.', 'I came from Seoul. (origin)');
+  HTML += '<div class="callout"><b>Quick test \u2014</b> can you insert "doing X" after the location? "At the cafe, [doing] drinking coffee" \u2192 에서. "At the cafe, [just existing]" \u2192 에.</div>';
+  HTML += '<div class="mini-label">Fill in the blank</div>';
+  HTML += '<table class="wk"><tr><th>Sentence</th><th>Your answer</th></tr>'
+   + '<tr><td class="kr-cell">소라는 학교___ 친구를 만나요. (action)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">친구는 공원___ 운동해요.</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose('에서');
+})();
+
+/* --- Unit 7: Boss Battle 에 vs 에서 --- */
+(function(){
+  HTML += pageOpen('Core Particles','Unit 7 \u2014 Boss Battle: '+chip('에','p-loc')+' vs '+chip('에서','p-locact'),'Existence vs. action \u2014 where most learners quietly stay confused for months.', '對','대결');
+  HTML += sentenceCard('소라는 집'+chip('에','p-loc')+' 있어요.', 'Sora-neun jip-e isseoyo.', 'Sora is at home. (existence \u2014 있다 almost always pairs with 에)');
+  HTML += sentenceCard('소라는 집'+chip('에서','p-locact')+' 밥을 먹어요.', 'Sora-neun jip-eseo bap-eul meogeoyo.', 'Sora eats at home. (action \u2014 an active verb pairs with 에서)');
+  HTML += '<div class="callout trap"><b>Common mistake \u2014</b> "집에서 있어요" is a classic learner error. 있다 (exist/be located) almost always wants 에, not 에서, even though 에서 "feels" more active.</div>';
+  HTML += '<div class="mini-label">Minimal pair \u2014 write which one is existence and which is action</div>';
+  HTML += '<div class="pair-box"><div class="kr">소라는 카페'+chip('에','p-loc')+' 있어요.</div><p style="margin:2px 0 0;font-size:.78em;color:var(--ink-soft)">Type: _______________</p></div>';
+  HTML += '<div class="pair-box"><div class="kr">소라는 카페'+chip('에서','p-locact')+' 친구를 만나요.</div><p style="margin:2px 0 0;font-size:.78em;color:var(--ink-soft)">Type: _______________</p></div>';
+  HTML += '<div class="mini-label">Error hunt \u2014 one particle is wrong in each. Write the fix.</div>';
+  HTML += '<p class="kr" style="font-size:1.05em">소라는 도서관<u>에서</u> 있어요. \u2192 <span style="display:inline-block;min-width:50px;border-bottom:1px solid var(--ink-faint)">&nbsp;</span></p>';
+  HTML += '<p class="kr" style="font-size:1.05em">친구는 공원<u>에</u> 운동해요. \u2192 <span style="display:inline-block;min-width:50px;border-bottom:1px solid var(--ink-faint)">&nbsp;</span></p>';
+  HTML += pageClose('boss battle');
+})();
+
+/* --- Unit 8: 도 --- */
+(function(){
+  HTML += pageOpen('Nuance','Unit 8 \u2014 '+chip('도','p-also')+': Also','도 replaces 이/가/은/는/을/를 \u2014 it doesn\u2019t stack with them.', '亦','또한');
+  HTML += legend(['also']);
+  HTML += sentenceCard('친구'+chip('도','p-also')+' 커피를 마셔요.', 'Chingu-do keopi-reul masyeoyo.', 'The friend also drinks coffee. (친구가 \u2192 친구도, the 가 is gone)');
+  HTML += '<div class="callout"><b>Fun fact \u2014</b> 도 swapping in for 이/가/을/를 (rather than stacking) is a pattern you\u2019ll see again with 만 next unit \u2014 these are called "special" or "auxiliary" particles.</div>';
+  HTML += '<div class="mini-label">Replace, don\u2019t stack \u2014 cross out the original particle and write 도 in its place</div>';
+  HTML += '<p class="kr" style="font-size:1.1em">소라<u>가</u> 학생이에요. \u2192 소라<span style="display:inline-block;min-width:40px;border-bottom:1px solid var(--ink-faint)">&nbsp;</span> 학생이에요. (also a student)</p>';
+  HTML += '<p class="kr" style="font-size:1.1em">저는 사과<u>를</u> 좋아해요. \u2192 저는 사과<span style="display:inline-block;min-width:40px;border-bottom:1px solid var(--ink-faint)">&nbsp;</span> 좋아해요. (also like apples)</p>';
+  HTML += '<div class="mini-label">Fill in the blank</div>';
+  HTML += '<table class="wk"><tr><th>Sentence</th><th>Your answer</th></tr>'
+   + '<tr><td class="kr-cell">소라___ 학생이에요. (also a student)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">저는 사과___ 좋아해요. (also like apples)</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose('도');
+})();
+
+/* --- Unit 9: 만 --- */
+(function(){
+  HTML += pageOpen('Nuance','Unit 9 \u2014 '+chip('만','p-only')+': Only','만 also replaces the particle it attaches to \u2014 the mirror image of 도.', '唯','오직');
+  HTML += legend(['only']);
+  HTML += sentenceCard('소라'+chip('만','p-only')+' 매일 카페에 가요.', 'Sora-man maeil kape-e gayo.', 'Only Sora goes to the cafe every day.');
+  HTML += '<div class="callout"><b>Mnemonic \u2014</b> 도 = "me too, let me in." 만 = "just me, nobody else." Opposite doors, same hinge.</div>';
+  HTML += '<div class="mini-label">Replace, don\u2019t stack \u2014 cross out the original particle and write 만 in its place</div>';
+  HTML += '<p class="kr" style="font-size:1.1em">소라<u>가</u> 김치를 먹어요. \u2192 소라<span style="display:inline-block;min-width:40px;border-bottom:1px solid var(--ink-faint)">&nbsp;</span> 김치를 먹어요. (nobody else does)</p>';
+  HTML += '<p class="kr" style="font-size:1.1em">저는 책<u>을</u> 읽어요. \u2192 저는 책<span style="display:inline-block;min-width:40px;border-bottom:1px solid var(--ink-faint)">&nbsp;</span> 읽어요. (nothing else, just the book)</p>';
+  HTML += '<div class="mini-label">Fill in the blank</div>';
+  HTML += '<table class="wk"><tr><th>Sentence</th><th>Your answer</th></tr>'
+   + '<tr><td class="kr-cell">소라___ 김치를 먹어요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">저는 책___ 읽어요.</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose('만');
+})();
+
+/* --- Unit 10: Stacking & Combos --- */
+(function(){
+  HTML += pageOpen('Nuance','Unit 10 \u2014 Stacking & Combos','도 and 만 replace 이/가/을/를 \u2014 but 에 and 에서 happily stack with them.', '合','조합');
+  HTML += sentenceCard('소라는 집'+chip('에도','p-also')+' 있어요.', 'Sora-neun jip-edo isseoyo.', 'Sora is also at home. (existence + also)');
+  HTML += sentenceCard('소라는 도서관'+chip('에서도','p-also')+' 커피를 마셔요.', 'Sora-neun doseogwan-eseodo keopi-reul masyeoyo.', 'Sora drinks coffee at the library too. (action + also)');
+  HTML += sentenceCard('소라는 집'+chip('에서만','p-only')+' 김치를 먹어요.', 'Sora-neun jip-eseoman gimchi-reul meogeoyo.', 'Sora only eats kimchi at home. (action + only)');
+  HTML += '<div class="callout"><b>Fun fact \u2014</b> you\u2019ll also meet 밖에 ("except/other than," always with a negative verb) and 만큼 ("as much as") later \u2014 same stacking logic, different flavor.</div>';
+  HTML += '<div class="mini-label">Build the combo \u2014 fill in the blank with the stacked particle</div>';
+  HTML += '<table class="wk"><tr><th>Sentence</th><th>Your answer</th></tr>'
+   + '<tr><td class="kr-cell">소라는 카페___ 커피를 마셔요. (also drinks there)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">소라는 집___ 김치를 먹어요. (only at home)</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += '<div class="mini-label">Trace the four stacking forms</div>';
+  HTML += '<p class="kr" style="font-size:1.3em;letter-spacing:.4em">에도&nbsp;&nbsp;&nbsp;에서도&nbsp;&nbsp;&nbsp;에서만&nbsp;&nbsp;&nbsp;밖에</p>';
+  HTML += pageClose('stacking & combos');
+})();
+
+/* --- Review: Units 0-10 --- */
+(function(){
+  HTML += pageOpen('Spaced Review','Review \u2014 Every Particle So Far','Cover Units 0\u201310. Write each answer from memory, then check yourself against those pages.', false);
+  HTML += '<table class="wk"><tr><th>Prompt</th><th>Your answer</th></tr>'
+   + '<tr><td>Subject marker after a vowel</td><td class="blank"></td></tr>'
+   + '<tr><td>Topic marker after a consonant</td><td class="blank"></td></tr>'
+   + '<tr><td>Object marker after 책 (book)</td><td class="blank"></td></tr>'
+   + '<tr><td>"At" for existence (있어요)</td><td class="blank"></td></tr>'
+   + '<tr><td>"At" for an action (먹어요)</td><td class="blank"></td></tr>'
+   + '<tr><td>"Also" replacing 가</td><td class="blank"></td></tr>'
+   + '<tr><td>"Only" replacing 를</td><td class="blank"></td></tr>'
+   + '<tr><td>"Also, at/in" (stacked)</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose('review');
+})();
+
+/* --- Unit 11: Ear Training --- */
+(function(){
+  HTML += pageOpen('Listening','Unit 11 \u2014 Ear Training','Casual speech drops particles constantly \u2014 train your ear, not just your eyes.', '聽','청취');
+  HTML += '<p>Textbook Korean keeps every particle. Real, fast, casual Korean often drops them \u2014 especially 을/를, and sometimes 이/가 \u2014 when the meaning is obvious from context or tone alone.</p>';
+  HTML += sentenceCard('학교 가?', '(casual) Hakgyo ga?', '"Going to school?" \u2014 에 dropped entirely.');
+  HTML += sentenceCard('밥 먹었어?', '(casual) Bap meogeosseo?', '"Did you eat?" \u2014 을 dropped; one of the most common casual greetings.');
+  HTML += '<div class="callout"><b>Rule of thumb \u2014</b> the more predictable the object/location is from context, the more likely it\u2019s dropped. 이/가 survives more often than 을/를, since subject ambiguity causes more confusion.</div>';
+  HTML += '<div class="mini-label">Restore the dropped particle \u2014 write the full, formal version</div>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.8em;color:var(--ink-faint);margin-top:-8px">casual: 학교 가? \u2192 formal, particle restored:</p>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.8em;color:var(--ink-faint);margin-top:-8px">casual: 밥 먹었어? \u2192 formal, particle restored:</p>';
+  HTML += '<div class="mini-label">Listen in the app, then transcribe two more casual lines you hear</div>';
+  HTML += writeLines(2);
+  HTML += pageClose('ear training');
+})();
+
+/* --- Unit 12: Finale --- */
+(function(){
+  HTML += pageOpen('Story','Unit 12 \u2014 Finale: Sora\u2019s Last Day','Every particle from this course, in one passage.', '終','완성');
+  HTML += '<p>Read it once for the story, then look again at every particle \u2014 you now know the job each one is doing.</p>';
+  HTML += sentenceCard('오늘 소라'+chip('는','p-topic')+' 바빠요.', 'Oneul Sora-neun bappayo.', 'Today Sora is busy.');
+  HTML += sentenceCard('아침'+chip('에','p-loc')+' 카페'+chip('에서','p-locact')+' 커피'+chip('를','p-obj')+' 마셔요.', 'Achim-e kape-eseo keopi-reul masyeoyo.', 'In the morning, she drinks coffee at the cafe.');
+  HTML += sentenceCard('학교'+chip('에서','p-locact')+' 친구'+chip('를','p-obj')+' 만나요.', 'Hakgyo-eseo chingu-reul mannayo.', 'She meets a friend at school.');
+  HTML += sentenceCard('친구'+chip('도','p-also')+' 커피'+chip('를','p-obj')+' 좋아해요.', 'Chingu-do keopi-reul joahaeyo.', 'The friend also likes coffee.');
+  HTML += sentenceCard('하지만 소라'+chip('만','p-only')+' 매일 거기'+chip('에','p-loc')+' 가요.', 'Hajiman Sora-man maeil geogi-e gayo.', 'But only Sora goes there every day.');
+  HTML += sentenceCard('저녁'+chip('에는','p-topic')+' 집'+chip('에서','p-locact')+' 밥'+chip('을','p-obj')+' 먹어요.', 'Jeonyeog-eneun jip-eseo bap-eul meogeoyo.', 'In the evening, she eats at home.');
+  HTML += '<div class="mini-label">Sentence-building drill \u2014 the story\u2019s first line is scrambled. Number the chunks in order, then rewrite it below with the topic word moved to the front for emphasis, the way Unit 0 showed you.</div>';
+  HTML += scrambleStrip(['바빠요.','오늘','소라는']);
+  HTML += writeLines(2);
+  HTML += pageClose('finale');
+})();
+
+/* --- Cheat sheet --- */
+(function(){
+  HTML += pageOpen('Practice & Finish','Particle Cheat Sheet','One page, every particle. Keep this open while you do the drills that follow.', '表','정리');
+  const sheet = [
+   {p:chip('이/가','p-subj'), name:'Subject (new info)', rule:'가 after a vowel, 이 after a consonant.', ex:'소라가 왔어요.'},
+   {p:chip('은/는','p-topic'), name:'Topic (known info)', rule:'는 after a vowel, 은 after a consonant.', ex:'소라는 학생이에요.'},
+   {p:chip('을/를','p-obj'), name:'Object', rule:'를 after a vowel, 을 after a consonant.', ex:'커피를 마셔요.'},
+   {p:chip('에','p-loc'), name:'At/in (existence, time)', rule:'Pairs with 있다/없다 and time words.', ex:'카페에 있어요.'},
+   {p:chip('에서','p-locact'), name:'At (action happens)', rule:'Pairs with action verbs; also "from."', ex:'카페에서 마셔요.'},
+   {p:chip('도','p-also'), name:'Also / too', rule:'Replaces 이/가/은/는/을/를.', ex:'친구도 마셔요.'},
+   {p:chip('만','p-only'), name:'Only', rule:'Replaces 이/가/은/는/을/를.', ex:'저만 마셔요.'},
+  ];
+  HTML += '<div class="cheat-grid">'+sheet.map(function(s){ return '<div class="cheat-card"><div>'+s.p+'</div><h4>'+s.name+'</h4><p>'+s.rule+'</p><div class="ex kr">'+s.ex+'</div></div>'; }).join('')+'</div>';
+  HTML += '<div class="mini-label">Stacking combos</div>';
+  HTML += '<div class="cheat-grid">'
+   + '<div class="cheat-card"><div>'+chip('에도','p-also')+'</div><h4>Also, at/in</h4><p>에 + 도</p><div class="ex kr">집에도 있어요.</div></div>'
+   + '<div class="cheat-card"><div>'+chip('에서도','p-also')+'</div><h4>Also, action there</h4><p>에서 + 도</p><div class="ex kr">카페에서도 마셔요.</div></div>'
+   + '<div class="cheat-card"><div>'+chip('에서만','p-only')+'</div><h4>Only, action there</h4><p>에서 + 만</p><div class="ex kr">집에서만 먹어요.</div></div>'
+   + '<div class="cheat-card"><div>'+chip('밖에','p-only')+'</div><h4>Nothing but (+ negative)</h4><p>Always paired with a negative verb.</p><div class="ex kr">하나밖에 없어요.</div></div>'
+   + '</div>';
+  HTML += pageClose('cheat sheet');
+})();
+
+/* --- Sentence-building drill --- */
+(function(){
+  HTML += pageOpen('Practice & Finish','Sentence-Building Drill','Reorder the scrambled chunks into a correct sentence \u2014 particles are your guide, not position.', '練','연습');
+  const items = [
+   {scr:['만나요.','친구를','학교에서','소라는'], eng:'Sora meets a friend at school.'},
+   {scr:['커피를','좋아해요.','도','친구'], eng:'The friend also likes coffee.'},
+   {scr:['있어요.','집에','소라는'], eng:'Sora is at home.'},
+   {scr:['먹어요.','밥을','집에서만','소라는'], eng:'Sora only eats at home.'},
+  ];
+  items.forEach(function(it){
+    HTML += scrambleStrip(it.scr);
+    HTML += '<p style="font-size:.78em;color:var(--ink-soft);margin-top:-6px">'+it.eng+'</p>';
+    HTML += writeLines(1);
+  });
+  HTML += pageClose('sentence building');
+})();
+
+/* --- Final assessment (2 pages) --- */
+(function(){
+  HTML += pageOpen('Practice & Finish','Final Written Assessment \u2014 I','No peeking. This mirrors the course\u2019s own final exam, but in your own hand.', '試','시험');
+  HTML += '<div class="mini-label">1 \u2014 Fill in the correct particle</div>';
+  HTML += '<table class="wk"><tr><th>Sentence</th><th>Your answer</th></tr>'
+   + '<tr><td class="kr-cell">어떤 사람___ 공원에 있었어요. (new)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">그 사람___ 강아지를 좋아해요. (known)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">소라는 책___ 읽어요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">소라는 도서관___ 있어요. (existence)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">친구는 공원___ 운동해요. (action)</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += '<div class="mini-label">2 \u2014 Replace, don\u2019t stack</div>';
+  HTML += '<p class="kr" style="font-size:1.05em">소라<u>가</u> 학생이에요. (also) \u2192 <span style="display:inline-block;min-width:60px;border-bottom:1px solid var(--ink-faint)">&nbsp;</span></p>';
+  HTML += '<p class="kr" style="font-size:1.05em">저는 책<u>을</u> 읽어요. (only) \u2192 <span style="display:inline-block;min-width:60px;border-bottom:1px solid var(--ink-faint)">&nbsp;</span></p>';
+  HTML += pageClose('assessment');
+
+  HTML += pageOpen('Practice & Finish','Final Written Assessment \u2014 II','', '試','시험');
+  HTML += '<div class="mini-label">3 \u2014 Translate each sentence into Korean</div>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.8em;color:var(--ink-faint);margin-top:-8px">Sora eats a meal at home. (action)</p>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.8em;color:var(--ink-faint);margin-top:-8px">Only Sora drinks coffee.</p>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.8em;color:var(--ink-faint);margin-top:-8px">Sora is also at the library. (existence + also)</p>';
+  HTML += '<div class="mini-label">4 \u2014 Error hunt \u2014 find and fix the wrong particle</div>';
+  HTML += '<p class="kr" style="font-size:1.05em">소라는 밥<u>이</u> 먹어요. \u2192 <span style="display:inline-block;min-width:60px;border-bottom:1px solid var(--ink-faint)">&nbsp;</span></p>';
+  HTML += '<p class="kr" style="font-size:1.05em">소라는 도서관<u>에서</u> 있어요. \u2192 <span style="display:inline-block;min-width:60px;border-bottom:1px solid var(--ink-faint)">&nbsp;</span></p>';
+  HTML += '<div class="callout stamp" style="margin-top:20px"><b>Passing mark \u2014</b> 70%, same as the course\u2019s final exam. Score yourself against the cheat sheet, then move on to your certificate.</div>';
+  HTML += pageClose('assessment');
+})();
+
+/* --- Certificate --- */
+(function(){
+  pageNum++;
+  HTML += '<section class="page cert-page">'
+   + '<div class="pg-eyebrow">Hookitlingo &nbsp;\u00d7&nbsp; Korean Particles Workbook</div>'
+   + '<h1 class="kr">수료증</h1>'
+   + '<div class="sub">Certificate of Completion</div>'
+   + '<p style="max-width:420px">This certifies that</p>'
+   + '<div class="name-line">&nbsp;</div>'
+   + '<p style="max-width:460px">has completed every unit of the Korean Particles Workbook \u2014 every particle, every boss battle, every stacking rule, traced and written by hand.</p>'
+   + '<div style="margin-top:32px;display:flex;gap:60px">'
+   + '<div><div class="fillline" style="min-width:160px"></div><div class="mini-label" style="margin-top:4px">Date</div></div>'
+   + '<div><div class="fillline" style="min-width:160px"></div><div class="mini-label" style="margin-top:4px">Signature</div></div>'
+   + '</div>'
+   + '<div class="pg-footer" style="border:none;margin-top:26px"><span></span><span>p.'+pageNum+'</span></div>'
+   + '</section>';
+})();
+
+document.getElementById('book').innerHTML = HTML;
+document.getElementById('pageCount').textContent = pageNum + ' pages generated';
+</script>
+</body>
+</html>

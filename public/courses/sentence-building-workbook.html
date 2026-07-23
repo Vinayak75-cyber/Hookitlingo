@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>문법 연습 — Sentence Building Workbook</title>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLEMFRK6XH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WLEMFRK6XH');
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Noto+Serif+KR:wght@400;500;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS — warm cream paper, carried over from the Hookitlingo
+   ink/petal course palette (vermilion seal, celadon, gold)
+   ============================================================ */
+:root{
+  --paper:#faf4e9;
+  --paper2:#f2e8d5;
+  --paper3:#e8dabc;
+  --ink:#241c22;
+  --ink-soft:#6d5b60;
+  --ink-faint:#a58f92;
+  --guide:#cdb999;
+  --vermilion:#b23a54;
+  --vermilion-dim:#f2dbe1;
+  --celadon:#3f7d63;
+  --celadon-dim:#dcece3;
+  --gold:#a4762b;
+  --gold-dim:#f1e2c2;
+  --serif-kr:"Noto Serif KR", serif;
+  --serif-en:"Cormorant Garamond", Georgia, serif;
+  --mono:"IBM Plex Mono", monospace;
+}
+*{box-sizing:border-box;}
+html{background:#48423a;}
+body{
+  margin:0; font-family:var(--serif-en); color:var(--ink); background:#48423a;
+  -webkit-font-smoothing:antialiased;
+}
+.kr{font-family:var(--serif-kr);}
+
+/* ============================================================
+   SCREEN TOOLBAR (hidden on print)
+   ============================================================ */
+#toolbar{
+  position:sticky; top:0; z-index:100; display:flex; align-items:center; gap:14px;
+  padding:12px 22px; background:var(--ink); color:var(--paper); font-family:var(--serif-en);
+  box-shadow:0 4px 16px rgba(0,0,0,.35);
+}
+#toolbar strong{font-family:var(--serif-kr); font-size:1.05em; letter-spacing:.02em;}
+#toolbar .spacer{flex:1;}
+#toolbar button{
+  font-family:var(--serif-en); font-size:.85em; background:var(--vermilion); color:#fdf6ee; border:none;
+  padding:8px 16px; border-radius:3px; cursor:pointer; letter-spacing:.02em;
+}
+#toolbar button.secondary{background:transparent; border:1px solid #786c6e; color:var(--paper);}
+#toolbar button:hover{filter:brightness(1.1);}
+#toolbar .hint{font-size:.75em; color:#b8a9a3;}
+
+/* ============================================================
+   PAGE SHELL
+   ============================================================ */
+#book{max-width:920px; margin:34px auto 90px; padding:0 16px;}
+.page{
+  background:var(--paper);
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(178,58,84,0.035), transparent 40%),
+    repeating-linear-gradient(0deg, rgba(36,28,34,0.015) 0px, rgba(36,28,34,0.015) 1px, transparent 1px, transparent 2px);
+  width:100%; aspect-ratio:210/297; min-height:1050px;
+  padding:50px 54px 38px; margin:0 auto 28px; position:relative;
+  box-shadow:0 18px 40px rgba(0,0,0,.45), 0 2px 0 rgba(0,0,0,.15);
+  border:1px solid #d9c9a3;
+  display:flex; flex-direction:column;
+}
+.page::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  box-shadow: inset 0 0 60px rgba(90,74,40,.10);
+}
+.seal{
+  position:absolute; top:44px; right:52px; width:60px; height:60px; border-radius:50%;
+  border:2.5px solid var(--vermilion); color:var(--vermilion); font-family:var(--serif-kr); font-weight:700;
+  display:flex; align-items:center; justify-content:center; text-align:center; line-height:1.05;
+  transform:rotate(-8deg); font-size:.7em; opacity:.88; letter-spacing:.02em;
+  background:radial-gradient(circle at 35% 30%, rgba(178,58,84,.06), transparent 70%);
+}
+.seal small{display:block; font-family:var(--mono); font-size:.6em; font-weight:500; margin-top:1px; letter-spacing:0;}
+
+.pg-eyebrow{font-family:var(--mono); font-size:.66em; letter-spacing:.16em; text-transform:uppercase; color:var(--vermilion); margin-bottom:6px;}
+.pg-title{font-family:var(--serif-kr); font-weight:700; font-size:1.55em; margin:0 0 4px; padding-right:76px;}
+.pg-sub{color:var(--ink-soft); font-size:.9em; margin:0 0 16px; max-width:660px;}
+.pg-body{flex:1;}
+.pg-footer{
+  margin-top:auto; padding-top:12px; border-top:1px solid var(--paper3); display:flex;
+  align-items:center; justify-content:space-between; font-family:var(--mono); font-size:.66em; color:var(--ink-faint);
+}
+.pg-footer .chk{display:flex; align-items:center; gap:6px;}
+.pg-footer .chk .box{width:11px; height:11px; border:1.3px solid var(--ink-faint); display:inline-block;}
+
+h3{font-family:var(--serif-kr); font-size:1.12em; margin:18px 0 6px; font-weight:600; color:var(--ink);}
+h4{font-family:var(--serif-kr); font-size:1.02em; margin:0 0 6px; font-weight:600;}
+p{margin:0 0 .75em; font-size:.9em; line-height:1.55;}
+.eng{font-style:italic; color:var(--ink-soft);}
+
+/* ============================================================
+   WRITING LINES
+   ============================================================ */
+.write-line-block{margin:8px 0 14px;}
+.write-line{border-bottom:1px solid var(--ink-faint); height:27px; position:relative; margin-bottom:2px;}
+.write-line.dotted{border-bottom:1px dashed var(--guide);}
+
+/* ============================================================
+   CALLOUTS / LABELS
+   ============================================================ */
+.callout{border-left:3px solid var(--celadon); background:var(--celadon-dim); padding:9px 13px; border-radius:0 6px 6px 0; font-size:.84em; margin:10px 0;}
+.callout.warn{border-color:var(--gold); background:var(--gold-dim);}
+.callout.stamp{border-color:var(--vermilion); background:var(--vermilion-dim);}
+.callout b{font-family:var(--serif-kr);}
+.mini-label{font-family:var(--mono); font-size:.66em; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-soft); margin:14px 0 6px;}
+
+/* ============================================================
+   TABLES / DRILLS
+   ============================================================ */
+table.wk{width:100%; border-collapse:collapse; font-size:.84em; margin:8px 0;}
+table.wk th{font-family:var(--mono); font-size:.68em; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); text-align:left; padding:5px 7px; border-bottom:1.3px solid var(--ink);}
+table.wk td{padding:7px 7px; border-bottom:1px solid var(--paper3); vertical-align:top;}
+table.wk td.kr-cell{font-family:var(--serif-kr); font-size:1.1em;}
+table.wk td.blank{border-bottom:1px solid var(--ink-faint); min-width:80px;}
+table.wk td.rom{font-family:var(--mono); font-size:.82em; color:var(--ink-soft);}
+
+.card{border:1px solid var(--paper3); border-radius:6px; padding:10px 13px; background:rgba(255,255,255,.35); margin:8px 0;}
+
+.word-bank{display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 4px;}
+.chip{font-family:var(--serif-kr); font-size:1.05em; border:1.4px solid var(--ink); border-radius:20px; padding:4px 13px; background:#fff;}
+.chip.role-S{border-color:var(--celadon); color:var(--celadon);}
+.chip.role-O{border-color:var(--gold); color:var(--gold);}
+.chip.role-V{border-color:var(--vermilion); color:var(--vermilion);}
+.chip.role-TOP{border-color:var(--ink-soft); color:var(--ink-soft);}
+
+.sort-row{display:flex; align-items:center; gap:10px; padding:6px 0; border-bottom:1px dotted var(--paper3); font-size:.88em;}
+.sort-row .term{font-family:var(--serif-kr); font-size:1.15em; min-width:110px;}
+.sort-row .rom{font-family:var(--mono); font-size:.72em; color:var(--ink-soft); min-width:96px;}
+.sort-row .boxes{display:flex; gap:6px; margin-left:auto; font-family:var(--mono); font-size:.68em; color:var(--ink-soft);}
+.sort-row .boxes span{display:flex; align-items:center; gap:3px;}
+.sort-row .boxes .box{width:11px;height:11px;border:1.3px solid var(--ink-faint); display:inline-block;}
+
+.error-box{border:1px dashed var(--vermilion); border-radius:6px; padding:9px 12px; margin:10px 0; background:rgba(178,58,84,.03);}
+.error-box .broken{font-family:var(--serif-kr); font-size:1.05em; text-decoration:line-through; text-decoration-color:var(--vermilion); color:var(--ink-soft);}
+
+.scenario-box{border-left:3px solid var(--gold); background:var(--gold-dim); padding:9px 13px; border-radius:0 6px 6px 0; font-size:.85em; margin:10px 0 6px;}
+
+.two-col{display:flex; gap:26px;}
+.two-col > div{flex:1;}
+
+ol.steps{padding-left:1.05em; font-size:.88em;}
+ol.steps li{margin-bottom:5px;}
+
+/* TOC */
+.toc-group{margin-bottom:12px;}
+.toc-group h4{color:var(--vermilion); border-bottom:1px solid var(--paper3); padding-bottom:4px;}
+.toc-row{display:flex; justify-content:space-between; font-size:.83em; padding:3px 0; border-bottom:1px dotted var(--paper3);}
+.toc-row .n{color:var(--ink-faint); font-family:var(--mono); font-size:.85em;}
+
+/* cover */
+.cover-page{align-items:center; text-align:center; justify-content:center;}
+.cover-page .brandmark{
+  width:112px; height:112px; border-radius:50%; margin:0 auto 24px;
+  background:radial-gradient(circle at 32% 26%, #cb5468, var(--vermilion) 74%);
+  display:flex; align-items:center; justify-content:center; font-family:var(--serif-kr);
+  font-weight:900; font-size:2.7em; color:#fdf1e8; box-shadow:0 10px 30px rgba(178,58,84,.35);
+  transform:rotate(-4deg);
+}
+.cover-page h1{font-family:var(--serif-kr); font-size:2.3em; margin:0 0 6px; font-weight:900;}
+.cover-page .eng{font-family:var(--serif-en); font-style:italic; color:var(--ink-soft); font-size:1.1em; margin-bottom:28px;}
+.cover-page .meta-line{font-family:var(--mono); font-size:.76em; color:var(--ink-faint); letter-spacing:.06em;}
+.cover-page .fillline{display:inline-block; min-width:220px; border-bottom:1px solid var(--ink); margin:0 6px;}
+
+/* log table */
+table.logtable{width:100%; border-collapse:collapse; font-size:.8em;}
+table.logtable th{font-family:var(--mono); font-size:.66em; text-transform:uppercase; color:var(--ink-soft); border-bottom:1.3px solid var(--ink); padding:6px;}
+table.logtable td{border-bottom:1px solid var(--paper3); padding:9px 6px; height:24px;}
+
+/* certificate */
+.cert-page{align-items:center; text-align:center; justify-content:center; border:6px double var(--vermilion); padding:66px 54px;}
+.cert-page h1{font-family:var(--serif-kr); font-size:2em; margin-bottom:2px;}
+.cert-page .sub{font-family:var(--mono); letter-spacing:.16em; text-transform:uppercase; font-size:.68em; color:var(--ink-soft); margin-bottom:28px;}
+.cert-page .name-line{border-bottom:1.4px solid var(--ink); display:inline-block; min-width:320px; margin:16px 0 30px; font-family:var(--serif-kr); font-size:1.25em; padding-bottom:6px;}
+
+/* answer key */
+.ak-block{margin-bottom:16px;}
+.ak-block h4{color:var(--vermilion); border-bottom:1px solid var(--paper3); padding-bottom:3px; margin-bottom:6px;}
+.ak-line{font-size:.82em; margin:2px 0;}
+.ak-line .kr{font-size:1.05em;}
+.ak-line .rom{font-family:var(--mono); font-size:.72em; color:var(--ink-soft);}
+
+/* print */
+@media print{
+  html,body{background:#fff;}
+  #toolbar{display:none;}
+  #book{max-width:none; margin:0; padding:0;}
+  .page{
+    box-shadow:none; border:none; margin:0; width:210mm; min-height:297mm; aspect-ratio:auto;
+    page-break-after:always; padding:15mm 17mm 13mm;
+  }
+  .page:last-child{page-break-after:auto;}
+  h3, .mini-label, .card, .callout, table.wk tr, .word-bank, .sort-row, .error-box, .scenario-box{page-break-inside:avoid;}
+}
+@page{ size:A4; margin:0; }
+@media screen and (max-width:760px){
+  .page{padding:32px 24px 24px;}
+  .two-col{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <strong>문법 연습 — Sentence Building Workbook</strong>
+  <span class="hint">A daily paper companion to Hookitlingo's Grammar Part 1</span>
+  <div class="spacer"></div>
+  <span class="hint" id="pageCount"></span>
+  <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
+  <button onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<div id="book"></div>
+
+<script>
+/* ============================================================
+   0. DATA — same source facts as the Hookitlingo Grammar course
+   ============================================================ */
+const NOUNS = [
+ {kr:'저', rom:'jeo', mean:'I / me (humble)', batchim:false},
+ {kr:'학생', rom:'haksaeng', mean:'student', batchim:true},
+ {kr:'선생님', rom:'seonsaengnim', mean:'teacher', batchim:false},
+ {kr:'밥', rom:'bap', mean:'rice / a meal', batchim:true},
+ {kr:'책', rom:'chaek', mean:'book', batchim:true},
+ {kr:'커피', rom:'keopi', mean:'coffee', batchim:false},
+ {kr:'학교', rom:'hakgyo', mean:'school', batchim:false},
+ {kr:'집', rom:'jip', mean:'house / home', batchim:true},
+ {kr:'친구', rom:'chingu', mean:'friend', batchim:false},
+ {kr:'영화', rom:'yeonghwa', mean:'movie', batchim:false},
+ {kr:'물', rom:'mul', mean:'water', batchim:true},
+ {kr:'날씨', rom:'nalssi', mean:'weather', batchim:false},
+];
+const ACTION_VERBS = [
+ {dict:'가다', dictRom:'gada', pol:'가요', polRom:'gayo', mean:'to go'},
+ {dict:'오다', dictRom:'oda', pol:'와요', polRom:'wayo', mean:'to come'},
+ {dict:'먹다', dictRom:'meokda', pol:'먹어요', polRom:'meogeoyo', mean:'to eat'},
+ {dict:'보다', dictRom:'boda', pol:'봐요', polRom:'bwayo', mean:'to see / watch'},
+ {dict:'하다', dictRom:'hada', pol:'해요', polRom:'haeyo', mean:'to do'},
+ {dict:'만나다', dictRom:'mannada', pol:'만나요', polRom:'mannayo', mean:'to meet'},
+ {dict:'읽다', dictRom:'ikda', pol:'읽어요', polRom:'ilgeoyo', mean:'to read'},
+ {dict:'마시다', dictRom:'masida', pol:'마셔요', polRom:'masyeoyo', mean:'to drink'},
+];
+const DESC_VERBS = [
+ {dict:'크다', dictRom:'keuda', pol:'커요', polRom:'keoyo', mean:'to be big'},
+ {dict:'작다', dictRom:'jakda', pol:'작아요', polRom:'jagayo', mean:'to be small'},
+ {dict:'좋다', dictRom:'jota', pol:'좋아요', polRom:'joayo', mean:'to be good'},
+ {dict:'맛있다', dictRom:'masitda', pol:'맛있어요', polRom:'masisseoyo', mean:'to be delicious'},
+ {dict:'예쁘다', dictRom:'yeppeuda', pol:'예뻐요', polRom:'yeppeoyo', mean:'to be pretty'},
+];
+
+/* ============================================================
+   1. SMALL BUILDERS
+   ============================================================ */
+let pageNum = 0;
+function seal(label, small){
+  return '<div class="seal">'+label+(small?'<small>'+small+'</small>':'')+'</div>';
+}
+function pageOpen(eyebrow, title, sub, sealLabel, sealSmall){
+  pageNum++;
+  return '<section class="page">'
+    + (sealLabel!==false ? seal(sealLabel||'文','문법') : '')
+    + '<div class="pg-eyebrow">'+eyebrow+'</div>'
+    + '<h1 class="pg-title">'+title+'</h1>'
+    + (sub? '<p class="pg-sub">'+sub+'</p>' : '')
+    + '<div class="pg-body">';
+}
+function pageClose(footNote){
+  return '</div><div class="pg-footer"><span class="chk"><span class="box"></span> practiced today</span>'
+    + '<span>'+(footNote||'문법 연습 워크북')+'</span>'
+    + '<span>p.'+pageNum+'</span></div></section>';
+}
+function writeLines(n, dotted){
+  let out = '<div class="write-line-block">';
+  for(let i=0;i<n;i++) out += '<div class="write-line'+(dotted?' dotted':'')+'"></div>';
+  out += '</div>';
+  return out;
+}
+function chips(items){
+  return '<div class="word-bank">' + items.map(function(c){
+    return '<span class="chip role-'+c.role+'">'+c.t+'</span>';
+  }).join('') + '</div>';
+}
+function sortRow(term, rom, cols){
+  return '<div class="sort-row"><span class="term kr">'+term+'</span><span class="rom">'+rom+'</span>'
+    + '<span class="boxes">'+cols.map(function(c){return '<span><span class="box"></span>'+c+'</span>';}).join('')+'</span></div>';
+}
+function errorBox(broken, brokenRom, hint){
+  return '<div class="error-box"><p class="broken kr">'+broken+'</p><p class="rom" style="font-family:var(--mono);font-size:.75em;color:var(--ink-soft);margin:-6px 0 6px">'+brokenRom+'</p>'
+   + (hint? '<p style="font-size:.78em;color:var(--ink-soft);margin:0 0 6px">'+hint+'</p>' : '')
+   + '<div class="mini-label" style="margin:4px 0 4px">Your correction</div>'+writeLines(1)+'</div>';
+}
+function recallBox(unitLabel, items){
+  let out = '<div class="callout stamp"><b>Warm-up — recall '+unitLabel+' first</b><br>No notes. Answer from memory, then check your answers against the previous chapter.</div>';
+  out += '<table class="wk"><tr><th>Prompt</th><th>Your answer</th></tr>';
+  items.forEach(function(it){ out += '<tr><td class="kr-cell">'+it+'</td><td class="blank"></td></tr>'; });
+  out += '</table>';
+  return out;
+}
+
+/* ============================================================
+   2. PAGE GENERATORS
+   ============================================================ */
+let HTML = '';
+
+/* --- Cover --- */
+HTML += '<section class="page cover-page">'
+ + '<div class="brandmark">문</div>'
+ + '<div class="pg-eyebrow" style="text-align:center">Hookitlingo — Companion Volume · Grammar Part 1</div>'
+ + '<h1>문법 연습</h1>'
+ + '<div class="eng">The Sentence Building Workbook</div>'
+ + '<p style="max-width:460px;margin:0 auto 24px;color:var(--ink-soft)">Ten minutes a day, pencil in hand. This book walks beside the Grammar Part 1 course, chapter for chapter — every pattern you learn on screen gets fixed into memory here, by writing it yourself.</p>'
+ + '<div class="meta-line">NAME <span class="fillline"></span></div>'
+ + '<div class="meta-line" style="margin-top:10px">START DATE <span class="fillline" style="min-width:120px"></span></div>'
+ + '</section>';
+
+/* --- How to use + study ritual --- */
+HTML += pageOpen('Before You Begin','How to Use This Workbook','A short read — then straight to the pencil.', '使用法','안내');
+HTML += '<div class="two-col">'
+ + '<div><h4>The daily ritual</h4><ol class="steps">'
+ + '<li>Open the matching unit in the Hookitlingo app first, and read the callouts.</li>'
+ + '<li>Turn to this chapter. Do the warm-up with no notes — that retrieval is the point.</li>'
+ + '<li>Work through the drills in order: copy, fill-in, transform, then free writing.</li>'
+ + '<li>Check your closed-ended answers against the Answer Key at the back.</li>'
+ + '<li>Check the box in the footer once you\'ve done all of it.</li>'
+ + '</ol></div>'
+ + '<div><h4>Why writing matters</h4><p>Recognizing a pattern on a screen is easy. Producing it yourself, from a blank line, is what actually fixes it in your head — recall beats recognition every time you come back to it later.</p>'
+ + '<div class="callout stamp"><b>A teacher\'s note —</b> Don\'t erase mistakes. Cross through gently and write the correction beside it. Seeing your own correction is part of how it sticks.</div></div>'
+ + '</div>';
+HTML += pageClose();
+
+/* --- Study log --- */
+HTML += pageOpen('Before You Begin','My Study Log','Fill in one row after every session — the streak itself is the lesson.', '記錄','기록');
+HTML += '<table class="logtable"><tr><th>Date</th><th>Unit</th><th>Minutes</th><th>Confidence (1–5)</th><th>Note to self</th></tr>';
+for(let i=0;i<16;i++) HTML += '<tr><td></td><td></td><td></td><td></td><td></td></tr>';
+HTML += '</table>';
+HTML += pageClose();
+
+/* --- TOC --- */
+(function(){
+  const toc = [
+    {group:'Foundations', rows:['Unit 0 — Why Korean Feels "Backwards"','Unit 1 — The Predicate Is King']},
+    {group:'Predicate Families', rows:['Unit 2 — Descriptive Verbs','Unit 3 — Action Verbs','Review — Units 1–3']},
+    {group:'Building Sentences', rows:['Unit 4 — Meet 이다','Unit 5 — Full SOV Sentences','Unit 6 — Topic 은/는','Unit 7 — Subject & Object Omission','Unit 8 — Basic Sentence Types','Review — Units 4–8']},
+    {group:'Putting It Together', rows:['Unit 9 — Full Sentences & Dialogues','Mock Final Assessment','Certificate']},
+    {group:'Reference', rows:['Answer Key']},
+  ];
+  HTML += pageOpen('Contents','목차 · Table of Contents', '', '目次','차례');
+  HTML += '<div style="columns:2; column-gap:32px;">';
+  toc.forEach(function(g){
+    HTML += '<div class="toc-group">'+ '<h4>'+g.group+'</h4>';
+    g.rows.forEach(function(r){ HTML += '<div class="toc-row"><span>'+r+'</span><span class="n">□</span></div>'; });
+    HTML += '</div>';
+  });
+  HTML += '</div>';
+  HTML += pageClose();
+})();
+
+/* --- Unit 0 — Why Korean Feels Backwards --- */
+(function(){
+  HTML += pageOpen('Foundations','Unit 0 — Why Korean Feels "Backwards"','English is Subject–Verb–Object. Korean is Subject–Object–Verb — the predicate is always the caboose.', '語順','어순');
+  HTML += '<div class="two-col"><div><h4>English (SVO)</h4><p style="font-size:1.15em">I <strong style="color:var(--vermilion)">eat</strong> rice.</p></div>'
+   + '<div><h4>Korean (SOV)</h4><p class="kr" style="font-size:1.15em">저는 밥을 <strong style="color:var(--vermilion)">먹어요</strong>.</p><p style="font-size:.78em;color:var(--ink-soft);margin-top:-6px">jeoneun bapeul meogeoyo.</p></div></div>';
+  HTML += '<div class="callout"><b>The Anchor Rule —</b> the predicate always comes last. Everything else can move around in front of it, but the sentence is not finished until the predicate lands.</div>';
+  HTML += '<div class="mini-label">Label each chip S (subject), O (object), or V (predicate) by writing the letter underneath</div>';
+  HTML += chips([{t:'저는',role:'TOP'},{t:'밥을',role:'O'},{t:'먹어요',role:'V'}]);
+  HTML += '<table class="wk"><tr><th>Chip</th><th>Your label (S / O / V)</th></tr>'
+   + '<tr><td class="kr-cell">저는</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">밥을</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">먹어요</td><td class="blank"></td></tr></table>';
+  HTML += '<div class="mini-label">Now build the same train yourself — copy the sentence, then write it again from memory</div>' + writeLines(2,true);
+  HTML += '<div class="mini-label">Which piece never moves? Write one sentence explaining the Anchor Rule in your own words</div>' + writeLines(2);
+  HTML += pageClose();
+})();
+
+/* --- Unit 1 — Predicate Is King --- */
+(function(){
+  HTML += pageOpen('Foundations','Unit 1 — The Predicate Is King','Every Korean predicate belongs to one of three families. Spotting the family is the skill the next three units are built around.', '述語','예측', undefined);
+  HTML += '<div class="card"><h4>1. Action Verbs (동사)</h4><p class="kr">가다 · 먹다</p><p>Something happening or done. Covered in Unit 3.</p></div>'
+   + '<div class="card"><h4>2. Descriptive Verbs (형용사)</h4><p class="kr">크다 · 좋다</p><p>A quality or state, conjugated like a verb — no separate word for "is." Covered in Unit 2.</p></div>'
+   + '<div class="card"><h4>3. The Copula 이다 — "to be [a noun]"</h4><p class="kr">학생이다</p><p>Attaches to a noun for "X is Y." Covered in Unit 4.</p></div>';
+  HTML += '<div class="mini-label">Predicate Detective — sort each predicate into its family (check one box)</div>';
+  HTML += sortRow('가다','gada',['Action','Descriptive','이다']);
+  HTML += sortRow('크다','keuda',['Action','Descriptive','이다']);
+  HTML += sortRow('학생이다','haksaengida',['Action','Descriptive','이다']);
+  HTML += sortRow('먹다','meokda',['Action','Descriptive','이다']);
+  HTML += sortRow('좋다','jota',['Action','Descriptive','이다']);
+  HTML += '<div class="mini-label">Write one predicate of your own guess for each family — don\'t worry about being right yet</div>' + writeLines(3,true);
+  HTML += pageClose();
+})();
+
+/* --- Unit 2 — Descriptive Verbs --- */
+(function(){
+  HTML += pageOpen('Predicate Families','Unit 2 — Descriptive Verbs ("Adjectives") in Action','A descriptive verb already means "is [quality]" — no extra word for "is" is ever needed.', '形容','묘사');
+  HTML += recallBox('Unit 1', ['가다 belongs to which family?','학생이다 belongs to which family?']);
+  HTML += '<div class="mini-label">Dictionary form → polite present. Drop 다, add -아요 (last vowel ㅏ/ㅗ) or -어요 (everything else). Fill in the blank.</div>';
+  HTML += '<table class="wk"><tr><th>Dictionary form</th><th>Meaning</th><th>Your polite form</th></tr>'
+   + DESC_VERBS.map(function(v){ return '<tr><td class="kr-cell">'+v.dict+'</td><td>'+v.mean+'</td><td class="blank"></td></tr>'; }).join('')
+   + '</table>';
+  HTML += '<div class="mini-label">Copy each polite form once, then write it again from memory</div>' + writeLines(3,true);
+  HTML += '<div class="mini-label">Translate into Korean — fill the blank with the correct descriptive verb form</div>';
+  HTML += '<table class="wk"><tr><th>Sentence</th><th>Your answer</th></tr>'
+   + '<tr><td>집이 ___. (The house is big.)</td><td class="blank"></td></tr>'
+   + '<tr><td>커피가 ___. (The coffee is good.)</td><td class="blank"></td></tr>'
+   + '<tr><td>밥이 ___. (The rice is delicious.)</td><td class="blank"></td></tr>'
+   + '<tr><td>친구가 ___. (The friend is pretty.)</td><td class="blank"></td></tr></table>';
+  HTML += '<div class="mini-label">Free write — describe two things around you right now using a descriptive verb from this page</div>' + writeLines(2);
+  HTML += pageClose();
+})();
+
+/* --- Unit 3 — Action Verbs --- */
+(function(){
+  HTML += pageOpen('Predicate Families','Unit 3 — Action Verbs in Action','Action verbs take the same -아요/-어요 ending, but now they often pair with an object marked by 을/를.', '動詞','행동');
+  HTML += recallBox('Unit 2', ['좋다 → polite present form?','예쁘다 → polite present form?']);
+  HTML += '<div class="mini-label">Dictionary form → polite present. Fill in the blank.</div>';
+  HTML += '<table class="wk"><tr><th>Dictionary form</th><th>Meaning</th><th>Your polite form</th></tr>'
+   + ACTION_VERBS.map(function(v){ return '<tr><td class="kr-cell">'+v.dict+'</td><td>'+v.mean+'</td><td class="blank"></td></tr>'; }).join('')
+   + '</table>';
+  HTML += '<div class="callout"><b>Object placement —</b> 을 after a batchim, 를 after a vowel. The object + particle sits directly in front of the verb.</div>';
+  HTML += '<div class="mini-label">Fill the correct object particle (을 or 를)</div>';
+  HTML += '<table class="wk"><tr><th>Sentence starter</th><th>Your particle</th></tr>'
+   + '<tr><td class="kr-cell">저는 밥___ 먹어요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">저는 책___ 읽어요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">저는 영화___ 봐요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">저는 물___ 마셔요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">저는 친구___ 만나요.</td><td class="blank"></td></tr></table>';
+  HTML += '<div class="mini-label">Sentence Scramble — put the chips in S–O–V order, then write the full sentence below</div>';
+  HTML += chips([{t:'저는',role:'TOP'},{t:'책을',role:'O'},{t:'읽어요',role:'V'}]);
+  HTML += writeLines(1);
+  HTML += '<div class="mini-label">Free write — build two of your own sentences using an action verb from this page</div>' + writeLines(2);
+  HTML += pageClose();
+})();
+
+/* --- Review Packet A --- */
+(function(){
+  HTML += pageOpen('Spaced Review','Review — Units 1–3','Cover the earlier pages. Answer from memory, then self-check against the Answer Key.', false);
+  HTML += '<div class="mini-label">Predicate family — write Action, Descriptive, or 이다</div>';
+  HTML += '<table class="wk"><tr><th>Predicate</th><th>Family</th></tr>'
+   + '<tr><td class="kr-cell">맛있어요</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">가요</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">학생이에요</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">봐요</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">커요</td><td class="blank"></td></tr></table>';
+  HTML += '<div class="mini-label">Dictionary form → polite form, no peeking</div>';
+  HTML += '<table class="wk"><tr><th>Dictionary</th><th>Your polite form</th></tr>'
+   + '<tr><td class="kr-cell">좋다</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">먹다</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">보다</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">작다</td><td class="blank"></td></tr></table>';
+  HTML += '<div class="mini-label">Error-spotting — each sentence has one wrong particle. Cross it out and write the fix</div>';
+  HTML += errorBox('저는 밥이 먹어요.', 'jeoneun babi meogeoyo.', 'This should mark 밥 as the object, not the subject.');
+  HTML += errorBox('학생을 책을 읽어요.', 'haksaengeul chaegeul ilgeoyo.', 'This should mark 학생 as the subject.');
+  HTML += pageClose('review');
+})();
+
+/* --- Unit 4 — 이다 --- */
+(function(){
+  HTML += pageOpen('Building Sentences','Unit 4 — Meet 이다 — The Copula for Nouns','이다 attaches to a noun for "X is Y." The choice between 이에요 and 예요 is a strict spelling rule.', '繫詞','이다');
+  HTML += recallBox('Unit 3', ['먹다 → polite present form?','What particle marks the object after a batchim?']);
+  HTML += '<div class="callout warn"><b>The Rule —</b> noun ends in a consonant (batchim) → attach 이에요. Noun ends in a vowel → attach 예요.</div>';
+  HTML += '<div class="mini-label">Sort each noun by batchim, then write the correct 이다 form</div>';
+  HTML += '<table class="wk"><tr><th>Noun</th><th>Batchim? (Y/N)</th><th>Your 이다 form</th></tr>'
+   + NOUNS.map(function(n){ return '<tr><td class="kr-cell">'+n.kr+'</td><td class="blank"></td><td class="blank"></td></tr>'; }).join('')
+   + '</table>';
+  HTML += '<div class="mini-label">Translate into Korean</div>';
+  HTML += '<table class="wk"><tr><th>English</th><th>Your Korean sentence</th></tr>'
+   + '<tr><td>I am a student.</td><td class="blank"></td></tr>'
+   + '<tr><td>I am a teacher.</td><td class="blank"></td></tr>'
+   + '<tr><td>This is a book.</td><td class="blank"></td></tr></table>';
+  HTML += '<div class="callout tip"><b>Tell the three families apart —</b> 커요 (quality) · 먹어요 (action) · 학생이에요 (linked to a noun). If you hear "noun + 이에요/예요," it\'s the copula.</div>';
+  HTML += '<div class="mini-label">Predicate Detective — all three families together</div>';
+  HTML += sortRow('학생이에요','haksaengieyo',['Action','Descriptive','이다']);
+  HTML += sortRow('가요','gayo',['Action','Descriptive','이다']);
+  HTML += sortRow('맛있어요','masisseoyo',['Action','Descriptive','이다']);
+  HTML += sortRow('친구예요','chinguyeyo',['Action','Descriptive','이다']);
+  HTML += pageClose();
+})();
+
+/* --- Unit 5 — Full SOV --- */
+(function(){
+  HTML += pageOpen('Building Sentences','Unit 5 — Building the Full SOV Sentence','Combine subject, object, and predicate with the correct particles: 이/가 for the subject, 을/를 for the object.', '文型','문형');
+  HTML += recallBox('Unit 4', ['학생 (has batchim) → 이다 form?','친구 (no batchim) → 이다 form?']);
+  HTML += '<div class="mini-label">Growing sentences — add one piece at a time, writing the full line each time</div>';
+  HTML += '<p class="kr" style="font-size:1.05em">1. 먹어요.</p>' + writeLines(1);
+  HTML += '<p class="kr" style="font-size:1.05em">2. 밥을 먹어요.</p>' + writeLines(1);
+  HTML += '<p class="kr" style="font-size:1.05em">3. 학생이 밥을 먹어요.</p>' + writeLines(1);
+  HTML += '<p class="kr" style="font-size:1.05em">4. 학생이 집에서 밥을 먹어요.</p>' + writeLines(1);
+  HTML += '<div class="mini-label">Fill in the subject particle (이 or 가)</div>';
+  HTML += '<table class="wk"><tr><th>Sentence starter</th><th>Your particle</th></tr>'
+   + '<tr><td class="kr-cell">학생___ 책을 읽어요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">친구___ 영화를 봐요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">선생님___ 좋아요.</td><td class="blank"></td></tr></table>';
+  HTML += '<div class="mini-label">Sentence Train Builder — arrange the chips into a full SOV sentence, then write it</div>';
+  HTML += chips([{t:'친구가',role:'S'},{t:'영화를',role:'O'},{t:'봐요',role:'V'}]);
+  HTML += writeLines(1);
+  HTML += '<div class="callout"><b>Particles mark the role, not the position —</b> word order can shift for emphasis, but S–O–V stays the neutral default you should reach for.</div>';
+  HTML += pageClose();
+})();
+
+/* --- Unit 6 — 은/는 --- */
+(function(){
+  HTML += pageOpen('Building Sentences','Unit 6 — Topic Flow: Setting the Scene with 은/는','은/는 is a topic marker — distinct from the subject marker 이/가. Use 은 after a batchim, 는 after a vowel.', '主題','주제');
+  HTML += recallBox('Unit 5', ['학생 + subject particle?','친구 + subject particle?']);
+  HTML += '<div class="callout tip"><b>Topic vs. Subject —</b> 이/가 introduces new information. 은/는 sets the stage for what\'s already known, and governs the sentences that follow without repeating.</div>';
+  HTML += '<div class="mini-label">Read the passage, then write the meaning of each line from memory</div>';
+  HTML += '<p class="kr" style="font-size:1.05em">저는 학생이에요. 학교가 커요. 선생님이 좋아요.</p>';
+  HTML += writeLines(3);
+  HTML += '<div class="mini-label">Fill the correct topic marker (은 or 는)</div>';
+  HTML += '<table class="wk"><tr><th>Sentence starter</th><th>Your marker</th></tr>'
+   + '<tr><td class="kr-cell">저___ 학생이에요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">이름___ 민수예요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">날씨___ 좋아요.</td><td class="blank"></td></tr></table>';
+  HTML += '<div class="mini-label">Topic Tracker — which noun, once introduced, is being talked about across every line?</div>';
+  HTML += '<p class="kr" style="font-size:1.02em">저는 친구가 있어요. 이름은 민수예요. 학생이에요.</p>';
+  HTML += '<p style="font-size:.8em;color:var(--ink-soft);margin-top:-6px">jeoneun chinguga isseoyo. ireumeun minsuyeyo. haksaengieyo.</p>';
+  HTML += writeLines(1);
+  HTML += '<div class="mini-label">Free write — three lines about yourself, setting the topic once with 은/는</div>' + writeLines(3,true);
+  HTML += pageClose();
+})();
+
+/* --- Unit 7 — Omission --- */
+(function(){
+  HTML += pageOpen('Building Sentences','Unit 7 — Subject & Object Omission','Once the topic or subject is clear from context, Korean simply drops it — no "it," "he," "she," filler needed.', '省略','생략');
+  HTML += recallBox('Unit 6', ['이름 (no batchim) + topic marker?','날씨 (no batchim) + topic marker?']);
+  HTML += '<div class="card"><h4>Natural Korean</h4><p class="kr" style="font-size:1.02em">가: 오늘 뭐 해요? &nbsp; 나: 친구를 만나요. 같이 밥을 먹어요.</p>'
+   + '<p style="font-size:.8em;color:var(--ink-soft);margin-top:-6px">A: What are you doing today? / B: (I\'m) meeting a friend. (We\'re) eating together.</p></div>';
+  HTML += '<div class="mini-label">Rewrite each cluttered, over-literal sentence the natural way — cross out what should be omitted</div>';
+  HTML += errorBox('저는 오늘 무엇을 해요? 저는 저의 친구를 만나요.', 'jeoneun oneul mueoseul haeyo? jeoneun jeoui chingureul mannayo.', 'No native speaker repeats 저는/저의 in every clause once the subject is clear.');
+  HTML += '<div class="mini-label">Topic Tracker — what two things are omitted from the second sentence, understood from context?</div>';
+  HTML += '<p class="kr" style="font-size:1.02em">저는 커피가 있어요. 마셔요.</p>';
+  HTML += '<p style="font-size:.8em;color:var(--ink-soft);margin-top:-6px">jeoneun keopiga isseoyo. masyeoyo.</p>';
+  HTML += writeLines(2);
+  HTML += '<div class="mini-label">Free write — write a two-line mini exchange, dropping the subject in the second line</div>' + writeLines(2);
+  HTML += pageClose();
+})();
+
+/* --- Unit 8 — Sentence Types --- */
+(function(){
+  HTML += pageOpen('Building Sentences','Unit 8 — Basic Sentence Types','Every base sentence can walk through three transformations: statement, question, negative.', '文型','전환');
+  HTML += recallBox('Unit 7', ['What gets dropped once the subject is already clear?']);
+  HTML += '<div class="card"><h4>1. Statement</h4><p class="kr" style="font-size:1.05em">저는 밥을 먹어요.</p><h4>2. Question</h4><p>Same form, rising intonation: <span class="kr">저는 밥을 먹어요?</span></p><h4>3. Negative</h4><p>Add 안 right before the predicate: <span class="kr">저는 밥을 안 먹어요.</span></p></div>';
+  HTML += '<div class="mini-label">Transform Drill — given the base statement, write the question, then the negative</div>';
+  HTML += '<table class="wk"><tr><th>Base statement</th><th>Your question form</th><th>Your negative form</th></tr>'
+   + '<tr><td class="kr-cell">친구가 좋아요.</td><td class="blank"></td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">학생이 책을 읽어요.</td><td class="blank"></td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">저는 학생이에요.</td><td class="blank"></td><td class="blank"></td></tr></table>';
+  HTML += '<div class="callout warn"><b>Watch for —</b> the 이다 negative is irregular: 학생이에요 → 학생이 아니에요, not 안 학생이에요.</div>';
+  HTML += '<div class="mini-label">Error-spotting — the negative form below is wrong. Cross it out and write the correction</div>';
+  HTML += errorBox('저는 안 학생이에요.', 'jeoneun an haksaengieyo.', '이다 does not take 안 directly — it has its own negative pattern.');
+  HTML += pageClose();
+})();
+
+/* --- Review Packet B --- */
+(function(){
+  HTML += pageOpen('Spaced Review','Review — Units 4–8','Cover the earlier pages. Answer from memory, then self-check against the Answer Key.', false);
+  HTML += '<div class="mini-label">이다 form — fill the blank</div>';
+  HTML += '<table class="wk"><tr><th>Noun</th><th>Your 이다 form</th></tr>'
+   + '<tr><td class="kr-cell">책</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">영화</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">집</td><td class="blank"></td></tr></table>';
+  HTML += '<div class="mini-label">Particle round-up — subject (이/가), object (을/를), or topic (은/는)?</div>';
+  HTML += '<table class="wk"><tr><th>Sentence starter</th><th>Your particle</th></tr>'
+   + '<tr><td class="kr-cell">저___ 학생이에요. (topic)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">학생___ 밥을 먹어요. (subject)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">저는 책___ 읽어요. (object)</td><td class="blank"></td></tr></table>';
+  HTML += '<div class="mini-label">Transform Drill — no peeking</div>';
+  HTML += '<table class="wk"><tr><th>Base statement</th><th>Question</th><th>Negative</th></tr>'
+   + '<tr><td class="kr-cell">친구가 영화를 봐요.</td><td class="blank"></td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">저는 선생님이에요.</td><td class="blank"></td><td class="blank"></td></tr></table>';
+  HTML += pageClose('review');
+})();
+
+/* --- Unit 9 — Full Sentences & Dialogues --- */
+(function(){
+  HTML += pageOpen('Putting It Together','Unit 9 — Full Sentence Practice & Everyday Mini-Dialogues','Everything so far comes together in short, natural dialogues — the structure transfers to whatever vocabulary you pick up next.', '對話','회화');
+  HTML += recallBox('Unit 8', ['Add ___ right before the predicate to make it negative.']);
+  const scenarios = [
+    {title:'Weather', prompt:'Write a short exchange: ask how the weather is, answer that it\'s good, then say you\'re going to the park.'},
+    {title:'Family', prompt:'Introduce a family member using 이다, then describe them with a descriptive verb.'},
+    {title:'Daily Routine', prompt:'Write two lines about your morning, dropping the subject in the second line once it\'s clear.'},
+    {title:'Hobbies', prompt:'Say what you do today (오늘 뭐 해요?) and answer with an action verb + object.'},
+  ];
+  scenarios.forEach(function(s){
+    HTML += '<div class="scenario-box"><b>'+s.title+'</b> — '+s.prompt+'</div>' + writeLines(2,true);
+  });
+  HTML += pageClose();
+})();
+
+/* --- Mock Final Assessment (2 pages) --- */
+(function(){
+  HTML += pageOpen('Putting It Together','Mock Final Assessment — I','No peeking. This mirrors the app\'s final exam, but in your own hand.', '試','시험');
+  HTML += '<div class="mini-label">1 — Sort each predicate into its family (Action / Descriptive / 이다)</div>';
+  HTML += sortRow('와요','wayo',['Action','Descriptive','이다']);
+  HTML += sortRow('작아요','jagayo',['Action','Descriptive','이다']);
+  HTML += sortRow('선생님이에요','seonsaengnimieyo',['Action','Descriptive','이다']);
+  HTML += sortRow('마셔요','masyeoyo',['Action','Descriptive','이다']);
+  HTML += '<div class="mini-label">2 — Fill in the correct particle (subject, object, or topic)</div>';
+  HTML += '<table class="wk"><tr><th>Sentence</th><th>Your particle</th></tr>'
+   + '<tr><td class="kr-cell">저___ 친구를 만나요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">학생___ 책을 읽어요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">저는 영화___ 봐요.</td><td class="blank"></td></tr></table>';
+  HTML += '<div class="mini-label">3 — Translate into Korean</div>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.78em;color:var(--ink-faint);margin-top:-10px">I am a student.</p>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.78em;color:var(--ink-faint);margin-top:-10px">The coffee is good.</p>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.78em;color:var(--ink-faint);margin-top:-10px">I drink water.</p>';
+  HTML += pageClose('assessment');
+
+  HTML += pageOpen('Putting It Together','Mock Final Assessment — II','', '試','시험');
+  HTML += '<div class="mini-label">4 — Transform each statement into a question, then a negative</div>';
+  HTML += '<table class="wk"><tr><th>Base statement</th><th>Question</th><th>Negative</th></tr>'
+   + '<tr><td class="kr-cell">저는 물을 마셔요.</td><td class="blank"></td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">친구가 예뻐요.</td><td class="blank"></td><td class="blank"></td></tr></table>';
+  HTML += '<div class="mini-label">5 — Error-spotting: cross out the mistake and write the fix</div>';
+  HTML += errorBox('학생을 밥이 먹어요.', 'haksaengeul babi meogeoyo.', 'The subject and object particles are swapped.');
+  HTML += '<div class="mini-label">6 — Free writing: introduce yourself in three sentences (name, one description, one daily action)</div>' + writeLines(3,true);
+  HTML += '<div class="callout stamp" style="margin-top:16px"><b>Passing mark —</b> 70%, same as the app\'s final exam. Score yourself against the Answer Key, then move on to your certificate.</div>';
+  HTML += pageClose('assessment');
+})();
+
+/* --- Certificate --- */
+(function(){
+  pageNum++;
+  HTML += '<section class="page cert-page">'
+   + '<div class="pg-eyebrow">Hookitlingo &nbsp;×&nbsp; Sentence Building Workbook</div>'
+   + '<h1 class="kr">수료증</h1>'
+   + '<div class="sub">Certificate of Completion</div>'
+   + '<p style="max-width:420px">This certifies that</p>'
+   + '<div class="name-line">&nbsp;</div>'
+   + '<p style="max-width:440px">has completed every unit of the Sentence Building Workbook — every predicate family, every particle, every transformation, written by hand.</p>'
+   + '<div style="margin-top:32px;display:flex;gap:60px">'
+   + '<div><div class="fillline" style="min-width:160px"></div><div class="mini-label" style="margin-top:4px">Date</div></div>'
+   + '<div><div class="fillline" style="min-width:160px"></div><div class="mini-label" style="margin-top:4px">Signature</div></div>'
+   + '</div>'
+   + '<div class="pg-footer" style="border:none;margin-top:28px"><span></span><span>p.'+pageNum+'</span></div>'
+   + '</section>';
+})();
+
+/* --- Answer Key --- */
+(function(){
+  HTML += pageOpen('Reference','Answer Key','Closed-ended drills only — free-writing pages have no single right answer, so check those against the app\'s example sentences instead.', '解答','정답');
+  HTML += '<div class="ak-block"><h4>Unit 0</h4><div class="ak-line">저는 = S(topic) &nbsp;·&nbsp; 밥을 = O &nbsp;·&nbsp; 먹어요 = V</div></div>';
+  HTML += '<div class="ak-block"><h4>Unit 1 — Predicate Detective</h4>'
+   + '<div class="ak-line">가다 = Action &nbsp;·&nbsp; 크다 = Descriptive &nbsp;·&nbsp; 학생이다 = 이다 &nbsp;·&nbsp; 먹다 = Action &nbsp;·&nbsp; 좋다 = Descriptive</div></div>';
+  HTML += '<div class="ak-block"><h4>Unit 2</h4>'
+   + '<div class="ak-line kr">크다→커요 · 작다→작아요 · 좋다→좋아요 · 맛있다→맛있어요 · 예쁘다→예뻐요</div>'
+   + '<div class="ak-line">집이 커요 / 커피가 좋아요 / 밥이 맛있어요 / 친구가 예뻐요</div></div>';
+  HTML += '<div class="ak-block"><h4>Unit 3</h4>'
+   + '<div class="ak-line kr">가다→가요 · 오다→와요 · 먹다→먹어요 · 보다→봐요 · 하다→해요 · 만나다→만나요 · 읽다→읽어요 · 마시다→마셔요</div>'
+   + '<div class="ak-line">밥을 · 책을 · 영화를 · 물을 · 친구를</div></div>';
+  HTML += '<div class="ak-block"><h4>Review A — error-spotting</h4>'
+   + '<div class="ak-line">저는 밥을 먹어요. &nbsp;·&nbsp; 학생이 책을 읽어요.</div></div>';
+  HTML += '<div class="ak-block"><h4>Unit 4</h4>'
+   + '<div class="ak-line kr">저 → 저예요 (no batchim) · 학생 → 학생이에요 (batchim) · 선생님 → 선생님이에요 (no batchim, but ends in ㅁ = batchim) · 밥 → 밥이에요 · 책 → 책이에요 · 커피 → 커피예요 · 학교 → 학교예요 · 집 → 집이에요 · 친구 → 친구예요 · 영화 → 영화예요 · 물 → 물이에요 · 날씨 → 날씨예요</div>'
+   + '<div class="ak-line">저는 학생이에요. / 저는 선생님이에요. / 이것은 책이에요.</div>'
+   + '<div class="ak-line">학생이에요=이다 · 가요=Action · 맛있어요=Descriptive · 친구예요=이다</div></div>';
+  HTML += '<div class="ak-block"><h4>Unit 5</h4>'
+   + '<div class="ak-line">학생이 책을 읽어요. / 친구가 영화를 봐요. / 선생님이 좋아요.</div>'
+   + '<div class="ak-line">Scramble answer: 친구가 영화를 봐요.</div></div>';
+  HTML += '<div class="ak-block"><h4>Unit 6</h4>'
+   + '<div class="ak-line">저는 학생이에요. 학교가 커요. 선생님이 좋아요.</div>'
+   + '<div class="ak-line">저는 / 이름은 / 날씨는</div>'
+   + '<div class="ak-line">Topic: 친구 (chingu — friend)</div></div>';
+  HTML += '<div class="ak-block"><h4>Unit 7</h4>'
+   + '<div class="ak-line">저는 오늘 뭐 해요? 친구를 만나요.</div>'
+   + '<div class="ak-line">Omitted: subject (저는) and object (커피를)</div></div>';
+  HTML += '<div class="ak-block"><h4>Unit 8</h4>'
+   + '<div class="ak-line">친구가 좋아요? / 친구가 안 좋아요. &nbsp;·&nbsp; 학생이 책을 읽어요? / 학생이 책을 안 읽어요. &nbsp;·&nbsp; 저는 학생이에요? / 저는 학생이 아니에요.</div>'
+   + '<div class="ak-line">저는 학생이 아니에요. (not 안 학생이에요)</div></div>';
+  HTML += '<div class="ak-block"><h4>Review B</h4>'
+   + '<div class="ak-line">책이에요 · 영화예요 · 집이에요</div>'
+   + '<div class="ak-line">저는 · 학생이 · 책을</div>'
+   + '<div class="ak-line">친구가 영화를 봐요? / 친구가 영화를 안 봐요. &nbsp;·&nbsp; 저는 선생님이에요? / 저는 선생님이 아니에요.</div></div>';
+  HTML += '<div class="ak-block"><h4>Mock Final</h4>'
+   + '<div class="ak-line">와요=Action · 작아요=Descriptive · 선생님이에요=이다 · 마셔요=Action</div>'
+   + '<div class="ak-line">저는 · 학생이 · 영화를</div>'
+   + '<div class="ak-line">저는 학생이에요. / 커피가 좋아요. / 저는 물을 마셔요.</div>'
+   + '<div class="ak-line">저는 물을 마셔요? / 저는 물을 안 마셔요. &nbsp;·&nbsp; 친구가 예뻐요? / 친구가 안 예뻐요.</div>'
+   + '<div class="ak-line">학생이 밥을 먹어요.</div></div>';
+  HTML += pageClose();
+})();
+
+document.getElementById('book').innerHTML = HTML;
+document.getElementById('pageCount').textContent = pageNum + ' pages generated';
+</script>
+</body>
+</html>

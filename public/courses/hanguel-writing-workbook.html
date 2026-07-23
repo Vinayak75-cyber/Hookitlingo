@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한글 손글씨 — The Hangeul Writing Workbook</title>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLEMFRK6XH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WLEMFRK6XH');
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+/* ============================================================
+   TOKENS — rice-paper / ink-stone / seal-stamp palette
+   ============================================================ */
+:root{
+  --paper:#f6f1e2;
+  --paper2:#efe6cf;
+  --paper3:#e7dabd;
+  --ink:#241f19;
+  --ink-soft:#6d6047;
+  --ink-faint:#a99a78;
+  --guide:#cdbe95;
+  --seal:#a8342a;
+  --seal-dim:#e9d3ce;
+  --indigo:#333e5c;
+  --indigo-dim:#dfe2ec;
+  --celadon:#4b7a63;
+  --celadon-dim:#dde9e0;
+  --serif-kr:"Noto Serif KR", serif;
+  --serif-en:"Source Serif 4", Georgia, serif;
+  --mono:"IBM Plex Mono", monospace;
+}
+*{box-sizing:border-box;}
+html{background:#4a4436;}
+body{
+  margin:0; font-family:var(--serif-en); color:var(--ink); background:#4a4436;
+  -webkit-font-smoothing:antialiased;
+}
+.kr{font-family:var(--serif-kr);}
+
+/* ============================================================
+   SCREEN TOOLBAR (hidden on print)
+   ============================================================ */
+#toolbar{
+  position:sticky; top:0; z-index:100; display:flex; align-items:center; gap:14px;
+  padding:12px 22px; background:var(--ink); color:var(--paper); font-family:var(--serif-en);
+  box-shadow:0 4px 16px rgba(0,0,0,.35);
+}
+#toolbar strong{font-family:var(--serif-kr); font-size:1.05em; letter-spacing:.02em;}
+#toolbar .spacer{flex:1;}
+#toolbar button{
+  font-family:var(--serif-en); font-size:.85em; background:var(--seal); color:#fdf6ee; border:none;
+  padding:8px 16px; border-radius:3px; cursor:pointer; letter-spacing:.02em;
+}
+#toolbar button.secondary{background:transparent; border:1px solid #786c50; color:var(--paper);}
+#toolbar button:hover{filter:brightness(1.08);}
+#toolbar .hint{font-size:.75em; color:#b7ac8f;}
+
+/* ============================================================
+   PAGE SHELL
+   ============================================================ */
+#book{max-width:920px; margin:34px auto 90px; padding:0 16px;}
+.page{
+  background:var(--paper);
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(168,52,42,0.035), transparent 40%),
+    repeating-linear-gradient(0deg, rgba(36,31,25,0.015) 0px, rgba(36,31,25,0.015) 1px, transparent 1px, transparent 2px);
+  width:100%; aspect-ratio:210/297; min-height:1050px;
+  padding:52px 56px 40px; margin:0 auto 28px; position:relative;
+  box-shadow:0 18px 40px rgba(0,0,0,.45), 0 2px 0 rgba(0,0,0,.15);
+  border:1px solid #d8c9a3;
+  display:flex; flex-direction:column;
+}
+.page::before{ /* deckle-edge vignette */
+  content:''; position:absolute; inset:0; pointer-events:none;
+  box-shadow: inset 0 0 60px rgba(90,74,40,.10);
+}
+
+/* seal stamp — the signature element */
+.seal{
+  position:absolute; top:44px; right:52px; width:64px; height:64px; border-radius:50%;
+  border:2.5px solid var(--seal); color:var(--seal); font-family:var(--serif-kr); font-weight:700;
+  display:flex; align-items:center; justify-content:center; text-align:center; line-height:1.05;
+  transform:rotate(-8deg); font-size:.72em; opacity:.88; letter-spacing:.02em;
+  background:radial-gradient(circle at 35% 30%, rgba(168,52,42,.06), transparent 70%);
+}
+.seal small{display:block; font-family:var(--mono); font-size:.62em; font-weight:500; margin-top:1px; letter-spacing:0;}
+
+.pg-eyebrow{font-family:var(--mono); font-size:.68em; letter-spacing:.16em; text-transform:uppercase; color:var(--seal); margin-bottom:6px;}
+.pg-title{font-family:var(--serif-kr); font-weight:700; font-size:1.7em; margin:0 0 4px; padding-right:80px;}
+.pg-sub{color:var(--ink-soft); font-size:.92em; margin:0 0 18px; max-width:640px;}
+.pg-body{flex:1;}
+.pg-footer{
+  margin-top:auto; padding-top:14px; border-top:1px solid var(--paper3); display:flex;
+  align-items:center; justify-content:space-between; font-family:var(--mono); font-size:.68em; color:var(--ink-faint);
+}
+.pg-footer .chk{display:flex; align-items:center; gap:6px;}
+.pg-footer .chk .box{width:11px; height:11px; border:1.3px solid var(--ink-faint); display:inline-block;}
+
+h4{font-family:var(--serif-kr); font-size:1.05em; margin:0 0 6px; font-weight:600;}
+p{margin:0 0 .8em; font-size:.94em; line-height:1.55;}
+
+/* ============================================================
+   TRACE / WRITE GRID
+   ============================================================ */
+.trace-row{display:flex; gap:10px; flex-wrap:wrap; margin:14px 0;}
+.trace-box{
+  width:64px; height:64px; border:1.4px solid var(--ink-faint); border-radius:4px;
+  background-image:
+    linear-gradient(var(--guide) .6px, transparent .6px),
+    linear-gradient(90deg, var(--guide) .6px, transparent .6px);
+  background-size:50% 50%; background-position:center; background-repeat:no-repeat;
+  display:flex; align-items:center; justify-content:center; position:relative; flex:none;
+}
+.trace-box.big{width:86px; height:86px;}
+.trace-box .g{font-family:var(--serif-kr); font-size:2.1em; color:var(--ink); opacity:.28;}
+.trace-box.big .g{font-size:2.6em;}
+.trace-box .num{position:absolute; bottom:2px; right:4px; font-family:var(--mono); font-size:.5em; color:var(--ink-faint);}
+
+.write-line-block{margin:10px 0 16px;}
+.write-line{
+  border-bottom:1px solid var(--ink-faint); height:30px; position:relative; margin-bottom:2px;
+}
+.write-line.dotted{border-bottom:1px dashed var(--guide);}
+.write-line .rule-mid{position:absolute; left:0; right:0; top:50%; border-top:.5px dotted var(--ink-faint);}
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+table.wk{width:100%; border-collapse:collapse; font-size:.86em; margin:10px 0;}
+table.wk th{
+  font-family:var(--mono); font-size:.72em; text-transform:uppercase; letter-spacing:.06em;
+  color:var(--ink-soft); text-align:left; padding:5px 8px; border-bottom:1.3px solid var(--ink);
+}
+table.wk td{padding:8px 8px; border-bottom:1px solid var(--paper3); vertical-align:top;}
+table.wk td.kr-cell{font-family:var(--serif-kr); font-size:1.15em;}
+table.wk td.blank{border-bottom:1px solid var(--ink-faint); min-width:90px;}
+
+.compare-strip{display:flex; gap:14px; margin:10px 0 18px;}
+.compare-card{flex:1; border:1px solid var(--paper3); border-radius:6px; padding:12px 14px; background:rgba(255,255,255,.35);}
+.compare-card .ch{font-family:var(--serif-kr); font-size:2.2em; line-height:1;}
+.compare-card .rom{font-family:var(--mono); font-size:.75em; color:var(--seal); margin:2px 0 6px;}
+.compare-card p{font-size:.78em; margin:0 0 4px; color:var(--ink-soft);}
+
+.callout{border-left:3px solid var(--celadon); background:var(--celadon-dim); padding:10px 14px; border-radius:0 6px 6px 0; font-size:.86em; margin:12px 0;}
+.callout.stamp{border-color:var(--seal); background:var(--seal-dim);}
+.callout b{font-family:var(--serif-kr);}
+
+.two-col{display:flex; gap:28px;}
+.two-col > div{flex:1;}
+
+.mini-label{font-family:var(--mono); font-size:.68em; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft); margin:16px 0 6px;}
+
+ol.steps{padding-left:1.1em; font-size:.9em;}
+ol.steps li{margin-bottom:6px;}
+
+/* TOC */
+.toc-group{margin-bottom:14px;}
+.toc-group h4{color:var(--seal); border-bottom:1px solid var(--paper3); padding-bottom:4px;}
+.toc-row{display:flex; justify-content:space-between; font-size:.85em; padding:3px 0; border-bottom:1px dotted var(--paper3);}
+.toc-row .n{color:var(--ink-faint); font-family:var(--mono); font-size:.85em;}
+
+/* cover */
+.cover-page{align-items:center; text-align:center; justify-content:center;}
+.cover-page .brandmark{
+  width:120px; height:120px; border-radius:50%; margin:0 auto 26px;
+  background:radial-gradient(circle at 32% 26%, #c14a3b, var(--seal) 74%);
+  display:flex; align-items:center; justify-content:center; font-family:var(--serif-kr);
+  font-weight:900; font-size:3em; color:#fdf1e8; box-shadow:0 10px 30px rgba(168,52,42,.35);
+  transform:rotate(-4deg);
+}
+.cover-page h1{font-family:var(--serif-kr); font-size:2.5em; margin:0 0 6px; font-weight:900;}
+.cover-page .eng{font-family:var(--serif-en); font-style:italic; color:var(--ink-soft); font-size:1.15em; margin-bottom:30px;}
+.cover-page .meta-line{font-family:var(--mono); font-size:.78em; color:var(--ink-faint); letter-spacing:.06em;}
+.cover-page .fillline{display:inline-block; min-width:220px; border-bottom:1px solid var(--ink); margin:0 6px;}
+
+/* log table */
+table.logtable{width:100%; border-collapse:collapse; font-size:.82em;}
+table.logtable th{font-family:var(--mono); font-size:.68em; text-transform:uppercase; color:var(--ink-soft); border-bottom:1.3px solid var(--ink); padding:6px;}
+table.logtable td{border-bottom:1px solid var(--paper3); padding:9px 6px; height:26px;}
+
+/* certificate */
+.cert-page{align-items:center; text-align:center; justify-content:center; border:6px double var(--seal); padding:70px 56px;}
+.cert-page h1{font-family:var(--serif-kr); font-size:2.1em; margin-bottom:2px;}
+.cert-page .sub{font-family:var(--mono); letter-spacing:.16em; text-transform:uppercase; font-size:.7em; color:var(--ink-soft); margin-bottom:30px;}
+.cert-page .name-line{border-bottom:1.4px solid var(--ink); display:inline-block; min-width:340px; margin:18px 0 34px; font-family:var(--serif-kr); font-size:1.3em; padding-bottom:6px;}
+
+/* print */
+@media print{
+  html,body{background:#fff;}
+  #toolbar{display:none;}
+  #book{max-width:none; margin:0; padding:0;}
+  .page{
+    box-shadow:none; border:none; margin:0; width:210mm; min-height:297mm; aspect-ratio:auto;
+    page-break-after:always; padding:16mm 18mm 14mm;
+  }
+  .page:last-child{page-break-after:auto;}
+}
+@page{ size:A4; margin:0; }
+@media screen and (max-width:760px){
+  .page{padding:34px 26px 26px;}
+  .compare-strip{flex-wrap:wrap;}
+  .two-col{flex-direction:column;}
+}
+
+/* ============================================================
+   PAYWALL — free preview / locked pages
+   ============================================================ */
+.page-locked{
+  filter: blur(7px) saturate(.7);
+  pointer-events:none;
+  user-select:none;
+  position:relative;
+}
+.page-locked::after{
+  content:'🔒';
+  position:absolute; top:18px; right:18px;
+  font-size:1.4em; filter:none; opacity:.9;
+}
+.paywall-page{
+  align-items:center; text-align:center; justify-content:center;
+  border:2px dashed var(--seal); background:var(--paper2);
+}
+.paywall-page .lock-badge{
+  width:56px; height:56px; border-radius:50%; background:var(--seal-dim); color:var(--seal);
+  display:flex; align-items:center; justify-content:center; font-size:1.6em; margin:0 auto 18px;
+}
+.paywall-page h2{font-family:var(--serif-kr); font-size:1.6em; margin:0 0 4px;}
+.paywall-page .paywall-kicker{font-family:var(--mono); font-size:.68em; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:16px;}
+.paywall-page p{max-width:440px; margin:0 auto .9em;}
+.paywall-page .price{font-family:var(--serif-en); font-weight:700; font-size:2em; color:var(--seal); margin:10px 0 16px;}
+.paywall-page .price small{font-size:.4em; color:var(--ink-soft); font-weight:400;}
+
+.wk-btn{
+  font-family:var(--serif-en); font-size:.92em; font-weight:600; background:var(--seal); color:#fdf6ee;
+  border:none; padding:12px 26px; border-radius:999px; cursor:pointer; letter-spacing:.02em;
+}
+.wk-btn:hover{filter:brightness(1.08);}
+.wk-btn.secondary{background:transparent; border:1px solid var(--seal); color:var(--seal);}
+.wk-secure-note{margin-top:14px; font-size:.72em; color:var(--ink-faint);}
+.wk-spinner{
+  width:26px; height:26px; border-radius:50%; margin:6px auto;
+  border:3px solid var(--paper3); border-top-color:var(--seal);
+  animation:wkspin .8s linear infinite;
+}
+@keyframes wkspin{to{transform:rotate(360deg);}}
+
+.paywall-bar{
+  position:fixed; left:0; right:0; bottom:0; z-index:90;
+  background:var(--ink); color:var(--paper); display:flex; align-items:center; gap:14px;
+  padding:12px 22px; box-shadow:0 -6px 20px rgba(0,0,0,.35); font-family:var(--serif-en);
+}
+.paywall-bar span{font-size:.88em;}
+.paywall-bar .spacer{flex:1;}
+.paywall-bar .wk-btn{padding:9px 20px; font-size:.85em;}
+
+#pdfInstructions{max-width:920px; margin:0 auto; padding:0 16px;}
+.instructions-card{
+  background:var(--paper); border:1px solid #d8c9a3; border-radius:8px; padding:18px 22px; margin:16px auto 0;
+  color:var(--ink); font-family:var(--serif-en); font-size:.9em; position:relative;
+}
+.instructions-card h4{font-family:var(--serif-kr); margin:0 0 10px;}
+.instructions-card ol{margin:0; padding-left:1.2em;}
+.instructions-card li{margin-bottom:7px;}
+.instructions-card .close-instr{position:absolute; top:12px; right:14px; background:none; border:none; color:var(--ink-faint); cursor:pointer; font-size:1.1em;}
+
+@media print{
+  .paywall-bar, .paywall-page, #pdfInstructions{display:none !important;}
+  .page-locked{display:none !important;}
+}
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <strong>한글 손글씨 — Hangeul Writing Workbook</strong>
+  <span class="hint">A daily paper companion to the Hookitlingo course</span>
+  <div class="spacer"></div>
+  <span class="hint" id="pageCount"></span>
+  <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
+  <button class="secondary" id="pdfHelpBtn">❔ Save as PDF</button>
+  <button id="printBtn" onclick="window.print()">Print / Save as PDF</button>
+  <button id="unlockToolbarBtn" style="display:none">🔒 Unlock — ₹99</button>
+</div>
+
+<div id="pdfInstructions" style="display:none">
+  <div class="instructions-card">
+    <button class="close-instr" id="closeInstrBtn" aria-label="Close">✕</button>
+    <h4>Saving your workbook as a PDF</h4>
+    <ol>
+      <li>Once the pages you want are unlocked, click <strong>Print / Save as PDF</strong> in the toolbar above.</li>
+      <li>In the print dialog, set <strong>Destination</strong> to "Save as PDF" (Chrome, Edge, Firefox) or "Microsoft Print to PDF" (Windows) — on a Mac, use the <strong>PDF</strong> dropdown in the bottom-left of the print preview.</li>
+      <li>Set <strong>Paper size</strong> to A4 and <strong>Margins</strong> to "None" or "Default."</li>
+      <li>Turn on <strong>Background graphics</strong> (often under "More settings") so the seal stamps and shaded trace boxes print correctly.</li>
+      <li>Click <strong>Save</strong>, choose where to keep the file — from there you can print physical copies from that PDF anytime.</li>
+    </ol>
+  </div>
+</div>
+
+<div id="book"></div>
+
+<script>
+/* ============================================================
+   0. DATA — same source facts as the Hookitlingo course
+   ============================================================ */
+const SIMPLE_VOWELS = [
+ {ch:"ㅣ", rom:"i", sound:'like "ee" in "see"', mouth:"Lips relaxed and wide, tongue high and forward", memory:"A single upright human — the vertical stroke of 천지인.", ex:[["이","this / tooth"]]},
+ {ch:"ㅡ", rom:"eu", sound:'like "oo" in "book" but unrounded — smile while saying it', mouth:"Lips flat and wide, do not round them", memory:"A single flat line — the earth stroke.", ex:[["그","that (thing)"]]},
+ {ch:"ㅏ", rom:"a", sound:'like "a" in "father"', mouth:"Open your jaw wide and relaxed", memory:"Human line with the sun rising on the right.", ex:[["아이","child"],["가다","to go"]]},
+ {ch:"ㅓ", rom:"eo", sound:'like "u" in "cup", open throat', mouth:"Jaw drops, tongue pulled slightly back", memory:"Human line with the sun on the left — mirror of ㅏ.", ex:[["어머니","mother"]]},
+ {ch:"ㅗ", rom:"o", sound:'like "o" in "go"', mouth:"Round your lips forward into a small circle", memory:"Earth line with the sun rising above it.", ex:[["오다","to come"]]},
+ {ch:"ㅜ", rom:"u", sound:'like "oo" in "moon"', mouth:"Push your lips further forward than ㅗ", memory:"Earth line with the sun setting below it.", ex:[["우유","milk"]]},
+];
+const Y_VOWELS = [
+ {ch:"ㅑ", rom:"ya", sound:'"ya" as in "yard"', mouth:"Same as ㅏ, glide into it with a y-sound", memory:"ㅏ plus one extra stroke = Y glide.", ex:[["야구","baseball"]]},
+ {ch:"ㅕ", rom:"yeo", sound:'"yuh" — y + eo', mouth:"Same as ㅓ with a y-glide", memory:"ㅓ plus one extra stroke.", ex:[["여자","woman"]]},
+ {ch:"ㅛ", rom:"yo", sound:'"yo" as in "yo-yo"', mouth:"Same as ㅗ with a y-glide", memory:"ㅗ plus one extra stroke.", ex:[["교실","classroom"]]},
+ {ch:"ㅠ", rom:"yu", sound:'"you"', mouth:"Same as ㅜ with a y-glide", memory:"ㅜ plus one extra stroke.", ex:[["우유","milk"]]},
+];
+const COMPOUND_PAIRS = [
+ [{ch:"ㅐ", rom:"ae", sound:'like "a" in "cat"', ex:"개 — dog"}, {ch:"ㅔ", rom:"e", sound:'like "e" in "bed"', ex:"네 — yes"}, "In casual modern speech these two sound almost identical — most young Koreans no longer distinguish them by ear, only by spelling."],
+ [{ch:"ㅒ", rom:"yae", sound:"y + ae", ex:"얘기 — story/talk"}, {ch:"ㅖ", rom:"ye", sound:"y + e", ex:"예 — yes (formal)"}, "ㅒ is rare — you'll meet it almost only in 얘 (this child) and its family of words."],
+ [{ch:"ㅘ", rom:"wa", sound:'"wa" as in "wand"', ex:"과일 — fruit"}, {ch:"ㅝ", rom:"wo", sound:'"wo" as in "won"', ex:"원 — won (currency)"}, "Both are quick glides: ㅗ+ㅏ and ㅜ+ㅓ blended into one syllable beat."],
+ [{ch:"ㅙ", rom:"wae", sound:'"we"', ex:"왜 — why"}, {ch:"ㅚ", rom:"oe", sound:'"we"', ex:"외국 — foreign country"}, "ㅙ, ㅚ, and ㅞ are three different spellings for one identical modern sound — memorize the spelling per word."],
+ [{ch:"ㅞ", rom:"we", sound:'"we"', ex:"웨이터 — waiter"}, {ch:"ㅟ", rom:"wi", sound:'"wee"', ex:"귀 — ear"}, "ㅢ (below) is the odd one out — hold the "+"\u201eeu\u201d"+" a beat before sliding into "+"\u201ei.\u201d"],
+];
+const UI_SOLO = {ch:"ㅢ", rom:"ui", sound:'"eu" gliding into "i"', ex:"의사 — doctor"};
+
+const CONSONANT_FAMILIES = [
+ {name:"ㄱ family — giyeok", note:"Back of tongue touches the soft palate.", items:[
+   {ch:"ㄱ", rom:"g/k", role:"base", desc:"Between English G and K.", ex:"가다 — to go"},
+   {ch:"ㅋ", rom:"k", role:"aspirated (+air)", desc:"Same tongue spot, extra puff of breath.", ex:"커피 — coffee"},
+   {ch:"ㄲ", rom:"kk", role:"tense (no air)", desc:"Written twice = clipped, higher-pitched.", ex:"까치 — magpie"}]},
+ {name:"ㄷ family — digeut", note:"Tongue touches the ridge behind the teeth.", items:[
+   {ch:"ㄷ", rom:"d/t", role:"base", desc:"Between English D and T.", ex:"다리 — leg/bridge"},
+   {ch:"ㅌ", rom:"t", role:"aspirated (+air)", desc:"Same spot, extra breath.", ex:"토끼 — rabbit"},
+   {ch:"ㄸ", rom:"tt", role:"tense (no air)", desc:"Written twice = clipped, higher-pitched.", ex:"딸 — daughter"}]},
+ {name:"ㅂ family — bieup", note:"Lips press shut, then release.", items:[
+   {ch:"ㅂ", rom:"b/p", role:"base", desc:"Between English B and P.", ex:"바다 — sea"},
+   {ch:"ㅍ", rom:"p", role:"aspirated (+air)", desc:"Same lip seal, extra breath.", ex:"피아노 — piano"},
+   {ch:"ㅃ", rom:"pp", role:"tense (no air)", desc:"Written twice = clipped, higher-pitched.", ex:"빵 — bread"}]},
+ {name:"ㅅ family — siot", note:"Tongue tip near the ridge, air hisses through.", items:[
+   {ch:"ㅅ", rom:"s", role:"base", desc:"A soft \u201cs\u201d, softer than English.", ex:"사람 — person"},
+   {ch:"ㅆ", rom:"ss", role:"tense", desc:"Written twice = tense, emphasized.", ex:"싸다 — to be cheap"}]},
+ {name:"ㅈ family — jieut", note:"Tongue blade presses the ridge, light friction on release.", items:[
+   {ch:"ㅈ", rom:"j", role:"base", desc:"Between English J and CH.", ex:"자다 — to sleep"},
+   {ch:"ㅊ", rom:"ch", role:"aspirated (+air)", desc:"Same spot, extra breath.", ex:"차 — tea / car"},
+   {ch:"ㅉ", rom:"jj", role:"tense (no air)", desc:"Written twice = clipped, higher-pitched.", ex:"짜다 — to be salty"}]},
+ {name:"Sonorants — ㄴ ㄹ ㅁ", note:"These three have no aspirated or tense partner — they stand alone.", items:[
+   {ch:"ㄴ", rom:"n", role:"nasal", desc:"Tongue tip touches behind the upper teeth.", ex:"나 — I / me"},
+   {ch:"ㄹ", rom:"r/l", role:"flap", desc:"Tongue tip taps once — between English R and L.", ex:"우리 — we/us"},
+   {ch:"ㅁ", rom:"m", role:"nasal", desc:"Lips sealed, hum through the nose.", ex:"엄마 — mom"}]},
+ {name:"ㅇ / ㅎ family", note:"ㅇ is a placeholder at the start of a syllable, a full \u201cng\u201d at the end.", items:[
+   {ch:"ㅇ", rom:"(silent) / ng", role:"placeholder / nasal", desc:"Silent at the start; \u201cng\u201d (as in sing) at the end.", ex:"사랑 — love"},
+   {ch:"ㅎ", rom:"h", role:"base", desc:"Open airflow from the throat, like exhaling.", ex:"한국 — Korea"}]},
+];
+
+const GREETINGS = [
+ {kr:"안녕하세요",rom:"annyeonghaseyo",mean:"Hello (standard polite)",ex:"선생님, 안녕하세요! — Hello, teacher!"},
+ {kr:"안녕히 가세요",rom:"annyeonghi gaseyo",mean:"Goodbye (to someone leaving)",ex:"내일 봐요, 안녕히 가세요. — See you tomorrow, goodbye."},
+ {kr:"안녕히 계세요",rom:"annyeonghi gyeseyo",mean:"Goodbye (said by the one leaving)",ex:"저 먼저 갈게요, 안녕히 계세요. — I'll go first, goodbye."},
+ {kr:"감사합니다",rom:"gamsahamnida",mean:"Thank you (formal)",ex:"도와주셔서 감사합니다. — Thank you for helping me."},
+ {kr:"고맙습니다",rom:"gomapseumnida",mean:"Thank you (warmer tone)",ex:"정말 고맙습니다. — Thank you so much."},
+ {kr:"죄송합니다",rom:"joesonghamnida",mean:"I am sorry (formal)",ex:"늦어서 죄송합니다. — Sorry for being late."},
+ {kr:"네",rom:"ne",mean:"Yes",ex:"네, 알겠습니다. — Yes, understood."},
+ {kr:"아니요",rom:"aniyo",mean:"No",ex:"아니요, 괜찮아요. — No, it's okay."},
+];
+const NUMBERS = [
+ {kr:"하나",rom:"hana",mean:"one (native)",ex:"사과 하나 주세요. — One apple, please."},
+ {kr:"둘",rom:"dul",mean:"two (native)",ex:"둘 다 좋아요. — I like both."},
+ {kr:"셋",rom:"set",mean:"three (native)",ex:"친구 셋이 왔어요. — Three friends came."},
+ {kr:"일",rom:"il",mean:"one (Sino-Korean)",ex:"일 층이에요. — It's the first floor."},
+ {kr:"이",rom:"i",mean:"two (Sino-Korean)",ex:"이번 주 — this week"},
+ {kr:"삼",rom:"sam",mean:"three (Sino-Korean)",ex:"삼 분만요. — Just three minutes."},
+];
+const FAMILY = [
+ {kr:"가족",rom:"gajok",mean:"family",ex:"우리 가족은 넷이에요. — My family has four people."},
+ {kr:"엄마",rom:"eomma",mean:"mom",ex:"엄마, 사랑해요. — Mom, I love you."},
+ {kr:"아빠",rom:"appa",mean:"dad",ex:"아빠는 회사에 있어요. — Dad is at the office."},
+ {kr:"형",rom:"hyeong",mean:"older brother (by a male)",ex:"우리 형은 의사예요. — My older brother is a doctor."},
+ {kr:"누나",rom:"nuna",mean:"older sister (by a male)",ex:"누나가 요리를 잘해요. — My older sister cooks well."},
+];
+const FOOD = [
+ {kr:"밥",rom:"bap",mean:"rice / a meal",ex:"밥 먹었어요? — Have you eaten?"},
+ {kr:"김치",rom:"gimchi",mean:"kimchi",ex:"김치는 맵지만 맛있어요. — Kimchi is spicy but delicious."},
+ {kr:"물",rom:"mul",mean:"water",ex:"물 좀 주세요. — Water, please."},
+ {kr:"커피",rom:"keopi",mean:"coffee (loanword)",ex:"커피 한 잔 주세요. — One coffee, please."},
+];
+const COLORS = [
+ {kr:"빨간색",rom:"ppalgansaek",mean:"red",ex:"빨간색 사과 — a red apple"},
+ {kr:"파란색",rom:"paransaek",mean:"blue",ex:"파란색 하늘 — a blue sky"},
+ {kr:"노란색",rom:"noransaek",mean:"yellow",ex:"노란색 우산 — a yellow umbrella"},
+ {kr:"검은색",rom:"geomeunsaek",mean:"black",ex:"검은색 가방 — a black bag"},
+];
+const ANIMALS = [
+ {kr:"개",rom:"gae",mean:"dog",ex:"개가 귀여워요. — The dog is cute."},
+ {kr:"고양이",rom:"goyangi",mean:"cat",ex:"고양이가 자고 있어요. — The cat is sleeping."},
+ {kr:"새",rom:"sae",mean:"bird",ex:"새가 날아가요. — The bird is flying away."},
+];
+const VOCAB_SECTIONS = [
+ {title:"Greetings & Politeness", n:"어휘 1", data:GREETINGS, activity:"Write each expression on your own doorstep — say it out loud to someone today, then check the box."},
+ {title:"Numbers", n:"어휘 2", data:NUMBERS, activity:"Fill the counting strip below using the native numbers, 1 through 5: 하나 · ___ · ___ · 넷 · 다섯."},
+ {title:"Family", n:"어휘 3", data:FAMILY, activity:"Sketch a small family tree in the box below and label each person in Korean."},
+ {title:"Food", n:"어휘 4", data:FOOD, activity:"Write a one-line \u201cshopping list\u201d in Korean using three food words from this page."},
+ {title:"Colors", n:"어휘 5", data:COLORS, activity:"Color the four boxes below in the correct colors, then label each one in Korean."},
+ {title:"Animals", n:"어휘 6", data:ANIMALS, activity:"Draw a simple outline of each animal next to its Korean name."},
+];
+
+const BATCHIM_ROWS = [
+ {syl:"책", batchim:"ㄱ", family:"ㄱ ㅋ ㄲ", mean:"book", note:"Back of the tongue blocks air completely — no release."},
+ {syl:"산", batchim:"ㄴ", family:"ㄴ", mean:"mountain", note:"Tongue tip touches behind the teeth, air hums through the nose."},
+ {syl:"옷", batchim:"ㅅ", family:"ㄷ ㅅ ㅆ ㅈ ㅊ ㅌ ㅎ", mean:"clothes", note:"All seven of these letters collapse to one clipped \u201ct\u201d sound in final position."},
+ {syl:"물", batchim:"ㄹ", family:"ㄹ", mean:"water", note:"Tongue tip curls up toward the roof of the mouth."},
+ {syl:"밥", batchim:"ㅂ", family:"ㅂ ㅍ", mean:"rice / meal", note:"Lips close fully and stay closed — no release of air."},
+ {syl:"공", batchim:"ㅇ", family:"ㅇ", mean:"ball", note:"A nasal \u201cng\u201d, exactly like the end of the English word \u201csong.\u201d"},
+];
+
+const READING_WORDS = ["가","나","다","라","마","바","사","아","자","차","카","타","파","하","고","노","도","로","모","보"];
+const READING_SENTENCES = [
+ ["저는 학생이에요.","I am a student."],
+ ["고양이가 자요.","The cat sleeps."],
+ ["밥을 먹어요.","I eat rice."],
+ ["오늘 날씨가 좋아요.","Today the weather is nice."],
+];
+
+/* ============================================================
+   1. SMALL BUILDERS
+   ============================================================ */
+let pageNum = 0;
+function seal(label, small){
+  return '<div class="seal">'+label+(small?'<small>'+small+'</small>':'')+'</div>';
+}
+function pageOpen(eyebrow, title, sub, sealLabel, sealSmall, extraClass){
+  pageNum++;
+  return '<section class="page'+(extraClass?(' '+extraClass):'')+'">'
+    + (sealLabel!==false ? seal(sealLabel||'漢','한글') : '')
+    + '<div class="pg-eyebrow">'+eyebrow+'</div>'
+    + '<h1 class="pg-title">'+title+'</h1>'
+    + (sub? '<p class="pg-sub">'+sub+'</p>' : '')
+    + '<div class="pg-body">';
+}
+function pageClose(footNote){
+  return '</div><div class="pg-footer"><span class="chk"><span class="box"></span> practiced today</span>'
+    + '<span>'+(footNote||'한글 손글씨 워크북')+'</span>'
+    + '<span>p.'+pageNum+'</span></div></section>';
+}
+function traceRow(ch, count, big){
+  let out = '<div class="trace-row">';
+  for(let i=0;i<count;i++){
+    out += '<div class="trace-box'+(big?' big':'')+'"><span class="g">'+(i<3?ch:'')+'</span><span class="num">'+(i+1)+'</span></div>';
+  }
+  out += '</div>';
+  return out;
+}
+function writeLines(n, dotted){
+  let out = '<div class="write-line-block">';
+  for(let i=0;i<n;i++) out += '<div class="write-line'+(dotted?' dotted':'')+'"></div>';
+  out += '</div>';
+  return out;
+}
+function exList(ex){
+  return ex.map(function(e){ return '<span class="kr">'+e[0]+'</span> — '+e[1]; }).join(' &nbsp;·&nbsp; ');
+}
+
+/* ============================================================
+   2. PAGE GENERATORS
+   ============================================================ */
+let HTML = '';
+
+/* --- Cover --- */
+HTML += '<section class="page cover-page">'
+ + '<div class="brandmark">한</div>'
+ + '<div class="pg-eyebrow" style="text-align:center">Hookitlingo — Companion Volume</div>'
+ + '<h1>한글 손글씨</h1>'
+ + '<div class="eng">The Hangeul Writing Workbook</div>'
+ + '<p style="max-width:440px;margin:0 auto 26px;color:var(--ink-soft)">Ten minutes a day, pencil in hand. This book walks beside the Hookitlingo course, page for page — every sound you learn on screen gets fixed into memory here, by hand.</p>'
+ + '<div class="meta-line">NAME <span class="fillline"></span></div>'
+ + '<div class="meta-line" style="margin-top:10px">START DATE <span class="fillline" style="min-width:120px"></span></div>'
+ + '</section>';
+
+/* --- How to use + study ritual --- */
+HTML += pageOpen('Before You Begin','How to Use This Workbook','A short read — then straight to the pencil.', '使用法','안내');
+HTML += '<div class="two-col">'
+ + '<div><h4>The daily ritual</h4><ol class="steps">'
+ + '<li>Open the matching chapter in the Hookitlingo app first, and listen to the sound.</li>'
+ + '<li>Trace the faded characters on this page three times, saying the sound aloud each time.</li>'
+ + '<li>Fill the empty boxes without looking at the model.</li>'
+ + '<li>Check the box in the footer once you\'ve done all three.</li>'
+ + '</ol></div>'
+ + '<div><h4>Why writing matters</h4><p>Reading Hangeul on a screen teaches recognition. Writing it teaches production — the muscle memory that lets you recall a shape instantly, mid-sentence, years later. Ten focused minutes on paper does more than an hour of passive scrolling.</p>'
+ + '<div class="callout stamp"><b>A teacher\'s note —</b> Don\'t erase mistakes. Cross through gently and write it again beside it. Seeing your own correction is part of how it sticks.</div></div>'
+ + '</div>';
+HTML += pageClose();
+
+/* --- Study log --- */
+HTML += pageOpen('Before You Begin','My Study Log','Fill in one row after every session — the streak itself is the lesson.', '記錄','기록');
+HTML += '<table class="logtable"><tr><th>Date</th><th>Unit / Page</th><th>Minutes</th><th>Confidence (1–5)</th><th>Note to self</th></tr>';
+for(let i=0;i<18;i++) HTML += '<tr><td></td><td></td><td></td><td></td><td></td></tr>';
+HTML += '</table>';
+HTML += pageClose();
+
+/* --- TOC --- */
+(function(){
+  const toc = [
+    {group:'Part 1 · The Building Blocks', rows:['Basic Vowels (6)','Y-Vowels (4)','Review — Vowels I','Compound Vowels (11)']},
+    {group:'Part 2 · Consonants', rows:['ㄱ · ㄷ · ㅂ families','ㅅ · ㅈ families','Sonorants & ㅇ/ㅎ','Review — Consonants']},
+    {group:'Part 3 · Reading & Writing', rows:['Building Syllable Blocks','Batchim (Final Consonants)','Sound Change Rules','Reading Practice']},
+    {group:'Part 4 · Vocabulary', rows:['Greetings','Numbers','Family','Food','Colors','Animals','Review — Vocabulary','Grammar Patterns']},
+    {group:'Part 5 · Practice & Finish', rows:['Matching & Recall Drill','Final Written Assessment','Certificate']},
+  ];
+  HTML += pageOpen('Contents','목차 · Table of Contents', '', '目次','차례');
+  HTML += '<div style="columns:2; column-gap:34px;">';
+  toc.forEach(function(g){
+    HTML += '<div class="toc-group">'+ '<h4>'+g.group+'</h4>';
+    g.rows.forEach(function(r,i){ HTML += '<div class="toc-row"><span>'+r+'</span><span class="n">□</span></div>'; });
+    HTML += '</div>';
+  });
+  HTML += '</div>';
+  HTML += pageClose();
+})();
+
+/* --- Vowel pages (simple + y), one per page --- */
+function vowelPage(v, groupLabel, idx, total){
+  let out = pageOpen('Part 1 · The Building Blocks', 'Vowel — <span class="kr">'+v.ch+'</span> <span style="font-family:var(--mono);font-size:.55em;color:var(--ink-soft)">'+v.rom+'</span>', groupLabel+' &nbsp;·&nbsp; letter '+idx+' of '+total, v.ch);
+  out += '<div class="mini-label">Sound</div><p>'+v.sound+(v.mouth?' &nbsp;—&nbsp; '+v.mouth+'.':'')+'</p>';
+  out += '<div class="mini-label">Memory hook</div><p>'+v.memory+'</p>';
+  out += '<div class="mini-label">Trace (say the sound aloud each time)</div>'+traceRow(v.ch,8,true);
+  out += '<div class="mini-label">Now write it from memory</div>'+traceRow('',8,true);
+  out += '<div class="mini-label">Words that use it</div><p class="kr" style="font-size:1.1em">'+exList(v.ex)+'</p>';
+  out += '<div class="mini-label">Copy each word twice</div>'+writeLines(3);
+  out += pageClose('vowel unit');
+  return out;
+}
+SIMPLE_VOWELS.forEach(function(v,i){ HTML += vowelPage(v,'Basic Vowels',i+1,6); });
+Y_VOWELS.forEach(function(v,i){ HTML += vowelPage(v,'Y-Vowels',i+1,4); });
+
+/* --- Review: Vowels I --- */
+(function(){
+  const pool = SIMPLE_VOWELS.concat(Y_VOWELS);
+  HTML += pageOpen('Spaced Review','Review — Vowels So Far','No labels this time. Say each sound, then write it, before checking yourself against the course app.', false);
+  HTML += '<div class="trace-row">' + pool.map(function(v){ return '<div class="trace-box big"><span class="g" style="opacity:.12">'+v.ch+'</span></div>'; }).join('') + '</div>';
+  HTML += '<div class="mini-label">Write the romanization under each blank box above, from memory, before flipping back.</div>';
+  HTML += '<div class="mini-label" style="margin-top:22px">Dictation — listen in the app, then write what you hear</div>' + writeLines(5,true);
+  HTML += pageClose('review');
+})();
+
+/* --- Compound vowel pairs --- */
+COMPOUND_PAIRS.forEach(function(pair, i){
+  const [a,b,note] = pair;
+  let out = pageOpen('Part 1 · The Building Blocks', 'Compound Vowels — <span class="kr">'+a.ch+'</span> & <span class="kr">'+b.ch+'</span>', 'Pair '+(i+1)+' of '+(COMPOUND_PAIRS.length+1), a.ch);
+  out += '<div class="compare-strip">';
+  [a,b].forEach(function(v){
+    out += '<div class="compare-card"><div class="ch">'+v.ch+'</div><div class="rom">'+v.rom+'</div><p>'+v.sound+'</p><p class="kr" style="font-size:1em;color:var(--ink)">'+v.ex+'</p></div>';
+  });
+  out += '</div>';
+  out += '<div class="callout">'+note+'</div>';
+  out += '<div class="mini-label">Trace each shape</div>' + traceRow(a.ch,4,true).replace('trace-row','trace-row').concat(traceRow(b.ch,4,true));
+  out += '<div class="mini-label">Write both from memory, alternating</div>' + traceRow('',10,true);
+  out += pageClose('vowel unit');
+  HTML += out;
+});
+(function(){
+  let out = pageOpen('Part 1 · The Building Blocks', 'Compound Vowel — <span class="kr">'+UI_SOLO.ch+'</span>', 'The odd one out — pair '+(COMPOUND_PAIRS.length+1)+' of '+(COMPOUND_PAIRS.length+1), UI_SOLO.ch);
+  out += '<p>'+UI_SOLO.sound+'. Hold the first half a beat longer than the second: <span class="kr">'+UI_SOLO.ex+'</span>.</p>';
+  out += '<div class="mini-label">Trace</div>'+traceRow(UI_SOLO.ch,8,true);
+  out += '<div class="mini-label">Write from memory</div>'+traceRow('',8,true);
+  out += '<div class="mini-label">Copy the word twice</div>'+writeLines(3);
+  out += pageClose('vowel unit');
+  HTML += out;
+})();
+
+/* --- Consonant family pages --- */
+CONSONANT_FAMILIES.forEach(function(fam, i){
+  let out = pageOpen('Part 2 · Consonants', fam.name, fam.note+' &nbsp;·&nbsp; family '+(i+1)+' of '+CONSONANT_FAMILIES.length, fam.items[0].ch);
+  out += '<div class="compare-strip">';
+  fam.items.forEach(function(c){
+    out += '<div class="compare-card"><div class="ch">'+c.ch+'</div><div class="rom">'+c.rom+' &nbsp;·&nbsp; '+c.role+'</div><p>'+c.desc+'</p><p class="kr" style="font-size:1em;color:var(--ink)">'+c.ex+'</p></div>';
+  });
+  out += '</div>';
+  out += '<div class="mini-label">Trace each letter, left to right, three times</div>';
+  fam.items.forEach(function(c){ out += traceRow(c.ch,6,false); });
+  out += '<div class="mini-label">Minimal-pair listening &amp; writing — write the letter you hear</div>' + writeLines(2,true);
+  out += pageClose('consonant unit');
+  HTML += out;
+});
+
+/* --- Review: Consonants --- */
+(function(){
+  const all = [];
+  CONSONANT_FAMILIES.forEach(function(f){ f.items.forEach(function(c){ all.push(c.ch); }); });
+  HTML += pageOpen('Spaced Review','Review — All 19 Consonants','Write the romanization and one example word from memory for each.', false);
+  HTML += '<div class="trace-row">' + all.map(function(ch){ return '<div class="trace-box"><span class="g" style="opacity:1">'+ch+'</span></div>'; }).join('') + '</div>';
+  HTML += writeLines(6,true);
+  HTML += pageClose('review');
+})();
+
+/* --- Syllable block building --- */
+(function(){
+  HTML += pageOpen('Part 3 · Reading & Writing','Building Syllable Blocks','Every block is consonant + vowel (+ optional final consonant), arranged left-right or top-bottom depending on the vowel shape.', '組','블록');
+  HTML += '<div class="two-col"><div>'
+   + '<div class="mini-label">Side-by-side vowels (ㅏ ㅑ ㅓ ㅕ ㅣ...) — write consonant then vowel</div>'
+   + traceRow('가',6,true)
+   + '</div><div>'
+   + '<div class="mini-label">Stacked vowels (ㅗ ㅛ ㅜ ㅠ ㅡ) — write consonant above vowel</div>'
+   + traceRow('노',6,true)
+   + '</div></div>';
+  HTML += '<div class="mini-label">Now build these blocks yourself from the pieces given</div>';
+  HTML += '<table class="wk"><tr><th>Consonant</th><th>Vowel</th><th>Your block</th><th>Consonant</th><th>Vowel</th><th>Your block</th></tr>'
+   + '<tr><td class="kr">ㅁ</td><td class="kr">ㅏ</td><td class="blank"></td><td class="kr">ㅅ</td><td class="kr">ㅗ</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr">ㅂ</td><td class="kr">ㅓ</td><td class="blank"></td><td class="kr">ㄷ</td><td class="kr">ㅜ</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr">ㅎ</td><td class="kr">ㅣ</td><td class="blank"></td><td class="kr">ㅈ</td><td class="kr">ㅠ</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose();
+})();
+
+/* --- Batchim --- */
+(function(){
+  HTML += pageOpen('Part 3 · Reading & Writing','Batchim — Final Consonants','A batchim is the consonant that closes a syllable. Many different letters collapse into the same final sound — learn the seven sound-families, not all 27 letters.', '終','받침');
+  HTML += '<table class="wk"><tr><th>Word</th><th>Batchim</th><th>Sound family</th><th>Meaning</th><th>Trace</th></tr>';
+  BATCHIM_ROWS.forEach(function(r){
+    HTML += '<tr><td class="kr-cell">'+r.syl+'</td><td class="kr">'+r.batchim+'</td><td class="kr" style="font-size:.85em">'+r.family+'</td><td>'+r.mean+'</td><td class="blank"></td></tr>';
+  });
+  HTML += '</table>';
+  HTML += '<div class="mini-label">Notes on each sound</div>';
+  BATCHIM_ROWS.forEach(function(r){ HTML += '<p style="font-size:.85em"><span class="kr" style="font-weight:600">'+r.syl+'</span> — '+r.note+'</p>'; });
+  HTML += '<div class="mini-label">Write each word three times</div>' + writeLines(3);
+  HTML += pageClose();
+})();
+
+/* --- Sound change rules --- */
+(function(){
+  HTML += pageOpen('Part 3 · Reading & Writing','Pronunciation & Sound Change Rules','Korean spelling and Korean sound sometimes part ways at the border between syllables. These four rules cover most of what you\'ll meet as a beginner.', '音','발음');
+  const rules = [
+    {name:'Linking (연음)', desc:'A batchim slides into the next syllable if it starts with silent ㅇ.', ex:'한국어 → sounds like 한구거'},
+    {name:'Nasal assimilation', desc:'ㄱ/ㄷ/ㅂ batchim followed by ㄴ or ㅁ shifts toward a nasal sound.', ex:'국물 → sounds like 궁물'},
+    {name:'Tensification', desc:'A plain consonant after certain batchim tenses (hardens).', ex:'학교 → sounds like 학꾜'},
+    {name:'ㅎ weakening', desc:'ㅎ often softens or disappears between two vowel-adjacent sounds.', ex:'좋아요 → sounds like 조아요'},
+  ];
+  rules.forEach(function(r){
+    HTML += '<div class="callout"><b>'+r.name+'</b> — '+r.desc+' &nbsp; <span class="kr" style="color:var(--ink)">'+r.ex+'</span></div>';
+  });
+  HTML += '<div class="mini-label">Write each example pair, spelling on top / sound below</div>' + writeLines(6,true);
+  HTML += pageClose();
+})();
+
+/* --- Reading practice (2 pages) --- */
+(function(){
+  HTML += pageOpen('Part 3 · Reading & Writing','Reading Practice I — Syllable Drill','Read each block aloud, left to right, before you write it. Speed comes after accuracy — don\'t rush the first pass.', '讀','읽기');
+  HTML += '<div class="trace-row">' + READING_WORDS.map(function(w){ return '<div class="trace-box"><span class="g" style="opacity:1">'+w+'</span></div>'; }).join('') + '</div>';
+  HTML += '<div class="mini-label">Copy the full row once, left to right, without looking away</div>' + writeLines(2);
+  HTML += '<div class="mini-label">Timed pass — note your time</div><p style="font-family:var(--mono);font-size:.85em">Attempt 1: _____ sec &nbsp;&nbsp; Attempt 2: _____ sec</p>';
+  HTML += pageClose();
+
+  HTML += pageOpen('Part 3 · Reading & Writing','Reading Practice II — Sentences','Real sentences, built entirely from letters and words you already know.', '文','문장');
+  HTML += '<table class="wk"><tr><th>Sentence</th><th>Meaning</th></tr>';
+  READING_SENTENCES.forEach(function(s){ HTML += '<tr><td class="kr-cell">'+s[0]+'</td><td>'+s[1]+'</td></tr>'; });
+  HTML += '</table>';
+  HTML += '<div class="mini-label">Copy each sentence twice below</div>' + writeLines(8,true);
+  HTML += pageClose();
+})();
+
+/* --- Vocabulary sections --- */
+VOCAB_SECTIONS.forEach(function(sec, si){
+  let out = pageOpen('Part 4 · Vocabulary', sec.title, sec.n+' &nbsp;·&nbsp; section '+(si+1)+' of '+VOCAB_SECTIONS.length, sec.data[0].kr[0]);
+  out += '<table class="wk"><tr><th>Korean</th><th>Romanization</th><th>Meaning</th><th>Write it</th></tr>';
+  sec.data.forEach(function(w){
+    out += '<tr><td class="kr-cell">'+w.kr+'</td><td style="font-family:var(--mono)">'+w.rom+'</td><td>'+w.mean+'</td><td class="blank"></td></tr>';
+  });
+  out += '</table>';
+  out += '<div class="mini-label">Example sentences — copy once each</div>';
+  sec.data.slice(0,3).forEach(function(w){ out += '<p class="kr" style="font-size:.95em">'+w.ex+'</p>'; });
+  out += '<div class="callout stamp"><b>Today\'s activity —</b> '+sec.activity+'</div>';
+  out += '<div style="border:1px dashed var(--ink-faint); border-radius:6px; height:90px; margin-top:6px;"></div>';
+  out += pageClose('vocabulary');
+  HTML += out;
+});
+
+/* --- Review: Vocabulary --- */
+(function(){
+  const all = GREETINGS.concat(NUMBERS,FAMILY,FOOD,COLORS,ANIMALS);
+  const sample = all.filter(function(_,i){ return i%2===0; });
+  HTML += pageOpen('Spaced Review','Review — Mixed Vocabulary','Cover the earlier pages. Write the meaning for each word below, then check yourself.', false);
+  HTML += '<table class="wk"><tr><th>Korean</th><th>Your answer</th></tr>';
+  sample.forEach(function(w){ HTML += '<tr><td class="kr-cell">'+w.kr+'</td><td class="blank"></td></tr>'; });
+  HTML += '</table>';
+  HTML += pageClose('review');
+})();
+
+/* --- Grammar --- */
+(function(){
+  HTML += pageOpen('Part 4 · Vocabulary','Beginner Grammar Patterns','Four building blocks carry most beginner sentences. Notice the pattern: each marker has two forms, chosen by whether the word before it ends in a batchim or a vowel.', '文法','문법');
+  const gram = [
+    {name:'Topic marker — 은 / 는', desc:'은 after a batchim, 는 after a vowel.', ex:'저는 학생이에요. — I am a student.'},
+    {name:'Subject marker — 이 / 가', desc:'이 after a batchim, 가 after a vowel.', ex:'고양이가 자요. — The cat sleeps.'},
+    {name:'Object marker — 을 / 를', desc:'을 after a batchim, 를 after a vowel.', ex:'밥을 먹어요. — I eat rice.'},
+    {name:'Polite present — -아요 / -어요', desc:'The everyday polite sentence ending.', ex:'가다 → 가요 &nbsp;·&nbsp; 먹다 → 먹어요'},
+  ];
+  gram.forEach(function(g){ HTML += '<div class="callout"><b>'+g.name+'</b> — '+g.desc+'<br><span class="kr" style="color:var(--ink)">'+g.ex+'</span></div>'; });
+  HTML += '<div class="mini-label">Build your own sentences — fill each blank with the correct marker</div>';
+  HTML += '<table class="wk"><tr><th>Sentence starter</th><th>Your marker</th></tr>'
+   + '<tr><td class="kr-cell">저___ 선생님이에요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">강아지___ 귀여워요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">물___ 마셔요.</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose();
+})();
+
+/* --- Matching / recall drill --- */
+(function(){
+  HTML += pageOpen('Part 5 · Practice & Finish','Matching & Recall Drill','Draw a line connecting each Korean word on the left to its meaning on the right — the meanings are shuffled.', '練','연습');
+  const items = [GREETINGS[0],NUMBERS[0],FAMILY[1],FOOD[1],COLORS[0],ANIMALS[0]];
+  const meanings = shuffleForPrint(items.map(function(w){return w.mean;}));
+  HTML += '<div class="two-col"><div>';
+  items.forEach(function(w){ HTML += '<p class="kr" style="font-size:1.15em;margin-bottom:16px">'+w.kr+'</p>'; });
+  HTML += '</div><div>';
+  meanings.forEach(function(m){ HTML += '<p style="margin-bottom:16px">'+m+'</p>'; });
+  HTML += '</div></div>';
+  HTML += '<div class="mini-label">Unscramble — put the letters in the right order to spell each word</div>';
+  HTML += '<table class="wk"><tr><th>Scrambled</th><th>Your answer</th></tr>'
+   + '<tr><td class="kr-cell">다 가</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">치 김</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">사 감 니 다 합</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose();
+})();
+function shuffleForPrint(a){ const b=a.slice(); for(let i=b.length-1;i>0;i--){ const j=(i*7+3)%(i+1); const t=b[i]; b[i]=b[j]; b[j]=t; } return b; }
+
+/* --- Final assessment (2 pages) --- */
+(function(){
+  HTML += pageOpen('Part 5 · Practice & Finish','Final Written Assessment — I','No peeking. This mirrors the app\'s final exam, but in your own hand.', '試','시험');
+  HTML += '<div class="mini-label">1 — Write the romanization for each letter</div>';
+  const set1 = ['ㄱ','ㅋ','ㄲ','ㄷ','ㅌ','ㄸ','ㅂ','ㅍ','ㅃ','ㅅ','ㅆ'];
+  HTML += '<div class="trace-row">'+set1.map(function(c){return '<div class="trace-box"><span class="g" style="opacity:1">'+c+'</span></div>';}).join('')+'</div>';
+  HTML += writeLines(3,true);
+  HTML += '<div class="mini-label">2 — Write these six vocabulary words from their English meaning</div>';
+  HTML += '<table class="wk"><tr><th>Meaning</th><th>Your answer in Korean</th></tr>'
+   + ['hello','thank you (formal)','mom','water','red','dog'].map(function(m){ return '<tr><td>'+m+'</td><td class="blank"></td></tr>'; }).join('')
+   + '</table>';
+  HTML += pageClose('assessment');
+
+  HTML += pageOpen('Part 5 · Practice & Finish','Final Written Assessment — II','', '試','시험');
+  HTML += '<div class="mini-label">3 — Translate each sentence into Korean</div>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.8em;color:var(--ink-faint);margin-top:-10px">I am a student.</p>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.8em;color:var(--ink-faint);margin-top:-10px">The cat sleeps.</p>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.8em;color:var(--ink-faint);margin-top:-10px">I eat rice.</p>';
+  HTML += '<div class="mini-label">4 — Circle the batchim sound-family that does not belong</div>';
+  HTML += '<p class="kr" style="font-size:1.1em">ㄱ &nbsp; ㅋ &nbsp; ㄲ &nbsp; <u>ㅁ</u> &nbsp;&nbsp;&nbsp;&nbsp; ㅂ &nbsp; ㅍ &nbsp; <u>ㄴ</u> &nbsp;&nbsp;&nbsp;&nbsp; ㄷ &nbsp; ㅅ &nbsp; ㅌ &nbsp; <u>ㅎ</u> &nbsp; <u>ㄹ</u></p>';
+  HTML += '<div class="callout stamp" style="margin-top:22px"><b>Passing mark —</b> 70%, same as the app\'s final exam. Score yourself against the app\'s answer key, then move on to your certificate.</div>';
+  HTML += pageClose('assessment');
+})();
+
+/* --- Certificate --- */
+(function(){
+  pageNum++;
+  HTML += '<section class="page cert-page">'
+   + '<div class="pg-eyebrow">Hookitlingo &nbsp;×&nbsp; Hangeul Writing Workbook</div>'
+   + '<h1 class="kr">수료증</h1>'
+   + '<div class="sub">Certificate of Completion</div>'
+   + '<p style="max-width:420px">This certifies that</p>'
+   + '<div class="name-line">&nbsp;</div>'
+   + '<p style="max-width:440px">has completed every unit of the Hangeul Writing Workbook — every vowel, every consonant, every batchim family, traced and written by hand.</p>'
+   + '<div style="margin-top:34px;display:flex;gap:60px">'
+   + '<div><div class="fillline" style="min-width:160px"></div><div class="mini-label" style="margin-top:4px">Date</div></div>'
+   + '<div><div class="fillline" style="min-width:160px"></div><div class="mini-label" style="margin-top:4px">Signature</div></div>'
+   + '</div>'
+   + '<div class="pg-footer" style="border:none;margin-top:30px"><span></span><span>p.'+pageNum+'</span></div>'
+   + '</section>';
+})();
+
+/* ============================================================
+   3. PAYWALL — first ~25% of pages are free; the rest unlock for
+      a one-time ₹99 via Razorpay. This mirrors the certificate
+      unlock in the main Hookitlingo course: the frontend never
+      trusts a locally-set "paid" flag on its own — every unlock,
+      including on repeat visits, is re-checked against Razorpay
+      through the server before pages are shown.
+   ============================================================ */
+const SUPPORT_API_BASE = window.location.hostname === 'localhost'
+  ? 'http://localhost:3000'
+  : ''; // same origin when deployed alongside the Express server
+
+const WORKBOOK_PRICE_PAISE = 9900; // ₹99 — keep in sync with server.js
+const WORKBOOK_PURPOSE = 'workbook-hanlingo';
+const WORKBOOK_PAYMENT_KEY = 'hg_workbook_payment_id';
+
+let wkFreeCount = 0, wkTotal = 0;
+
+function initPaywall(){
+  const pages = Array.from(document.querySelectorAll('#book > .page'));
+  wkTotal = pages.length;
+  wkFreeCount = Math.max(2, Math.ceil(wkTotal * 0.25));
+
+  const savedPaymentId = localStorage.getItem(WORKBOOK_PAYMENT_KEY);
+  if(savedPaymentId){
+    verifyWorkbookAccess(savedPaymentId).then(ok=>{
+      if(ok){ unlockWorkbook(); }
+      else { localStorage.removeItem(WORKBOOK_PAYMENT_KEY); lockWorkbook(); }
+    });
+  } else {
+    lockWorkbook();
+  }
+}
+
+function lockWorkbook(){
+  const pages = Array.from(document.querySelectorAll('#book > .page'));
+  pages.forEach((p,i)=>{ if(i>=wkFreeCount) p.classList.add('page-locked'); });
+  insertPaywallCard(pages[wkFreeCount-1] || pages[pages.length-1]);
+  showPaywallBar();
+  setToolbarLocked(true);
+}
+
+function unlockWorkbook(){
+  document.querySelectorAll('#book > .page').forEach(p=>p.classList.remove('page-locked'));
+  removePaywallCard();
+  hidePaywallBar();
+  setToolbarLocked(false);
+}
+
+function setToolbarLocked(isLocked){
+  document.getElementById('printBtn').style.display = isLocked ? 'none' : '';
+  document.getElementById('unlockToolbarBtn').style.display = isLocked ? '' : 'none';
+}
+
+function insertPaywallCard(afterEl){
+  removePaywallCard();
+  const lockedCount = wkTotal - wkFreeCount;
+  const card = document.createElement('section');
+  card.className = 'page paywall-page';
+  card.id = 'paywallCard';
+  card.innerHTML = `
+    <div class="lock-badge">🔒</div>
+    <h2 class="kr">잠금 해제</h2>
+    <div class="paywall-kicker">Unlock to Continue</div>
+    <p>You've previewed the first ${wkFreeCount} pages for free. The remaining <strong>${lockedCount} pages</strong> — full vocabulary drills, grammar practice, the matching game, both final assessments, and your printable certificate page — are locked.</p>
+    <div class="price">₹99 <small>one-time</small></div>
+    <div id="paywallPayArea">
+      <button class="wk-btn" id="paywallPayBtn">Unlock Full Workbook — ₹99</button>
+      <p class="wk-secure-note">🔒 Handled securely by Razorpay. Pages unlock only after payment is verified.</p>
+    </div>
+  `;
+  afterEl.insertAdjacentElement('afterend', card);
+  document.getElementById('paywallPayBtn').onclick = initiateWorkbookPayment;
+}
+
+function removePaywallCard(){
+  const el = document.getElementById('paywallCard');
+  if(el) el.remove();
+}
+
+function showPaywallBar(){
+  hidePaywallBar();
+  const bar = document.createElement('div');
+  bar.className = 'paywall-bar';
+  bar.id = 'paywallBar';
+  bar.innerHTML = `<span>🔒 ${wkTotal - wkFreeCount} pages locked</span><div class="spacer"></div><button class="wk-btn" id="paywallBarBtn">Unlock — ₹99</button>`;
+  document.body.appendChild(bar);
+  document.getElementById('paywallBarBtn').onclick = jumpToPaywall;
+  document.getElementById('unlockToolbarBtn').onclick = jumpToPaywall;
+}
+function hidePaywallBar(){
+  const el = document.getElementById('paywallBar');
+  if(el) el.remove();
+}
+function jumpToPaywall(){
+  document.getElementById('paywallCard')?.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+async function initiateWorkbookPayment(){
+  const area = document.getElementById('paywallPayArea');
+  area.innerHTML = `<div class="wk-spinner"></div><p class="wk-secure-note">Preparing secure checkout…</p>`;
+  try{
+    const orderRes = await fetch(`${SUPPORT_API_BASE}/api/create-order`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ amount: WORKBOOK_PRICE_PAISE, purpose: WORKBOOK_PURPOSE })
+    });
+    if(!orderRes.ok){
+      const err = await orderRes.json();
+      throw new Error(err.error || 'Failed to create order');
+    }
+    const { orderId, amount, currency, key } = await orderRes.json();
+
+    const options = {
+      key, amount, currency,
+      name: "Hookitlingo",
+      description: "Hangeul Writing Workbook — full unlock",
+      order_id: orderId,
+      theme: { color: "#a8342a" },
+      handler: async function(response){ await verifyWorkbookPayment(response, orderId); },
+      modal: { ondismiss: function(){ renderPaywallRetry(); } }
+    };
+    const rzp = new Razorpay(options);
+    rzp.open();
+  } catch(err){
+    console.error('Workbook payment initiation failed:', err);
+    area.innerHTML = `<p class="wk-secure-note" style="color:var(--seal)">${err.message}</p><button class="wk-btn secondary" id="paywallRetryBtn">Try again</button>`;
+    document.getElementById('paywallRetryBtn').onclick = initiateWorkbookPayment;
+  }
+}
+
+function renderPaywallRetry(){
+  const area = document.getElementById('paywallPayArea');
+  if(!area) return;
+  area.innerHTML = `<button class="wk-btn" id="paywallPayBtn2">Unlock Full Workbook — ₹99</button><p class="wk-secure-note">🔒 Handled securely by Razorpay.</p>`;
+  document.getElementById('paywallPayBtn2').onclick = initiateWorkbookPayment;
+}
+
+async function verifyWorkbookPayment(response, orderId){
+  const area = document.getElementById('paywallPayArea');
+  if(area) area.innerHTML = `<div class="wk-spinner"></div><p class="wk-secure-note">Verifying payment…</p>`;
+
+  try{
+    const verifyRes = await fetch(`${SUPPORT_API_BASE}/api/verify-payment`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        orderId: response.razorpay_order_id || orderId,
+        paymentId: response.razorpay_payment_id,
+        signature: response.razorpay_signature
+      })
+    });
+    const result = await verifyRes.json();
+    if(!result.verified) throw new Error('Payment verification failed');
+
+    const ok = await verifyWorkbookAccess(result.paymentId);
+    if(!ok) throw new Error("We couldn't confirm access for this payment. Please contact support.");
+
+    localStorage.setItem(WORKBOOK_PAYMENT_KEY, result.paymentId);
+    unlockWorkbook();
+  } catch(err){
+    console.error('Workbook payment verification failed:', err);
+    if(area){
+      area.innerHTML = `<p class="wk-secure-note" style="color:var(--seal)">We couldn't verify your payment. If you were charged, please contact us.</p><button class="wk-btn secondary" id="paywallRetryBtn2">Try again</button>`;
+      document.getElementById('paywallRetryBtn2').onclick = initiateWorkbookPayment;
+    }
+  }
+}
+
+async function verifyWorkbookAccess(paymentId){
+  try{
+    const res = await fetch(`${SUPPORT_API_BASE}/api/workbook-access?paymentId=${encodeURIComponent(paymentId)}`);
+    if(!res.ok) return false;
+    const data = await res.json();
+    return !!data.unlocked;
+  } catch(err){
+    console.error('Workbook access check failed:', err);
+    return false;
+  }
+}
+
+document.getElementById('book').innerHTML = HTML;
+document.getElementById('pageCount').textContent = pageNum + ' pages generated';
+
+document.getElementById('pdfHelpBtn').onclick = () => {
+  const box = document.getElementById('pdfInstructions');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+};
+document.getElementById('closeInstrBtn').onclick = () => {
+  document.getElementById('pdfInstructions').style.display = 'none';
+};
+
+initPaywall();
+</script>
+</body>
+</html>

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국어 숫자 워크북 — The Korean Numbers Workbook</title>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLEMFRK6XH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WLEMFRK6XH');
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS — rice-paper / ink-stone / seal-stamp palette
+   (same family as the Hookitlingo companion workbooks)
+   ============================================================ */
+:root{
+  --paper:#f6f1e2;
+  --paper2:#efe6cf;
+  --paper3:#e7dabd;
+  --ink:#241f19;
+  --ink-soft:#6d6047;
+  --ink-faint:#a99a78;
+  --guide:#cdbe95;
+  --seal:#a8342a;
+  --seal-dim:#e9d3ce;
+  --indigo:#333e5c;
+  --indigo-dim:#dfe2ec;
+  --celadon:#4b7a63;
+  --celadon-dim:#dde9e0;
+  --gold:#a4762b;
+  --gold-dim:#f2e2c2;
+  --serif-kr:"Noto Serif KR", serif;
+  --serif-en:"Source Serif 4", Georgia, serif;
+  --mono:"IBM Plex Mono", monospace;
+}
+*{box-sizing:border-box;}
+html{background:#4a4436;}
+body{
+  margin:0; font-family:var(--serif-en); color:var(--ink); background:#4a4436;
+  -webkit-font-smoothing:antialiased;
+}
+.kr{font-family:var(--serif-kr);}
+
+/* ============================================================
+   SCREEN TOOLBAR (hidden on print)
+   ============================================================ */
+#toolbar{
+  position:sticky; top:0; z-index:100; display:flex; align-items:center; gap:14px;
+  padding:12px 22px; background:var(--ink); color:var(--paper); font-family:var(--serif-en);
+  box-shadow:0 4px 16px rgba(0,0,0,.35);
+}
+#toolbar strong{font-family:var(--serif-kr); font-size:1.05em; letter-spacing:.02em;}
+#toolbar .spacer{flex:1;}
+#toolbar button{
+  font-family:var(--serif-en); font-size:.85em; background:var(--seal); color:#fdf6ee; border:none;
+  padding:8px 16px; border-radius:3px; cursor:pointer; letter-spacing:.02em;
+}
+#toolbar button.secondary{background:transparent; border:1px solid #786c50; color:var(--paper);}
+#toolbar button:hover{filter:brightness(1.08);}
+#toolbar .hint{font-size:.75em; color:#b7ac8f;}
+
+/* ============================================================
+   PAGE SHELL
+   ============================================================ */
+#book{max-width:920px; margin:34px auto 90px; padding:0 16px;}
+.page{
+  background:var(--paper);
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(168,52,42,0.035), transparent 40%),
+    repeating-linear-gradient(0deg, rgba(36,31,25,0.015) 0px, rgba(36,31,25,0.015) 1px, transparent 1px, transparent 2px);
+  width:100%; aspect-ratio:210/297; min-height:1050px;
+  padding:52px 56px 40px; margin:0 auto 28px; position:relative;
+  box-shadow:0 18px 40px rgba(0,0,0,.45), 0 2px 0 rgba(0,0,0,.15);
+  border:1px solid #d8c9a3;
+  display:flex; flex-direction:column;
+}
+.page::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  box-shadow: inset 0 0 60px rgba(90,74,40,.10);
+}
+
+.seal{
+  position:absolute; top:44px; right:52px; width:64px; height:64px; border-radius:50%;
+  border:2.5px solid var(--seal); color:var(--seal); font-family:var(--serif-kr); font-weight:700;
+  display:flex; align-items:center; justify-content:center; text-align:center; line-height:1.05;
+  transform:rotate(-8deg); font-size:.72em; opacity:.88; letter-spacing:.02em;
+  background:radial-gradient(circle at 35% 30%, rgba(168,52,42,.06), transparent 70%);
+}
+.seal small{display:block; font-family:var(--mono); font-size:.62em; font-weight:500; margin-top:1px; letter-spacing:0;}
+
+.pg-eyebrow{font-family:var(--mono); font-size:.68em; letter-spacing:.16em; text-transform:uppercase; color:var(--seal); margin-bottom:6px;}
+.pg-title{font-family:var(--serif-kr); font-weight:700; font-size:1.7em; margin:0 0 4px; padding-right:80px;}
+.pg-sub{color:var(--ink-soft); font-size:.92em; margin:0 0 18px; max-width:640px;}
+.pg-body{flex:1;}
+.pg-footer{
+  margin-top:auto; padding-top:14px; border-top:1px solid var(--paper3); display:flex;
+  align-items:center; justify-content:space-between; font-family:var(--mono); font-size:.68em; color:var(--ink-faint);
+}
+.pg-footer .chk{display:flex; align-items:center; gap:6px;}
+.pg-footer .chk .box{width:11px; height:11px; border:1.3px solid var(--ink-faint); display:inline-block;}
+
+h4{font-family:var(--serif-kr); font-size:1.05em; margin:0 0 6px; font-weight:600;}
+p{margin:0 0 .8em; font-size:.94em; line-height:1.55;}
+
+/* trace / write grid */
+.trace-row{display:flex; gap:10px; flex-wrap:wrap; margin:14px 0;}
+.trace-box{
+  width:64px; height:64px; border:1.4px solid var(--ink-faint); border-radius:4px;
+  background-image:
+    linear-gradient(var(--guide) .6px, transparent .6px),
+    linear-gradient(90deg, var(--guide) .6px, transparent .6px);
+  background-size:50% 50%; background-position:center; background-repeat:no-repeat;
+  display:flex; align-items:center; justify-content:center; position:relative; flex:none;
+}
+.trace-box.big{width:86px; height:86px;}
+.trace-box.wide{width:112px;}
+.trace-box .g{font-family:var(--serif-kr); font-size:1.7em; color:var(--ink); opacity:.28;}
+.trace-box.big .g{font-size:2.2em;}
+.trace-box .num{position:absolute; bottom:2px; right:4px; font-family:var(--mono); font-size:.5em; color:var(--ink-faint);}
+
+.write-line-block{margin:10px 0 16px;}
+.write-line{border-bottom:1px solid var(--ink-faint); height:30px; position:relative; margin-bottom:2px;}
+.write-line.dotted{border-bottom:1px dashed var(--guide);}
+.write-line .rule-mid{position:absolute; left:0; right:0; top:50%; border-top:.5px dotted var(--ink-faint);}
+
+/* tables */
+table.wk{width:100%; border-collapse:collapse; font-size:.86em; margin:10px 0;}
+table.wk th{
+  font-family:var(--mono); font-size:.72em; text-transform:uppercase; letter-spacing:.06em;
+  color:var(--ink-soft); text-align:left; padding:5px 8px; border-bottom:1.3px solid var(--ink);
+}
+table.wk td{padding:8px 8px; border-bottom:1px solid var(--paper3); vertical-align:top;}
+table.wk td.kr-cell{font-family:var(--serif-kr); font-size:1.15em;}
+table.wk td.blank{border-bottom:1px solid var(--ink-faint); min-width:90px;}
+
+.compare-strip{display:flex; gap:14px; margin:10px 0 18px;}
+.compare-card{flex:1; border:1px solid var(--paper3); border-radius:6px; padding:12px 14px; background:rgba(255,255,255,.35);}
+.compare-card .ch{font-family:var(--serif-kr); font-size:1.6em; line-height:1;}
+.compare-card .rom{font-family:var(--mono); font-size:.75em; color:var(--seal); margin:2px 0 6px;}
+.compare-card p{font-size:.78em; margin:0 0 4px; color:var(--ink-soft);}
+
+.callout{border-left:3px solid var(--celadon); background:var(--celadon-dim); padding:10px 14px; border-radius:0 6px 6px 0; font-size:.86em; margin:12px 0;}
+.callout.stamp{border-color:var(--seal); background:var(--seal-dim);}
+.callout.trap{border-color:var(--gold); background:var(--gold-dim);}
+.callout b{font-family:var(--serif-kr);}
+
+.two-col{display:flex; gap:28px;}
+.two-col > div{flex:1;}
+.three-col{display:flex; gap:16px;}
+.three-col > div{flex:1;}
+
+.mini-label{font-family:var(--mono); font-size:.68em; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft); margin:16px 0 6px;}
+
+ol.steps{padding-left:1.1em; font-size:.9em;}
+ol.steps li{margin-bottom:6px;}
+
+/* TOC */
+.toc-group{margin-bottom:14px;}
+.toc-group h4{color:var(--seal); border-bottom:1px solid var(--paper3); padding-bottom:4px;}
+.toc-row{display:flex; justify-content:space-between; font-size:.85em; padding:3px 0; border-bottom:1px dotted var(--paper3);}
+.toc-row .n{color:var(--ink-faint); font-family:var(--mono); font-size:.85em;}
+
+/* cover */
+.cover-page{align-items:center; text-align:center; justify-content:center;}
+.cover-page .brandmark{
+  width:120px; height:120px; border-radius:50%; margin:0 auto 26px;
+  background:radial-gradient(circle at 32% 26%, #c14a3b, var(--seal) 74%);
+  display:flex; align-items:center; justify-content:center; font-family:var(--serif-kr);
+  font-weight:900; font-size:2.6em; color:#fdf1e8; box-shadow:0 10px 30px rgba(168,52,42,.35);
+  transform:rotate(-4deg);
+}
+.cover-page h1{font-family:var(--serif-kr); font-size:2.4em; margin:0 0 6px; font-weight:900;}
+.cover-page .eng{font-family:var(--serif-en); font-style:italic; color:var(--ink-soft); font-size:1.1em; margin-bottom:28px;}
+.cover-page .meta-line{font-family:var(--mono); font-size:.78em; color:var(--ink-faint); letter-spacing:.06em;}
+.cover-page .fillline{display:inline-block; min-width:220px; border-bottom:1px solid var(--ink); margin:0 6px;}
+
+/* log table */
+table.logtable{width:100%; border-collapse:collapse; font-size:.82em;}
+table.logtable th{font-family:var(--mono); font-size:.68em; text-transform:uppercase; color:var(--ink-soft); border-bottom:1.3px solid var(--ink); padding:6px;}
+table.logtable td{border-bottom:1px solid var(--paper3); padding:9px 6px; height:26px;}
+
+/* cheat sheet */
+.cheat-grid{display:flex; gap:14px;}
+.cheat-col{flex:1; border:1px solid var(--paper3); border-radius:6px; padding:10px 12px; background:rgba(255,255,255,.3);}
+.cheat-col h4{font-size:.9em; margin-bottom:4px;}
+.cheat-row{display:flex; justify-content:space-between; font-size:.8em; padding:2px 0; border-bottom:1px dotted var(--paper3);}
+.cheat-row .kr{font-size:1.05em;}
+
+/* certificate */
+.cert-page{align-items:center; text-align:center; justify-content:center; border:6px double var(--seal); padding:70px 56px;}
+.cert-page h1{font-family:var(--serif-kr); font-size:2.1em; margin-bottom:2px;}
+.cert-page .sub{font-family:var(--mono); letter-spacing:.16em; text-transform:uppercase; font-size:.7em; color:var(--ink-soft); margin-bottom:30px;}
+.cert-page .name-line{border-bottom:1.4px solid var(--ink); display:inline-block; min-width:340px; margin:18px 0 34px; font-family:var(--serif-kr); font-size:1.3em; padding-bottom:6px;}
+
+/* fillline (generic) */
+.fillline{display:inline-block; min-width:160px; border-bottom:1px solid var(--ink); margin:0 6px;}
+
+/* print */
+@media print{
+  html,body{background:#fff;}
+  #toolbar{display:none;}
+  #book{max-width:none; margin:0; padding:0;}
+  .page{
+    box-shadow:none; border:none; margin:0; width:210mm; min-height:297mm; aspect-ratio:auto;
+    page-break-after:always; padding:16mm 18mm 14mm;
+  }
+  .page:last-child{page-break-after:auto;}
+}
+@page{ size:A4; margin:0; }
+@media screen and (max-width:760px){
+  .page{padding:34px 26px 26px;}
+  .compare-strip{flex-wrap:wrap;}
+  .two-col,.three-col{flex-direction:column;}
+  .cheat-grid{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <strong>한국어 숫자 — Korean Numbers Workbook</strong>
+  <span class="hint">A daily paper companion to the Korean Numbers course</span>
+  <div class="spacer"></div>
+  <span class="hint" id="pageCount"></span>
+  <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
+  <button onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<div id="book"></div>
+
+<script>
+/* ============================================================
+   0. DATA — same source facts as the course
+   ============================================================ */
+const SINO = [
+ {n:'1',kr:'일'},{n:'2',kr:'이'},{n:'3',kr:'삼'},{n:'4',kr:'사'},{n:'5',kr:'오'},
+ {n:'6',kr:'육'},{n:'7',kr:'칠'},{n:'8',kr:'팔'},{n:'9',kr:'구'},{n:'10',kr:'십'},
+];
+const SINO_BIG = [
+ {n:'100',kr:'백'},{n:'1,000',kr:'천'},{n:'10,000',kr:'만'},{n:'0',kr:'영 / 공'},
+];
+const NATIVE = [
+ {n:'1',kr:'하나'},{n:'2',kr:'둘'},{n:'3',kr:'셋'},{n:'4',kr:'넷'},{n:'5',kr:'다섯'},
+ {n:'6',kr:'여섯'},{n:'7',kr:'일곱'},{n:'8',kr:'여덟'},{n:'9',kr:'아홉'},{n:'10',kr:'열'},
+];
+const NATIVE_TEENS = [
+ {n:'11',kr:'열하나'},{n:'12',kr:'열둘'},{n:'13',kr:'열셋'},{n:'15',kr:'열다섯'},
+ {n:'20',kr:'스물'},{n:'30',kr:'서른'},{n:'40',kr:'마흔'},{n:'50',kr:'쉰'},
+];
+const SHAPE_SHIFTERS = [
+ {kr:'한',from:'하나 (1)',ex:'한 개 — one item'},
+ {kr:'두',from:'둘 (2)',ex:'두 명 — two people'},
+ {kr:'세',from:'셋 (3)',ex:'세 시 — three o\u2019clock'},
+ {kr:'네',from:'넷 (4)',ex:'네 살 — four years old'},
+ {kr:'스무',from:'스물 (20)',ex:'스무 살 — twenty years old'},
+];
+const COUNTERS = [
+ {kr:'개',mean:'general objects',ex:'사과 세 개 — three apples',rom:'gae'},
+ {kr:'명 / 분',mean:'people (분 = polite)',ex:'학생 두 명 — two students',rom:'myeong/bun'},
+ {kr:'마리',mean:'animals',ex:'강아지 다섯 마리 — five puppies',rom:'mari'},
+ {kr:'잔',mean:'cups / glasses',ex:'커피 한 잔 — one coffee',rom:'jan'},
+ {kr:'권',mean:'bound books',ex:'책 두 권 — two books',rom:'gwon'},
+ {kr:'병',mean:'bottles',ex:'물 한 병 — one bottle of water',rom:'byeong'},
+ {kr:'장',mean:'flat sheets / tickets',ex:'표 두 장 — two tickets',rom:'jang'},
+ {kr:'대',mean:'vehicles / machines',ex:'자동차 한 대 — one car',rom:'dae'},
+];
+const TIME_HOURS = [
+ {n:'1',kr:'한 시'},{n:'2',kr:'두 시'},{n:'3',kr:'세 시'},{n:'4',kr:'네 시'},
+ {n:'5',kr:'다섯 시'},{n:'6',kr:'여섯 시'},{n:'12',kr:'열두 시'},
+];
+const TIME_MINUTES = [
+ {n:'5',kr:'오 분'},{n:'10',kr:'십 분'},{n:'15',kr:'십오 분'},{n:'30',kr:'삼십 분 (반)'},{n:'45',kr:'사십오 분'},
+];
+const ORDINALS = [
+ {kr:'첫 번째',mean:'1st'},{kr:'두 번째',mean:'2nd'},{kr:'세 번째',mean:'3rd'},
+ {kr:'네 번째',mean:'4th'},{kr:'다섯 번째',mean:'5th'},
+];
+const MONTHS = [
+ {n:'1',kr:'일월'},{n:'2',kr:'이월'},{n:'3',kr:'삼월'},{n:'4',kr:'사월'},
+ {n:'5',kr:'오월'},{n:'6',kr:'유월 *'},{n:'7',kr:'칠월'},{n:'8',kr:'팔월'},
+ {n:'9',kr:'구월'},{n:'10',kr:'시월 *'},{n:'11',kr:'십일월'},{n:'12',kr:'십이월'},
+];
+const DAYS_SAMPLE = [
+ {n:'1',kr:'일일'},{n:'8',kr:'팔일'},{n:'10',kr:'십일'},{n:'15',kr:'십오일'},
+ {n:'20',kr:'이십일'},{n:'25',kr:'이십오일'},{n:'30',kr:'삼십일'},{n:'31',kr:'삼십일일'},
+];
+const BIG_NUMBERS = [
+ {kr:'만',val:'10,000'},{kr:'십만',val:'100,000'},{kr:'백만',val:'1,000,000'},
+ {kr:'천만',val:'10,000,000'},{kr:'억',val:'100,000,000'},
+];
+const PHONE_DIGITS = [
+ {d:'0',kr:'공'},{d:'1',kr:'일'},{d:'2',kr:'이'},{d:'3',kr:'삼'},{d:'4',kr:'사'},
+ {d:'5',kr:'오'},{d:'6',kr:'육'},{d:'7',kr:'칠'},{d:'8',kr:'팔'},{d:'9',kr:'구'},
+];
+const EAR_TRAINING_LINES = [
+ '십 더하기 오는 얼마예요?', '사과 세 개에 오천 원이에요.', '태윤 씨는 몇 살이에요?',
+ '이 커피는 얼마예요?', '강아지 몇 마리 있어요?', '두 시 십오 분에 출발해요.',
+ '유월 십오일이에요.', '총 십오만 원이에요.',
+];
+
+/* ============================================================
+   1. SMALL BUILDERS
+   ============================================================ */
+let pageNum = 0;
+function seal(label, small){
+  return '<div class="seal">'+label+(small?'<small>'+small+'</small>':'')+'</div>';
+}
+function pageOpen(eyebrow, title, sub, sealLabel, sealSmall, extraClass){
+  pageNum++;
+  return '<section class="page'+(extraClass?(' '+extraClass):'')+'">'
+    + (sealLabel!==false ? seal(sealLabel||'數','숫자') : '')
+    + '<div class="pg-eyebrow">'+eyebrow+'</div>'
+    + '<h1 class="pg-title">'+title+'</h1>'
+    + (sub? '<p class="pg-sub">'+sub+'</p>' : '')
+    + '<div class="pg-body">';
+}
+function pageClose(footNote){
+  return '</div><div class="pg-footer"><span class="chk"><span class="box"></span> practiced today</span>'
+    + '<span>'+(footNote||'한국어 숫자 워크북')+'</span>'
+    + '<span>p.'+pageNum+'</span></div></section>';
+}
+function traceRow(ch, count, big, wide){
+  let out = '<div class="trace-row">';
+  for(let i=0;i<count;i++){
+    out += '<div class="trace-box'+(big?' big':'')+(wide?' wide':'')+'"><span class="g">'+(i<3?ch:'')+'</span><span class="num">'+(i+1)+'</span></div>';
+  }
+  out += '</div>';
+  return out;
+}
+function writeLines(n, dotted){
+  let out = '<div class="write-line-block">';
+  for(let i=0;i<n;i++) out += '<div class="write-line'+(dotted?' dotted':'')+'"></div>';
+  out += '</div>';
+  return out;
+}
+
+/* ============================================================
+   2. PAGE GENERATORS
+   ============================================================ */
+let HTML = '';
+
+/* --- Cover --- */
+HTML += '<section class="page cover-page">'
+ + '<div class="brandmark">數</div>'
+ + '<div class="pg-eyebrow" style="text-align:center">Hookitlingo — Companion Volume</div>'
+ + '<h1>한국어 숫자</h1>'
+ + '<div class="eng">The Korean Numbers Workbook</div>'
+ + '<p style="max-width:460px;margin:0 auto 26px;color:var(--ink-soft)">Numbers run underneath every price, every clock, every birthday in Korean. This book walks beside the Korean Numbers course, unit for unit — every system, every counter, every irregular shape-shift gets fixed into memory here, by hand.</p>'
+ + '<div class="meta-line">NAME <span class="fillline"></span></div>'
+ + '<div class="meta-line" style="margin-top:10px">START DATE <span class="fillline" style="min-width:120px"></span></div>'
+ + '</section>';
+
+/* --- How to use + study ritual --- */
+HTML += pageOpen('Before You Begin','How to Use This Workbook','A short read — then straight to the pencil.', '使用法','안내');
+HTML += '<div class="two-col">'
+ + '<div><h4>The daily ritual</h4><ol class="steps">'
+ + '<li>Open the matching unit in the course app first, and read the example sentences aloud.</li>'
+ + '<li>Trace the faded numbers on this page three times, saying each one aloud.</li>'
+ + '<li>Fill the blanks without looking at the model — check yourself against the course\u2019s cheat sheet after.</li>'
+ + '<li>Check the box in the footer once you\u2019ve done all three.</li>'
+ + '</ol></div>'
+ + '<div><h4>Why writing matters</h4><p>Reading numbers on a screen teaches recognition. Writing them teaches production — the reflex that lets you blurt out a price or a time without translating in your head. Ten focused minutes on paper does more than an hour of passive tapping.</p>'
+ + '<div class="callout stamp"><b>A teacher\u2019s note —</b> Korean numbers trip people up because there are two full systems running side by side. Every unit in this book has at least one \u201cwhich system?\u201d trap question — don\u2019t skip it, even when it feels repetitive.</div></div>'
+ + '</div>';
+HTML += pageClose();
+
+/* --- Study log --- */
+HTML += pageOpen('Before You Begin','My Study Log','Fill in one row after every session — the streak itself is the lesson.', '記錄','기록');
+HTML += '<table class="logtable"><tr><th>Date</th><th>Unit / Page</th><th>Minutes</th><th>Confidence (1\u20135)</th><th>Note to self</th></tr>';
+for(let i=0;i<18;i++) HTML += '<tr><td></td><td></td><td></td><td></td><td></td></tr>';
+HTML += '</table>';
+HTML += pageClose();
+
+/* --- TOC --- */
+(function(){
+  const toc = [
+    {group:'Foundations', rows:['Unit 0 \u2014 Two Systems, One Country','Unit 1 \u2014 Sino-Korean: The Calculator','Unit 2 \u2014 Native Korean: The Counter','Unit 3 \u2014 Boss Battle: Which System']},
+    {group:'Counters', rows:['Unit 4 \u2014 Shape-Shifters','Unit 5 \u2014 Counter Words 101','Review \u2014 Units 0\u20135']},
+    {group:'Time & Calendar', rows:['Unit 6 \u2014 Telling Time','Unit 7 \u2014 Age, Frequency & Order','Unit 8 \u2014 Dates & Calendar','Review \u2014 Units 6\u20138']},
+    {group:'Real World', rows:['Unit 9 \u2014 Money & Big Numbers','Unit 10 \u2014 Phone Numbers','Unit 11 \u2014 Ear Training','Unit 12 \u2014 Finale: A Busy Saturday']},
+    {group:'Practice & Finish', rows:['Numbers Cheat Sheet','Matching & Scramble Drill','Final Written Assessment','Certificate']},
+  ];
+  HTML += pageOpen('Contents','목차 · Table of Contents', '', '目次','차례');
+  HTML += '<div style="columns:2; column-gap:34px;">';
+  toc.forEach(function(g){
+    HTML += '<div class="toc-group">'+ '<h4>'+g.group+'</h4>';
+    g.rows.forEach(function(r){ HTML += '<div class="toc-row"><span>'+r+'</span><span class="n">\u25a1</span></div>'; });
+    HTML += '</div>';
+  });
+  HTML += '</div>';
+  HTML += pageClose();
+})();
+
+/* --- Unit 0: Two Systems --- */
+(function(){
+  HTML += pageOpen('Foundations','Unit 0 \u2014 Two Systems, One Country','Korean uses two complete number systems side by side. Neither is optional \u2014 every fluent speaker switches between them dozens of times a day without thinking.', '兩','체계');
+  HTML += '<div class="compare-strip">'
+   + '<div class="compare-card"><div class="ch">일, 이, 삼\u2026</div><div class="rom">Sino-Korean</div><p>Borrowed from Chinese. Used for math, money, dates, phone numbers, minutes, floors.</p></div>'
+   + '<div class="compare-card"><div class="ch">하나, 둘, 셋\u2026</div><div class="rom">Native Korean</div><p>Korean\u2019s own words. Used for counting objects, age, hours, frequency (up to 99).</p></div>'
+   + '</div>';
+  HTML += '<div class="mini-label">Trace both families side by side</div>';
+  HTML += '<table class="wk"><tr><th>#</th><th>Sino</th><th>Trace</th><th>Native</th><th>Trace</th></tr>'
+   + SINO.slice(0,5).map(function(s,i){ return '<tr><td>'+s.n+'</td><td class="kr-cell">'+s.kr+'</td><td class="blank"></td><td class="kr-cell">'+NATIVE[i].kr+'</td><td class="blank"></td></tr>'; }).join('')
+   + '</table>';
+  HTML += '<div class="callout trap"><span class="callout-label"></span><b>Trap \u2014</b> \u201cThree apples\u201d needs Native Korean (세 개), but \u201cthree minutes\u201d needs Sino-Korean (삼 분). The object being counted decides the system, not the number itself.</div>';
+  HTML += '<div class="mini-label">Which system? Circle S (Sino) or N (Native)</div>';
+  HTML += '<table class="wk"><tr><th>Situation</th><th>Your answer</th></tr>'
+   + '<tr><td>Telling someone your age</td><td class="blank">S / N</td></tr>'
+   + '<tr><td>Reading a phone number</td><td class="blank">S / N</td></tr>'
+   + '<tr><td>Counting cups of coffee</td><td class="blank">S / N</td></tr>'
+   + '<tr><td>Saying the year</td><td class="blank">S / N</td></tr>'
+   + '</table>';
+  HTML += pageClose('foundations');
+})();
+
+/* --- Unit 1: Sino-Korean --- */
+(function(){
+  HTML += pageOpen('Foundations','Unit 1 \u2014 Sino-Korean: The Calculator','The system that behaves like a calculator \u2014 clean, regular, and built the same way every teen number in Chinese-derived counting systems is built.', '算','계산');
+  HTML += '<div class="mini-label">Trace 1\u201310 three times each, saying the sound aloud</div>';
+  HTML += '<table class="wk"><tr><th>#</th><th>Korean</th><th>Trace</th></tr>'
+   + SINO.map(function(s){ return '<tr><td>'+s.n+'</td><td class="kr-cell">'+s.kr+'</td><td class="blank"></td></tr>'; }).join('')
+   + '</table>';
+  HTML += '<div class="mini-label">Big units \u2014 100 / 1,000 / 10,000 / 0</div>';
+  HTML += '<div class="trace-row">'+SINO_BIG.map(function(s){ return '<div class="trace-box wide"><span class="g" style="opacity:1">'+s.kr+'</span></div>'; }).join('')+'</div>';
+  HTML += '<div class="mini-label">Build compound numbers \u2014 fill in the missing piece</div>';
+  HTML += '<table class="wk"><tr><th>Number</th><th>Korean</th><th>Your answer</th></tr>'
+   + '<tr><td>11</td><td class="kr-cell">십___</td><td class="blank"></td></tr>'
+   + '<tr><td>25</td><td class="kr-cell">이십___</td><td class="blank"></td></tr>'
+   + '<tr><td>100</td><td class="kr-cell">___</td><td class="blank"></td></tr>'
+   + '<tr><td>2024</td><td class="kr-cell">이천이십___</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += '<div class="mini-label">Copy each full sentence twice</div>';
+  HTML += '<p class="kr">일 더하기 이는 삼이에요. \u2014 One plus two is three.</p>'
+   + writeLines(2);
+  HTML += pageClose('sino-korean');
+})();
+
+/* --- Unit 2: Native Korean --- */
+(function(){
+  HTML += pageOpen('Foundations','Unit 2 \u2014 Native Korean: The Counter','Native Korean numbers are irregular past 20 \u2014 and they stop entirely at 99. Above that, Sino-Korean takes over completely.', '固','고유어');
+  HTML += '<div class="mini-label">Trace 1\u201310 three times each, saying the sound aloud</div>';
+  HTML += '<table class="wk"><tr><th>#</th><th>Korean</th><th>Trace</th></tr>'
+   + NATIVE.map(function(s){ return '<tr><td>'+s.n+'</td><td class="kr-cell">'+s.kr+'</td><td class="blank"></td></tr>'; }).join('')
+   + '</table>';
+  HTML += '<div class="mini-label">Tens and teens \u2014 notice these are new words, not compounds of 1\u201310</div>';
+  HTML += '<table class="wk"><tr><th>#</th><th>Korean</th><th>Trace</th></tr>'
+   + NATIVE_TEENS.map(function(s){ return '<tr><td>'+s.n+'</td><td class="kr-cell">'+s.kr+'</td><td class="blank"></td></tr>'; }).join('')
+   + '</table>';
+  HTML += '<div class="callout"><b>Ceiling \u2014</b> Native Korean counting stops at 99 (아흔아홉). There is no native word for 100 or higher \u2014 Sino-Korean\u2019s 백 takes over automatically.</div>';
+  HTML += '<div class="mini-label">Write the native number for each amount</div>';
+  HTML += '<table class="wk"><tr><th>Meaning</th><th>Your answer</th></tr>'
+   + '<tr><td>three apples</td><td class="blank"></td></tr>'
+   + '<tr><td>seven people</td><td class="blank"></td></tr>'
+   + '<tr><td>twenty years old</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose('native-korean');
+})();
+
+/* --- Unit 3: Boss Battle --- */
+(function(){
+  HTML += pageOpen('Foundations','Unit 3 \u2014 Boss Battle: Which System, Which Job','No new numbers here \u2014 just the single hardest skill in this course: picking the right system on reflex, without translating.', '戰','대결');
+  HTML += '<div class="mini-label">Mixed drill \u2014 write the correct-system number for each blank</div>';
+  HTML += '<table class="wk"><tr><th>Sentence</th><th>Your answer</th></tr>'
+   + '<tr><td class="kr-cell">사과 ___ 개 주세요. (3)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">저는 ___ 살이에요. (25)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">지금 ___ 시예요. (2)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">___ 분만 기다려 주세요. (5)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">친구 ___ 명 왔어요. (4)</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += '<div class="callout stamp"><b>Self-check rule \u2014</b> if you can swap in a counter word (개, 명, 마리, 살, 시), it\u2019s Native. If it\u2019s pure math, money, or a label (a phone digit, a date, a floor number), it\u2019s Sino.</div>';
+  HTML += '<div class="mini-label">Timed pass \u2014 read the five sentences above aloud without pausing</div>';
+  HTML += '<p style="font-family:var(--mono);font-size:.85em">Attempt 1: _____ sec &nbsp;&nbsp; Attempt 2: _____ sec</p>';
+  HTML += pageClose('boss battle');
+})();
+
+/* --- Unit 4: Shape-Shifters --- */
+(function(){
+  HTML += pageOpen('Counters','Unit 4 \u2014 Shape-Shifters: 한/두/세/네/스무','Five Native Korean numbers change their shape the moment a counter word follows them. These five cause more mistakes than any other single rule in the whole course.', '變','변형');
+  SHAPE_SHIFTERS.forEach(function(s){
+    HTML += '<div class="callout"><b>'+s.kr+'</b> \u2014 from '+s.from+'. <span class="kr" style="color:var(--ink)">'+s.ex+'</span></div>';
+  });
+  HTML += '<div class="mini-label">Trace each shape-shifted form three times</div>';
+  HTML += '<div class="trace-row">'+SHAPE_SHIFTERS.map(function(s){ return '<div class="trace-box big"><span class="g">'+s.kr+'</span></div>'; }).join('')+'</div>';
+  HTML += '<div class="mini-label">Fill each blank with the correct shape-shifted form</div>';
+  HTML += '<table class="wk"><tr><th>Base number</th><th>Sentence</th><th>Your answer</th></tr>'
+   + '<tr><td class="kr-cell">하나</td><td class="kr-cell">___ 개 주세요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">둘</td><td class="kr-cell">친구 ___ 명이요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">셋</td><td class="kr-cell">___ 시에 만나요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">넷</td><td class="kr-cell">저는 ___ 살이에요.</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">스물</td><td class="kr-cell">동생은 ___ 살이에요.</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose('shape-shifters');
+})();
+
+/* --- Unit 5: Counter Words --- */
+(function(){
+  HTML += pageOpen('Counters','Unit 5 \u2014 Counter Words 101','A counter word is the noun that comes between a number and the thing being counted \u2014 English has a few too (\u201ctwo slices of bread\u201d), but Korean needs one almost everywhere.', '單','단위');
+  HTML += '<table class="wk"><tr><th>Counter</th><th>Romanization</th><th>Used for</th><th>Write it</th></tr>'
+   + COUNTERS.map(function(c){ return '<tr><td class="kr-cell">'+c.kr+'</td><td style="font-family:var(--mono)">'+c.rom+'</td><td>'+c.mean+'</td><td class="blank"></td></tr>'; }).join('')
+   + '</table>';
+  HTML += '<div class="mini-label">Example sentences \u2014 copy each once</div>';
+  COUNTERS.slice(0,4).forEach(function(c){ HTML += '<p class="kr" style="font-size:.95em">'+c.ex+'</p>'; });
+  HTML += '<div class="callout trap"><b>Trap \u2014</b> the counter almost always follows the number, and the number is almost always Native Korean here (한 개, not 일 개).</div>';
+  HTML += '<div class="mini-label">Match the item to its counter \u2014 write the counter word</div>';
+  HTML += '<table class="wk"><tr><th>Item</th><th>Correct counter</th></tr>'
+   + '<tr><td>a dog</td><td class="blank"></td></tr>'
+   + '<tr><td>a cup of tea</td><td class="blank"></td></tr>'
+   + '<tr><td>a novel</td><td class="blank"></td></tr>'
+   + '<tr><td>a movie ticket</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose('counters');
+})();
+
+/* --- Review: Units 0-5 --- */
+(function(){
+  HTML += pageOpen('Spaced Review','Review \u2014 Foundations & Counters','Cover Units 0\u20135. Write each answer from memory, then check yourself against those pages.', false);
+  HTML += '<table class="wk"><tr><th>Prompt</th><th>Your answer</th></tr>'
+   + '<tr><td>Native 7</td><td class="blank"></td></tr>'
+   + '<tr><td>Sino 7</td><td class="blank"></td></tr>'
+   + '<tr><td>"Four" before a counter</td><td class="blank"></td></tr>'
+   + '<tr><td>"Twenty" before 살 (age)</td><td class="blank"></td></tr>'
+   + '<tr><td>Counter for animals</td><td class="blank"></td></tr>'
+   + '<tr><td>Counter for cups</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose('review');
+})();
+
+/* --- Unit 6: Telling Time --- */
+(function(){
+  HTML += pageOpen('Time & Calendar','Unit 6 \u2014 Telling Time','Korean clock time is the classic split-system sentence: the hour is Native Korean, the minute is Sino-Korean \u2014 always, with no exceptions.', '時','시간');
+  HTML += '<div class="two-col"><div>'
+   + '<div class="mini-label">Hours \u2014 Native Korean</div>'
+   + '<table class="wk"><tr><th>#</th><th>Korean</th></tr>'
+   + TIME_HOURS.map(function(t){ return '<tr><td>'+t.n+'</td><td class="kr-cell">'+t.kr+'</td></tr>'; }).join('')
+   + '</table></div><div>'
+   + '<div class="mini-label">Minutes \u2014 Sino-Korean</div>'
+   + '<table class="wk"><tr><th>#</th><th>Korean</th></tr>'
+   + TIME_MINUTES.map(function(t){ return '<tr><td>'+t.n+'</td><td class="kr-cell">'+t.kr+'</td></tr>'; }).join('')
+   + '</table></div></div>';
+  HTML += '<div class="mini-label">Trace two full time expressions</div>'
+   + traceRow('두 시 십오 분',2,true,true);
+  HTML += '<div class="mini-label">Write the time shown, hour + minute</div>';
+  HTML += '<table class="wk"><tr><th>Clock reads</th><th>Your answer</th></tr>'
+   + '<tr><td>3:00</td><td class="blank"></td></tr>'
+   + '<tr><td>6:30</td><td class="blank"></td></tr>'
+   + '<tr><td>9:45</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose('telling time');
+})();
+
+/* --- Unit 7: Age, Frequency & Order --- */
+(function(){
+  HTML += pageOpen('Time & Calendar','Unit 7 \u2014 Age, Frequency & Order','Age uses Native Korean + 살. Frequency (\u201cthree times a week\u201d) uses Native Korean + 번. Order (\u201cfirst, second\u2026\u201d) uses Native Korean + 번째.', '順','순서');
+  HTML += '<div class="mini-label">Ordinal numbers \u2014 trace and copy</div>';
+  HTML += '<table class="wk"><tr><th>Order</th><th>Korean</th><th>Trace</th></tr>'
+   + ORDINALS.map(function(o){ return '<tr><td>'+o.mean+'</td><td class="kr-cell">'+o.kr+'</td><td class="blank"></td></tr>'; }).join('')
+   + '</table>';
+  HTML += '<div class="mini-label">Fill in the blanks</div>';
+  HTML += '<table class="wk"><tr><th>Sentence</th><th>Your answer</th></tr>'
+   + '<tr><td class="kr-cell">저는 일주일에 ___ 번 운동해요. (3 times)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">제가 ___ 이에요! (1st place)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">동생은 ___ 살이에요. (4 years old)</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += '<div class="callout trap"><b>Trap \u2014</b> \u201c한 번\u201d means \u201conce / one time\u201d, but \u201c첫 번째\u201d means \u201cfirst\u201d \u2014 번 and 번째 look similar but answer different questions (how many times vs. which position).</div>';
+  HTML += pageClose('age & frequency');
+})();
+
+/* --- Unit 8: Dates & Calendar --- */
+(function(){
+  HTML += pageOpen('Time & Calendar','Unit 8 \u2014 Dates & Calendar','Months and days both use Sino-Korean \u2014 with two irregular months to memorize on sight.', '曆','달력');
+  HTML += '<div class="mini-label">Months \u2014 note the two irregulars marked *</div>';
+  HTML += '<table class="wk"><tr><th>#</th><th>Korean</th><th>Trace</th></tr>'
+   + MONTHS.map(function(m){ return '<tr><td>'+m.n+'</td><td class="kr-cell">'+m.kr+'</td><td class="blank"></td></tr>'; }).join('')
+   + '</table>';
+  HTML += '<div class="callout"><b>Irregulars \u2014</b> 6\u6708 is 유월 (not 육월) and 10\u6708 is 시월 (not 십월). These two drop a sound for easier pronunciation \u2014 there is no rule beyond memorizing them.</div>';
+  HTML += '<div class="mini-label">Days of the month \u2014 write the full date in Korean</div>';
+  HTML += '<table class="wk"><tr><th>Date</th><th>Your answer</th></tr>'
+   + '<tr><td>June 15</td><td class="blank"></td></tr>'
+   + '<tr><td>October 1</td><td class="blank"></td></tr>'
+   + '<tr><td>December 25</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose('dates');
+})();
+
+/* --- Review: Units 6-8 --- */
+(function(){
+  HTML += pageOpen('Spaced Review','Review \u2014 Time & Calendar','Cover Units 6\u20138. Write each answer from memory.', false);
+  HTML += '<table class="wk"><tr><th>Prompt</th><th>Your answer</th></tr>'
+   + '<tr><td>4:00</td><td class="blank"></td></tr>'
+   + '<tr><td>7:20</td><td class="blank"></td></tr>'
+   + '<tr><td>"Second" (ordinal)</td><td class="blank"></td></tr>'
+   + '<tr><td>June (month)</td><td class="blank"></td></tr>'
+   + '<tr><td>October (month)</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose('review');
+})();
+
+/* --- Unit 9: Money & Big Numbers --- */
+(function(){
+  HTML += pageOpen('Real World','Unit 9 \u2014 Boss Battle: Money & Big Numbers','Korean currency runs in units of 10,000 (만), not 1,000 \u2014 the single biggest adjustment for English speakers reading Korean prices.', '萬','큰수');
+  HTML += '<div class="mini-label">Trace the big-number ladder</div>';
+  HTML += '<table class="wk"><tr><th>Korean</th><th>Value</th><th>Trace</th></tr>'
+   + BIG_NUMBERS.map(function(b){ return '<tr><td class="kr-cell">'+b.kr+'</td><td style="font-family:var(--mono)">'+b.val+'</td><td class="blank"></td></tr>'; }).join('')
+   + '</table>';
+  HTML += '<div class="callout trap"><b>Trap \u2014</b> \u201c150,000\u201d is not read digit-by-digit \u2014 it\u2019s built from 만 (10,000): 십오만 = 15 \u00d7 10,000. English speakers default to grouping by 1,000s; Korean groups by 10,000s.</div>';
+  HTML += '<div class="mini-label">Write the price in Korean</div>';
+  HTML += '<table class="wk"><tr><th>Price</th><th>Your answer</th></tr>'
+   + '<tr><td>\u20a95,000</td><td class="blank"></td></tr>'
+   + '<tr><td>\u20a950,000</td><td class="blank"></td></tr>'
+   + '<tr><td>\u20a9150,000</td><td class="blank"></td></tr>'
+   + '<tr><td>\u20a91,000,000</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose('money & big numbers');
+})();
+
+/* --- Unit 10: Phone Numbers --- */
+(function(){
+  HTML += pageOpen('Real World','Unit 10 \u2014 Phone Numbers & Digit Strings','Phone numbers, room numbers, and PINs are read one digit at a time in Sino-Korean \u2014 including a special reading for zero.', '番','전화');
+  HTML += '<div class="mini-label">Trace each digit</div>';
+  HTML += '<div class="trace-row">'+PHONE_DIGITS.map(function(p){ return '<div class="trace-box"><span class="g" style="opacity:1">'+p.kr+'</span></div>'; }).join('')+'</div>';
+  HTML += '<div class="callout"><b>Zero \u2014</b> 공 is the everyday spoken reading for 0 in strings of digits (phone numbers, room numbers); 영 is the more formal/mathematical reading.</div>';
+  HTML += '<div class="mini-label">Read the digit string aloud, then write it out in Korean, digit by digit</div>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.8em;color:var(--ink-faint);margin-top:-10px">010-1234-5678</p>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.8em;color:var(--ink-faint);margin-top:-10px">Room 402</p>';
+  HTML += pageClose('phone numbers');
+})();
+
+/* --- Unit 11: Ear Training --- */
+(function(){
+  HTML += pageOpen('Real World','Unit 11 \u2014 Ear Training','This unit is audio-driven in the app \u2014 use this page as your dictation sheet. Play each line in the course, then write exactly what you hear before checking.', '聽','듣기');
+  HTML += '<div class="mini-label">Dictation \u2014 listen in the app, write what you hear</div>';
+  EAR_TRAINING_LINES.forEach(function(line, i){
+    HTML += writeLines(1);
+  });
+  HTML += '<div class="callout stamp"><b>A teacher\u2019s note \u2014</b> Ear training is the one skill a printed page can\u2019t fully replace. Always do this unit\u2019s listening in the app first \u2014 this sheet is for catching what you actually heard, mistakes included.</div>';
+  HTML += pageClose('ear training');
+})();
+
+/* --- Unit 12: Finale --- */
+(function(){
+  HTML += pageOpen('Real World','Unit 12 \u2014 Finale: A Busy Saturday','One story, every system in play. Translate each line, choosing Sino- or Native Korean number forms as the context demands.', '終','완성');
+  HTML += '<div class="mini-label">Translate each sentence into Korean</div>';
+  const lines = [
+   'I am 25 years old, and today is June 15th.',
+   'I woke up at 7:30 and drank one cup of coffee.',
+   'I bought three apples for 5,000 won.',
+   'My friend and I met at 2 o\u2019clock \u2014 four people came in total.',
+   'The total was 150,000 won, and I paid with my card.',
+  ];
+  lines.forEach(function(l){
+    HTML += writeLines(1); HTML += '<p style="font-size:.8em;color:var(--ink-faint);margin-top:-10px">'+l+'</p>';
+  });
+  HTML += pageClose('finale');
+})();
+
+/* --- Cheat sheet pullout --- */
+(function(){
+  HTML += pageOpen('Practice & Finish','Numbers Cheat Sheet','Pull-out reference \u2014 keep this page open while you do the drills that follow.', '表','정리');
+  HTML += '<div class="cheat-grid">'
+   + '<div class="cheat-col"><h4>Sino 1\u201310</h4>'+SINO.map(function(s){return '<div class="cheat-row"><span class="kr">'+s.kr+'</span><span>'+s.n+'</span></div>';}).join('')+'</div>'
+   + '<div class="cheat-col"><h4>Native 1\u201310</h4>'+NATIVE.map(function(s){return '<div class="cheat-row"><span class="kr">'+s.kr+'</span><span>'+s.n+'</span></div>';}).join('')+'</div>'
+   + '<div class="cheat-col"><h4>Shape-shifters</h4>'+SHAPE_SHIFTERS.map(function(s){return '<div class="cheat-row"><span class="kr">'+s.kr+'</span><span style="font-size:.72em">'+s.from+'</span></div>';}).join('')+'</div>'
+   + '</div>';
+  HTML += '<div class="mini-label" style="margin-top:16px">Common counters</div>';
+  HTML += '<div class="cheat-grid">'
+   + '<div class="cheat-col">'+COUNTERS.slice(0,4).map(function(c){return '<div class="cheat-row"><span class="kr">'+c.kr+'</span><span>'+c.mean+'</span></div>';}).join('')+'</div>'
+   + '<div class="cheat-col">'+COUNTERS.slice(4).map(function(c){return '<div class="cheat-row"><span class="kr">'+c.kr+'</span><span>'+c.mean+'</span></div>';}).join('')+'</div>'
+   + '</div>';
+  HTML += pageClose('cheat sheet');
+})();
+
+/* --- Matching / scramble drill --- */
+function shuffleForPrint(a){ const b=a.slice(); for(let i=b.length-1;i>0;i--){ const j=(i*7+3)%(i+1); const t=b[i]; b[i]=b[j]; b[j]=t; } return b; }
+(function(){
+  HTML += pageOpen('Practice & Finish','Matching & Scramble Drill','Draw a line connecting each Korean number word to its meaning \u2014 the meanings are shuffled. Then unscramble the syllables below.', '練','연습');
+  const items = [{kr:'다섯',mean:'five (native)'},{kr:'칠',mean:'seven (sino)'},{kr:'스무',mean:'twenty (before a counter)'},{kr:'첫 번째',mean:'first'},{kr:'만',mean:'ten thousand'},{kr:'유월',mean:'June'}];
+  const meanings = shuffleForPrint(items.map(function(w){return w.mean;}));
+  HTML += '<div class="two-col"><div>';
+  items.forEach(function(w){ HTML += '<p class="kr" style="font-size:1.15em;margin-bottom:16px">'+w.kr+'</p>'; });
+  HTML += '</div><div>';
+  meanings.forEach(function(m){ HTML += '<p style="margin-bottom:16px">'+m+'</p>'; });
+  HTML += '</div></div>';
+  HTML += '<div class="mini-label">Unscramble \u2014 put the syllables in the right order</div>';
+  HTML += '<table class="wk"><tr><th>Scrambled</th><th>Your answer</th></tr>'
+   + '<tr><td class="kr-cell">섯 다</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">시 십 열</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">째 번 첫</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += pageClose();
+})();
+
+/* --- Final assessment (2 pages) --- */
+(function(){
+  HTML += pageOpen('Practice & Finish','Final Written Assessment \u2014 I','No peeking. This mirrors the course\u2019s own final exam, but in your own hand.', '試','시험');
+  HTML += '<div class="mini-label">1 \u2014 Write the correct-system number for each blank</div>';
+  HTML += '<table class="wk"><tr><th>Sentence</th><th>Your answer</th></tr>'
+   + '<tr><td class="kr-cell">사과 ___ 개 주세요. (2)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">저는 ___ 살이에요. (30)</td><td class="blank"></td></tr>'
+   + '<tr><td class="kr-cell">지금 ___ 시 ___ 분이에요. (5:20)</td><td class="blank"></td></tr>'
+   + '</table>';
+  HTML += '<div class="mini-label">2 \u2014 Write these amounts in Korean</div>';
+  HTML += '<table class="wk"><tr><th>Meaning</th><th>Your answer in Korean</th></tr>'
+   + ['\u20a930,000','five books','the 3rd (ordinal)','010-9876-5432'].map(function(m){ return '<tr><td>'+m+'</td><td class="blank"></td></tr>'; }).join('')
+   + '</table>';
+  HTML += pageClose('assessment');
+
+  HTML += pageOpen('Practice & Finish','Final Written Assessment \u2014 II','', '試','시험');
+  HTML += '<div class="mini-label">3 \u2014 Translate each sentence into Korean</div>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.8em;color:var(--ink-faint);margin-top:-10px">I am 25 years old.</p>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.8em;color:var(--ink-faint);margin-top:-10px">Today is October 1st.</p>';
+  HTML += writeLines(1); HTML += '<p style="font-size:.8em;color:var(--ink-faint);margin-top:-10px">The total is 150,000 won.</p>';
+  HTML += '<div class="mini-label">4 \u2014 Circle the one that does NOT belong</div>';
+  HTML += '<p class="kr" style="font-size:1.1em">하나 &nbsp; 둘 &nbsp; <u>삼</u> &nbsp; 넷 &nbsp;&nbsp;&nbsp;&nbsp; 일 &nbsp; 이 &nbsp; <u>셋</u> &nbsp; 사</p>';
+  HTML += '<div class="callout stamp" style="margin-top:22px"><b>Passing mark \u2014</b> 70%, same as the course\u2019s final exam. Score yourself against the course\u2019s cheat sheet, then move on to your certificate.</div>';
+  HTML += pageClose('assessment');
+})();
+
+/* --- Certificate --- */
+(function(){
+  pageNum++;
+  HTML += '<section class="page cert-page">'
+   + '<div class="pg-eyebrow">Hookitlingo &nbsp;\u00d7&nbsp; Korean Numbers Workbook</div>'
+   + '<h1 class="kr">수료증</h1>'
+   + '<div class="sub">Certificate of Completion</div>'
+   + '<p style="max-width:420px">This certifies that</p>'
+   + '<div class="name-line">&nbsp;</div>'
+   + '<p style="max-width:460px">has completed every unit of the Korean Numbers Workbook \u2014 both number systems, every shape-shifter, every counter, and every date and price, traced and written by hand.</p>'
+   + '<div style="margin-top:34px;display:flex;gap:60px">'
+   + '<div><div class="fillline" style="min-width:160px"></div><div class="mini-label" style="margin-top:4px">Date</div></div>'
+   + '<div><div class="fillline" style="min-width:160px"></div><div class="mini-label" style="margin-top:4px">Signature</div></div>'
+   + '</div>'
+   + '<div class="pg-footer" style="border:none;margin-top:30px"><span></span><span>p.'+pageNum+'</span></div>'
+   + '</section>';
+})();
+
+document.getElementById('book').innerHTML = HTML;
+document.getElementById('pageCount').textContent = pageNum + ' pages generated';
+</script>
+</body>
+</html>

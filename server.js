@@ -262,6 +262,54 @@ app.get('/api/certificate', async (req, res) => {
   }
 });
 
+// Workbook unlock check — same "ask Razorpay directly" pattern as the
+// certificate above, but there's no file to generate here: this just
+// answers yes/no on whether a given paymentId legitimately paid for the
+// workbook, so the frontend knows it's safe to remove the page lock.
+// Because it's a pure check (not a download), it isn't rate-limited the
+// way certificate downloads are — the frontend calls it on every page
+// load to re-verify before showing unlocked content.
+const WORKBOOK_PRICE_PAISE = 9900; // ₹99 — keep in sync with workbook.html
+const WORKBOOK_PURPOSE = 'workbook-hanlingo';
+
+app.get('/api/workbook-access', async (req, res) => {
+  const { paymentId } = req.query;
+
+  if (!paymentId) {
+    return res.status(400).json({ unlocked: false, error: 'Missing paymentId' });
+  }
+
+  try {
+    const payment = await razorpay.payments.fetch(paymentId);
+
+    const basicsOk =
+      payment &&
+      payment.status === 'captured' &&
+      payment.currency === 'INR' &&
+      payment.amount === WORKBOOK_PRICE_PAISE &&
+      payment.order_id;
+
+    if (!basicsOk) {
+      return res.status(403).json({ unlocked: false, error: 'No verified workbook payment found for this ID' });
+    }
+
+    // As with the certificate, the purpose tag lives on the order (set
+    // at creation time, before payment) — this is what stops a payment
+    // for one product from unlocking a different one.
+    const order = await razorpay.orders.fetch(payment.order_id);
+    const isValid = order && order.notes && order.notes.purpose === WORKBOOK_PURPOSE;
+
+    if (!isValid) {
+      return res.status(403).json({ unlocked: false, error: 'No verified workbook payment found for this ID' });
+    }
+
+    res.json({ unlocked: true });
+  } catch (err) {
+    console.error('Workbook access check failed:', err);
+    res.status(500).json({ unlocked: false, error: 'Failed to verify payment' });
+  }
+});
+
 // Catch-all: serve index.html for any unknown route (SPA behavior)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
