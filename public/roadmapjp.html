@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hookitlingo — The Full Korean Roadmap</title>
+<title>Hookitlingo — The Full Japanese Roadmap</title>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WLEMFRK6XH"></script>
@@ -16,7 +16,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- Razorpay Checkout SDK -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <style>
@@ -32,7 +32,7 @@
   --radius:16px; --radius-sm:10px;
   --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
   --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --kr:"Noto Serif KR","Apple SD Gothic Neo","Malgun Gothic","Nanum Gothic",sans-serif;
+  --jp:"Noto Serif JP","Apple SD Gothic Neo","Malgun Gothic","Nanum Gothic",sans-serif;
   --maxw:820px;
 }
 html[data-theme="light"]{
@@ -59,7 +59,7 @@ body{
 h1,h2,h3,h4{font-family:var(--serif); font-weight:600; letter-spacing:.2px; margin:0 0 .4em;}
 p{margin:0 0 1em;}
 a{color:var(--celadon); text-decoration:none;}
-.kr{font-family:var(--kr);}
+.jp{font-family:var(--jp);}
 button{font-family:var(--sans); cursor:pointer;}
 
 /* Petals */
@@ -79,7 +79,7 @@ button{font-family:var(--sans); cursor:pointer;}
 .brand-block{
   width:42px;height:42px;border-radius:50%; flex:none; position:relative;
   background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--vermilion) 88%, #fff 12%), var(--vermilion) 72%);
-  display:flex;align-items:center;justify-content:center; font-family:var(--kr); font-weight:700; font-size:18px; color:#fff9f7;
+  display:flex;align-items:center;justify-content:center; font-family:var(--jp); font-weight:700; font-size:18px; color:#fff9f7;
   transform:rotate(-7deg); box-shadow:0 4px 12px color-mix(in srgb, var(--vermilion) 50%, transparent);
 }
 .brand-txt strong{display:block; font-family:var(--serif); font-size:1.15em;}
@@ -220,13 +220,13 @@ button{font-family:var(--sans); cursor:pointer;}
 
 .rcard-badge{
   width:44px;height:44px;border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
-  font-family:var(--kr); font-weight:700; font-size:19px; color:#fff;
+  font-family:var(--jp); font-weight:700; font-size:19px; color:#fff;
 }
 .rcard.live .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--inkblue) 88%, #fff 12%), var(--inkblue) 72%);}
 .rcard.soon .rcard-badge{background:var(--surface3); color:var(--text-faint);}
 
 .rcard-body{flex:1; min-width:0;}
-.rcard-body .rc-title{font-family:var(--kr); font-size:1.08em; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+.rcard-body .rc-title{font-family:var(--jp); font-size:1.08em; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
 .rcard-body .rc-en{color:var(--text-dim); font-size:.82em; margin-top:1px;}
 .rcard-body .rc-tag{color:var(--text-faint); font-size:.8em; margin-top:4px;}
 .rc-live-tag{font-size:.62em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--celadon-dim); color:var(--celadon);}
@@ -283,7 +283,7 @@ footer a{text-decoration:underline;}
 
 <div id="topbar">
   <div class="brand">
-    <div class="brand-block kr">虎</div>
+    <div class="brand-block jp">日</div>
     <div class="brand-txt"><strong>Hookitlingo</strong><span>Korean &amp; Japanese, one file at a time</span></div>
   </div>
   <div class="top-actions">
@@ -295,8 +295,8 @@ footer a{text-decoration:underline;}
 
 <div class="hero">
   <div class="eyebrow">The Full Curriculum</div>
-  <h1>Zero to <span class="kr" style="color:var(--gold); font-style:italic;">near-fluent</span>, mapped out.</h1>
-  <p class="sub">Nineteen courses across four phases, each one building your confidence for the next — a clear path that takes you all the way from your first word to real, natural conversations.</p>
+  <h1>Zero to <span class="jp" style="color:var(--gold); font-style:italic;">near-native</span>, mapped out.</h1>
+  <p class="sub">Thirty-two courses across eight phases, each one building your confidence for the next — a clear path that takes you all the way from your first hiragana to near-native fluency.</p>
 </div>
 
 <div class="overall-progress" id="overallProgress"></div>
@@ -325,42 +325,75 @@ footer a{text-decoration:underline;}
    ============================================================ */
 const PHASES = [
   {
-    num: 1, status: 'active', title: 'Foundations', sub: 'Absolute beginner',
+    num: 1, status: 'active', title: 'Foundations', sub: 'Absolute beginner · Pre-A1',
     courses: [
-      {kr:'한글 Hangeul', en:'Learn to Read Korean in One Hour', badge:'한', status:'live', file:'courses/hanlingo.html'},
-      {kr:'한국어 문법', en:'Grammar Part 1 — Sentence Building', badge:'문', status:'live', file:'courses/korean-grammar.html'},
-      {kr:'한국어 조사', en:'Grammar Part 2 — Particles', badge:'조', status:'live', file:'courses/korean-particlesg.html'},
-      {kr:'숫자와 시간', en:'Numbers, Counters & Time', badge:'수', status:'live', file:'courses/korean-numbers.html'},
-      {kr:'동사 활용', en:'Verb Tenses & Conjugation', badge:'동', status:'live', file:'courses/korean-verbs.html' },
+      {jp:'かな基礎', en:'Kana Foundations', badge:'あ', status:'soon'},
+      {jp:'発音の基礎', en:'Sounds of Japanese', badge:'音', status:'soon'},
+      {jp:'はじめての単語と文', en:'First Words, First Sentences', badge:'語', status:'soon'},
+      {jp:'数字・時間・挨拶', en:'Numbers, Time & Greetings', badge:'数', status:'soon'},
     ]
   },
   {
-    num: 2, status: 'soon', title: 'Elementary', sub: 'Basic real conversation · TOPIK I',
+    num: 2, status: 'soon', title: 'Basic Survival Japanese', sub: 'JLPT N5 · CEFR A1',
     courses: [
-      {kr:'존댓말과 반말', en:'Speech Levels & Politeness', badge:'존', status:'soon'},
-      {kr:'위치와 존재', en:'Location, Existence & Possession', badge:'위', status:'soon'},
-      {kr:'연결어미 I', en:'Core Connectives I (고, 아서/어서, (으)면)', badge:'연', status:'soon'},
-      {kr:'묘사와 비교', en:'Descriptive Sentences & Comparison', badge:'묘', status:'soon'},
-      {kr:'일상 어휘', en:'Daily Life Vocabulary', badge:'일', status:'soon'},
+      {jp:'助詞と基本文型', en:'Particles & Basic Sentence Patterns', badge:'助', status:'soon'},
+      {jp:'動詞のグループ I', en:'Verb Groups I: Present & Past', badge:'動', status:'soon'},
+      {jp:'形容詞と否定', en:'Adjectives, Negation & Description', badge:'形', status:'soon'},
+      {jp:'サバイバル会話', en:'Survival Communication (Shops, Food, Travel)', badge:'生', status:'soon'},
     ]
   },
   {
-    num: 3, status: 'soon', title: 'Intermediate', sub: 'Sustained conversation · TOPIK II entry',
+    num: 3, status: 'soon', title: 'Everyday Communication', sub: 'JLPT N4 · CEFR A2',
     courses: [
-      {kr:'연결어미 II', en:'Core Connectives II (지만, 는데, 거나)', badge:'연', status:'soon'},
-      {kr:'높임말', en:'Honorifics & Formal Speech', badge:'높', status:'soon'},
-      {kr:'자연스러운 회화', en:'Natural Spoken Korean', badge:'회', status:'soon'},
-      {kr:'미묘한 조사', en:'Nuance Particles (도, 만, 밖에, 조차)', badge:'미', status:'soon'},
-      {kr:'읽기와 쓰기', en:'Reading & Writing Practice', badge:'읽', status:'soon'},
+      {jp:'て形の世界', en:'The Te-Form Universe', badge:'て', status:'soon'},
+      {jp:'可能・願望・予定', en:'Expressing Ability, Desire & Plans', badge:'能', status:'soon'},
+      {jp:'過去の経験と物語', en:'Past Experience & Narrative', badge:'験', status:'soon'},
+      {jp:'日常会話プロジェクト', en:'Everyday Fluency Project', badge:'話', status:'soon'},
     ]
   },
   {
-    num: 4, status: 'soon', title: 'Upper-Intermediate', sub: 'Near-fluent, functional in most situations',
+    num: 4, status: 'soon', title: 'Confident Daily Conversation', sub: 'JLPT N3 (lower) · CEFR A2+/B1',
     courses: [
-      {kr:'복문', en:'Complex Sentences (nominalization, indirect quotation)', badge:'복', status:'soon'},
-      {kr:'비즈니스 한국어', en:'Business & Professional Korean', badge:'비', status:'soon'},
-      {kr:'뉴스와 소설', en:'Reading News & Short Fiction', badge:'뉴', status:'soon'},
-      {kr:'종합 회화', en:'Capstone: Extended Conversation', badge:'종', status:'soon'},
+      {jp:'授受動詞と視点', en:'Giving, Receiving & Perspective', badge:'授', status:'soon'},
+      {jp:'条件形と比較', en:'Conditionals & Comparison', badge:'較', status:'soon'},
+      {jp:'受身と使役入門', en:'Passive & Causative Introduction', badge:'受', status:'soon'},
+      {jp:'意見・議論・ニュアンス', en:'Opinions, Debate & Nuance', badge:'論', status:'soon'},
+    ]
+  },
+  {
+    num: 5, status: 'soon', title: 'Intermediate Fluency', sub: 'JLPT N3 (upper) → N2 entry · CEFR B1+',
+    courses: [
+      {jp:'敬語の基礎', en:'Keigo Foundations', badge:'敬', status:'soon'},
+      {jp:'名詞化と複文', en:'Nominalization & Complex Sentences', badge:'文', status:'soon'},
+      {jp:'書き言葉とフォーマル表現', en:'Written & Formal Japanese', badge:'書', status:'soon'},
+      {jp:'中級総合プロジェクト', en:'Intermediate Fluency Capstone', badge:'熟', status:'soon'},
+    ]
+  },
+  {
+    num: 6, status: 'soon', title: 'Advanced Fluency', sub: 'JLPT N2 · CEFR B2',
+    courses: [
+      {jp:'上級文法パターン', en:'Advanced Grammar Patterns (N2)', badge:'法', status:'soon'},
+      {jp:'学術・抽象語彙', en:'Academic & Abstract Vocabulary', badge:'学', status:'soon'},
+      {jp:'メディア没入 I', en:'Media Immersion I (News, Drama, Podcasts)', badge:'聴', status:'soon'},
+      {jp:'上級総合プロジェクト', en:'Advanced Fluency Capstone', badge:'達', status:'soon'},
+    ]
+  },
+  {
+    num: 7, status: 'soon', title: 'Professional Japanese', sub: 'JLPT N1 · CEFR B2+/C1',
+    courses: [
+      {jp:'N1文法と文語表現', en:'N1 Grammar & Literary Patterns', badge:'古', status:'soon'},
+      {jp:'ビジネス日本語', en:'Business Japanese (ビジネス日本語)', badge:'業', status:'soon'},
+      {jp:'上級読解', en:'Advanced Reading (Newspapers, Novels, Academic Texts)', badge:'読', status:'soon'},
+      {jp:'プロフェッショナル総合プロジェクト', en:'Professional Fluency Capstone', badge:'職', status:'soon'},
+    ]
+  },
+  {
+    num: 8, status: 'soon', title: 'Near-Native Japanese', sub: 'Post-N1 · native materials · CEFR C1',
+    courses: [
+      {jp:'常用漢字完全制覇', en:'Full Jōyō Kanji Completion', badge:'漢', status:'soon'},
+      {jp:'俗語・方言・古語', en:'Register Range: Slang, Dialects & Classical Echoes', badge:'方', status:'soon'},
+      {jp:'ネイティブ完全没入', en:'Unscaffolded Native Immersion', badge:'母', status:'soon'},
+      {jp:'ネイティブ級総合プロジェクト', en:'Near-Native Capstone', badge:'極', status:'soon'},
     ]
   },
 ];
@@ -386,9 +419,9 @@ function courseCard(c){
   if(c.status==='live'){
     return `
     <div class="rcard live">
-      <div class="rcard-badge kr">${c.badge}</div>
+      <div class="rcard-badge jp">${c.badge}</div>
       <div class="rcard-body">
-        <div class="rc-title">${c.kr} <span class="rc-live-tag">Available</span></div>
+        <div class="rc-title">${c.jp} <span class="rc-live-tag">Available</span></div>
         <div class="rc-en">${c.en}</div>
       </div>
       <div class="rcard-actions">
@@ -398,9 +431,9 @@ function courseCard(c){
   }
   return `
     <div class="rcard soon">
-      <div class="rcard-badge kr">${c.badge}</div>
+      <div class="rcard-badge jp">${c.badge}</div>
       <div class="rcard-body">
-        <div class="rc-title">${c.kr} <span class="rc-soon-tag">🔒 Coming soon</span></div>
+        <div class="rc-title">${c.jp} <span class="rc-soon-tag">🔒 Coming soon</span></div>
         <div class="rc-en">${c.en}</div>
       </div>
     </div>`;
@@ -418,7 +451,7 @@ function renderPhases(){
           <h2>Phase ${p.num} — ${p.title}</h2>
           <div class="phase-sub">${p.sub} · ${liveCount}/${p.courses.length} live</div>
         </div>
-        <div class="phase-ribbon ${p.status==='active'?'active':'soon'}">${p.status==='active'?'Active Phase':'Coming Soon'}</div>
+        <div class="phase-ribbon ${p.status==='active'?'active':'soon'}">${p.status==='active'?'Up Next':'Coming Soon'}</div>
       </div>
       <div class="course-list">
         ${p.courses.map(courseCard).join('')}
@@ -491,7 +524,7 @@ applyTheme();
     body.innerHTML = `
       <div class="hkl-icon">🌸</div>
       <h3>Keep Hookitlingo free for everyone?</h3>
-      <p>Every course here is free, forever, with no ads. If Hookitlingo has helped you learn Korean, a small contribution helps fund new lessons — completely optional.</p>
+      <p>Every course here is free, forever, with no ads. If Hookitlingo has helped you learn Japanese, a small contribution helps fund new lessons — completely optional.</p>
       <div class="hkl-actions">
         <button class="hkl-btn hkl-btn-yes" id="hklYes">Yes, I'd like to help 💛</button>
         <button class="hkl-btn hkl-btn-no" id="hklNo">Not right now</button>
