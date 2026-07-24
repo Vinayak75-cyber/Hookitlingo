@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>동사 활용 워크북 — The Korean Verbs Workbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+/* ============================================================
+   TOKENS — rice-paper / ink-stone / seal-stamp palette
+   (same companion-volume family as the other Hookitlingo workbooks)
+   ============================================================ */
+:root{
+  --paper:#f6f1e2; --paper2:#efe6cf; --paper3:#e7dabd;
+  --ink:#241f19; --ink-soft:#6d6047; --ink-faint:#a99a78; --guide:#cdbe95;
+  --seal:#a8342a; --seal-dim:#e9d3ce;
+  --indigo:#333e5c; --indigo-dim:#dfe2ec;
+  --celadon:#4b7a63; --celadon-dim:#dde9e0;
+  --gold:#8a6a1f; --gold-dim:#efe3c4;
+  --serif-kr:"Noto Serif KR", serif;
+  --serif-en:"Source Serif 4", Georgia, serif;
+  --mono:"IBM Plex Mono", monospace;
+}
+*{box-sizing:border-box;}
+html{background:#4a4436;}
+body{margin:0; font-family:var(--serif-en); color:var(--ink); background:#4a4436; -webkit-font-smoothing:antialiased;}
+.kr{font-family:var(--serif-kr);}
+
+#toolbar{position:sticky; top:0; z-index:100; display:flex; align-items:center; gap:14px; padding:12px 22px; background:var(--ink); color:var(--paper); font-family:var(--serif-en); box-shadow:0 4px 16px rgba(0,0,0,.35);}
+#toolbar strong{font-family:var(--serif-kr); font-size:1.05em; letter-spacing:.02em;}
+#toolbar .spacer{flex:1;}
+#toolbar button{font-family:var(--serif-en); font-size:.85em; background:var(--seal); color:#fdf6ee; border:none; padding:8px 16px; border-radius:3px; cursor:pointer; letter-spacing:.02em;}
+#toolbar button.secondary{background:transparent; border:1px solid #786c50; color:var(--paper);}
+#toolbar button:hover{filter:brightness(1.08);}
+#toolbar .hint{font-size:.75em; color:#b7ac8f;}
+
+#book{max-width:920px; margin:34px auto 90px; padding:0 16px;}
+.page{
+  background:var(--paper);
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(168,52,42,0.035), transparent 40%),
+    repeating-linear-gradient(0deg, rgba(36,31,25,0.015) 0px, rgba(36,31,25,0.015) 1px, transparent 1px, transparent 2px);
+  width:100%; aspect-ratio:210/297; min-height:1050px;
+  padding:52px 56px 40px; margin:0 auto 28px; position:relative;
+  box-shadow:0 18px 40px rgba(0,0,0,.45), 0 2px 0 rgba(0,0,0,.15);
+  border:1px solid #d8c9a3; display:flex; flex-direction:column;
+}
+.page::before{content:''; position:absolute; inset:0; pointer-events:none; box-shadow: inset 0 0 60px rgba(90,74,40,.10);}
+.seal{
+  position:absolute; top:44px; right:52px; width:64px; height:64px; border-radius:50%;
+  border:2.5px solid var(--seal); color:var(--seal); font-family:var(--serif-kr); font-weight:700;
+  display:flex; align-items:center; justify-content:center; text-align:center; line-height:1.05;
+  transform:rotate(-8deg); font-size:.72em; opacity:.88; letter-spacing:.02em;
+  background:radial-gradient(circle at 35% 30%, rgba(168,52,42,.06), transparent 70%);
+}
+.seal small{display:block; font-family:var(--mono); font-size:.62em; font-weight:500; margin-top:1px; letter-spacing:0;}
+
+.pg-eyebrow{font-family:var(--mono); font-size:.68em; letter-spacing:.16em; text-transform:uppercase; color:var(--seal); margin-bottom:6px;}
+.pg-title{font-family:var(--serif-kr); font-weight:700; font-size:1.55em; margin:0 0 4px; padding-right:80px;}
+.pg-sub{color:var(--ink-soft); font-size:.9em; margin:0 0 16px; max-width:660px;}
+.pg-body{flex:1;}
+.pg-footer{margin-top:auto; padding-top:14px; border-top:1px solid var(--paper3); display:flex; align-items:center; justify-content:space-between; font-family:var(--mono); font-size:.68em; color:var(--ink-faint);}
+.pg-footer .chk{display:flex; align-items:center; gap:6px;}
+.pg-footer .chk .box{width:11px; height:11px; border:1.3px solid var(--ink-faint); display:inline-block;}
+
+h3{font-family:var(--serif-kr); font-size:1.1em; margin:16px 0 8px;}
+h4{font-family:var(--serif-kr); font-size:1em; margin:0 0 6px; font-weight:600;}
+p{margin:0 0 .75em; font-size:.9em; line-height:1.5;}
+
+.write-line-block{margin:8px 0 14px;}
+.write-line{border-bottom:1px solid var(--ink-faint); height:28px; position:relative; margin-bottom:2px;}
+.write-line.dotted{border-bottom:1px dashed var(--guide);}
+
+table.wk{width:100%; border-collapse:collapse; font-size:.83em; margin:8px 0;}
+table.wk th{font-family:var(--mono); font-size:.68em; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); text-align:left; padding:5px 7px; border-bottom:1.3px solid var(--ink);}
+table.wk td{padding:7px 7px; border-bottom:1px solid var(--paper3); vertical-align:top;}
+table.wk td.kr-cell{font-family:var(--serif-kr); font-size:1.05em;}
+table.wk td.blank{border-bottom:1px solid var(--ink-faint); min-width:80px;}
+table.wk td.eng-cell{color:var(--ink-soft); font-size:.9em;}
+table.wk tr.grp td{background:var(--paper2); font-weight:600; font-family:var(--serif-kr);}
+
+.compare-strip{display:flex; gap:12px; margin:8px 0 14px; flex-wrap:wrap;}
+.compare-card{flex:1; min-width:210px; border:1px solid var(--paper3); border-radius:6px; padding:11px 13px; background:rgba(255,255,255,.35);}
+.compare-card .ch{font-family:var(--serif-kr); font-size:1.15em; line-height:1.4;}
+.compare-card .rom{font-family:var(--mono); font-size:.7em; color:var(--seal); margin:2px 0 5px;}
+.compare-card p{font-size:.8em; margin:0 0 4px; color:var(--ink-soft);}
+
+.callout{border-left:3px solid var(--celadon); background:var(--celadon-dim); padding:9px 13px; border-radius:0 6px 6px 0; font-size:.83em; margin:10px 0;}
+.callout.stamp{border-color:var(--seal); background:var(--seal-dim);}
+.callout.warn{border-color:var(--gold); background:var(--gold-dim);}
+.callout b{font-family:var(--serif-kr);}
+
+.two-col{display:flex; gap:26px;}
+.two-col > div{flex:1;}
+.mini-label{font-family:var(--mono); font-size:.66em; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-soft); margin:14px 0 6px;}
+ol.steps{padding-left:1.1em; font-size:.88em;}
+ol.steps li{margin-bottom:5px;}
+
+.p-pill{display:inline-block; font-family:var(--serif-kr); font-weight:700; font-size:.9em; padding:1px 9px; border-radius:20px; border:1.3px solid var(--seal); color:var(--seal); background:var(--seal-dim); margin:0 2px;}
+.blank-underline{display:inline-block; min-width:48px; border-bottom:1.4px solid var(--ink); margin:0 3px; height:1.05em;}
+.strike{text-decoration:line-through; text-decoration-color:var(--seal); text-decoration-thickness:2px; color:var(--ink-soft);}
+
+.wordbank{display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 14px; padding:10px 12px; background:var(--paper2); border-radius:6px; border:1px dashed var(--guide);}
+.wordbank .wb-item{font-family:var(--serif-kr); font-size:1em; background:#fff; border:1px solid var(--paper3); border-radius:20px; padding:2px 12px;}
+
+.dial-block{margin:6px 0 14px;}
+.dial-row{display:flex; gap:10px; padding:7px 0; border-bottom:1px dotted var(--paper3); align-items:baseline;}
+.dial-row .spk{font-family:var(--serif-kr); font-weight:600; font-size:.82em; color:var(--seal); min-width:52px;}
+.dial-row .txt{flex:1;}
+.dial-row .kr{font-size:1.02em;}
+.dial-row .eng{color:var(--ink-soft); font-size:.78em; display:block; margin-top:1px;}
+
+.cheat-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:10px 0;}
+.cheat-card{border:1px solid var(--paper3); border-radius:6px; padding:10px 12px; background:rgba(255,255,255,.4);}
+.cheat-card h4{font-size:.9em; margin-bottom:3px;}
+.cheat-card p{font-size:.76em; margin-bottom:4px; color:var(--ink-soft);}
+.cheat-card .ch-ex{font-family:var(--serif-kr); font-size:.86em; border-top:1px dashed var(--paper3); padding-top:4px;}
+
+.toc-group{margin-bottom:12px;}
+.toc-group h4{color:var(--seal); border-bottom:1px solid var(--paper3); padding-bottom:4px;}
+.toc-row{display:flex; justify-content:space-between; font-size:.83em; padding:3px 0; border-bottom:1px dotted var(--paper3);}
+.toc-row .n{color:var(--ink-faint); font-family:var(--mono); font-size:.85em;}
+
+.cover-page{align-items:center; text-align:center; justify-content:center;}
+.cover-page .brandmark{width:120px; height:120px; border-radius:50%; margin:0 auto 24px; background:radial-gradient(circle at 32% 26%, #c14a3b, var(--seal) 74%); display:flex; align-items:center; justify-content:center; font-family:var(--serif-kr); font-weight:900; font-size:2.4em; color:#fdf1e8; box-shadow:0 10px 30px rgba(168,52,42,.35); transform:rotate(-4deg);}
+.cover-page h1{font-family:var(--serif-kr); font-size:2.1em; margin:0 0 6px; font-weight:900;}
+.cover-page .eng{font-family:var(--serif-en); font-style:italic; color:var(--ink-soft); font-size:1.05em; margin-bottom:28px;}
+.cover-page .meta-line{font-family:var(--mono); font-size:.76em; color:var(--ink-faint); letter-spacing:.05em;}
+.cover-page .fillline{display:inline-block; min-width:220px; border-bottom:1px solid var(--ink); margin:0 6px;}
+
+table.logtable{width:100%; border-collapse:collapse; font-size:.8em;}
+table.logtable th{font-family:var(--mono); font-size:.66em; text-transform:uppercase; color:var(--ink-soft); border-bottom:1.3px solid var(--ink); padding:6px;}
+table.logtable td{border-bottom:1px solid var(--paper3); padding:9px 6px; height:24px;}
+
+.cert-page{align-items:center; text-align:center; justify-content:center; border:6px double var(--seal); padding:64px 52px;}
+.cert-page h1{font-family:var(--serif-kr); font-size:2em; margin-bottom:2px;}
+.cert-page .sub{font-family:var(--mono); letter-spacing:.15em; text-transform:uppercase; font-size:.68em; color:var(--ink-soft); margin-bottom:26px;}
+.cert-page .name-line{border-bottom:1.4px solid var(--ink); display:inline-block; min-width:320px; margin:16px 0 30px; font-family:var(--serif-kr); font-size:1.25em; padding-bottom:6px;}
+
+@media print{
+  html,body{background:#fff;}
+  #toolbar{display:none;}
+  #book{max-width:none; margin:0; padding:0;}
+  .page{box-shadow:none; border:none; margin:0; width:210mm; min-height:297mm; aspect-ratio:auto; page-break-after:always; padding:16mm 18mm 14mm;}
+  .page:last-child{page-break-after:auto;}
+}
+@page{ size:A4; margin:0; }
+@media screen and (max-width:760px){
+  .page{padding:32px 24px 24px;}
+  .compare-strip{flex-wrap:wrap;}
+  .two-col{flex-direction:column;}
+  .cheat-grid{grid-template-columns:1fr;}
+}
+
+.page-locked{filter: blur(7px) saturate(.7); pointer-events:none; user-select:none; position:relative;}
+.page-locked::after{content:'🔒'; position:absolute; top:18px; right:18px; font-size:1.4em; filter:none; opacity:.9;}
+.paywall-page{align-items:center; text-align:center; justify-content:center; border:2px dashed var(--seal); background:var(--paper2);}
+.paywall-page .lock-badge{width:56px; height:56px; border-radius:50%; background:var(--seal-dim); color:var(--seal); display:flex; align-items:center; justify-content:center; font-size:1.6em; margin:0 auto 18px;}
+.paywall-page h2{font-family:var(--serif-kr); font-size:1.6em; margin:0 0 4px;}
+.paywall-page .paywall-kicker{font-family:var(--mono); font-size:.68em; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:16px;}
+.paywall-page p{max-width:440px; margin:0 auto .9em;}
+.paywall-page .price{font-family:var(--serif-en); font-weight:700; font-size:2em; color:var(--seal); margin:10px 0 16px;}
+.paywall-page .price small{font-size:.4em; color:var(--ink-soft); font-weight:400;}
+
+.wk-btn{font-family:var(--serif-en); font-size:.92em; font-weight:600; background:var(--seal); color:#fdf6ee; border:none; padding:12px 26px; border-radius:999px; cursor:pointer; letter-spacing:.02em;}
+.wk-btn:hover{filter:brightness(1.08);}
+.wk-btn.secondary{background:transparent; border:1px solid var(--seal); color:var(--seal);}
+.wk-secure-note{margin-top:14px; font-size:.72em; color:var(--ink-faint);}
+.wk-spinner{width:26px; height:26px; border-radius:50%; margin:6px auto; border:3px solid var(--paper3); border-top-color:var(--seal); animation:wkspin .8s linear infinite;}
+@keyframes wkspin{to{transform:rotate(360deg);}}
+
+.paywall-bar{position:fixed; left:0; right:0; bottom:0; z-index:90; background:var(--ink); color:var(--paper); display:flex; align-items:center; gap:14px; padding:12px 22px; box-shadow:0 -6px 20px rgba(0,0,0,.35); font-family:var(--serif-en);}
+.paywall-bar span{font-size:.88em;}
+.paywall-bar .spacer{flex:1;}
+.paywall-bar .wk-btn{padding:9px 20px; font-size:.85em;}
+
+#pdfInstructions{max-width:920px; margin:0 auto; padding:0 16px;}
+.instructions-card{background:var(--paper); border:1px solid #d8c9a3; border-radius:8px; padding:18px 22px; margin:16px auto 0; color:var(--ink); font-family:var(--serif-en); font-size:.9em; position:relative;}
+.instructions-card h4{font-family:var(--serif-kr); margin:0 0 10px;}
+.instructions-card ol{margin:0; padding-left:1.2em;}
+.instructions-card li{margin-bottom:7px;}
+.instructions-card .close-instr{position:absolute; top:12px; right:14px; background:none; border:none; color:var(--ink-faint); cursor:pointer; font-size:1.1em;}
+
+@media print{ .paywall-bar, .paywall-page, #pdfInstructions{display:none !important;} .page-locked{display:none !important;} }
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <strong>동사 활용 워크북 — Verbs Workbook</strong>
+  <span class="hint">A daily paper companion to the Hookitlingo Verb Tenses &amp; Conjugation course</span>
+  <div class="spacer"></div>
+  <span class="hint" id="pageCount"></span>
+  <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
+  <button class="secondary" id="pdfHelpBtn">❔ Save as PDF</button>
+  <button id="printBtn" onclick="window.print()">Print / Save as PDF</button>
+  <button id="unlockToolbarBtn" style="display:none">🔒 Unlock — ₹99</button>
+</div>
+
+<div id="pdfInstructions" style="display:none">
+  <div class="instructions-card">
+    <button class="close-instr" id="closeInstrBtn" aria-label="Close">✕</button>
+    <h4>Saving your workbook as a PDF</h4>
+    <ol>
+      <li>Once the pages you want are unlocked, click <strong>Print / Save as PDF</strong> in the toolbar above.</li>
+      <li>In the print dialog, set <strong>Destination</strong> to "Save as PDF" (Chrome, Edge, Firefox) or "Microsoft Print to PDF" (Windows) — on a Mac, use the <strong>PDF</strong> dropdown in the bottom-left of the print preview.</li>
+      <li>Set <strong>Paper size</strong> to A4 and <strong>Margins</strong> to "None" or "Default."</li>
+      <li>Turn on <strong>Background graphics</strong> (often under "More settings") so the seal stamps and shaded boxes print correctly.</li>
+      <li>Click <strong>Save</strong>, choose where to keep the file — from there you can print physical copies from that PDF anytime.</li>
+    </ol>
+  </div>
+</div>
+
+<div id="book"></div>
+
+<script>
+/* ============================================================
+   0. SMALL BUILDERS
+   ============================================================ */
+let pageNum = 0;
+function seal(label, small){ return '<div class="seal">'+label+(small?'<small>'+small+'</small>':'')+'</div>'; }
+function pageOpen(eyebrow, title, sub, sealLabel, sealSmall, extraClass){
+  pageNum++;
+  return '<section class="page'+(extraClass?(' '+extraClass):'')+'">'
+    + (sealLabel!==false ? seal(sealLabel||'動','활용') : '')
+    + '<div class="pg-eyebrow">'+eyebrow+'</div>'
+    + '<h1 class="pg-title">'+title+'</h1>'
+    + (sub? '<p class="pg-sub">'+sub+'</p>' : '')
+    + '<div class="pg-body">';
+}
+function pageClose(footNote){
+  return '</div><div class="pg-footer"><span class="chk"><span class="box"></span> practiced today</span>'
+    + '<span>'+(footNote||'동사 활용 워크북')+'</span>'
+    + '<span>p.'+pageNum+'</span></div></section>';
+}
+function writeLines(n, dotted){
+  let out = '<div class="write-line-block">';
+  for(let i=0;i<n;i++) out += '<div class="write-line'+(dotted?' dotted':'')+'"></div>';
+  out += '</div>';
+  return out;
+}
+function wordbank(items){
+  return '<div class="wordbank">'+items.map(w=>'<span class="wb-item kr">'+w+'</span>').join('')+'</div>';
+}
+function dialogueBlock(items){
+  return '<div class="dial-block">'+items.map(it=>
+    '<div class="dial-row"><span class="spk kr">'+it.speaker+'</span><span class="txt"><span class="kr">'+it.kr+'</span><span class="eng">'+it.eng+'</span></span></div>'
+  ).join('')+'</div>';
+}
+/* Fill-in table: student writes the conjugated form in a blank column */
+function conjFillTable(headers, rows){
+  // rows: array of arrays of strings; a cell value of null renders a blank writing cell
+  let out = '<table class="wk"><tr>'+headers.map(h=>'<th>'+h+'</th>').join('')+'</tr>';
+  rows.forEach(r=>{
+    out += '<tr>'+r.map(c=> c===null ? '<td class="blank">&nbsp;</td>' : '<td class="kr-cell">'+c+'</td>').join('')+'</tr>';
+  });
+  out += '</table>';
+  return out;
+}
+function engRow(kr, eng){
+  return '<div style="margin:2px 0 10px"><span class="kr" style="font-size:1.05em">'+kr+'</span><br><span style="color:var(--ink-soft); font-size:.82em">'+eng+'</span></div>';
+}
+
+/* ============================================================
+   1. PAGE GENERATORS
+   ============================================================ */
+let HTML = '';
+
+/* --- Cover --- */
+HTML += '<section class="page cover-page">'
+ + '<div class="brandmark">動</div>'
+ + '<div class="pg-eyebrow" style="text-align:center">Hookitlingo — Companion Volume</div>'
+ + '<h1>동사 활용 워크북</h1>'
+ + '<div class="eng">The Korean Verbs Workbook</div>'
+ + '<p style="max-width:460px;margin:0 auto 24px;color:var(--ink-soft)">Present, past, future, negation, and the irregulars that trip everyone up — ten minutes a day with a pencil, following 수민 and 제이슨 through the same story you met in the course.</p>'
+ + '<div class="meta-line">NAME <span class="fillline"></span></div>'
+ + '<div class="meta-line" style="margin-top:10px">START DATE <span class="fillline" style="min-width:120px"></span></div>'
+ + '</section>';
+
+/* --- How to use --- */
+HTML += pageOpen('Before You Begin','How to Use This Workbook','A short read — then straight to the pencil.', '使用法','안내');
+HTML += '<div class="two-col">'
+ + '<div><h4>The daily ritual</h4><ol class="steps">'
+ + '<li>Open the matching unit in the Hookitlingo app first, and re-read the rule once.</li>'
+ + '<li>Fill in the conjugation table on this page from memory, not from the app.</li>'
+ + '<li>Write out every full sentence on the writing lines — say it aloud as you write it.</li>'
+ + '<li>Check your answers against the course app, then check the box in the footer.</li>'
+ + '</ol></div>'
+ + '<div><h4>Why writing conjugations matters</h4><p>Recognizing 먹었어요 on a screen is one skill. Producing it correctly, unprompted, mid-sentence, is another skill entirely — and it\'s the one that actually lets you speak. This workbook is built around <em>production</em>, not recognition.</p>'
+ + '<div class="callout stamp"><b>A teacher\'s note —</b> Don\'t erase a wrong conjugation. Cross it out gently and write the correct one beside it. Watching your own hand fix the mistake is part of how the rule sticks.</div></div>'
+ + '</div>';
+HTML += pageClose();
+
+/* --- Study log --- */
+HTML += pageOpen('Before You Begin','My Study Log','Fill in one row after every session — the streak itself is the lesson.', '記錄','기록');
+HTML += '<table class="logtable"><tr><th>Date</th><th>Unit / Page</th><th>Minutes</th><th>Confidence (1–5)</th><th>Note to self</th></tr>';
+for(let i=0;i<18;i++) HTML += '<tr><td></td><td></td><td></td><td></td><td></td></tr>';
+HTML += '</table>';
+HTML += pageClose();
+
+/* --- TOC --- */
+(function(){
+  const toc = [
+    {group:'Part 1 · Foundations', rows:['The Verb\'s Shape & the A/EO Rule','Review — Foundations']},
+    {group:'Part 2 · Present Tense', rows:['해요체 — Everyday Present','ㅂ니다/습니다 — Formal Present','Review — Present Tense']},
+    {group:'Part 3 · Past Tense', rows:['았/었어요 — Past Tense','수민\'s Cafe Day (Story Cloze)']},
+    {group:'Part 4 · Future Tense', rows:['거예요 vs. 겠어요 — Boss Battle','Writing Your Own Plans & Guesses']},
+    {group:'Part 5 · Negation', rows:['안 + Verb','지 않다 / 못 — The Longer Forms','Review — Negation']},
+    {group:'Part 6 · Irregular Verbs', rows:['ㅂ and ㄷ Irregulars','르, ㅅ, and ㅎ Irregulars','Review — Irregulars']},
+    {group:'Part 7 · Putting It Together', rows:['The Full Combining Grid','수민 & 제이슨\'s Weekend Trip']},
+    {group:'Part 8 · Capstone & Finish', rows:['Real Conversations — Register Spotting','Verb Conjugation Cheat Sheet','Matching & Recall Drill','Final Mixed Review','Final Written Assessment I','Final Written Assessment II','Certificate']},
+  ];
+  HTML += pageOpen('Contents','목차 · Table of Contents', '', '目次','차례');
+  HTML += '<div style="columns:2; column-gap:32px;">';
+  toc.forEach(function(g){
+    HTML += '<div class="toc-group">'+ '<h4>'+g.group+'</h4>';
+    g.rows.forEach(function(r){ HTML += '<div class="toc-row"><span>'+r+'</span><span class="n">□</span></div>'; });
+    HTML += '</div>';
+  });
+  HTML += '</div>';
+  HTML += pageClose();
+})();
+
+/* ============================================================
+   PART 1 — FOUNDATIONS (Unit 0 + Unit 1)
+   ============================================================ */
+HTML += pageOpen('Part 1 · Foundations','Unit 0–1 — The Verb\'s Shape &amp; the A/EO Rule','Every verb ends in 다. Strip it, and the a/eo rule decides everything else.', '다','기본형');
+HTML += '<h3>Step 1 — Find the stem</h3><p>Cross out 다 and write the stem that\'s left.</p>';
+HTML += conjFillTable(['Dictionary form','Stem'], [
+  ['가다', null], ['먹다', null], ['보다', null], ['읽다', null], ['공부하다', null], ['마시다', null], ['만나다', null], ['일하다', null]
+]);
+HTML += '<div class="callout"><b>Reminder</b> — Korean verbs don\'t change for person. One conjugated form covers I/you/he/she/we/they equally.</div>';
+HTML += '<h3>Step 2 — Bright or dark? Sort the stem\'s last vowel</h3><p>Write each dictionary form below into the correct column, then write the ending it takes.</p>';
+HTML += wordbank(['가다','먹다','보다','읽다','마시다','살다','만나다','공부하다']);
+HTML += '<div class="two-col">'
+ + '<div><h4>ㅏ / ㅗ (bright) → +아</h4>'+writeLines(4,true)+'</div>'
+ + '<div><h4>everything else (dark) → +어</h4>'+writeLines(4,true)+'</div>'
+ + '</div>';
+HTML += '<div class="callout warn"><b>Remember</b> — 하다 verbs are the fixed exception: they always become 해, no matter what the vowel rule says.</div>';
+HTML += pageClose();
+
+HTML += pageOpen('Part 1 · Foundations','Practicing the Merge','가다 → 가, 보다 → 봐 — write out what happens when the stem\'s vowel meets the ending.', '合','융합');
+HTML += '<p><strong>수민</strong>, a university student, and <strong>제이슨</strong>, her English-speaking exchange-student friend, are the two people whose story runs through this whole workbook — every sentence from here on is something one of them says.</p>';
+HTML += '<h3>Write the merged present-tense form</h3>';
+HTML += conjFillTable(['Dictionary form','Stem + 아/어','Merged result'], [
+  ['가다 (to go)', '가 + 아', null],
+  ['보다 (to see/watch)', '보 + 아', null],
+  ['먹다 (to eat)', '먹 + 어', null],
+  ['공부하다 (to study)', '공부해', null],
+  ['마시다 (to drink)', '마시 + 어', null],
+]);
+HTML += '<div class="callout stamp"><b>A teacher\'s note —</b> This vowel-merging habit — 가+아 → 가, not 가아 — shows up again and again through this whole course. It\'s always about making the sound easier to say, never a one-off exception to memorize in isolation.</div>';
+HTML += '<h3>Now write each full sentence, present tense, polite (해요체)</h3>';
+HTML += '<p class="mini-label">저는 아침에 일어나요. (I wake up in the morning.)</p>'+writeLines(2,true);
+HTML += '<p class="mini-label">저는 학교에 가요. (I go to school.)</p>'+writeLines(2,true);
+HTML += pageClose();
+
+/* --- Review: Foundations --- */
+(function(){
+  HTML += pageOpen('Spaced Review','Review — Foundations','Before moving on, come back to this without checking the app first.', '復','복습');
+  HTML += '<p>Write the stem, then circle whether it\'s a bright (아) or dark (어) vowel, then write the present-tense polite form.</p>';
+  HTML += conjFillTable(['Dictionary form','Stem','Bright/Dark','Present (해요체)'], [
+    ['살다 (to live)', null, null, null],
+    ['읽다 (to read)', null, null, null],
+    ['만나다 (to meet)', null, null, null],
+    ['일하다 (to work)', null, null, null],
+    ['보다 (to watch)', null, null, null],
+    ['마시다 (to drink)', null, null, null],
+  ]);
+  HTML += pageClose();
+})();
+
+/* ============================================================
+   PART 2 — PRESENT TENSE (Unit 2 + Unit 3)
+   ============================================================ */
+HTML += pageOpen('Part 2 · Present Tense','Unit 2 — 해요체: Everyday Present','Stem + 아/어 + 요. The form you\'ll reach for in nine out of ten sentences.', '해','일상');
+HTML += '<p><strong>수민\'s morning</strong> — fill in each blank with the correct 해요체 form, then write the full line again on your own beside it.</p>';
+HTML += dialogueBlock([
+  {speaker:'수민', kr:'저는 아침에 <span class="blank-underline"></span>. (일어나다)', eng:'I wake up in the morning.'},
+  {speaker:'수민', kr:'밥을 <span class="blank-underline"></span>. (먹다)', eng:'I eat a meal.'},
+  {speaker:'수민', kr:'학교에 <span class="blank-underline"></span>. (가다)', eng:'I go to school.'},
+  {speaker:'수민', kr:'친구를 <span class="blank-underline"></span>. (만나다)', eng:'I meet a friend.'},
+]);
+HTML += writeLines(4,true);
+HTML += '<div class="callout"><b>Two jobs, one form</b> — 해요체 covers present action, routines/habits, <em>and</em> near-future plans. \'저는 매일 커피를 마셔요\' can mean either \'I drink coffee every day\' or \'I\'m drinking coffee (right now)\' — context decides.</div>';
+HTML += '<h3>Fill in the rest</h3>';
+HTML += conjFillTable(['Dictionary form','해요체'], [
+  ['일어나다 (wake up)', null], ['마시다 (drink)', null], ['만나다 (meet)', null], ['살다 (live)', null], ['일하다 (work)', null]
+]);
+HTML += pageClose();
+
+HTML += pageOpen('Part 2 · Present Tense','Unit 3 — ㅂ니다/습니다: Formal Present','Same meaning as 해요체, a completely different social register.', '式','격식');
+HTML += '<p>Vowel-ending stem → +ㅂ니다. Consonant-ending stem → +습니다. 하다 verbs → 합니다. No a/eo rule involved here at all.</p>';
+HTML += conjFillTable(['Dictionary form','Stem ends in…','ㅂ니다/습니다 form'], [
+  ['가다', 'vowel', null],
+  ['먹다', 'consonant', null],
+  ['공부하다', '하다 verb', null],
+  ['일하다', '하다 verb', null],
+  ['보다', 'vowel', null],
+  ['읽다', 'consonant', null],
+]);
+HTML += '<h3>Register-matching — rewrite each 해요체 line in formal 합니다체</h3>';
+HTML += '<p class="mini-label">저는 학생이에요. → </p>'+writeLines(1,true);
+HTML += '<p class="mini-label">한국어를 공부해요. → </p>'+writeLines(1,true);
+HTML += '<p class="mini-label">이 회사에서 일해요. → </p>'+writeLines(1,true);
+HTML += '<div class="callout warn"><b>Same meaning, different room</b> — 해요체 is for a friend or classmate; 합니다체 is for a job interview, the news, or a room of strangers. Neither is \'more correct\' — they\'re different social registers.</div>';
+HTML += pageClose();
+
+/* --- Review: Present Tense --- */
+(function(){
+  HTML += pageOpen('Spaced Review','Review — Present Tense','Mix of 해요체 and 합니다체 — no peeking at the app.', '復','복습');
+  HTML += '<p>Write both the everyday (해요체) and formal (합니다체) present-tense form for each verb.</p>';
+  HTML += conjFillTable(['Dictionary form','해요체','합니다체'], [
+    ['가다 (go)', null, null],
+    ['먹다 (eat)', null, null],
+    ['공부하다 (study)', null, null],
+    ['보다 (watch)', null, null],
+    ['일하다 (work)', null, null],
+    ['읽다 (read)', null, null],
+  ]);
+  HTML += '<h3>Translate</h3>';
+  HTML += '<p class="mini-label">I meet a friend. (everyday) → </p>'+writeLines(1,true);
+  HTML += '<p class="mini-label">I study Korean. (formal) → </p>'+writeLines(1,true);
+  HTML += pageClose();
+})();
+
+/* ============================================================
+   PART 3 — PAST TENSE (Unit 4)
+   ============================================================ */
+HTML += pageOpen('Part 3 · Past Tense','Unit 4 — 았/었어요: Past Tense','Same vowel-harmony logic as present tense — just add a syllable.', '過','과거');
+HTML += conjFillTable(['Rule','Example','Meaning'], [
+  ['bright stem + 았어요', '가다 → ', null],
+  ['dark stem + 었어요', '먹다 → ', null],
+  ['하다 verbs → 했어요', '일하다 → ', null],
+]);
+HTML += '<div class="callout stamp"><b>Watch the merge again</b> — 가 + 았어요 collapses to 갔어요, not 가았어요. Same pattern you learned in Unit 1, just one syllable longer.</div>';
+HTML += '<h3>Transform: present → past</h3>';
+HTML += conjFillTable(['Present (해요체)','Past (았/었어요)'], [
+  ['먹어요', null], ['가요', null], ['일해요', null], ['쏟아요', null], ['웃어요', null], ['재미있어요', null]
+]);
+HTML += '<h3>Time-word anchors — write a full past-tense sentence with each</h3>';
+HTML += '<p class="mini-label">어제 (yesterday) — </p>'+writeLines(1,true);
+HTML += '<p class="mini-label">지난주 (last week) — </p>'+writeLines(1,true);
+HTML += pageClose();
+
+HTML += pageOpen('Part 3 · Past Tense',"수민's Cafe Day — Story Cloze",'Fill in each blank with the correct past-tense form, then translate the whole passage.', '店','일화');
+HTML += dialogueBlock([
+  {speaker:'수민', kr:'어제 카페에서 <span class="blank-underline"></span>. (일하다)', eng:'Yesterday I worked at the cafe.'},
+  {speaker:'수민', kr:'커피를 <span class="blank-underline"></span>. (쏟다 — to spill)', eng:'I spilled the coffee.'},
+  {speaker:'수민', kr:'사장님이 <span class="blank-underline"></span>. (웃다 — to laugh)', eng:'My boss laughed.'},
+  {speaker:'수민', kr:'그래도 <span class="blank-underline"></span>! (재미있다 — to be fun)', eng:'Even so, it was fun!'},
+]);
+HTML += '<h3>Now write the whole story from memory, in your own hand</h3>';
+HTML += writeLines(6,true);
+HTML += pageClose();
+
+/* ============================================================
+   PART 4 — FUTURE TENSE (Unit 5)
+   ============================================================ */
+HTML += pageOpen('Part 4 · Future Tense','Boss Battle — 거예요 vs. 겠어요','A pre-made plan, or an in-the-moment guess? Mixing these up is the #1 intermediate mistake.', '未','미래');
+HTML += '<div class="compare-strip">'
+ + '<div class="compare-card"><div class="ch">-(으)ㄹ 거예요</div><div class="rom">plan / intention / prediction from what you already know</div><p>Vowel stem + ㄹ 거예요 · Consonant stem + 을 거예요</p><div class="kr" style="font-size:.95em">가다 → 갈 거예요 &nbsp;·&nbsp; 먹다 → 먹을 거예요</div></div>'
+ + '<div class="compare-card"><div class="ch">-겠어요</div><div class="rom">in-the-moment guess / promise, based on what you\'re observing now</div><p>Attaches straight to the stem, no vowel rule</p><div class="kr" style="font-size:.95em">오다 → 오겠어요 &nbsp;·&nbsp; 돕다 → 돕겠어요</div></div>'
+ + '</div>';
+HTML += '<h3>Circle the right form for the situation, then write the sentence</h3>';
+HTML += '<p class="mini-label">수민 decided last week she\'s visiting Busan this weekend. (거예요 / 겠어요)</p>'+writeLines(2,true);
+HTML += '<p class="mini-label">You look up, see dark clouds, and guess out loud that it will rain. (거예요 / 겠어요)</p>'+writeLines(2,true);
+HTML += '<div class="callout warn"><b>Quick test</b> — could you have said it yesterday because you\'d already decided? → 거예요. Does it only make sense because of something you\'re seeing/feeling right this second? → 겠어요.</div>';
+HTML += '<div class="callout"><b>Fixed phrase to know</b> — 잘 먹겠습니다, said before a meal, is less a literal prediction and more a ritual phrase of gratitude, like "bon appetit."</div>';
+HTML += pageClose();
+
+HTML += pageOpen('Part 4 · Future Tense','Writing Your Own Plans &amp; Guesses','Two columns, two futures — write three of your own real sentences in each.', '計','계획');
+HTML += conjFillTable(['Dictionary form','Consonant/vowel?','-(으)ㄹ 거예요 form'], [
+  ['가다', 'vowel', null], ['먹다', 'consonant', null], ['보다', 'vowel', null], ['읽다', 'consonant', null]
+]);
+HTML += '<h3>Write three plans you\'ve already decided on (거예요)</h3>'+writeLines(3,true);
+HTML += '<h3>Write three in-the-moment guesses (겠어요) — about weather, food, or how you feel right now</h3>'+writeLines(3,true);
+HTML += pageClose();
+
+/* ============================================================
+   PART 5 — NEGATION (Unit 6 + Unit 7)
+   ============================================================ */
+HTML += pageOpen('Part 5 · Negation','Unit 6 — 안 + Verb','The short, everyday "not" — used constantly in spoken Korean.', '不','부정');
+HTML += '<p><strong>안</strong> goes directly in front of any conjugated verb. That\'s the whole rule — except for one trap.</p>';
+HTML += conjFillTable(['Dictionary form','해요체','안 + 해요체'], [
+  ['가다', '가요', null], ['먹다', '먹어요', null], ['살다', '살아요', null]
+]);
+HTML += '<h3>Error hunt — one line below breaks the 하다-verb rule. Find it, then write both lines correctly.</h3>';
+HTML += '<div class="callout warn">Where does 안 go with a 하다 verb — 공부 안 해요, or <span class="strike">안 공부해요</span>? Remember: 안 slots between the noun and 하다, not in front of the whole word.</div>';
+HTML += '<p class="mini-label">공부해요 → </p>'+writeLines(1,true);
+HTML += '<p class="mini-label">숙제해요 → </p>'+writeLines(1,true);
+HTML += '<p class="mini-label">일해요 → </p>'+writeLines(1,true);
+HTML += pageClose();
+
+HTML += pageOpen('Part 5 · Negation','Unit 7 — 지 않다 &amp; 못 / 지 못하다','A more formal "not," and a completely different idea: can\'t, by circumstance, not choice.', '否','불가');
+HTML += conjFillTable(['Meaning','With 안 / 못','With -지 않다 / -지 못하다'], [
+  ["don't/doesn't go", '안 가요', null],
+  ["didn't go", '안 갔어요', null],
+  ["can't go", '못 가요', null],
+  ["couldn't go", '못 갔어요', null],
+]);
+HTML += '<div class="callout"><b>안 vs. 못</b> — 안 is simply the opposite of doing something (didn\'t choose to). 못 specifically means the doer <em>couldn\'t</em> — blocked by circumstance, not choice. Compare: 안 먹었어요 (chose not to eat) vs. 못 먹었어요 (wasn\'t able to eat).</div>';
+HTML += '<h3>Translate, choosing 안/못 or 지 않다/지 못하다 as fits</h3>';
+HTML += '<p class="mini-label">I couldn\'t go to school yesterday because I was sick. → </p>'+writeLines(2,true);
+HTML += '<p class="mini-label">I can\'t eat this food because it\'s spicy. → </p>'+writeLines(2,true);
+HTML += pageClose();
+
+/* --- Review: Negation --- */
+(function(){
+  HTML += pageOpen('Spaced Review','Review — Negation','All four negation tools, mixed — no peeking at the app.', '復','복습');
+  HTML += conjFillTable(['Dictionary form','안 + verb','못 + verb','-지 않다','-지 못하다'], [
+    ['가다', null, null, null, null],
+    ['먹다', null, null, null, null],
+    ['공부하다', null, null, null, null],
+  ]);
+  HTML += '<h3>Which fits — chosen not to, or unable to?</h3>';
+  HTML += '<p class="mini-label">I don\'t drink coffee (personal choice). → </p>'+writeLines(1,true);
+  HTML += '<p class="mini-label">I can\'t drink coffee (it makes me sick). → </p>'+writeLines(1,true);
+  HTML += pageClose();
+})();
+
+/* ============================================================
+   PART 6 — IRREGULAR VERBS (Unit 8 + Unit 9)
+   ============================================================ */
+HTML += pageOpen('Part 6 · Irregular Verbs','Unit 8 — ㅂ and ㄷ Irregulars','ㅂ melts into 우 (or, rarely, 오). ㄷ swaps for ㄹ. Small families, learnable patterns.', '不規','불규칙');
+HTML += '<h3>ㅂ irregulars — ㅂ → 우, then + 어요 (watch for the 돕다 exception → 오)</h3>';
+HTML += conjFillTable(['Dictionary form','What happens','Present tense'], [
+  ['덥다 (hot)', 'ㅂ → 우 + 어요', null],
+  ['춥다 (cold)', 'ㅂ → 우 + 어요', null],
+  ['어렵다 (difficult)', 'ㅂ → 우 + 어요', null],
+  ['돕다 (help) — exception', 'ㅂ → 오 + 아요', null],
+]);
+HTML += '<div class="callout warn"><b>Not every ㅂ verb is irregular</b> — 입다 (to wear) is perfectly regular: 입어요. There\'s no visual shortcut; it comes down to a specific, fairly short list.</div>';
+HTML += '<h3>ㄷ irregulars — ㄷ → ㄹ, then + 어요</h3>';
+HTML += conjFillTable(['Dictionary form','What happens','Present tense'], [
+  ['듣다 (listen)', 'ㄷ → ㄹ + 어요', null],
+  ['걷다 (walk)', 'ㄷ → ㄹ + 어요', null],
+  ['묻다 (ask)', 'ㄷ → ㄹ + 어요', null],
+]);
+HTML += '<div class="callout"><b>Regular counter-example</b> — 받다 (to receive) looks like it should follow the same pattern but is completely regular: 받아요.</div>';
+HTML += '<h3>Sort these into the correct box: 덥다 · 입다 · 듣다 · 받다 · 춥다 · 걷다</h3>';
+HTML += '<div class="two-col"><div><h4>Irregular</h4>'+writeLines(3,true)+'</div><div><h4>Regular (looks irregular, isn\'t)</h4>'+writeLines(3,true)+'</div></div>';
+HTML += pageClose();
+
+HTML += pageOpen('Part 6 · Irregular Verbs','Unit 9 — 르, ㅅ, and ㅎ Irregulars','The three patterns learners find trickiest — each with a clean, learnable mechanic.', '不規','불규칙');
+HTML += '<h3>르 irregulars — 으 drops, ㄹ doubles onto the syllable before it</h3>';
+HTML += conjFillTable(['Dictionary form','Present tense'], [
+  ['모르다 (not know)', null], ['빠르다 (fast)', null], ['다르다 (different)', null]
+]);
+HTML += '<h3>ㅅ irregulars — ㅅ disappears before a vowel-starting ending</h3>';
+HTML += conjFillTable(['Dictionary form','Present tense'], [
+  ['짓다 (build)', null], ['낫다 (heal/get better)', null]
+]);
+HTML += '<div class="callout warn">Not every ㅅ verb drops it — 웃다 (laugh) and 벗다 (take off) are fully regular: 웃어요, 벗어요.</div>';
+HTML += '<h3>ㅎ irregulars — mostly color/descriptive words; ㅎ drops, vowel often shifts to 애/얘</h3>';
+HTML += conjFillTable(['Dictionary form','Present tense'], [
+  ['그렇다 (be like that)', null], ['빨갛다 (red)', null], ['하얗다 (white)', null]
+]);
+HTML += '<div class="callout">좋다 (good) looks like an ㅎ irregular but isn\'t — it\'s fully regular: 좋아요.</div>';
+HTML += pageClose();
+
+/* --- Review: Irregulars --- */
+(function(){
+  HTML += pageOpen('Spaced Review','Review — Irregular Verbs','Mixed regular and irregular verbs. Write "reg." if it follows the plain a/eo rule.', '復','복습');
+  HTML += conjFillTable(['Dictionary form','Present tense','Regular or which irregular?'], [
+    ['모르다', null, null],
+    ['웃다', null, null],
+    ['듣다', null, null],
+    ['입다', null, null],
+    ['덥다', null, null],
+    ['하얗다', null, null],
+  ]);
+  HTML += '<div class="callout stamp"><b>Most common learner slip</b> — 몰라요 (correct) vs. 모라요 (wrong). 모르다 is used constantly for "I don\'t know," so there\'s rarely time to pause and think the rule through mid-sentence. Drill this one until it\'s automatic.</div>';
+  HTML += pageClose();
+})();
+
+/* ============================================================
+   PART 7 — PUTTING IT TOGETHER (Unit 10)
+   ============================================================ */
+HTML += pageOpen('Part 7 · Putting It Together','The Full Combining Grid','Tense and negation, stacked exactly as you\'ll actually need them in real sentences.', '合','종합');
+HTML += '<p>With 안, tense conjugates on the verb as normal, and 안 just sits in front. With -지 않다/-지 못하다, the tense goes on 않다/못하다 itself, since that\'s now the "verb" at the end of the phrase. Fill in every cell for 가다 (to go).</p>';
+HTML += conjFillTable(['Meaning','With 안 / 못','With -지 않다 / -지 못하다'], [
+  ["don't/doesn't go", null, null],
+  ["didn't go", null, null],
+  ["won't go / not going to", null, null],
+  ["can't go", null, null],
+  ["couldn't go", null, null],
+]);
+HTML += '<div class="callout"><b>When unsure</b> — default to 안/못 in spoken Korean; they\'re shorter and never sound stiff. Save -지 않다/-지 못하다 for writing or more formal speech.</div>';
+HTML += pageClose();
+
+HTML += pageOpen('Part 7 · Putting It Together',"수민 &amp; 제이슨's Weekend Trip",'A full dialogue combining past, future, and negation. Fill in each blank.', '旅','여행');
+HTML += dialogueBlock([
+  {speaker:'제이슨', kr:'지난주에 표를 <span class="blank-underline"></span>. (사다 + 못, past)', eng:"Last week I couldn't buy the tickets."},
+  {speaker:'수민', kr:'괜찮아요. 이번 주말에는 <span class="blank-underline"></span>. (가다, plan-future)', eng:"That's fine. We're going this weekend."},
+  {speaker:'제이슨', kr:'저는 늦잠을 <span class="blank-underline"></span>. (자다 + 안, plan-future)', eng:"I won't oversleep."},
+  {speaker:'수민', kr:'저도 이번에는 <span class="blank-underline"></span>. (지각하다 + 지 않다, plan-future)', eng:"I won't be late this time either."},
+]);
+HTML += '<h3>Now write the full four-line dialogue from memory</h3>';
+HTML += writeLines(6,true);
+HTML += pageClose();
+
+/* ============================================================
+   PART 8 — CAPSTONE & FINISH
+   ============================================================ */
+HTML += pageOpen('Part 8 · Capstone','Real Conversations — Register Spotting','Same tenses you\'ve learned, woven across three different social registers.', '會話','실전');
+HTML += '<p><strong>Scene 3 — 수민 meeting her professor.</strong> Underline every formal (습니다/ㅂ니다) ending, then answer below.</p>';
+HTML += dialogueBlock([
+  {speaker:'교수님', kr:'수민 씨, 과제는 다 했습니까?', eng:'Sumin, have you finished the assignment?'},
+  {speaker:'수민', kr:'거의 다 했습니다. 내일까지 제출하겠습니다.', eng:"I've almost finished it. I will submit it by tomorrow."},
+  {speaker:'교수님', kr:'좋습니다. 늦지 않게 부탁합니다.', eng:'Good. Please don\'t be late.'},
+]);
+HTML += '<p class="mini-label">Why do 수민 and her professor use the formal register here, instead of 해요체?</p>'+writeLines(2,true);
+HTML += '<p class="mini-label">What is 수민 promising, and with which future form?</p>'+writeLines(2,true);
+HTML += '<div class="callout warn">Same grammar, different social register — a preview of what a future Speech Levels &amp; Politeness course covers in full.</div>';
+HTML += pageClose();
+
+/* --- Cheat sheet --- */
+(function(){
+  HTML += pageOpen('Reference','Verb Conjugation Cheat Sheet','One page, every rule from this workbook. Come back to this any time.', '要','참고');
+  const sheet = [
+    {name:'A/EO Rule', rule:'Bright stem (ㅏ/ㅗ) → +아 · Dark stem → +어 · 하다 → 해', ex:'가다 → 가요 · 먹다 → 먹어요 · 공부하다 → 공부해요'},
+    {name:'Formal Present', rule:'Vowel stem +ㅂ니다 · Consonant stem +습니다', ex:'가다 → 갑니다 · 먹다 → 먹습니다'},
+    {name:'Past Tense', rule:'Bright +았어요 · Dark +었어요 · 하다 → 했어요', ex:'가다 → 갔어요 · 먹다 → 먹었어요'},
+    {name:'Future — plan', rule:'Vowel stem +ㄹ 거예요 · Consonant +을 거예요', ex:'가다 → 갈 거예요 · 먹다 → 먹을 거예요'},
+    {name:'Future — guess', rule:'Stem + 겠어요, no vowel rule', ex:'오다 → 오겠어요'},
+    {name:'Negation — casual', rule:'안 + conjugated verb (하다 verbs: noun 안 하다)', ex:'안 가요 · 공부 안 해요'},
+    {name:'Negation — formal/can\'t', rule:'stem+지 않다(don\'t) · 못+verb / stem+지 못하다 (can\'t)', ex:'가지 않아요 · 못 가요 · 가지 못해요'},
+    {name:'ㅂ irregular', rule:'ㅂ → 우 + 어요 (돕다/곱다 → 오 + 아요)', ex:'덥다 → 더워요 · 돕다 → 도와요'},
+    {name:'ㄷ irregular', rule:'ㄷ → ㄹ + 어요', ex:'듣다 → 들어요'},
+    {name:'르 irregular', rule:'으 drops, ㄹ doubles onto prior syllable', ex:'모르다 → 몰라요'},
+    {name:'ㅅ irregular', rule:'ㅅ disappears before vowel-ending', ex:'짓다 → 지어요'},
+    {name:'ㅎ irregular', rule:'ㅎ drops, vowel often → 애/얘 (mostly color words)', ex:'빨갛다 → 빨개요'},
+  ];
+  HTML += '<div class="cheat-grid">'+sheet.map(s=>'<div class="cheat-card"><h4>'+s.name+'</h4><p>'+s.rule+'</p><div class="ch-ex kr">'+s.ex+'</div></div>').join('')+'</div>';
+  HTML += pageClose();
+})();
+
+/* --- Matching & Recall --- */
+(function(){
+  HTML += pageOpen('Practice','Matching &amp; Recall Drill','Draw a line from each dictionary form to its meaning, then write its 해요체 form.', '對','짝짓기');
+  HTML += '<div class="two-col">'
+   + '<div><h4>Korean</h4><p class="kr" style="line-height:2.3">가다<br>먹다<br>보다<br>읽다<br>마시다<br>만나다<br>일하다<br>모르다<br>듣다<br>웃다</p></div>'
+   + '<div><h4>Meaning (scrambled)</h4><p style="line-height:2.3">to laugh · to meet · to eat · to work · to listen/hear · to go · to watch/see · to not know · to drink · to read</p></div>'
+   + '</div>';
+  HTML += '<h3>Now write the 해요체 present tense for each, without looking back</h3>';
+  HTML += conjFillTable(['가다','먹다','보다','읽다','마시다'], [[null,null,null,null,null]]);
+  HTML += conjFillTable(['만나다','일하다','모르다','듣다','웃다'], [[null,null,null,null,null]]);
+  HTML += pageClose();
+})();
+
+/* --- Final mixed review --- */
+(function(){
+  HTML += pageOpen('Spaced Review','Final Mixed Review','Every tense, every negation, and a few irregulars — the whole course, in one sitting.', '總復','총복습');
+  HTML += conjFillTable(['Dictionary form','Present','Past','Future (plan)','Negative (안)'], [
+    ['가다', null, null, null, null],
+    ['먹다', null, null, null, null],
+    ['공부하다', null, null, null, null],
+    ['듣다', null, null, null, null],
+    ['모르다', null, null, null, null],
+  ]);
+  HTML += pageClose();
+})();
+
+/* --- Final Written Assessment I --- */
+(function(){
+  HTML += pageOpen('Finish','Final Written Assessment — Part I','Conjugation and transformation. Aim for 70% or better before moving to Part II.', '試','시험');
+  HTML += '<h3>1. Fill in the correct present-tense form</h3>';
+  HTML += conjFillTable(['Dictionary form','해요체'], [
+    ['보다', null], ['읽다', null], ['공부하다', null], ['듣다', null]
+  ]);
+  HTML += '<h3>2. Transform each into past tense</h3>';
+  HTML += '<p class="mini-label">가요 → </p>'+writeLines(1,true);
+  HTML += '<p class="mini-label">먹어요 → </p>'+writeLines(1,true);
+  HTML += '<h3>3. Translate, choosing the right future form</h3>';
+  HTML += '<p class="mini-label">I\'m going to Busan this weekend. (already planned) → </p>'+writeLines(1,true);
+  HTML += '<p class="mini-label">Look at the sky — it\'s going to rain. (guessing now) → </p>'+writeLines(1,true);
+  HTML += pageClose();
+})();
+
+/* --- Final Written Assessment II --- */
+(function(){
+  HTML += pageOpen('Finish','Final Written Assessment — Part II','Negation, irregulars, and a full passage. The last stretch.', '試','시험');
+  HTML += '<h3>4. Negate each sentence two ways — casual and formal</h3>';
+  HTML += '<p class="mini-label">저는 커피를 마셔요. (안 / -지 않다) → </p>'+writeLines(2,true);
+  HTML += '<h3>5. Conjugate the irregular verbs</h3>';
+  HTML += conjFillTable(['Dictionary form','해요체'], [
+    ['덥다', null], ['모르다', null], ['짓다', null], ['빨갛다', null]
+  ]);
+  HTML += '<h3>6. Cloze passage — fill every blank</h3>';
+  HTML += '<p class="kr" style="line-height:1.9">오늘 수민은 바빠요. 아침에 카페에서 커피를 <span class="blank-underline"></span> (마시다). 학교에서 친구를 <span class="blank-underline"></span> (만나다). 친구도 커피를 <span class="blank-underline"></span> (좋아하다). 하지만 수민만 매일 거기에 <span class="blank-underline"></span> (가다). 저녁에는 집에서 밥을 <span class="blank-underline"></span> (먹다).</p>';
+  HTML += '<div class="callout stamp">A 70% pass mark means getting roughly 20 of these 28 blanks right across both pages. Check yourself against the course app, then move on to your certificate.</div>';
+  HTML += pageClose();
+})();
+
+/* --- Certificate --- */
+(function(){
+  pageNum++;
+  HTML += '<section class="page cert-page">'
+   + seal('動','활용')
+   + '<div class="pg-eyebrow">Certificate of Completion</div>'
+   + '<h1 class="kr">동사 활용 워크북</h1>'
+   + '<div class="sub">The Korean Verbs Workbook</div>'
+   + '<p style="max-width:440px">This certifies that</p>'
+   + '<div class="name-line">&nbsp;</div>'
+   + '<p style="max-width:440px">has completed every unit of the Korean Verbs Workbook — present, past, future, negation, and every irregular family — conjugated and written by hand.</p>'
+   + '<div style="margin-top:32px;display:flex;gap:56px">'
+   + '<div><div class="fillline" style="min-width:150px"></div><div class="mini-label" style="margin-top:4px">Date</div></div>'
+   + '<div><div class="fillline" style="min-width:150px"></div><div class="mini-label" style="margin-top:4px">Signature</div></div>'
+   + '</div>'
+   + '<div class="pg-footer" style="border:none;margin-top:28px"><span></span><span>p.'+pageNum+'</span></div>'
+   + '</section>';
+})();
+
+/* ============================================================
+   PAYWALL — first ~25% of pages are free; the rest unlock for
+   a one-time ₹99 via Razorpay, verified server-side.
+   ============================================================ */
+const SUPPORT_API_BASE = window.location.hostname === 'localhost'
+  ? 'http://localhost:3000'
+  : '';
+
+const WORKBOOK_PRICE_PAISE = 9900;
+const WORKBOOK_PURPOSE = 'workbook-verbs';
+const WORKBOOK_PAYMENT_KEY = 'hg_workbook_payment_id_verbs';
+
+let wkFreeCount = 0, wkTotal = 0;
+
+function initPaywall(){
+  const pages = Array.from(document.querySelectorAll('#book > .page'));
+  wkTotal = pages.length;
+  wkFreeCount = Math.max(2, Math.ceil(wkTotal * 0.25));
+
+  const savedPaymentId = localStorage.getItem(WORKBOOK_PAYMENT_KEY);
+  if(savedPaymentId){
+    verifyWorkbookAccess(savedPaymentId).then(ok=>{
+      if(ok){ unlockWorkbook(); }
+      else { localStorage.removeItem(WORKBOOK_PAYMENT_KEY); lockWorkbook(); }
+    });
+  } else {
+    lockWorkbook();
+  }
+}
+
+function lockWorkbook(){
+  const pages = Array.from(document.querySelectorAll('#book > .page'));
+  pages.forEach((p,i)=>{ if(i>=wkFreeCount) p.classList.add('page-locked'); });
+  insertPaywallCard(pages[wkFreeCount-1] || pages[pages.length-1]);
+  showPaywallBar();
+  setToolbarLocked(true);
+}
+
+function unlockWorkbook(){
+  document.querySelectorAll('#book > .page').forEach(p=>p.classList.remove('page-locked'));
+  removePaywallCard();
+  hidePaywallBar();
+  setToolbarLocked(false);
+}
+
+function setToolbarLocked(isLocked){
+  document.getElementById('printBtn').style.display = isLocked ? 'none' : '';
+  document.getElementById('unlockToolbarBtn').style.display = isLocked ? '' : 'none';
+}
+
+function insertPaywallCard(afterEl){
+  removePaywallCard();
+  const lockedCount = wkTotal - wkFreeCount;
+  const card = document.createElement('section');
+  card.className = 'page paywall-page';
+  card.id = 'paywallCard';
+  card.innerHTML = `
+    <div class="lock-badge">🔒</div>
+    <h2 class="kr">잠금 해제</h2>
+    <div class="paywall-kicker">Unlock to Continue</div>
+    <p>You've previewed the first ${wkFreeCount} pages for free. The remaining <strong>${lockedCount} pages</strong> — past/future/negation drills, both irregular-verb units, the combining grid, the matching game, both final assessments, and your printable certificate — are locked.</p>
+    <div class="price">₹99 <small>one-time</small></div>
+    <div id="paywallPayArea">
+      <button class="wk-btn" id="paywallPayBtn">Unlock Full Workbook — ₹99</button>
+      <p class="wk-secure-note">🔒 Handled securely by Razorpay. Pages unlock only after payment is verified.</p>
+    </div>
+  `;
+  afterEl.insertAdjacentElement('afterend', card);
+  document.getElementById('paywallPayBtn').onclick = initiateWorkbookPayment;
+}
+
+function removePaywallCard(){
+  const el = document.getElementById('paywallCard');
+  if(el) el.remove();
+}
+
+function showPaywallBar(){
+  hidePaywallBar();
+  const bar = document.createElement('div');
+  bar.className = 'paywall-bar';
+  bar.id = 'paywallBar';
+  bar.innerHTML = `<span>🔒 ${wkTotal - wkFreeCount} pages locked</span><div class="spacer"></div><button class="wk-btn" id="paywallBarBtn">Unlock — ₹99</button>`;
+  document.body.appendChild(bar);
+  document.getElementById('paywallBarBtn').onclick = jumpToPaywall;
+  document.getElementById('unlockToolbarBtn').onclick = jumpToPaywall;
+}
+function hidePaywallBar(){
+  const el = document.getElementById('paywallBar');
+  if(el) el.remove();
+}
+function jumpToPaywall(){
+  document.getElementById('paywallCard')?.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+async function initiateWorkbookPayment(){
+  const area = document.getElementById('paywallPayArea');
+  area.innerHTML = `<div class="wk-spinner"></div><p class="wk-secure-note">Preparing secure checkout…</p>`;
+  try{
+    const orderRes = await fetch(`${SUPPORT_API_BASE}/api/create-order`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ amount: WORKBOOK_PRICE_PAISE, purpose: WORKBOOK_PURPOSE })
+    });
+    if(!orderRes.ok){
+      const err = await orderRes.json();
+      throw new Error(err.error || 'Failed to create order');
+    }
+    const { orderId, amount, currency, key } = await orderRes.json();
+
+    const options = {
+      key, amount, currency,
+      name: "Hookitlingo",
+      description: "Korean Verbs Workbook — full unlock",
+      order_id: orderId,
+      theme: { color: "#a8342a" },
+      handler: async function(response){ await verifyWorkbookPayment(response, orderId); },
+      modal: { ondismiss: function(){ renderPaywallRetry(); } }
+    };
+    const rzp = new Razorpay(options);
+    rzp.open();
+  } catch(err){
+    console.error('Workbook payment initiation failed:', err);
+    area.innerHTML = `<p class="wk-secure-note" style="color:var(--seal)">${err.message}</p><button class="wk-btn secondary" id="paywallRetryBtn">Try again</button>`;
+    document.getElementById('paywallRetryBtn').onclick = initiateWorkbookPayment;
+  }
+}
+
+function renderPaywallRetry(){
+  const area = document.getElementById('paywallPayArea');
+  if(!area) return;
+  area.innerHTML = `<button class="wk-btn" id="paywallPayBtn2">Unlock Full Workbook — ₹99</button><p class="wk-secure-note">🔒 Handled securely by Razorpay.</p>`;
+  document.getElementById('paywallPayBtn2').onclick = initiateWorkbookPayment;
+}
+
+async function verifyWorkbookPayment(response, orderId){
+  const area = document.getElementById('paywallPayArea');
+  if(area) area.innerHTML = `<div class="wk-spinner"></div><p class="wk-secure-note">Verifying payment…</p>`;
+
+  try{
+    const verifyRes = await fetch(`${SUPPORT_API_BASE}/api/verify-payment`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        orderId: response.razorpay_order_id || orderId,
+        paymentId: response.razorpay_payment_id,
+        signature: response.razorpay_signature
+      })
+    });
+    const result = await verifyRes.json();
+    if(!result.verified) throw new Error('Payment verification failed');
+
+    const ok = await verifyWorkbookAccess(result.paymentId);
+    if(!ok) throw new Error("We couldn't confirm access for this payment. Please contact support.");
+
+    localStorage.setItem(WORKBOOK_PAYMENT_KEY, result.paymentId);
+    unlockWorkbook();
+  } catch(err){
+    console.error('Workbook payment verification failed:', err);
+    if(area){
+      area.innerHTML = `<p class="wk-secure-note" style="color:var(--seal)">We couldn't verify your payment. If you were charged, please contact us.</p><button class="wk-btn secondary" id="paywallRetryBtn2">Try again</button>`;
+      document.getElementById('paywallRetryBtn2').onclick = initiateWorkbookPayment;
+    }
+  }
+}
+
+async function verifyWorkbookAccess(paymentId){
+  try{
+    const res = await fetch(`${SUPPORT_API_BASE}/api/workbook-access?paymentId=${encodeURIComponent(paymentId)}&product=verbs`);
+    if(!res.ok) return false;
+    const data = await res.json();
+    return !!data.unlocked;
+  } catch(err){
+    console.error('Workbook access check failed:', err);
+    return false;
+  }
+}
+
+document.getElementById('book').innerHTML = HTML;
+document.getElementById('pageCount').textContent = pageNum + ' pages generated';
+
+document.getElementById('pdfHelpBtn').onclick = () => {
+  const box = document.getElementById('pdfInstructions');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+};
+document.getElementById('closeInstrBtn').onclick = () => {
+  document.getElementById('pdfInstructions').style.display = 'none';
+};
+
+initPaywall();
+</script>
+</body>
+</html>

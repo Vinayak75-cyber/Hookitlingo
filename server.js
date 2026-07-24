@@ -15,6 +15,14 @@ const CERT_FONT = fs.readFileSync(path.join(__dirname, 'fonts', 'NotoSansKR.ttf'
 
 const app = express();
 
+// Safe membership check for plain-object whitelists keyed by client input
+// (e.g. ?course=, ?product=). Using `obj[key]` truthiness directly is unsafe
+// because a key like "__proto__" or "constructor" resolves to an inherited
+// property instead of undefined. This always checks the object's OWN keys.
+function hasOwn(obj, key) {
+  return Object.prototype.hasOwnProperty.call(obj, key);
+}
+
 // Only your own frontend(s) may call this API from a browser. Set
 // ALLOWED_ORIGINS in your environment to a comma-separated list of the
 // domains you actually serve the site from, e.g.:
@@ -70,7 +78,7 @@ app.post('/api/create-order', async (req, res) => {
       key: process.env.RAZORPAY_KEY_ID
     });
   } catch (err) {
-    console.error('Order creation failed:', err);
+    console.error('Order creation failed:', err?.error?.description || err.message);
     res.status(500).json({ error: 'Failed to create order' });
   }
 });
@@ -106,7 +114,7 @@ app.post('/api/verify-payment', async (req, res) => {
       notes: { ...(order.notes || {}), certName: safeName }
     });
   } catch (err) {
-    console.error('Failed to lock certificate name on order:', err);
+    console.error('Failed to lock certificate name on order:', err?.error?.description || err.message);
     // Don't fail the whole verification over this — the certificate
     // endpoint falls back to a generic name if certName never got set.
   }
@@ -159,7 +167,7 @@ const certDownloadCounts = new Map();
 app.get('/api/certificate', async (req, res) => {
   const { paymentId, name, course } = req.query;
 
-  if (!paymentId || !course || !CERT_COURSES[course]) {
+  if (!paymentId || !course || !hasOwn(CERT_COURSES, course)) {
     return res.status(400).json({ error: 'Missing or invalid parameters' });
   }
 
@@ -255,7 +263,7 @@ app.get('/api/certificate', async (req, res) => {
     certDownloadCounts.set(paymentId, downloadsSoFar + 1);
 
   } catch (err) {
-    console.error('Certificate generation failed:', err);
+    console.error('Certificate generation failed:', err?.error?.description || err.message);
     if (!res.headersSent) {
       res.status(500).json({ error: 'Failed to verify payment or generate certificate' });
     }
@@ -264,19 +272,37 @@ app.get('/api/certificate', async (req, res) => {
 
 // Workbook unlock check — same "ask Razorpay directly" pattern as the
 // certificate above, but there's no file to generate here: this just
-// answers yes/no on whether a given paymentId legitimately paid for the
-// workbook, so the frontend knows it's safe to remove the page lock.
-// Because it's a pure check (not a download), it isn't rate-limited the
-// way certificate downloads are — the frontend calls it on every page
-// load to re-verify before showing unlocked content.
-const WORKBOOK_PRICE_PAISE = 9900; // ₹99 — keep in sync with workbook.html
-const WORKBOOK_PURPOSE = 'workbook-hanlingo';
+// answers yes/no on whether a given paymentId legitimately paid for a
+// given workbook, so the frontend knows it's safe to remove the page
+// lock. Because it's a pure check (not a download), it isn't rate-limited
+// the way certificate downloads are — the frontend calls it on every
+// page load to re-verify before showing unlocked content.
+//
+// Server-controlled whitelist — same idea as CERT_COURSES: a payment for
+// one workbook's purpose tag can never unlock a different workbook,
+// because the purpose is set on the order before payment and checked
+// against this exact list, not against whatever the client sends. New
+// workbooks (e.g. a future verbs workbook) just add a line here.
+const WORKBOOK_PRICE_PAISE = 9900; // ₹99 — keep in sync with each workbook's frontend
+const WORKBOOK_PRODUCTS = {
+  hanlingo: { purpose: 'workbook-hanlingo' },
+  numbers: { purpose: 'workbook-numbers' },
+  particles: { purpose: 'workbook-particles' },
+  grammar: { purpose: 'workbook-grammar' },
+  verbs: { purpose: 'workbook-verbs' }
+};
 
 app.get('/api/workbook-access', async (req, res) => {
   const { paymentId } = req.query;
+  // Defaults to 'hanlingo' so the original workbook.html (which predates
+  // this whitelist and doesn't send a product param) keeps working.
+  const product = req.query.product || 'hanlingo';
 
   if (!paymentId) {
     return res.status(400).json({ unlocked: false, error: 'Missing paymentId' });
+  }
+  if (!hasOwn(WORKBOOK_PRODUCTS, product)) {
+    return res.status(400).json({ unlocked: false, error: 'Unknown workbook product' });
   }
 
   try {
@@ -297,7 +323,7 @@ app.get('/api/workbook-access', async (req, res) => {
     // at creation time, before payment) — this is what stops a payment
     // for one product from unlocking a different one.
     const order = await razorpay.orders.fetch(payment.order_id);
-    const isValid = order && order.notes && order.notes.purpose === WORKBOOK_PURPOSE;
+    const isValid = order && order.notes && order.notes.purpose === WORKBOOK_PRODUCTS[product].purpose;
 
     if (!isValid) {
       return res.status(403).json({ unlocked: false, error: 'No verified workbook payment found for this ID' });
@@ -305,7 +331,7 @@ app.get('/api/workbook-access', async (req, res) => {
 
     res.json({ unlocked: true });
   } catch (err) {
-    console.error('Workbook access check failed:', err);
+    console.error('Workbook access check failed:', err?.error?.description || err.message);
     res.status(500).json({ unlocked: false, error: 'Failed to verify payment' });
   }
 });

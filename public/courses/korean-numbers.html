@@ -4,16 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>한국어 숫자 — Korean Grammar Part 3: Numbers, Counters &amp; Time</title>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLEMFRK6XH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-WLEMFRK6XH');
-</script>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -407,6 +397,19 @@ textarea.note-area{width:100%; min-height:90px; background:var(--surface2); bord
 .cert-locked{ max-width:520px; margin:10px auto 0; text-align:center; }
 .cert-locked-silhouette{ position:relative; margin:0 auto 22px; max-width:400px; }
 .cert-locked-silhouette svg{ display:block; width:100%; filter:blur(2.5px); opacity:.55; }
+
+.path-cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin:18px 0 8px;}
+.path-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:22px 24px; display:flex; flex-direction:column;}
+.path-card-eyebrow{font-size:.72em; text-transform:uppercase; letter-spacing:.1em; font-weight:700; margin-bottom:8px;}
+.path-card--next{border-color:var(--celadon);}
+.path-card--next .path-card-eyebrow{color:var(--celadon);}
+.path-card--workbook{border-color:var(--gold);}
+.path-card--workbook .path-card-eyebrow{color:var(--gold);}
+.path-card h4{margin:0 0 10px; font-size:1.15em;}
+.path-card p{color:var(--text-dim); font-size:.92em; margin:0 0 12px;}
+.path-card-points{margin:0 0 16px; padding-left:1.2em; font-size:.88em; color:var(--text-dim);}
+.path-card-points li{margin-bottom:5px;}
+.path-card .btn{align-self:flex-start; margin-top:auto;}
 .cert-lock-icon{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:2.6em; filter:drop-shadow(0 2px 6px rgba(0,0,0,.3)); }
 .cert-locked h3{ margin-bottom:10px; }
 .cert-locked p{ color:var(--text-dim); }
@@ -1579,7 +1582,7 @@ function renderCertLocked(el, savedName){
       <p>Your official Hookitlingo certificate is ready to be generated with your name on it. Unlock and download the PDF for a one-time <strong style="color:var(--vermilion)">₹99</strong>.</p>
       <div class="card">
         <label>Name to print on your certificate:
-          <input type="text" id="certNameInput" value="${savedName}" placeholder="Your full name" style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); padding:8px 10px; margin-left:8px; width:220px;">
+          <input type="text" id="certNameInput" placeholder="Your full name" style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); padding:8px 10px; margin-left:8px; width:220px;">
         </label>
       </div>
       <div id="certPayArea">
@@ -1587,6 +1590,8 @@ function renderCertLocked(el, savedName){
         <p class="hkl-secure-note">🔒 Handled securely by Razorpay. Your certificate PDF is generated only after payment is verified.</p>
       </div>
     </div>`);
+
+  document.getElementById('certNameInput').value = savedName; // set safely — no HTML parsing
 
   document.getElementById('certPayBtn').onclick = () => {
     const nameInput = document.getElementById('certNameInput');
@@ -1671,7 +1676,7 @@ async function verifyCertPayment(response, orderId, nm){
 function renderCertUnlocked(el, paymentId, nm){
   el.insertAdjacentHTML('beforeend', `
   <div class="card">
-    <label>Your name: <input type="text" id="certName" value="${nm}" placeholder="Enter your name" style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); padding:6px 10px; margin-left:8px;"></label>
+    <label>Your name: <input type="text" id="certName" placeholder="Enter your name" style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); padding:6px 10px; margin-left:8px;"></label>
     <button class="btn" style="margin-left:10px" id="certUpdateBtn">Update</button>
     <button class="btn secondary" style="margin-left:6px" id="certDownloadBtn">⬇ Download Certificate PDF</button>
   </div>
@@ -1679,13 +1684,16 @@ function renderCertUnlocked(el, paymentId, nm){
     <div class="eyebrow" style="text-align:center">Hookitlingo · Korean Grammar Part 3: Numbers, Counters &amp; Time</div>
     <h2>Certificate of Completion</h2>
     <p>This certifies that</p>
-    <div class="cert-name" id="certNameDisplay">${nm||'________________________'}</div>
+    <div class="cert-name" id="certNameDisplay">________________________</div>
     <p>has successfully completed <strong>Korean Grammar Part 3: Numbers, Counters &amp; Time</strong>, demonstrating fluent, correct use of both Sino-Korean and Native Korean number systems, counter words, telling time, dates, and money.</p>
     <p style="margin-top:24px; color:var(--text-faint); font-size:.85em">Issued ${new Date().toLocaleDateString()} · XP earned: ${State.xp} · Best streak: ${State.bestStreak}</p>
     <p style="margin-top:8px; color:var(--celadon); font-size:.8em;">✓ Certificate unlocked</p>
   </div>
   <p id="certDownloadStatus" class="hkl-secure-note"></p>
   `);
+
+  document.getElementById('certName').value = nm; // set safely — no HTML parsing
+  document.getElementById('certNameDisplay').textContent = nm || '________________________';
 
   document.getElementById('certUpdateBtn').onclick = () => {
     const v = document.getElementById('certName').value.trim();
@@ -1999,12 +2007,38 @@ function renderNextSteps(el){
   <div class="badge-grid">
     ${BADGE_DEFS.map(b=>`<div class="badge ${State.badges[b.id]?'earned':''}"><div class="bicon">${b.icon}</div><div class="bname">${b.name}</div></div>`).join('')}
   </div>
-  <h3>Where to go from here</h3>
+
+  <h3>Continue Your Journey</h3>
+  <p>Numbers were dense and irregular in places — but everything from here builds on a skill you now already have on reflex.</p>
+
+  <div class="path-cards">
+    <div class="path-card path-card--next">
+      <div class="path-card-eyebrow">Next Course</div>
+      <h4>Verb Tenses & Conjugation</h4>
+      <p>Move into past and future tense, negation, and Korean's major irregular verb patterns — this builds directly on the sentence structure from Grammar Part 1, the same way numbers did.</p>
+      <a class="btn" href="korean-verbs.html" target="_self">Start Verb Tenses →</a>
+    </div>
+
+    <div class="path-card path-card--workbook">
+      <div class="path-card-eyebrow">Practice Companion · ₹99</div>
+      <h4>한국어 숫자 워크북 — The Korean Numbers Workbook</h4>
+      <p>Numbers only stick with repetition. This printable workbook drills Sino-Korean and Native Korean side by side — counters, telling time, dates, and prices — until the switch between systems stops needing conscious thought.</p>
+      <ul class="path-card-points">
+        <li>The first ~25% is free to try — no payment needed</li>
+        <li>Unlock the full workbook (counter drills, time & date practice, price listening drills, and a printable certificate page) for a one-time <strong>₹99</strong></li>
+        <li>Once unlocked, save it as a PDF right from your browser and print it whenever you like</li>
+      </ul>
+      <a class="btn secondary" href="korean-numbers-workbook.html" target="_self">Open the Numbers Workbook →</a>
+    </div>
+  </div>
+
+  <h3>Other ways to keep learning</h3>
   <ul>
-    <li>Move into verb tenses and conjugation — past/future patterns build directly on the sentence structure from Grammar Part 1.</li>
     <li>Study speech levels (해요체 vs. 합니다체 vs. 반말) — the next place "sounding natural" really clicks in.</li>
     <li>Keep an ear out for 만 in real prices — once you can catch it at native speed, big numbers stop being scary.</li>
+    <li>Practice reading real phone numbers, dates, and receipts out loud daily — number fluency is built through repetition, not review.</li>
   </ul>
+
   <div class="callout tip"><span class="callout-label">Keep Going</span>Numbers were dense and irregular in places — but everything from here builds on a skill you now already have on reflex.</div>
   ${noteBox('next-steps')}
   `);

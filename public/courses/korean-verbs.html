@@ -351,6 +351,21 @@ textarea.note-area{width:100%; min-height:90px; background:var(--surface2); bord
 .cert-locked{ max-width:520px; margin:10px auto 0; text-align:center; }
 .cert-locked-silhouette{ position:relative; margin:0 auto 22px; max-width:400px; }
 .cert-locked-silhouette svg{ display:block; width:100%; filter:blur(2.5px); opacity:.55; }
+
+.path-cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin:18px 0 8px;}
+.path-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:22px 24px; display:flex; flex-direction:column;}
+.path-card-eyebrow{font-size:.72em; text-transform:uppercase; letter-spacing:.1em; font-weight:700; margin-bottom:8px;}
+.path-card--next{border-color:var(--celadon);}
+.path-card--next .path-card-eyebrow{color:var(--celadon);}
+.path-card--workbook{border-color:var(--gold);}
+.path-card--workbook .path-card-eyebrow{color:var(--gold);}
+.path-card--manga{border-color:var(--vermilion);}
+.path-card--manga .path-card-eyebrow{color:var(--vermilion);}
+.path-card h4{margin:0 0 10px; font-size:1.15em;}
+.path-card p{color:var(--text-dim); font-size:.92em; margin:0 0 12px;}
+.path-card-points{margin:0 0 16px; padding-left:1.2em; font-size:.88em; color:var(--text-dim);}
+.path-card-points li{margin-bottom:5px;}
+.path-card .btn{align-self:flex-start; margin-top:auto;}
 .cert-lock-icon{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:2.6em; filter:drop-shadow(0 2px 6px rgba(0,0,0,.3)); }
 .cert-locked h3{ margin-bottom:10px; }
 .cert-locked p{ color:var(--text-dim); }
@@ -938,7 +953,7 @@ function renderCertLocked(el, savedName){
       <p>Your official Hookitlingo certificate is ready to be generated with your name on it. Unlock and download the PDF for a one-time <strong style="color:var(--vermilion)">₹99</strong>.</p>
       <div class="card">
         <label>Name to print on your certificate:
-          <input type="text" id="certNameInput" value="${savedName}" placeholder="Your full name" style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); padding:8px 10px; margin-left:8px; width:220px;">
+          <input type="text" id="certNameInput" placeholder="Your full name" style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); padding:8px 10px; margin-left:8px; width:220px;">
         </label>
       </div>
       <div id="certPayArea">
@@ -946,6 +961,8 @@ function renderCertLocked(el, savedName){
         <p class="hkl-secure-note">🔒 Handled securely by Razorpay. Your certificate PDF is generated only after payment is verified.</p>
       </div>
     </div>`);
+
+  document.getElementById('certNameInput').value = savedName; // set safely — no HTML parsing
 
   document.getElementById('certPayBtn').onclick = () => {
     const nameInput = document.getElementById('certNameInput');
@@ -1030,7 +1047,7 @@ async function verifyCertPayment(response, orderId, nm){
 function renderCertUnlocked(el, paymentId, nm){
   el.insertAdjacentHTML('beforeend', `
   <div class="card">
-    <label>Your name: <input type="text" id="certName" value="${nm}" placeholder="Enter your name" style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); padding:6px 10px; margin-left:8px;"></label>
+    <label>Your name: <input type="text" id="certName" placeholder="Enter your name" style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); padding:6px 10px; margin-left:8px;"></label>
     <button class="btn" style="margin-left:10px" id="certUpdateBtn">Update</button>
     <button class="btn secondary" style="margin-left:6px" id="certDownloadBtn">⬇ Download Certificate PDF</button>
   </div>
@@ -1038,13 +1055,16 @@ function renderCertUnlocked(el, paymentId, nm){
     <div class="eyebrow" style="text-align:center">Hookitlingo · Verb Tenses &amp; Conjugation</div>
     <h2>Certificate of Completion</h2>
     <p>This certifies that</p>
-    <div class="cert-name" id="certNameDisplay">${nm||'________________________'}</div>
+    <div class="cert-name" id="certNameDisplay">________________________</div>
     <p>has successfully completed <strong>Verb Tenses &amp; Conjugation</strong>, demonstrating fluent, correct use of present, past, and future tense, negation, and Korean's major irregular verb patterns.</p>
     <p style="margin-top:24px; color:var(--text-faint); font-size:.85em">Issued ${new Date().toLocaleDateString()} · XP earned: ${State.xp} · Best streak: ${State.bestStreak}</p>
     <p style="margin-top:8px; color:var(--celadon); font-size:.8em;">✓ Certificate unlocked</p>
   </div>
   <p id="certDownloadStatus" class="hkl-secure-note"></p>
   `);
+
+  document.getElementById('certName').value = nm; // set safely — no HTML parsing
+  document.getElementById('certNameDisplay').textContent = nm || '________________________';
 
   document.getElementById('certUpdateBtn').onclick = () => {
     const v = document.getElementById('certName').value.trim();
@@ -1358,12 +1378,44 @@ function renderNextSteps(el){
   <div class="badge-grid">
     ${BADGE_DEFS.map(b=>`<div class="badge ${State.badges[b.id]?'earned':''}"><div class="bicon">${b.icon}</div><div class="bname">${b.name}</div></div>`).join('')}
   </div>
-  <h3>Where to go from here</h3>
+
+  <h3>Continue Your Journey</h3>
+  <p>Reading, sentence building, particles, numbers, and now conjugation — every tense you learn from here reuses the exact stem + a/eo rule you just mastered, so the hardest part is genuinely behind you.</p>
+
+  <div class="path-cards">
+    <div class="path-card path-card--next">
+      <div class="path-card-eyebrow">Next Course</div>
+      <h4>Speech Levels & Politeness</h4>
+      <p>You can already build correct sentences in every tense — now learn when to use them. This course covers 해요체 vs. 합니다체 vs. 반말, the social nuance that decides whether you sound formal, natural, or too casual for the room.</p>
+      <a class="btn" href="korean-speech-levels.html" target="_self">Start Speech Levels →</a>
+    </div>
+
+    <div class="path-card path-card--workbook">
+      <div class="path-card-eyebrow">Practice Companion · ₹99</div>
+      <h4>동사 활용 워크북 — The Korean Verbs Workbook</h4>
+      <p>Conjugation only becomes reflex through repetition. This printable workbook drills past, future, and negation across both irregular-verb patterns until the stem + a/eo rule stops needing conscious thought.</p>
+      <ul class="path-card-points">
+        <li>The first ~25% is free to try — no payment needed</li>
+        <li>Unlock the full workbook (tense drills, irregular-verb units, a combining grid, a matching game, and a printable certificate page) for a one-time <strong>₹99</strong></li>
+        <li>Once unlocked, save it as a PDF right from your browser and print it whenever you like</li>
+      </ul>
+      <a class="btn secondary" href="korean-verbs-workbook.html" target="_self">Open the Verbs Workbook →</a>
+    </div>
+
+    <div class="path-card path-card--manga">
+      <div class="path-card-eyebrow">Reading Practice</div>
+      <h4>여우와 소년 — A Hookitlingo Webtoon</h4>
+      <p>Put everything from Hangeul through verb tenses to work in something built for pure reading fluency — no translations, no romanization, just a story to read at your own pace.</p>
+      <a class="btn" href="manga.html" target="_self">Read Episode 1 →</a>
+    </div>
+  </div>
+
+  <h3>Other ways to keep learning</h3>
   <ul>
-    <li>Study Speech Levels &amp; Politeness next — you've already seen 해요체 vs. 합니다체 in action here; that course covers the full social nuance.</li>
     <li>Keep an ear out for irregular verbs in the wild — 모르다/몰라요 and 듣다/들어요 are two of the most common you'll hear constantly.</li>
     <li>Revisit the Spaced-Repetition Review periodically — conjugation is a reflex skill, and reflexes fade without light, regular use.</li>
   </ul>
+
   <div class="callout tip"><span class="callout-label">Keep Going</span>Every tense you learn from here reuses the exact stem + a/eo rule you just mastered — the hardest part is already behind you.</div>
   ${noteBox('next-steps')}
   `);

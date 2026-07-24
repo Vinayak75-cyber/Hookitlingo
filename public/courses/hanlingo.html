@@ -1392,7 +1392,7 @@ function renderCertLocked(el, savedName){
       <p>Your official Hookitlingo certificate is ready to be generated with your name on it. Unlock and download the PDF for a one-time <strong style="color:var(--vermilion)">₹99</strong>.</p>
       <div class="card">
         <label>Name to print on your certificate:
-          <input type="text" id="certNameInput" value="${savedName}" placeholder="Your full name" style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); padding:8px 10px; margin-left:8px; width:220px;">
+          <input type="text" id="certNameInput" placeholder="Your full name" style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); padding:8px 10px; margin-left:8px; width:220px;">
         </label>
       </div>
       <div id="certPayArea">
@@ -1400,6 +1400,8 @@ function renderCertLocked(el, savedName){
         <p class="hkl-secure-note">🔒 Handled securely by Razorpay. Your certificate PDF is generated only after payment is verified.</p>
       </div>
     </div>`);
+
+  document.getElementById('certNameInput').value = savedName; // set safely — no HTML parsing
 
   document.getElementById('certPayBtn').onclick = () => {
     const nameInput = document.getElementById('certNameInput');
@@ -1484,7 +1486,7 @@ async function verifyCertPayment(response, orderId, nm){
 function renderCertUnlocked(el, paymentId, nm){
   el.insertAdjacentHTML('beforeend', `
   <div class="card">
-    <label>Your name: <input type="text" id="certName" value="${nm}" placeholder="Enter your name" style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); padding:6px 10px; margin-left:8px;"></label>
+    <label>Your name: <input type="text" id="certName" placeholder="Enter your name" style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); padding:6px 10px; margin-left:8px;"></label>
     <button class="btn" style="margin-left:10px" id="certUpdateBtn">Update</button>
     <button class="btn secondary" style="margin-left:6px" id="certDownloadBtn">⬇ Download Certificate PDF</button>
   </div>
@@ -1492,13 +1494,16 @@ function renderCertUnlocked(el, paymentId, nm){
     <div class="eyebrow" style="text-align:center">Hookitlingo · Hangeul Course</div>
     <h2>Certificate of Completion</h2>
     <p>This certifies that</p>
-    <div class="cert-name" id="certNameDisplay">${nm||'________________________'}</div>
+    <div class="cert-name" id="certNameDisplay">________________________</div>
     <p>has successfully completed the <strong>한글 Hangeul</strong> interactive beginner course, demonstrating the ability to read, pronounce, and write the Korean alphabet.</p>
     <p style="margin-top:24px; color:var(--text-faint); font-size:.85em">Issued ${new Date().toLocaleDateString()} · XP earned: ${State.xp}</p>
     <p style="margin-top:8px; color:var(--celadon); font-size:.8em;">✓ Certificate unlocked</p>
   </div>
   <p id="certDownloadStatus" class="hkl-secure-note"></p>
   `);
+
+  document.getElementById('certName').value = nm; // set safely — no HTML parsing
+  document.getElementById('certNameDisplay').textContent = nm || '________________________';
 
   document.getElementById('certUpdateBtn').onclick = () => {
     const v = document.getElementById('certName').value.trim();

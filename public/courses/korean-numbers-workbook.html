@@ -4,19 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>한국어 숫자 워크북 — The Korean Numbers Workbook</title>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLEMFRK6XH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-WLEMFRK6XH');
-</script>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <style>
 /* ============================================================
    TOKENS — rice-paper / ink-stone / seal-stamp palette
@@ -222,6 +213,72 @@ table.logtable td{border-bottom:1px solid var(--paper3); padding:9px 6px; height
   .two-col,.three-col{flex-direction:column;}
   .cheat-grid{flex-direction:column;}
 }
+
+/* ============================================================
+   PAYWALL — free preview / locked pages
+   ============================================================ */
+.page-locked{
+  filter: blur(7px) saturate(.7);
+  pointer-events:none;
+  user-select:none;
+  position:relative;
+}
+.page-locked::after{
+  content:'🔒';
+  position:absolute; top:18px; right:18px;
+  font-size:1.4em; filter:none; opacity:.9;
+}
+.paywall-page{
+  align-items:center; text-align:center; justify-content:center;
+  border:2px dashed var(--seal); background:var(--paper2);
+}
+.paywall-page .lock-badge{
+  width:56px; height:56px; border-radius:50%; background:var(--seal-dim); color:var(--seal);
+  display:flex; align-items:center; justify-content:center; font-size:1.6em; margin:0 auto 18px;
+}
+.paywall-page h2{font-family:var(--serif-kr); font-size:1.6em; margin:0 0 4px;}
+.paywall-page .paywall-kicker{font-family:var(--mono); font-size:.68em; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:16px;}
+.paywall-page p{max-width:440px; margin:0 auto .9em;}
+.paywall-page .price{font-family:var(--serif-en); font-weight:700; font-size:2em; color:var(--seal); margin:10px 0 16px;}
+.paywall-page .price small{font-size:.4em; color:var(--ink-soft); font-weight:400;}
+
+.wk-btn{
+  font-family:var(--serif-en); font-size:.92em; font-weight:600; background:var(--seal); color:#fdf6ee;
+  border:none; padding:12px 26px; border-radius:999px; cursor:pointer; letter-spacing:.02em;
+}
+.wk-btn:hover{filter:brightness(1.08);}
+.wk-btn.secondary{background:transparent; border:1px solid var(--seal); color:var(--seal);}
+.wk-secure-note{margin-top:14px; font-size:.72em; color:var(--ink-faint);}
+.wk-spinner{
+  width:26px; height:26px; border-radius:50%; margin:6px auto;
+  border:3px solid var(--paper3); border-top-color:var(--seal);
+  animation:wkspin .8s linear infinite;
+}
+@keyframes wkspin{to{transform:rotate(360deg);}}
+
+.paywall-bar{
+  position:fixed; left:0; right:0; bottom:0; z-index:90;
+  background:var(--ink); color:var(--paper); display:flex; align-items:center; gap:14px;
+  padding:12px 22px; box-shadow:0 -6px 20px rgba(0,0,0,.35); font-family:var(--serif-en);
+}
+.paywall-bar span{font-size:.88em;}
+.paywall-bar .spacer{flex:1;}
+.paywall-bar .wk-btn{padding:9px 20px; font-size:.85em;}
+
+#pdfInstructions{max-width:920px; margin:0 auto; padding:0 16px;}
+.instructions-card{
+  background:var(--paper); border:1px solid #d8c9a3; border-radius:8px; padding:18px 22px; margin:16px auto 0;
+  color:var(--ink); font-family:var(--serif-en); font-size:.9em; position:relative;
+}
+.instructions-card h4{font-family:var(--serif-kr); margin:0 0 10px;}
+.instructions-card ol{margin:0; padding-left:1.2em;}
+.instructions-card li{margin-bottom:7px;}
+.instructions-card .close-instr{position:absolute; top:12px; right:14px; background:none; border:none; color:var(--ink-faint); cursor:pointer; font-size:1.1em;}
+
+@media print{
+  .paywall-bar, .paywall-page, #pdfInstructions{display:none !important;}
+  .page-locked{display:none !important;}
+}
 </style>
 </head>
 <body>
@@ -232,7 +289,23 @@ table.logtable td{border-bottom:1px solid var(--paper3); padding:9px 6px; height
   <div class="spacer"></div>
   <span class="hint" id="pageCount"></span>
   <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
-  <button onclick="window.print()">Print / Save as PDF</button>
+  <button class="secondary" id="pdfHelpBtn">❔ Save as PDF</button>
+  <button id="printBtn" onclick="window.print()">Print / Save as PDF</button>
+  <button id="unlockToolbarBtn" style="display:none">🔒 Unlock — ₹99</button>
+</div>
+
+<div id="pdfInstructions" style="display:none">
+  <div class="instructions-card">
+    <button class="close-instr" id="closeInstrBtn" aria-label="Close">✕</button>
+    <h4>Saving your workbook as a PDF</h4>
+    <ol>
+      <li>Once the pages you want are unlocked, click <strong>Print / Save as PDF</strong> in the toolbar above.</li>
+      <li>In the print dialog, set <strong>Destination</strong> to "Save as PDF" (Chrome, Edge, Firefox) or "Microsoft Print to PDF" (Windows) — on a Mac, use the <strong>PDF</strong> dropdown in the bottom-left of the print preview.</li>
+      <li>Set <strong>Paper size</strong> to A4 and <strong>Margins</strong> to "None" or "Default."</li>
+      <li>Turn on <strong>Background graphics</strong> (often under "More settings") so the seal stamps and shaded boxes print correctly.</li>
+      <li>Click <strong>Save</strong>, choose where to keep the file — from there you can print physical copies from that PDF anytime.</li>
+    </ol>
+  </div>
 </div>
 
 <div id="book"></div>
@@ -742,8 +815,197 @@ function shuffleForPrint(a){ const b=a.slice(); for(let i=b.length-1;i>0;i--){ c
    + '</section>';
 })();
 
+/* ============================================================
+   PAYWALL — first ~25% of pages are free; the rest unlock for
+   a one-time ₹99 via Razorpay. Mirrors the hanlingo workbook and
+   the certificate unlock: every visit is re-verified against
+   Razorpay through the server before pages are shown.
+   ============================================================ */
+const SUPPORT_API_BASE = window.location.hostname === 'localhost'
+  ? 'http://localhost:3000'
+  : '';
+
+const WORKBOOK_PRICE_PAISE = 9900; // ₹99 — keep in sync with server.js
+const WORKBOOK_PURPOSE = 'workbook-numbers';
+const WORKBOOK_PAYMENT_KEY = 'hg_workbook_payment_id_numbers';
+
+let wkFreeCount = 0, wkTotal = 0;
+
+function initPaywall(){
+  const pages = Array.from(document.querySelectorAll('#book > .page'));
+  wkTotal = pages.length;
+  wkFreeCount = Math.max(2, Math.ceil(wkTotal * 0.25));
+
+  const savedPaymentId = localStorage.getItem(WORKBOOK_PAYMENT_KEY);
+  if(savedPaymentId){
+    verifyWorkbookAccess(savedPaymentId).then(ok=>{
+      if(ok){ unlockWorkbook(); }
+      else { localStorage.removeItem(WORKBOOK_PAYMENT_KEY); lockWorkbook(); }
+    });
+  } else {
+    lockWorkbook();
+  }
+}
+
+function lockWorkbook(){
+  const pages = Array.from(document.querySelectorAll('#book > .page'));
+  pages.forEach((p,i)=>{ if(i>=wkFreeCount) p.classList.add('page-locked'); });
+  insertPaywallCard(pages[wkFreeCount-1] || pages[pages.length-1]);
+  showPaywallBar();
+  setToolbarLocked(true);
+}
+
+function unlockWorkbook(){
+  document.querySelectorAll('#book > .page').forEach(p=>p.classList.remove('page-locked'));
+  removePaywallCard();
+  hidePaywallBar();
+  setToolbarLocked(false);
+}
+
+function setToolbarLocked(isLocked){
+  document.getElementById('printBtn').style.display = isLocked ? 'none' : '';
+  document.getElementById('unlockToolbarBtn').style.display = isLocked ? '' : 'none';
+}
+
+function insertPaywallCard(afterEl){
+  removePaywallCard();
+  const lockedCount = wkTotal - wkFreeCount;
+  const card = document.createElement('section');
+  card.className = 'page paywall-page';
+  card.id = 'paywallCard';
+  card.innerHTML = `
+    <div class="lock-badge">🔒</div>
+    <h2 class="kr">잠금 해제</h2>
+    <div class="paywall-kicker">Unlock to Continue</div>
+    <p>You've previewed the first ${wkFreeCount} pages for free. The remaining <strong>${lockedCount} pages</strong> — counter drills, telling time, dates, prices, and your printable certificate page — are locked.</p>
+    <div class="price">₹99 <small>one-time</small></div>
+    <div id="paywallPayArea">
+      <button class="wk-btn" id="paywallPayBtn">Unlock Full Workbook — ₹99</button>
+      <p class="wk-secure-note">🔒 Handled securely by Razorpay. Pages unlock only after payment is verified.</p>
+    </div>
+  `;
+  afterEl.insertAdjacentElement('afterend', card);
+  document.getElementById('paywallPayBtn').onclick = initiateWorkbookPayment;
+}
+
+function removePaywallCard(){
+  const el = document.getElementById('paywallCard');
+  if(el) el.remove();
+}
+
+function showPaywallBar(){
+  hidePaywallBar();
+  const bar = document.createElement('div');
+  bar.className = 'paywall-bar';
+  bar.id = 'paywallBar';
+  bar.innerHTML = `<span>🔒 ${wkTotal - wkFreeCount} pages locked</span><div class="spacer"></div><button class="wk-btn" id="paywallBarBtn">Unlock — ₹99</button>`;
+  document.body.appendChild(bar);
+  document.getElementById('paywallBarBtn').onclick = jumpToPaywall;
+  document.getElementById('unlockToolbarBtn').onclick = jumpToPaywall;
+}
+function hidePaywallBar(){
+  const el = document.getElementById('paywallBar');
+  if(el) el.remove();
+}
+function jumpToPaywall(){
+  document.getElementById('paywallCard')?.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+async function initiateWorkbookPayment(){
+  const area = document.getElementById('paywallPayArea');
+  area.innerHTML = `<div class="wk-spinner"></div><p class="wk-secure-note">Preparing secure checkout…</p>`;
+  try{
+    const orderRes = await fetch(`${SUPPORT_API_BASE}/api/create-order`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ amount: WORKBOOK_PRICE_PAISE, purpose: WORKBOOK_PURPOSE })
+    });
+    if(!orderRes.ok){
+      const err = await orderRes.json();
+      throw new Error(err.error || 'Failed to create order');
+    }
+    const { orderId, amount, currency, key } = await orderRes.json();
+
+    const options = {
+      key, amount, currency,
+      name: "Hookitlingo",
+      description: "Korean Numbers Workbook — full unlock",
+      order_id: orderId,
+      theme: { color: "#a8342a" },
+      handler: async function(response){ await verifyWorkbookPayment(response, orderId); },
+      modal: { ondismiss: function(){ renderPaywallRetry(); } }
+    };
+    const rzp = new Razorpay(options);
+    rzp.open();
+  } catch(err){
+    console.error('Workbook payment initiation failed:', err);
+    area.innerHTML = `<p class="wk-secure-note" style="color:var(--seal)">${err.message}</p><button class="wk-btn secondary" id="paywallRetryBtn">Try again</button>`;
+    document.getElementById('paywallRetryBtn').onclick = initiateWorkbookPayment;
+  }
+}
+
+function renderPaywallRetry(){
+  const area = document.getElementById('paywallPayArea');
+  if(!area) return;
+  area.innerHTML = `<button class="wk-btn" id="paywallPayBtn2">Unlock Full Workbook — ₹99</button><p class="wk-secure-note">🔒 Handled securely by Razorpay.</p>`;
+  document.getElementById('paywallPayBtn2').onclick = initiateWorkbookPayment;
+}
+
+async function verifyWorkbookPayment(response, orderId){
+  const area = document.getElementById('paywallPayArea');
+  if(area) area.innerHTML = `<div class="wk-spinner"></div><p class="wk-secure-note">Verifying payment…</p>`;
+
+  try{
+    const verifyRes = await fetch(`${SUPPORT_API_BASE}/api/verify-payment`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        orderId: response.razorpay_order_id || orderId,
+        paymentId: response.razorpay_payment_id,
+        signature: response.razorpay_signature
+      })
+    });
+    const result = await verifyRes.json();
+    if(!result.verified) throw new Error('Payment verification failed');
+
+    const ok = await verifyWorkbookAccess(result.paymentId);
+    if(!ok) throw new Error("We couldn't confirm access for this payment. Please contact support.");
+
+    localStorage.setItem(WORKBOOK_PAYMENT_KEY, result.paymentId);
+    unlockWorkbook();
+  } catch(err){
+    console.error('Workbook payment verification failed:', err);
+    if(area){
+      area.innerHTML = `<p class="wk-secure-note" style="color:var(--seal)">We couldn't verify your payment. If you were charged, please contact us.</p><button class="wk-btn secondary" id="paywallRetryBtn2">Try again</button>`;
+      document.getElementById('paywallRetryBtn2').onclick = initiateWorkbookPayment;
+    }
+  }
+}
+
+async function verifyWorkbookAccess(paymentId){
+  try{
+    const res = await fetch(`${SUPPORT_API_BASE}/api/workbook-access?paymentId=${encodeURIComponent(paymentId)}&product=numbers`);
+    if(!res.ok) return false;
+    const data = await res.json();
+    return !!data.unlocked;
+  } catch(err){
+    console.error('Workbook access check failed:', err);
+    return false;
+  }
+}
+
 document.getElementById('book').innerHTML = HTML;
 document.getElementById('pageCount').textContent = pageNum + ' pages generated';
+
+document.getElementById('pdfHelpBtn').onclick = () => {
+  const box = document.getElementById('pdfInstructions');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+};
+document.getElementById('closeInstrBtn').onclick = () => {
+  document.getElementById('pdfInstructions').style.display = 'none';
+};
+
+initPaywall();
 </script>
 </body>
 </html>
