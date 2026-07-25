@@ -247,6 +247,8 @@ footer a{text-decoration:underline;}
   .top-actions .topbtn{font-size:.72em; padding:7px 6px;}
 }
 </style>
+<link rel="stylesheet" href="support-widget.css">
+<script src="support-widget.js"></script>
 </head>
 <body>
 
@@ -586,41 +588,9 @@ document.addEventListener('keydown', (e)=>{
 window.addEventListener('resize', () => { renderGrove(); });
 
 /* ============================================================
-   SUPPORT MODAL — same donation flow as the rest of the site
+   SUPPORT — Gumroad (see support-widget.js)
    ============================================================ */
-(function(){
-  const AMOUNTS = [99, 199, 499, 999];
-  let selected = null;
-  const overlay = document.getElementById('hklOverlay');
-  const body = document.getElementById('hklBody');
-
-  function openModal(){ renderAsk(); overlay.classList.add('open'); }
-  function closeModal(){ overlay.classList.remove('open'); }
-
-  function renderAsk(){
-    body.innerHTML = `
-      <div class="hkl-icon">🌸</div>
-      <h3>Keep Hookitlingo free for everyone?</h3>
-      <p>Every course here is free, forever, with no ads. If Hookitlingo has helped you learn, a small contribution helps fund new lessons — completely optional.</p>
-      <div class="hkl-actions" style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-        <button class="hkl-btn hkl-btn-yes" id="hklYes" style="border-radius:999px; padding:11px 20px; font-size:.88em; font-weight:700; background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%)); color:#fff; border:none;">Yes, I'd like to help 💛</button>
-        <button class="hkl-btn hkl-btn-no" id="hklNo" style="border-radius:999px; padding:11px 20px; font-size:.88em; font-weight:700; background:var(--surface2); border:1px solid var(--border); color:var(--text-dim);">Not right now</button>
-      </div>`;
-    document.getElementById('hklYes').onclick = renderBye;
-    document.getElementById('hklNo').onclick = renderBye2;
-  }
-  function renderBye(){
-    body.innerHTML = `<div class="hkl-icon">💛</div><h3>Thank you!</h3><p>Head to the <a href="index.html">course catalog</a> to complete your contribution.</p>`;
-  }
-  function renderBye2(){
-    body.innerHTML = `<div class="hkl-icon">😢</div><h3>No worries!</h3><p>Thanks for learning with us anyway.</p>`;
-    setTimeout(closeModal, 1400);
-  }
-
-  document.getElementById('supportBtn').onclick = openModal;
-  document.getElementById('hklClose').onclick = closeModal;
-  overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(); });
-})();
+document.getElementById('supportBtn').onclick = () => HookitSupport.open();
 </script>
 </body>
 </html>

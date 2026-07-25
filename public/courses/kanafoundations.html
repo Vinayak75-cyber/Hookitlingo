@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>かな — Kana Foundations | Hookitlingo</title>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLEMFRK6XH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WLEMFRK6XH');
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../support-widget.css">
+<script src="../support-widget.js"></script>
+<style>
+/* ============================================================
+   TOKENS  (same sakura theme as the Korean course)
+   ============================================================ */
+:root{
+  --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941;
+  --border:#4a3550;
+  --text:#f6ecec; --text-dim:#c7b2c4; --text-faint:#8f7a91;
+  --vermilion:#e58aa2; --vermilion-dim:#5a2c3a;
+  --celadon:#5fa688; --celadon-dim:#2a4a3d;
+  --gold:#d9ab5c; --gold-dim:#5c471e;
+  --inkblue:#a084c9; --inkblue-dim:#3a2c50;
+  --petal:#f3b6c6;
+  --radius:16px; --radius-sm:10px;
+  --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --jp:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  --maxw:880px;
+  --fs-scale:1;
+}
+html[data-theme="light"]{
+  --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6;
+  --border:#eccabb;
+  --text:#3a2530; --text-dim:#79576a; --text-faint:#a98a9c;
+  --vermilion:#c8546f; --vermilion-dim:#f6dae2;
+  --celadon:#3f7d63; --celadon-dim:#d9ece2;
+  --gold:#a4762b; --gold-dim:#f2e2c2;
+  --inkblue:#75509f; --inkblue-dim:#e7ddf2;
+  --petal:#e59fb2;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--text); font-family:var(--sans);
+  font-size:calc(16px*var(--fs-scale)); line-height:1.65; transition:background .3s,color .3s;
+  background:
+    radial-gradient(1100px 620px at 12% -8%, color-mix(in srgb, var(--vermilion) 16%, transparent), transparent 58%),
+    radial-gradient(900px 520px at 104% 6%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 55%),
+    var(--ink);
+  background-attachment:fixed;
+}
+::selection{background:var(--vermilion); color:#fff;}
+h1,h2,h3,h4{font-family:var(--serif); font-weight:600; letter-spacing:.2px; margin:0 0 .5em;}
+h1{font-size:2.2em;} h2{font-size:1.6em;} h3{font-size:1.25em;} h4{font-size:1.05em;}
+p{margin:0 0 1em;}
+a{color:var(--celadon);}
+.jp{font-family:var(--jp);}
+button{font-family:var(--sans); cursor:pointer;}
+.hidden{display:none !important;}
+
+/* ============================================================
+   LAYOUT SHELL
+   ============================================================ */
+#app{display:flex; min-height:100vh; position:relative; z-index:2;}
+#sidebar{
+  width:280px; flex:none; background:var(--surface); border-right:1px solid var(--border);
+  position:sticky; top:0; height:100vh; overflow-y:auto; padding:18px 14px 40px;
+  transition:transform .3s; z-index:40;
+}
+#sidebar::-webkit-scrollbar{width:6px;} #sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+.brand{display:flex; align-items:center; gap:12px; padding:6px 8px 18px; border-bottom:1px solid var(--border); margin-bottom:14px;}
+.brand-block{
+  width:44px;height:44px;border-radius:50%; flex:none; position:relative;
+  background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--vermilion) 88%, #fff 12%), var(--vermilion) 72%);
+  display:flex;align-items:center;justify-content:center; font-family:var(--jp); font-weight:700; font-size:19px; color:#fff9f7;
+  transform:rotate(-7deg);
+  box-shadow:0 4px 12px color-mix(in srgb, var(--vermilion) 50%, transparent), inset 0 0 0 2px color-mix(in srgb, #fff 22%, transparent);
+}
+.brand-txt strong{display:block; font-family:var(--serif); font-size:1.15em; letter-spacing:.2px;}
+.brand-txt span{display:block; font-size:.7em; color:var(--text-faint); letter-spacing:.12em; text-transform:uppercase;}
+
+.progress-mini{margin:0 8px 16px; padding:10px 12px; background:var(--surface2); border-radius:var(--radius-sm); border:1px solid var(--border);}
+.progress-mini .row{display:flex; justify-content:space-between; font-size:.78em; color:var(--text-dim); margin-bottom:6px;}
+.bar-track{height:6px; background:var(--surface3); border-radius:4px; overflow:hidden;}
+.bar-fill{height:100%; background:linear-gradient(90deg,var(--vermilion),var(--gold)); width:0%; transition:width .4s;}
+
+.nav-group{margin-bottom:6px;}
+.nav-group-label{font-size:.68em; text-transform:uppercase; letter-spacing:.1em; color:var(--text-faint); padding:14px 10px 6px;}
+.nav-item{
+  display:flex; align-items:center; gap:9px; width:100%; text-align:left; padding:8px 10px; border-radius:8px;
+  background:transparent; border:none; color:var(--text-dim); font-size:.88em; margin-bottom:1px;
+}
+.nav-item:hover{background:var(--surface2); color:var(--text);}
+.nav-item.active{background:var(--vermilion-dim); color:var(--vermilion); font-weight:600;}
+html[data-theme="light"] .nav-item.active{color:#8a2c4a;}
+.nav-item .dot{width:6px;height:6px;border-radius:50%; background:var(--border); flex:none;}
+.nav-item.done .dot{background:var(--celadon);}
+.nav-item .lbl{flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+
+#mainWrap{flex:1; min-width:0; display:flex; flex-direction:column;}
+#topbar{
+  position:sticky; top:0; z-index:30; display:flex; align-items:center; gap:10px;
+  padding:10px 20px 14px; background:color-mix(in srgb, var(--ink) 85%, transparent); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+#topbar::after{
+  content:''; position:absolute; left:0; right:0; bottom:-1px; height:7px;
+  background-image: radial-gradient(circle at 9px 0, transparent 8px, color-mix(in srgb, var(--vermilion) 45%, var(--border)) 8px, color-mix(in srgb, var(--vermilion) 45%, var(--border)) 9px, transparent 9px);
+  background-size:18px 10px; background-repeat:repeat-x; opacity:.55; pointer-events:none;
+}
+#menuBtn{display:none; background:none;border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 10px;}
+.readbar-track{flex:1; height:4px; background:var(--surface2); border-radius:3px; overflow:hidden;}
+.readbar-fill{height:100%; width:0%; background:linear-gradient(90deg,var(--celadon),var(--inkblue)); transition:width .15s;}
+.topbtn{background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); border-radius:8px; padding:6px 10px; font-size:.85em; display:flex; align-items:center; gap:5px;}
+.topbtn:hover{color:var(--text); border-color:var(--celadon);}
+.topbtn.active-toggle{color:var(--gold); border-color:var(--gold-dim);}
+#searchBox{background:var(--surface2); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:6px 10px; font-size:.85em; width:150px;}
+#searchResults{position:absolute; top:52px; right:20px; width:320px; max-height:60vh; overflow:auto; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); box-shadow:0 20px 50px rgba(0,0,0,.5); z-index:60;}
+#searchResults .sr-item{padding:10px 12px; border-bottom:1px solid var(--border); font-size:.85em; cursor:pointer;}
+#searchResults .sr-item:hover{background:var(--surface2);}
+
+main{flex:1; padding:36px 40px 80px; max-width:var(--maxw); margin:0 auto; width:100%;}
+main.wide{max-width:1100px;}
+
+.chapter{display:none; animation:fadeIn .35s ease;}
+.chapter.active{display:block;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+.eyebrow{font-size:.75em; letter-spacing:.14em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:8px;}
+.chapter-meta{display:flex; gap:14px; color:var(--text-faint); font-size:.82em; margin-bottom:26px; flex-wrap:wrap;}
+
+/* Cards & callouts */
+.card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin:18px 0;}
+.callout{border-left:3px solid var(--celadon); background:var(--celadon-dim); border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:14px 18px; margin:18px 0; color:var(--text);}
+.callout.warn{border-color:var(--vermilion); background:var(--vermilion-dim);}
+.callout.tip{border-color:var(--gold); background:var(--gold-dim);}
+.callout.fun{border-color:var(--inkblue); background:var(--inkblue-dim);}
+.callout-label{font-weight:700; font-size:.78em; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px; display:block;}
+
+/* Letter tile grid */
+.tile-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:14px; margin:20px 0;}
+.letter-tile{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px;
+  text-align:center; position:relative; transition:border-color .2s, transform .2s; cursor:pointer;
+}
+.letter-tile:hover{border-color:var(--celadon); transform:translateY(-2px);}
+.letter-tile.opened{border-color:var(--vermilion);}
+.glyph-pair{display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:4px;}
+.glyph-pair .jp.big{font-size:2em; line-height:1; color:var(--text);}
+.glyph-pair .jp.kata{color:var(--inkblue);}
+.letter-tile .rom{font-family:var(--serif); font-style:italic; color:var(--gold); font-size:1.05em;}
+.letter-tile .spk{margin-top:8px; display:flex; gap:6px; justify-content:center; flex-wrap:wrap;}
+.tile-detail{margin-top:12px; padding-top:12px; border-top:1px dashed var(--border); text-align:left; font-size:.85em;}
+.tile-detail .mnem{color:var(--text-dim); margin-bottom:8px;}
+.tile-detail .word{color:var(--text);}
+.tile-detail .word .rom{font-size:.85em;}
+
+/* Speaker button */
+.spk-btn{
+  background:var(--surface2); border:1px solid var(--border); color:var(--text-dim);
+  border-radius:20px; padding:5px 12px; font-size:.78em; display:inline-flex; align-items:center; gap:6px;
+}
+.spk-btn:hover{border-color:var(--vermilion); color:var(--vermilion);}
+.spk-btn.loading{opacity:.5; pointer-events:none;}
+.spk-btn.playing{border-color:var(--celadon); color:var(--celadon);}
+
+/* Buttons */
+.btn{background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%)); color:#fff; border:none; border-radius:999px; padding:11px 22px; font-size:.9em; font-weight:600; letter-spacing:.2px;}
+.btn:hover{filter:brightness(1.06); box-shadow:0 6px 18px color-mix(in srgb, var(--vermilion) 35%, transparent);}
+.btn.secondary{background:var(--surface2); color:var(--text); border:1px solid var(--border); border-radius:999px;}
+.btn.secondary:hover{border-color:var(--celadon); color:var(--celadon);}
+.btn:disabled{opacity:.4; cursor:default;}
+.btn-row{display:flex; gap:10px; flex-wrap:wrap; margin:16px 0;}
+
+/* Row comparison tables (dakuten etc) */
+.pair-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:12px; margin:18px 0;}
+.pair-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px; text-align:center;}
+.pair-card .arrow{color:var(--text-faint); font-size:.8em; margin:2px 0;}
+.pair-card .jp{font-size:1.6em;}
+.pair-card .from{color:var(--text-faint); font-size:.85em;}
+.pair-card .to{color:var(--vermilion); font-weight:600;}
+
+/* Confusable comparison */
+.confuse-row{display:flex; align-items:center; gap:18px; flex-wrap:wrap; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:18px; margin:16px 0;}
+.confuse-glyph{font-family:var(--jp); font-size:2.6em; background:var(--surface2); border-radius:var(--radius-sm); padding:10px 18px; min-width:70px; text-align:center;}
+.confuse-note{flex:1; min-width:200px; color:var(--text-dim); font-size:.92em;}
+
+/* Flashcards */
+.flash-wrap{max-width:420px; margin:20px auto;}
+.flashcard{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); height:220px;
+  display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:20px;
+  cursor:pointer; user-select:none; position:relative;
+}
+.flashcard .fc-face{font-family:var(--jp); font-size:3em;}
+.flashcard .fc-sub{color:var(--text-faint); font-size:.8em; margin-top:10px;}
+.flashcard .fc-back{display:none;}
+.flashcard.flipped .fc-front{display:none;} .flashcard.flipped .fc-back{display:flex; flex-direction:column; align-items:center;}
+.flash-controls{display:flex; justify-content:space-between; align-items:center; margin-top:14px;}
+.flash-counter{color:var(--text-faint); font-size:.85em;}
+
+/* Quiz */
+.quiz-q{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin:16px 0;}
+.quiz-q .qtext{font-family:var(--sans); font-size:1.05em; margin-bottom:14px;}
+.quiz-q .qtext.jp{font-family:var(--jp); font-size:1.5em;}
+.qopts{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+@media(max-width:520px){.qopts{grid-template-columns:1fr;}}
+.qopt{background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:10px 14px; text-align:left; color:var(--text); font-size:.95em;}
+.qopt.jp{font-family:var(--jp); font-size:1.2em; text-align:center;}
+.qopt:hover{border-color:var(--celadon);}
+.qopt.correct{background:var(--celadon-dim); border-color:var(--celadon); color:var(--celadon);}
+.qopt.wrong{background:var(--vermilion-dim); border-color:var(--vermilion); color:var(--vermilion);}
+.qopt:disabled{pointer-events:none;}
+.qfeedback{margin-top:10px; font-size:.85em; color:var(--text-dim); min-height:1.2em;}
+.quiz-score{font-family:var(--serif); font-size:1.4em; text-align:center; margin:20px 0;}
+
+/* Matching game */
+.match-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:20px 0;}
+@media(max-width:600px){.match-grid{grid-template-columns:repeat(3,1fr);}}
+.match-card{
+  aspect-ratio:1; background:var(--surface); border:1px solid var(--border); border-radius:10px;
+  display:flex;align-items:center;justify-content:center; font-family:var(--jp); font-size:1.4em;
+  padding:6px; text-align:center;
+}
+.match-card.flipped{border-color:var(--celadon); background:var(--celadon-dim);}
+.match-card.matched{opacity:.35; border-color:var(--gold); pointer-events:none;}
+.match-card.wrong{border-color:var(--vermilion); background:var(--vermilion-dim);}
+.match-status{text-align:center; color:var(--text-dim); margin:10px 0;}
+
+/* Typing sprint */
+.type-wrap{max-width:420px; margin:20px auto; text-align:center;}
+.type-glyph{font-family:var(--jp); font-size:4em; margin:20px 0;}
+.type-input{width:100%; padding:12px 16px; border-radius:10px; border:1px solid var(--border); background:var(--surface2); color:var(--text); font-size:1.1em; text-align:center;}
+.type-stats{display:flex; justify-content:space-between; color:var(--text-faint); font-size:.85em; margin-top:10px;}
+
+/* Certificate */
+.cert{background:var(--surface); border:2px solid var(--gold); border-radius:var(--radius); padding:40px; text-align:center; margin:24px 0; position:relative;}
+.cert::before{content:''; position:absolute; inset:8px; border:1px solid var(--gold-dim); border-radius:calc(var(--radius) - 4px); pointer-events:none;}
+.cert h2{font-size:1.2em; letter-spacing:.1em; text-transform:uppercase; color:var(--text-faint);}
+.cert .cert-name{font-family:var(--serif); font-style:italic; font-size:2.2em; margin:14px 0; color:var(--vermilion);}
+.cert .cert-jp{font-family:var(--jp); font-size:1.4em; margin:10px 0;}
+.cert input{background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:10px 14px; font-size:1.1em; color:var(--text); text-align:center; width:80%; max-width:320px;}
+
+/* Badges */
+.badge-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:14px; margin:18px 0;}
+.badge{text-align:center; padding:14px 8px; border-radius:var(--radius-sm); border:1px solid var(--border); background:var(--surface); opacity:.35;}
+.badge.earned{opacity:1; border-color:var(--gold);}
+.badge .icon{font-size:2em;}
+.badge .name{font-size:.72em; color:var(--text-dim); margin-top:4px;}
+
+/* Roadmap */
+.roadmap-group{margin:18px 0;}
+.roadmap-group h3{margin-bottom:8px;}
+.roadmap-list{display:flex; flex-direction:column; gap:6px;}
+.roadmap-item{display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:8px; background:var(--surface); border:1px solid var(--border); cursor:pointer;}
+.roadmap-item:hover{border-color:var(--celadon);}
+.roadmap-item .dot{width:8px;height:8px;border-radius:50%; background:var(--border); flex:none;}
+.roadmap-item.done .dot{background:var(--celadon);}
+.roadmap-item .t{flex:1;}
+
+/* Support */
+.support-amounts{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:18px 0;}
+.support-amt{background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:14px; text-align:center; font-size:1.1em; font-weight:600;}
+.support-amt:hover, .support-amt.sel{border-color:var(--gold); color:var(--gold);}
+.support-icon{font-size:2.4em; text-align:center; margin-bottom:10px;}
+.support-card{max-width:420px; margin:20px auto; text-align:center;}
+
+/* Petals decoration */
+#petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.petal{position:absolute; top:-5%; animation:fall linear infinite;}
+.petal svg{width:100%; height:100%; display:block;}
+@keyframes fall{
+  from{transform:translateY(-10vh) translateX(0) rotate(0deg);}
+  to{transform:translateY(110vh) translateX(var(--drift)) rotate(340deg);}
+}
+@media (prefers-reduced-motion: reduce){.petal{display:none;}}
+
+@media print{
+  #sidebar,#topbar,#petals,.no-print,.btn-row{display:none !important;}
+  main{padding:0; max-width:100%;}
+  body{background:#fff; color:#111;}
+  .cert{border-color:#a4762b;}
+}
+@media(max-width:860px){
+  #sidebar{position:fixed; left:0; top:0; height:100vh; transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #menuBtn{display:inline-flex;}
+  main{padding:24px 18px 60px;}
+  #searchBox{width:100px;}
+}
+</style>
+</head>
+<body>
+<div id="petals"></div>
+<div id="app">
+
+<nav id="sidebar">
+  <div class="brand">
+    <div class="brand-block">か</div>
+    <div class="brand-txt"><strong>Kana Foundations</strong><span>Hookitlingo</span></div>
+  </div>
+  <div class="progress-mini">
+    <div class="row"><span>Your progress</span><span id="progressPct">0%</span></div>
+    <div class="bar-track"><div class="bar-fill" id="progressBar"></div></div>
+  </div>
+  <div id="navHost"></div>
+</nav>
+
+<div id="mainWrap">
+  <div id="topbar">
+    <button id="menuBtn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+    <div class="readbar-track"><div class="readbar-fill" id="readbarFill"></div></div>
+    <button class="topbtn" id="themeBtn" onclick="toggleTheme()">🌙 Theme</button>
+    <button class="topbtn" onclick="changeFont(-1)">A−</button>
+    <button class="topbtn" onclick="changeFont(1)">A+</button>
+    <input id="searchBox" type="text" placeholder="Search units…" oninput="doSearch(this.value)">
+  </div>
+  <div id="searchResults" class="hidden"></div>
+  <main id="mainInner"></main>
+</div>
+
+</div>
+
+<script>
+/* ============================================================
+   0. UTIL
+   ============================================================ */
+function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function sample(arr,n){ return shuffle(arr).slice(0,n); }
+function esc(s){ return String(s).replace(/"/g,'&quot;'); }
+
+/* ============================================================
+   1. STATE
+   ============================================================ */
+const State = {
+  theme: localStorage.getItem('kf_theme') || 'dark',
+  fontScale: parseFloat(localStorage.getItem('kf_font')) || 1,
+  completed: JSON.parse(localStorage.getItem('kf_completed')||'{}'),
+  xp: parseInt(localStorage.getItem('kf_xp')||'0'),
+  badges: JSON.parse(localStorage.getItem('kf_badges')||'{}'),
+  current: null,
+  last: localStorage.getItem('kf_last') || 'cover'
+};
+function saveState(){
+  localStorage.setItem('kf_theme', State.theme);
+  localStorage.setItem('kf_font', State.fontScale);
+  localStorage.setItem('kf_completed', JSON.stringify(State.completed));
+  localStorage.setItem('kf_xp', State.xp);
+  localStorage.setItem('kf_badges', JSON.stringify(State.badges));
+  localStorage.setItem('kf_last', State.current);
+}
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', State.theme);
+  const btn = document.getElementById('themeBtn');
+  if(btn) btn.textContent = State.theme==='dark' ? '🌙 Theme' : '☀️ Theme';
+}
+function toggleTheme(){ State.theme = State.theme==='dark'?'light':'dark'; applyTheme(); saveState(); }
+function changeFont(dir){
+  State.fontScale = Math.min(1.3, Math.max(0.85, +(State.fontScale + dir*0.05).toFixed(2)));
+  document.documentElement.style.setProperty('--fs-scale', State.fontScale);
+  saveState();
+}
+function addXP(n){ State.xp += n; saveState(); updateProgressUI(); }
+function markComplete(id){
+  if(!State.completed[id]){ State.completed[id]=true; addXP(10); checkBadges(); }
+  saveState(); updateProgressUI(); buildSidebar();
+}
+const BADGE_DEFS = [
+ {id:'first', icon:'🌱', name:'First Step', test:()=>Object.keys(State.completed).length>=1},
+ {id:'hiraganamaster', icon:'あ', name:'Hiragana Sense', test:()=>['vowels','krow','srow','trow','nrow','hrow','mrow','yrow','rrow','wnrow'].every(id=>State.completed[id])},
+ {id:'modifiersmaster', icon:'゛', name:'Modifier Master', test:()=>['dakuten','sokuon','youon','chouon'].every(id=>State.completed[id])},
+ {id:'confusablemaster', icon:'👀', name:'Sharp Eyes', test:()=>State.completed['confusables']},
+ {id:'halfway', icon:'⛰️', name:'Halfway There', test:()=>Object.keys(State.completed).length>=Math.ceil(CHAPTERS.length/2)},
+ {id:'graduate', icon:'🎓', name:'Kana Graduate', test:()=>State.completed['final-exam']},
+];
+function checkBadges(){
+  BADGE_DEFS.forEach(b=>{ if(!State.badges[b.id] && b.test()){ State.badges[b.id]=true; } });
+  saveState();
+}
+function updateProgressUI(){
+  const pct = Math.round((Object.keys(State.completed).length / CHAPTERS.length) * 100);
+  const bar = document.getElementById('progressBar');
+  const pctEl = document.getElementById('progressPct');
+  if(bar) bar.style.width = pct+'%';
+  if(pctEl) pctEl.textContent = pct+'%';
+}
+
+/* ============================================================
+   2. AUDIO — same embedded-base64 logic as the Korean course.
+   AUDIO_DATA starts empty; fill it in later with Amazon Polly
+   output, e.g. AUDIO_DATA['あ'] = 'data:audio/mpeg;base64,....'
+   The KEY must exactly match the text passed into spkBtn().
+   ============================================================ */
+const AUDIO_DATA = {
+  /* ---- fill me in with Polly-generated base64 clips ---- */
+};
+
+const Audio_ = {
+  queue: [], playing: false, currentAudio: null,
+
+  lookup(text){
+    if(Object.prototype.hasOwnProperty.call(AUDIO_DATA, text)) return AUDIO_DATA[text];
+    return null;
+  },
+
+  speak(text, btn){
+    if(!text){ return; }
+    if(btn){
+      if(btn.dataset.busy==='1') return;
+      btn.dataset.busy='1';
+      btn.classList.add('loading');
+    }
+    this.queue.push({text, btn});
+    this._pump();
+  },
+
+  _pump(){
+    if(this.playing || !this.queue.length) return;
+    const {text, btn} = this.queue.shift();
+    this.playing = true;
+    const dataUri = this.lookup(text);
+    if(btn){ btn.classList.remove('loading'); btn.classList.add('playing'); }
+
+    const done = ()=>{
+      this.playing=false; this.currentAudio=null;
+      if(btn){ btn.classList.remove('playing'); btn.dataset.busy='0'; }
+      setTimeout(()=>this._pump(),120);
+    };
+
+    if(!dataUri){
+      console.warn('Audio: no embedded clip yet for', text);
+      if(btn){
+        const orig = btn.innerHTML;
+        btn.innerHTML = '❌ Missing';
+        setTimeout(()=>btn.innerHTML=orig,1200);
+      }
+      done();
+      return;
+    }
+
+    const audio = new Audio();
+    this.currentAudio = audio;
+    audio.onended = done;
+    audio.onerror = ()=>{
+      if(btn){ const orig=btn.innerHTML; btn.innerHTML='❌ Missing'; setTimeout(()=>btn.innerHTML=orig,1200); }
+      done();
+    };
+    audio.addEventListener('canplaythrough', ()=>{ audio.play().catch(()=>done()); }, {once:true});
+    audio.src = dataUri;
+    audio.load();
+  }
+};
+function spkBtn(text, label){
+  label = label || '🔊';
+  if(!text) return '';
+  const safeText = JSON.stringify(text).replace(/"/g,'&quot;');
+  return `<button class="spk-btn no-print" onclick="event.stopPropagation(); Audio_.speak(${safeText}, this)">${label}</button>`;
+}
+
+/* ============================================================
+   3. KANA DATA
+   ============================================================ */
+const ROWS = {
+  vowels: [
+    {h:'あ',k:'ア',r:'a', mnem:'Picture an apple sliced open - the shape has that same round curl. Say a pure, open "ah" like in "father," not the English short-a in "apple."', word:['あさ','asa','morning']},
+    {h:'い',k:'イ',r:'i', mnem:'Two simple strokes, like two people standing side-by-side saying "eee!" together.', word:['いぬ','inu','dog']},
+    {h:'う',k:'ウ',r:'u', mnem:'A small curled comma - lips barely rounded. A short, clipped "oo" like the "oo" in "book," not a long "ooo."', word:['うみ','umi','sea']},
+    {h:'え',k:'エ',r:'e', mnem:'Looks like a stick figure with a little flag - sounds like the "eh" in "bed."', word:['えき','eki','station']},
+    {h:'お',k:'オ',r:'o', mnem:'Picture a person bowing politely - a round, closed "oh" like in "go."', word:['おちゃ','ocha','tea']}
+  ],
+  krow: [
+    {h:'か',k:'カ',r:'ka', mnem:'A person mid-kick - shout "KA!" as the leg swings.', word:['かさ','kasa','umbrella']},
+    {h:'き',k:'キ',r:'ki', mnem:'It really does look like an old-fashioned key - "key" sounds just like "ki."', word:['き','ki','tree']},
+    {h:'く',k:'ク',r:'ku', mnem:'A boomerang, or a mouth caught mid "coo" - say "ku" like the "coo" in "cook," clipped short.', word:['くも','kumo','cloud / spider']},
+    {h:'け',k:'ケ',r:'ke', mnem:'A leg kicking out sideways - "keh," rhymes with "Kevin" minus the "vin."', word:['けさ','kesa','this morning']},
+    {h:'こ',k:'コ',r:'ko', mnem:'Two short parallel strokes, like two coins stacked - "koh," rhymes with "go."', word:['ここ','koko','here']}
+  ],
+  srow: [
+    {h:'さ',k:'サ',r:'sa', mnem:'A fishing line casting out - "sah," like the start of "saga."', word:['さかな','sakana','fish']},
+    {h:'し',k:'シ',r:'shi', mnem:'One curved fishhook stroke - "shee." This is one of the "watch this shape" kana - it will come back in the Confusable Clinic.', word:['しろ','shiro','white']},
+    {h:'す',k:'ス',r:'su', mnem:'A swirl, like a noodle sucked up fast - "soo," short and quick.', word:['すし','sushi','sushi']},
+    {h:'せ',k:'セ',r:'se', mnem:'Looks like a little ladder or well - "seh," like "set" without the T.', word:['せかい','sekai','world']},
+    {h:'そ',k:'ソ',r:'so', mnem:'A single zigzag, like a stitch of thread - "soh," like "sew."', word:['そら','sora','sky']}
+  ],
+  trow: [
+    {h:'た',k:'タ',r:'ta', mnem:'A capital "T" with an extra cross-stroke - "tah," like "tot" without the final T.', word:['たまご','tamago','egg']},
+    {h:'ち',k:'チ',r:'chi', mnem:'A curled stroke like a spinning top - "chee," like "cheese" without the "-se."', word:['ちず','chizu','map']},
+    {h:'つ',k:'ツ',r:'tsu', mnem:'The classic one: a tsunami wave curling over - "tsu," a single sound, not "t" then "su."', word:['つき','tsuki','moon']},
+    {h:'て',k:'テ',r:'te', mnem:'Handy coincidence: て is drawn like an open hand, and te is the Japanese word for "hand."', word:['てがみ','tegami','letter']},
+    {h:'と',k:'ト',r:'to', mnem:'A door swinging open on its hinge - "toh," like "toe."', word:['とり','tori','bird']}
+  ],
+  nrow: [
+    {h:'な',k:'ナ',r:'na', mnem:'A knot tied in a piece of rope - "nah," like "not" without the T.', word:['なつ','natsu','summer']},
+    {h:'に',k:'ニ',r:'ni', mnem:'Two chopsticks lying side by side - "nee," like "knee."', word:['にく','niku','meat']},
+    {h:'ぬ',k:'ヌ',r:'nu', mnem:'A noodle looped around a fork - "noo." Keep an eye on this one - it gets confused with め, わ, and ね later.', word:['いぬ','inu','dog']},
+    {h:'ね',k:'ネ',r:'ne', mnem:'A cat curling its tail around - "neh," like "net" without the T.', word:['ねこ','neko','cat']},
+    {h:'の',k:'ノ',r:'no', mnem:'A single loop - think of the word "no" traced in one stroke - "noh," like "know."', word:['のみもの','nomimono','drink']}
+  ],
+  hrow: [
+    {h:'は',k:'ハ',r:'ha', mnem:'A person laughing "ha ha!" with legs kicked apart - "hah," like "hot" without the T.', word:['はな','hana','flower']},
+    {h:'ひ',k:'ヒ',r:'hi', mnem:'A curved eyebrow raised in a smile - "hee," like "he."', word:['ひと','hito','person']},
+    {h:'ふ',k:'フ',r:'fu', mnem:'Mount Fuji\'s twin peaks in one stroke - "fu," a soft breathy sound between "foo" and "hoo."', word:['ふゆ','fuyu','winter']},
+    {h:'へ',k:'ヘ',r:'he', mnem:'A simple mountain roofline, like a tiny peak - "heh," like "hen" without the N.', word:['へや','heya','room']},
+    {h:'ほ',k:'ホ',r:'ho', mnem:'A tall flagpole with a banner - "hoh," like "hope" without the P.', word:['ほし','hoshi','star']}
+  ],
+  mrow: [
+    {h:'ま',k:'マ',r:'ma', mnem:'A ribbon curling like a bow on a present - "mah," like "mom" minus the last M.', word:['まち','machi','town']},
+    {h:'み',k:'ミ',r:'mi', mnem:'Three short curls stacked - "mee," like "me."', word:['みず','mizu','water']},
+    {h:'む',k:'ム',r:'mu', mnem:'A cow\'s face mid-moo - "moo."', word:['むし','mushi','insect']},
+    {h:'め',k:'メ',r:'me', mnem:'It genuinely looks like a winking eye - "meh," like "met" without the T.', word:['め','me','eye']},
+    {h:'も',k:'モ',r:'mo', mnem:'A fishhook with a little loop at the top - "moh," like "more" without the R.', word:['もも','momo','peach']}
+  ],
+  yrow: [
+    {h:'や',k:'ヤ',r:'ya', mnem:'A slingshot Y-shape being pulled back - "yah," like "yacht" without the T.', word:['やま','yama','mountain']},
+    {h:'ゆ',k:'ユ',r:'yu', mnem:'A hot-spring bath symbol, curled like steam - "yoo," like "you."', word:['ゆき','yuki','snow']},
+    {h:'よ',k:'ヨ',r:'yo', mnem:'A yo-yo mid-loop on its string - "yoh," like "yo!"', word:['よる','yoru','night']}
+  ],
+  rrow: [
+    {h:'ら',k:'ラ',r:'ra', mnem:'A rabbit\'s ear flopping over - "rah," a soft flap between an English L and R.', word:['らいねん','rainen','next year']},
+    {h:'り',k:'リ',r:'ri', mnem:'Two lean strokes, like chopsticks leaning together - "ree," like "reed."', word:['りんご','ringo','apple']},
+    {h:'る',k:'ル',r:'ru', mnem:'A loop-de-loop, like a rollercoaster track - "roo," like "rude" without the D.', word:['くる','kuru','to come']},
+    {h:'れ',k:'レ',r:'re', mnem:'A person leaning back, relaxed - "reh," like "red" without the D.', word:['これ','kore','this']},
+    {h:'ろ',k:'ロ',r:'ro', mnem:'A simple square box outline - "roh," like "row."', word:['ろく','roku','six']}
+  ],
+  wnrow: [
+    {h:'わ',k:'ワ',r:'wa', mnem:'A curled ocean wave - "wah," like "watt."', word:['わたし','watashi','I / me']},
+    {h:'を',k:'ヲ',r:'o (wo)', mnem:'You will almost never write this one outside of one grammar role (marking the object of a verb) - it is pronounced exactly like お. Recognize it, don\'t stress about it.', word:['ほんをよむ','hon wo yomu','to read a book']},
+    {h:'ん',k:'ン',r:'n', mnem:'The odd one out: no vowel attached, just a nasal hum through the nose. A single curled hook - think of it as Japanese\'s only standalone-consonant letter.', word:['ほん','hon','book']}
+  ]
+};
+const ROW_ORDER = ['vowels','krow','srow','trow','nrow','hrow','mrow','yrow','rrow','wnrow'];
+const ROW_TITLES = {
+  vowels:'The Five Vowels — あいうえお', krow:'The K-Row — かきくけこ', srow:'The S-Row — さしすせそ',
+  trow:'The T-Row — たちつてと', nrow:'The N-Row — なにぬねの', hrow:'The H-Row — はひふへほ',
+  mrow:'The M-Row — まみむめも', yrow:'The Y-Row — やゆよ', rrow:'The R-Row — らりるれろ',
+  wnrow:'わ, を, and ん — the Odd Ones Out'
+};
+const ROW_TIPS = {
+  vowels:'Every other sound in the entire kana system is built from these five vowels. Get comfortable with the pure vowel sounds first — resist the urge to add an English "y" or "w" glide.',
+  krow:'Say か out loud, then immediately look at かさ (kasa, "umbrella"). Hearing the sound inside a real word cements it faster than the isolated syllable ever will.',
+  srow:'し is the first of the "big six" look-alikes — you will do a focused drill on it later, but start noticing its shape now.',
+  trow:'つ trips up almost every English speaker at first because "tsu" is not a natural English sound. Practice it slowly: "t" then "su," then speed up until it blends into one sound.',
+  nrow:'ぬ is the other half of a very confusable pair — keep it in mind as you also learn め, わ, and ね.',
+  hrow:'ふ is the softest sound in the whole chart — not quite "foo," not quite "hoo." Let your lips nearly touch without a hard puff of air.',
+  mrow:'め really does look like an eye, winking at you. If a mnemonic feels silly, that is exactly why it works — strange images stick better than plain ones.',
+  yrow:'Notice there is no "yi" or "ye" — the Y-row only has three members. That gap is intentional; を fills a similar structural gap in the W-row.',
+  rrow:'The Japanese R is not an English R or L — it is a single quick flap of the tongue against the roof of the mouth, closer to a Spanish single "r."',
+  wnrow:'ん is the only kana that is a consonant with no vowel attached to it at all — say it as a held nasal hum, like the "n" in "sung."'
+};
+
+const DAKUTEN = [
+  {h:'が',k:'ガ',r:'ga', from:'か'},{h:'ぎ',k:'ギ',r:'gi', from:'き'},{h:'ぐ',k:'グ',r:'gu', from:'く'},{h:'げ',k:'ゲ',r:'ge', from:'け'},{h:'ご',k:'ゴ',r:'go', from:'こ'},
+  {h:'ざ',k:'ザ',r:'za', from:'さ'},{h:'じ',k:'ジ',r:'ji', from:'し'},{h:'ず',k:'ズ',r:'zu', from:'す'},{h:'ぜ',k:'ゼ',r:'ze', from:'せ'},{h:'ぞ',k:'ゾ',r:'zo', from:'そ'},
+  {h:'だ',k:'ダ',r:'da', from:'た'},{h:'ぢ',k:'ヂ',r:'ji', from:'ち', note:'rare — sounds identical to じ'},{h:'づ',k:'ヅ',r:'zu', from:'つ', note:'rare — sounds identical to ず'},{h:'で',k:'デ',r:'de', from:'て'},{h:'ど',k:'ド',r:'do', from:'と'},
+  {h:'ば',k:'バ',r:'ba', from:'は'},{h:'び',k:'ビ',r:'bi', from:'ひ'},{h:'ぶ',k:'ブ',r:'bu', from:'ふ'},{h:'べ',k:'ベ',r:'be', from:'へ'},{h:'ぼ',k:'ボ',r:'bo', from:'ほ'}
+];
+const HANDAKUTEN = [
+  {h:'ぱ',k:'パ',r:'pa', from:'は'},{h:'ぴ',k:'ピ',r:'pi', from:'ひ'},{h:'ぷ',k:'プ',r:'pu', from:'ふ'},{h:'ぺ',k:'ペ',r:'pe', from:'へ'},{h:'ぽ',k:'ポ',r:'po', from:'ほ'}
+];
+
+const YOUON = [
+  {h:'きゃ',k:'キャ',r:'kya'},{h:'きゅ',k:'キュ',r:'kyu'},{h:'きょ',k:'キョ',r:'kyo'},
+  {h:'しゃ',k:'シャ',r:'sha'},{h:'しゅ',k:'シュ',r:'shu'},{h:'しょ',k:'ショ',r:'sho'},
+  {h:'ちゃ',k:'チャ',r:'cha'},{h:'ちゅ',k:'チュ',r:'chu'},{h:'ちょ',k:'チョ',r:'cho'},
+  {h:'にゃ',k:'ニャ',r:'nya'},{h:'にゅ',k:'ニュ',r:'nyu'},{h:'にょ',k:'ニョ',r:'nyo'},
+  {h:'ひゃ',k:'ヒャ',r:'hya'},{h:'ひゅ',k:'ヒュ',r:'hyu'},{h:'ひょ',k:'ヒョ',r:'hyo'},
+  {h:'みゃ',k:'ミャ',r:'mya'},{h:'みゅ',k:'ミュ',r:'myu'},{h:'みょ',k:'ミョ',r:'myo'},
+  {h:'りゃ',k:'リャ',r:'rya'},{h:'りゅ',k:'リュ',r:'ryu'},{h:'りょ',k:'リョ',r:'ryo'},
+  {h:'ぎゃ',k:'ギャ',r:'gya'},{h:'じゃ',k:'ジャ',r:'ja'},{h:'びゃ',k:'ビャ',r:'bya'},{h:'ぴゃ',k:'ピャ',r:'pya'}
+];
+
+const SOKUON_PAIRS = [
+  {a:['いた','ita','was / existed'], b:['いった','itta','went']},
+  {a:['かこ','kako','the past'], b:['かっこ','kakko','cool / bracket']},
+  {a:['さか','saka','slope'], b:['さっか','sakka','author']}
+];
+
+const CHOUON_EXAMPLES = [
+  {jp:'おかあさん', romaji:'okaasan', mean:'mother — the あ is held twice as long'},
+  {jp:'おにいさん', romaji:'oniisan', mean:'older brother — the い is held twice as long'},
+  {jp:'おばあさん', romaji:'obaasan', mean:'grandmother'},
+  {jp:'コーヒー', romaji:'kōhī', mean:'coffee — katakana uses a bar (ー) instead of doubling'},
+  {jp:'ケーキ', romaji:'kēki', mean:'cake'},
+  {jp:'ビール', romaji:'bīru', mean:'beer'}
+];
+
+const CONFUSABLES = [
+  {glyphs:['し','つ','ん','そ'], note:'The single most common beginner tangle. し curls like a fishhook opening upward-right. つ curls like a wave crashing left-to-right along the top. ん is a tight hook with a small tail flick. そ is a zigzag with two clear direction changes. Trace each one slowly with a finger before typing it.'},
+  {glyphs:['さ','ち'], note:'さ has a short disconnected stroke near the top; ち is one continuous curling stroke with no gap. Look for the gap.'},
+  {glyphs:['ぬ','め','わ','ね'], note:'All four share a loop. ぬ and め both have a loop that crosses back on itself; わ and ね are simpler curves. め is the "eye" — a tight, closed loop. ぬ\'s loop trails off to the lower-left.'},
+  {glyphs:['る','ろ'], note:'る has a small loop at the bottom-right of the curve; ろ is just a plain curve with no loop. If you see a little tail curling back on itself, it is る.'},
+  {glyphs:['ク','タ'], note:'Katakana pair: ク is narrow and angular like a chevron; タ has an extra short stroke crossing through the middle, like a small flag.'},
+  {glyphs:['シ','ツ'], note:'Katakana pair: the two short strokes in シ point mostly downward and diagonal (like falling rain); in ツ they point more horizontally, echoing the "wave" of hiragana つ.'}
+];
+
+const READING_WORDS = [
+  {jp:'あさひ', romaji:'asahi', mean:'morning sun'},
+  {jp:'たなか', romaji:'tanaka', mean:'a common surname'},
+  {jp:'ともだち', romaji:'tomodachi', mean:'friend'},
+  {jp:'ありがとう', romaji:'arigatou', mean:'thank you'},
+  {jp:'おはようございます', romaji:'ohayou gozaimasu', mean:'good morning (polite)'},
+  {jp:'カレーライス', romaji:'karē raisu', mean:'curry rice'},
+  {jp:'コンビニ', romaji:'konbini', mean:'convenience store'},
+  {jp:'にほんご', romaji:'nihongo', mean:'the Japanese language'}
+];
+
+function allBaseKana(){
+  let out=[];
+  ROW_ORDER.forEach(id=>out=out.concat(ROWS[id]));
+  return out;
+}
+
+/* ============================================================
+   4. QUIZ ENGINE
+   ============================================================ */
+function buildQuiz(id, data, isFinal){
+  const wrap = document.createElement('div');
+  wrap.className='quiz-host';
+  wrap.id = 'quiz-'+id;
+  let idx=0, score=0;
+  function draw(){
+    if(idx>=data.length){
+      const pct = data.length ? Math.round((score/data.length)*100) : 0;
+      wrap.innerHTML = `
+        <div class="quiz-score">Score: ${score} / ${data.length} (${pct}%)</div>
+        ${isFinal ? (pct>=70
+          ? `<div class="callout"><span class="callout-label">Passed!</span>You have earned your certificate. Great work.
+             <div class="btn-row"><button class="btn" onclick="goTo('certificate')">Go to Certificate →</button></div></div>`
+          : `<div class="callout warn"><span class="callout-label">Almost there</span>70% is the passing mark — review a unit or two and try again whenever you are ready.</div>`)
+          : ''}
+        <div class="btn-row"><button class="btn secondary" onclick="goTo(State.current)">Try Again</button></div>
+      `;
+      addXP(score*2);
+      if(isFinal && pct>=70) markComplete('final-exam');
+      return;
+    }
+    const q = data[idx];
+    wrap.innerHTML = `
+      <div class="quiz-q">
+        <div class="qtext ${q.jp?'jp':''}">${q.q}</div>
+        <div class="qopts">${q.options.map(o=>`<button class="qopt ${q.optJp?'jp':''}" data-o="${esc(o)}">${o}</button>`).join('')}</div>
+        <div class="qfeedback">&nbsp;</div>
+        <div style="margin-top:10px;color:var(--text-faint);font-size:.78em">Question ${idx+1} of ${data.length}</div>
+      </div>`;
+    wrap.querySelectorAll('.qopt').forEach(btn=>{
+      btn.onclick = ()=>{
+        wrap.querySelectorAll('.qopt').forEach(b=>b.disabled=true);
+        const chosen = btn.getAttribute('data-o');
+        const correct = chosen === q.answer;
+        btn.classList.add(correct?'correct':'wrong');
+        if(!correct){
+          wrap.querySelectorAll('.qopt').forEach(b=>{ if(b.getAttribute('data-o')===q.answer) b.classList.add('correct'); });
+        }
+        wrap.querySelector('.qfeedback').textContent = correct ? '✓ Correct!' : `Correct answer: ${q.answer}`;
+        if(correct) score++;
+        setTimeout(()=>{ idx++; draw(); }, 900);
+      };
+    });
+  }
+  draw();
+  return wrap;
+}
+
+function makeRowQuiz(rows, count){
+  count = count || Math.min(6, rows.length*2);
+  const qs=[];
+  const pool = rows;
+  for(let i=0;i<count;i++){
+    const r = pool[Math.floor(Math.random()*pool.length)];
+    if(i%2===0){
+      const wrong = sample(pool.filter(x=>x!==r), Math.min(3,pool.length-1)).map(x=>x.r);
+      const opts = shuffle([...wrong, r.r]);
+      qs.push({q:r.h, jp:true, options:opts, answer:r.r, optJp:false});
+    } else {
+      const wrong = sample(pool.filter(x=>x!==r), Math.min(3,pool.length-1)).map(x=>x.k);
+      const opts = shuffle([...wrong, r.k]);
+      qs.push({q:`Which one says "${r.r}"?`, jp:false, options:opts, answer:r.k, optJp:true});
+    }
+  }
+  return qs;
+}
+
+/* ============================================================
+   5. TILE RENDERING
+   ============================================================ */
+function renderKanaTile(r){
+  const detailId = 'd-'+Math.random().toString(36).slice(2,9);
+  return `<div class="letter-tile" data-target="${detailId}">
+     <div class="glyph-pair"><span class="jp big">${r.h}</span><span class="jp big kata">${r.k}</span></div>
+     <div class="rom">${r.r}</div>
+     <div class="spk">${spkBtn(r.h,'🔊 '+r.h)}${spkBtn(r.k,'🔊 '+r.k)}</div>
+     <div class="tile-detail hidden" id="${detailId}">
+       <p class="mnem">${r.mnem}</p>
+       ${r.word ? `<p class="word"><span class="jp">${r.word[0]}</span> <span class="rom">(${r.word[1]})</span> — ${r.word[2]} ${spkBtn(r.word[0],'🔊')}</p>` : ''}
+       ${r.note ? `<p class="word" style="color:var(--text-faint)">${r.note}</p>` : ''}
+     </div>
+  </div>`;
+}
+function wireTiles(el){
+  el.querySelectorAll('.letter-tile').forEach(tile=>{
+    tile.addEventListener('click', (e)=>{
+      const d = tile.querySelector('.tile-detail');
+      d.classList.toggle('hidden');
+      tile.classList.toggle('opened', !d.classList.contains('hidden'));
+    });
+  });
+}
+
+/* ============================================================
+   6. CHAPTER RENDER FUNCTIONS
+   ============================================================ */
+function renderCover(el){
+  el.innerHTML = `
+    <div style="text-align:center; padding:40px 0 10px;">
+      <div class="eyebrow">Hookitlingo · Japanese Track</div>
+      <h1 style="font-size:3em;">かな — Kana Foundations</h1>
+      <p style="max-width:520px;margin:0 auto 26px;color:var(--text-dim)">Hiragana and katakana, taught together, with a mnemonic for every single sound, a mini-quiz after every unit, and a full Confusable Kana Clinic so the look-alikes never trip you up again.</p>
+      <div class="btn-row" style="justify-content:center">
+        <button class="btn" onclick="goTo('roadmap')">Start the Journey →</button>
+        <button class="btn secondary" onclick="goTo('intro')">What is Kana?</button>
+      </div>
+      <p style="margin-top:26px;color:var(--text-faint);font-size:.82em">Most focused learners finish recognition in under a week. 🌸</p>
+    </div>`;
+}
+
+function renderRoadmap(el){
+  const groups = {};
+  CHAPTERS.forEach(c=>{ (groups[c.group] = groups[c.group]||[]).push(c); });
+  el.innerHTML = `
+    <div class="eyebrow">Your Path</div>
+    <h1>The Kana Foundations Roadmap</h1>
+    <div class="chapter-meta"><span>${CHAPTERS.length} units</span><span>${Object.keys(State.completed).length} completed</span></div>
+    ${Object.entries(groups).map(([g,list])=>`
+      <div class="roadmap-group">
+        <h3>${g}</h3>
+        <div class="roadmap-list">
+          ${list.map(c=>`<div class="roadmap-item ${State.completed[c.id]?'done':''}" onclick="goTo('${c.id}')">
+              <span class="dot"></span><span class="t">${c.title}</span><span style="color:var(--text-faint);font-size:.8em">${State.completed[c.id]?'✓ done':''}</span>
+            </div>`).join('')}
+        </div>
+      </div>`).join('')}
+  `;
+}
+
+function renderIntro(el){
+  el.innerHTML = `
+    <div class="eyebrow">Start Here</div>
+    <h1>What Even Is "Kana"?</h1>
+    <div class="chapter-meta"><span>⏱ 3 min read</span></div>
+    <p>Japanese is written with three systems layered together, and the good news is you are only tackling the easy two right now.</p>
+    <div class="card">
+      <h4>ひらがな — Hiragana</h4>
+      <p>The native phonetic alphabet. It carries grammar (word endings, particles) and is usually the first script children learn. Soft, curvy strokes.</p>
+    </div>
+    <div class="card">
+      <h4>カタカナ — Katakana</h4>
+      <p>The exact same 46+ sounds as hiragana, just in sharper, more angular letterforms. Used for foreign loanwords (コーヒー, "coffee"), emphasis, and some onomatopoeia.</p>
+    </div>
+    <div class="card" style="opacity:.7">
+      <h4>漢字 — Kanji</h4>
+      <p>Chinese-derived characters carrying whole meanings, not sounds. Not part of this course — that is Phase 1's dedicated kanji track. You do not need a single kanji to finish Kana Foundations.</p>
+    </div>
+    <div class="callout fun"><span class="callout-label">Fun Fact</span>Katakana's sharp, angular look actually comes from taking small pieces of more complex kanji — it was originally a kind of shorthand.</div>
+    <div class="btn-row"><button class="btn" onclick="markComplete('intro'); goTo('why-easy')">Continue →</button></div>
+  `;
+}
+
+function renderWhyEasy(el){
+  el.innerHTML = `
+    <div class="eyebrow">Start Here</div>
+    <h1>Why Kana Is Easier Than You Think</h1>
+    <div class="chapter-meta"><span>⏱ 3 min read</span></div>
+    <p>English spelling is a minefield — "cough," "though," and "through" all end in "-ough" and rhyme with nothing consistent. Kana has none of that problem.</p>
+    <div class="callout"><span class="callout-label">The Golden Rule</span>What you see is what you say. Every kana has exactly one sound, always. Once you know a shape, you can read it out loud correctly forever — even in a word you have never seen before.</div>
+    <p>Here is the plan for the rest of this course:</p>
+    <ul>
+      <li>Hiragana and katakana are taught <strong>side by side</strong>, sound by sound — not as two separate walls to climb.</li>
+      <li>Every sound gets a quick visual mnemonic, tied to its <em>shape</em>, not its pronunciation — audio always leads, the picture is just a memory hook.</li>
+      <li>You will quiz yourself every 5–10 minutes, not once every 46 characters.</li>
+      <li>A dedicated <strong>Confusable Kana Clinic</strong> tackles the look-alike shapes head-on instead of hoping repetition fixes them.</li>
+    </ul>
+    <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Say every sound out loud before you look at its mnemonic. Your ear should always lead your eye — the picture is a memory aid, not a pronunciation guide.</div>
+    <div class="btn-row"><button class="btn" onclick="markComplete('why-easy'); goTo('vowels')">Let's Begin →</button></div>
+  `;
+}
+
+function renderKanaRowChapter(id){
+  return function(el){
+    const rows = ROWS[id];
+    el.innerHTML = `
+      <div class="eyebrow">The Building Blocks</div>
+      <h1>${ROW_TITLES[id]}</h1>
+      <div class="chapter-meta"><span>⏱ ~5 min</span><span>${rows.length} sounds × 2 scripts</span></div>
+      <p>Tap any tile to reveal its mnemonic, a real example word, and audio for both scripts.</p>
+      <div class="callout tip"><span class="callout-label">Teacher's Tip</span>${ROW_TIPS[id]}</div>
+      <div class="tile-grid">${rows.map(renderKanaTile).join('')}</div>
+      <h3>Quick Check</h3>
+      <div id="qhost-${id}"></div>
+      <div class="btn-row"><button class="btn" onclick="markComplete('${id}')">Mark Unit Complete</button></div>
+    `;
+    wireTiles(el);
+    el.querySelector('#qhost-'+id).appendChild(buildQuiz(id, makeRowQuiz(rows)));
+  };
+}
+
+function renderModifiers(el){
+  el.innerHTML = `
+    <div class="eyebrow">Sound Modifiers</div>
+    <h1>゛and ゜ — Dakuten &amp; Handakuten</h1>
+    <div class="chapter-meta"><span>⏱ ~4 min</span><span>25 new sounds</span></div>
+    <p>Add two little marks and you get a whole new sound. This is not extra material to skip — these sounds show up constantly in real words.</p>
+    <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Dakuten (゛) mostly "voices" a sound: k→g, s→z, t→d, h→b. Handakuten (゜) only ever applies to the H-row, turning it into a crisp "p."</div>
+    <h3>Dakuten (゛) — k → g, s → z, t → d, h → b</h3>
+    <div class="pair-grid">${DAKUTEN.map(d=>`
+      <div class="pair-card">
+        <div class="from jp">${d.from}</div><div class="arrow">↓ ゛</div>
+        <div class="jp to">${d.h}</div><div class="jp" style="color:var(--inkblue)">${d.k}</div>
+        <div class="rom" style="font-size:.85em">${d.r}</div>
+        <div class="spk">${spkBtn(d.h,'🔊')}</div>
+        ${d.note?`<div style="font-size:.72em;color:var(--text-faint);margin-top:4px">${d.note}</div>`:''}
+      </div>`).join('')}</div>
+    <h3>Handakuten (゜) — h → p</h3>
+    <div class="pair-grid">${HANDAKUTEN.map(d=>`
+      <div class="pair-card">
+        <div class="from jp">${d.from}</div><div class="arrow">↓ ゜</div>
+        <div class="jp to">${d.h}</div><div class="jp" style="color:var(--inkblue)">${d.k}</div>
+        <div class="rom" style="font-size:.85em">${d.r}</div>
+        <div class="spk">${spkBtn(d.h,'🔊')}</div>
+      </div>`).join('')}</div>
+    <div class="callout fun"><span class="callout-label">Fun Fact</span>The は row is the only row that can take either mark — ば (ba) with dakuten, or ぱ (pa) with handakuten — which is why は/ば/ぱ is a favorite example in every textbook.</div>
+    <h3>Quick Check</h3>
+    <div id="qhost-dakuten"></div>
+    <div class="btn-row"><button class="btn" onclick="markComplete('dakuten')">Mark Unit Complete</button></div>
+  `;
+  const pool = DAKUTEN.concat(HANDAKUTEN).filter(x=>!x.note);
+  el.querySelector('#qhost-dakuten').appendChild(buildQuiz('dakuten-quiz', makeRowQuiz(pool)));
+}
+
+function renderSokuon(el){
+  el.innerHTML = `
+    <div class="eyebrow">Sound Modifiers</div>
+    <h1>っ / ッ — The Small っ (Sokuon)</h1>
+    <div class="chapter-meta"><span>⏱ ~3 min</span></div>
+    <p>A tiny っ written before a consonant means: hold your breath for one beat before releasing that consonant. It doubles the consonant sound and adds a small pause — it never has a sound of its own.</p>
+    <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Think of it like the gap between the two T's in "hot tea" said quickly — that little catch is exactly what っ represents.</div>
+    <h3>Minimal Pairs — Listen for the Difference</h3>
+    ${SOKUON_PAIRS.map(p=>`
+      <div class="confuse-row">
+        <div class="confuse-glyph">${p.a[0]}</div>
+        <div class="confuse-note"><strong>${p.a[1]}</strong> — ${p.a[2]} ${spkBtn(p.a[0],'🔊')}</div>
+        <div style="color:var(--text-faint)">vs.</div>
+        <div class="confuse-glyph">${p.b[0]}</div>
+        <div class="confuse-note"><strong>${p.b[1]}</strong> — ${p.b[2]} ${spkBtn(p.b[0],'🔊')}</div>
+      </div>`).join('')}
+    <div class="callout fun"><span class="callout-label">Fun Fact</span>In katakana, the small ッ is used constantly in loanwords — like ベッド (beddo, "bed") — to keep the borrowed word's original double-consonant feel.</div>
+    <div class="btn-row"><button class="btn" onclick="markComplete('sokuon')">Mark Unit Complete</button></div>
+  `;
+}
+
+function renderYouon(el){
+  el.innerHTML = `
+    <div class="eyebrow">Sound Modifiers</div>
+    <h1>きゃ, しゃ, ちゃ… — Youon (Combo Kana)</h1>
+    <div class="chapter-meta"><span>⏱ ~5 min</span><span>${YOUON.length} combos</span></div>
+    <p>Take an "i"-column kana (き, し, ち, に, ひ, み, り, or their voiced versions) and pair it with a small ゃ ゅ ょ. Together, two kana make exactly <strong>one</strong> syllable — never two.</p>
+    <div class="callout tip"><span class="callout-label">Teacher's Tip</span>The second kana is always written small and squeezed close to the first. If you see しゃ, read it as one beat — "sha" — never as "shi-ya."</div>
+    <div class="tile-grid">${YOUON.map(y=>`
+      <div class="letter-tile" style="cursor:default">
+        <div class="glyph-pair"><span class="jp big">${y.h}</span><span class="jp big kata">${y.k}</span></div>
+        <div class="rom">${y.r}</div>
+        <div class="spk">${spkBtn(y.h,'🔊 '+y.h)}${spkBtn(y.k,'🔊 '+y.k)}</div>
+      </div>`).join('')}</div>
+    <h3>Quick Check</h3>
+    <div id="qhost-youon"></div>
+    <div class="btn-row"><button class="btn" onclick="markComplete('youon')">Mark Unit Complete</button></div>
+  `;
+  el.querySelector('#qhost-youon').appendChild(buildQuiz('youon-quiz', makeRowQuiz(YOUON, 6)));
+}
+
+function renderChouon(el){
+  el.innerHTML = `
+    <div class="eyebrow">Sound Modifiers</div>
+    <h1>ー — Long Vowels (Chōon)</h1>
+    <div class="chapter-meta"><span>⏱ ~3 min</span></div>
+    <p>Holding a vowel for twice as long can completely change a word's meaning, so this mechanic matters more than it looks. The two scripts handle it differently:</p>
+    <div class="callout"><span class="callout-label">Hiragana</span>Double the vowel kana itself — おばあさん (obaasan) has an extra あ right after the first one.</div>
+    <div class="callout"><span class="callout-label">Katakana</span>Use a single bar: ー. コーヒー (kōhī, "coffee") has two of them.</div>
+    <div class="tile-grid">${CHOUON_EXAMPLES.map(w=>`
+      <div class="letter-tile" style="cursor:default">
+        <div class="glyph-pair"><span class="jp big" style="font-size:1.4em">${w.jp}</span></div>
+        <div class="rom">${w.romaji}</div>
+        <div class="spk">${spkBtn(w.jp,'🔊')}</div>
+        <div class="tile-detail" style="display:block"><p class="word">${w.mean}</p></div>
+      </div>`).join('')}</div>
+    <div class="callout warn"><span class="callout-label">Common Beginner Error</span>Skipping the long vowel changes the word: おばさん (obasan) means "aunt," while おばあさん (obaasan) means "grandmother." That one extra beat matters.</div>
+    <div class="btn-row"><button class="btn" onclick="markComplete('chouon')">Mark Unit Complete</button></div>
+  `;
+}
+
+function renderConfusables(el){
+  el.innerHTML = `
+    <div class="eyebrow">Confusable Kana Clinic</div>
+    <h1>The Look-Alikes, Solved</h1>
+    <div class="chapter-meta"><span>⏱ ~6 min</span><span>Most courses skip this — do not skip this</span></div>
+    <p>This is the single unit that separates "I sort of know kana" from real confidence. A handful of shapes get mixed up by nearly every English-speaking learner — let's fix that head-on.</p>
+    ${CONFUSABLES.map(c=>`
+      <div class="confuse-row">
+        ${c.glyphs.map(g=>`<div class="confuse-glyph jp">${g}${spkBtn(g,'')}</div>`).join('')}
+        <div class="confuse-note">${c.note}</div>
+      </div>`).join('')}
+    <h3>Rapid-Fire Discrimination Quiz</h3>
+    <div id="qhost-confuse"></div>
+    <div class="btn-row"><button class="btn" onclick="markComplete('confusables')">Mark Unit Complete</button></div>
+  `;
+  const pool = [
+    {h:'し',k:'シ',r:'shi'},{h:'つ',k:'ツ',r:'tsu'},{h:'ん',k:'ン',r:'n'},{h:'そ',k:'ソ',r:'so'},
+    {h:'さ',k:'サ',r:'sa'},{h:'ち',k:'チ',r:'chi'},{h:'ぬ',k:'ヌ',r:'nu'},{h:'め',k:'メ',r:'me'},
+    {h:'わ',k:'ワ',r:'wa'},{h:'ね',k:'ネ',r:'ne'},{h:'る',k:'ル',r:'ru'},{h:'ろ',k:'ロ',r:'ro'}
+  ];
+  el.querySelector('#qhost-confuse').appendChild(buildQuiz('confuse-quiz', makeRowQuiz(pool, 8)));
+}
+
+function renderStrokeOrder(el){
+  el.innerHTML = `
+    <div class="eyebrow">Reading &amp; Writing</div>
+    <h1>Stroke Order &amp; Handwriting</h1>
+    <div class="chapter-meta"><span>⏱ ~4 min</span></div>
+    <p>Recognition is not enough on its own — writing by hand builds the muscle memory that finally locks in confusable shapes like し, つ, ん, and そ.</p>
+    <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Three rules cover almost every kana: top to bottom, left to right, and horizontal strokes before the vertical stroke that crosses them. Get a piece of paper and trace each kana you have learned so far, saying the sound out loud as you write it.</div>
+    <div class="callout"><span class="callout-label">Practice Routine</span>
+      <ol style="margin:6px 0 0 18px;padding:0">
+        <li>Write each kana 5 times while saying its sound out loud.</li>
+        <li>Cover the chart and write the sound from memory.</li>
+        <li>Time yourself reading one full row aloud — aim for under a minute.</li>
+      </ol>
+    </div>
+    <div class="callout fun"><span class="callout-label">Fun Fact</span>Hiragana's curvy strokes come from a cursive simplification of whole kanji (安 became あ). Katakana's angular strokes come from taking just one small piece of a kanji (阿 was trimmed down to ア).</div>
+    <div class="btn-row"><button class="btn" onclick="markComplete('stroke-order')">Mark Unit Complete</button></div>
+  `;
+}
+
+function renderReadingPractice(el){
+  el.innerHTML = `
+    <div class="eyebrow">Reading &amp; Writing</div>
+    <h1>Reading Practice</h1>
+    <div class="chapter-meta"><span>⏱ ~5 min</span><span>${READING_WORDS.length} real words</span></div>
+    <p>Everything below is built purely from what you have already learned. Try reading each one aloud <em>before</em> playing the audio or revealing the romaji.</p>
+    <div class="tile-grid">${READING_WORDS.map(w=>`
+      <div class="letter-tile" data-target="rw-${Math.random().toString(36).slice(2,8)}">
+        <div class="glyph-pair"><span class="jp big" style="font-size:1.5em">${w.jp}</span></div>
+        <div class="spk">${spkBtn(w.jp,'🔊 Listen')}</div>
+        <div class="tile-detail hidden"><p class="word">${w.romaji} — ${w.mean}</p></div>
+      </div>`).join('')}</div>
+    <p style="color:var(--text-faint);font-size:.85em">Tap a card to reveal the reading and meaning.</p>
+    <div class="btn-row"><button class="btn" onclick="markComplete('reading-practice')">Mark Unit Complete</button></div>
+  `;
+  wireTiles(el);
+}
+
+function renderFlashcards(el){
+  const all = allBaseKana();
+  let mode = 'h'; // h = hiragana front, k = katakana front
+  let idx = 0;
+  let order = shuffle(all);
+  el.innerHTML = `
+    <div class="eyebrow">Practice</div>
+    <h1>Flashcard Deck</h1>
+    <div class="chapter-meta"><span>${all.length} cards</span></div>
+    <div class="btn-row">
+      <button class="btn secondary" id="fcModeH">Hiragana Front</button>
+      <button class="btn secondary" id="fcModeK">Katakana Front</button>
+      <button class="btn secondary" id="fcShuffle">🔀 Shuffle</button>
+    </div>
+    <div class="flash-wrap">
+      <div class="flashcard" id="fcCard">
+        <div class="fc-front"><div class="fc-face jp"></div><div class="fc-sub">tap to flip</div></div>
+        <div class="fc-back"><div class="fc-face"></div><div class="fc-sub"></div></div>
+      </div>
+      <div class="flash-controls">
+        <button class="btn secondary" id="fcPrev">← Prev</button>
+        <span class="flash-counter" id="fcCounter"></span>
+        <button class="btn secondary" id="fcNext">Next →</button>
+      </div>
+    </div>
+  `;
+  const card = el.querySelector('#fcCard');
+  function draw(){
+    const r = order[idx];
+    const front = mode==='h' ? r.h : r.k;
+    card.classList.remove('flipped');
+    card.querySelector('.fc-front .fc-face').textContent = front;
+    card.querySelector('.fc-back .fc-face').textContent = r.r;
+    card.querySelector('.fc-back .fc-sub').textContent = (mode==='h'?r.k:r.h);
+    el.querySelector('#fcCounter').textContent = `${idx+1} / ${order.length}`;
+  }
+  card.onclick = ()=>card.classList.toggle('flipped');
+  el.querySelector('#fcPrev').onclick = ()=>{ idx=(idx-1+order.length)%order.length; draw(); };
+  el.querySelector('#fcNext').onclick = ()=>{ idx=(idx+1)%order.length; draw(); };
+  el.querySelector('#fcModeH').onclick = ()=>{ mode='h'; draw(); };
+  el.querySelector('#fcModeK').onclick = ()=>{ mode='k'; draw(); };
+  el.querySelector('#fcShuffle').onclick = ()=>{ order=shuffle(all); idx=0; draw(); };
+  draw();
+}
+
+function renderMatching(el){
+  const chosen = sample(allBaseKana(), 8);
+  let cards = [];
+  chosen.forEach((r,i)=>{ cards.push({id:i,txt:r.h,match:i,jp:true}); cards.push({id:i+100,txt:r.k,match:i,jp:true}); });
+  cards = shuffle(cards);
+  let flipped = [];
+  let matchedCount = 0;
+  el.innerHTML = `
+    <div class="eyebrow">Practice</div>
+    <h1>Match the Pairs</h1>
+    <div class="chapter-meta"><span>Hiragana ↔ Katakana, same sound</span></div>
+    <div class="match-status" id="matchStatus">Find all 8 pairs</div>
+    <div class="match-grid" id="matchGrid"></div>
+    <div class="btn-row"><button class="btn secondary" onclick="goTo('matching')">🔀 New Game</button></div>
+  `;
+  const grid = el.querySelector('#matchGrid');
+  grid.innerHTML = cards.map(c=>`<div class="match-card" data-id="${c.id}" data-match="${c.match}">${c.txt}</div>`).join('');
+  grid.querySelectorAll('.match-card').forEach(cardEl=>{
+    cardEl.onclick = ()=>{
+      if(cardEl.classList.contains('flipped') || cardEl.classList.contains('matched') || flipped.length>=2) return;
+      cardEl.classList.add('flipped');
+      flipped.push(cardEl);
+      if(flipped.length===2){
+        const [a,b] = flipped;
+        if(a.dataset.match===b.dataset.match && a.dataset.id!==b.dataset.id){
+          setTimeout(()=>{
+            a.classList.add('matched'); b.classList.add('matched');
+            flipped=[]; matchedCount++;
+            el.querySelector('#matchStatus').textContent = matchedCount>=8 ? '🎉 All matched! Nicely done.' : `${matchedCount} / 8 pairs found`;
+            if(matchedCount>=8){ markComplete('matching'); }
+          },350);
+        } else {
+          a.classList.add('wrong'); b.classList.add('wrong');
+          setTimeout(()=>{
+            a.classList.remove('flipped','wrong'); b.classList.remove('flipped','wrong');
+            flipped=[];
+          },700);
+        }
+      }
+    };
+  });
+}
+
+function renderTyping(el){
+  const all = allBaseKana();
+  const deck = shuffle(all).slice(0, 15);
+  let idx=0, correct=0, wrong=0;
+  const startTime = Date.now();
+  el.innerHTML = `
+    <div class="eyebrow">Practice</div>
+    <h1>Typing &amp; Recall Sprint</h1>
+    <div class="chapter-meta"><span>15 kana, type the romaji</span></div>
+    <div class="type-wrap">
+      <div class="type-glyph" id="typeGlyph"></div>
+      <input class="type-input" id="typeInput" autocomplete="off" placeholder="type the romaji…">
+      <div class="type-stats"><span id="typeCount"></span><span id="typeTimer">0.0s</span></div>
+      <div id="typeFeedback" style="margin-top:10px;color:var(--text-faint)">&nbsp;</div>
+    </div>
+  `;
+  const glyphEl = el.querySelector('#typeGlyph');
+  const input = el.querySelector('#typeInput');
+  const feedback = el.querySelector('#typeFeedback');
+  let timerInt;
+  function tick(){ el.querySelector('#typeTimer').textContent = ((Date.now()-startTime)/1000).toFixed(1)+'s'; }
+  timerInt = setInterval(tick, 100);
+  function draw(){
+    if(idx>=deck.length){
+      clearInterval(timerInt);
+      const secs = ((Date.now()-startTime)/1000).toFixed(1);
+      el.querySelector('.type-wrap').innerHTML = `
+        <div class="quiz-score">${correct} / ${deck.length} correct in ${secs}s</div>
+        <div class="btn-row" style="justify-content:center"><button class="btn secondary" onclick="goTo('typing')">Try Again</button></div>`;
+      addXP(correct*2);
+      if(correct>=Math.ceil(deck.length*0.7)) markComplete('typing');
+      return;
+    }
+    const r = deck[idx];
+    const showKata = Math.random()<0.5;
+    glyphEl.textContent = showKata ? r.k : r.h;
+    glyphEl.dataset.answer = r.r.split(' ')[0].replace(/[()]/g,'');
+    el.querySelector('#typeCount').textContent = `${idx+1} / ${deck.length}`;
+    input.value=''; feedback.textContent='\u00a0';
+    input.focus();
+  }
+  input.addEventListener('keydown', (e)=>{
+    if(e.key!=='Enter') return;
+    const ans = glyphEl.dataset.answer.toLowerCase();
+    const val = input.value.trim().toLowerCase();
+    if(val===ans){ correct++; feedback.textContent='✓ Correct'; feedback.style.color='var(--celadon)'; }
+    else { wrong++; feedback.textContent=`✗ It was "${ans}"`; feedback.style.color='var(--vermilion)'; }
+    idx++;
+    setTimeout(draw, 450);
+  });
+  draw();
+}
+
+function renderReviewQuiz(el){
+  el.innerHTML = `
+    <div class="eyebrow">Practice</div>
+    <h1>Full Kana Review Quiz</h1>
+    <div class="chapter-meta"><span>15 mixed questions</span><span>Hiragana, katakana, and modifiers</span></div>
+    <p>A mixed review across everything you have covered so far. Take it whenever you feel ready — there is no penalty for retrying.</p>
+    <div id="qhost-review"></div>
+    <div class="btn-row"><button class="btn secondary" onclick="goTo('review-quiz')">🔀 New Set</button></div>
+  `;
+  const pool = allBaseKana().concat(DAKUTEN, HANDAKUTEN);
+  el.querySelector('#qhost-review').appendChild(buildQuiz('review-quiz-q', makeRowQuiz(pool, 15)));
+  markComplete('review-quiz');
+}
+
+function renderFinalExam(el){
+  el.innerHTML = `
+    <div class="eyebrow">Finish</div>
+    <h1>Final Assessment</h1>
+    <div class="chapter-meta"><span>20 questions</span><span>Pass mark: 70%</span></div>
+    <p>This pulls from hiragana, katakana, dakuten/handakuten, and youon. Score 70% or higher to unlock your certificate.</p>
+    <div id="qhost-final"></div>
+  `;
+  const pool = allBaseKana().concat(DAKUTEN.filter(x=>!x.note), HANDAKUTEN, YOUON);
+  el.querySelector('#qhost-final').appendChild(buildQuiz('final-exam-q', makeRowQuiz(pool, 20), true));
+}
+
+function renderCertificate(el){
+  const savedName = localStorage.getItem('kf_name') || '';
+  const done = Object.keys(State.completed).length;
+  el.innerHTML = `
+    <div class="eyebrow">Finish</div>
+    <h1>Your Certificate</h1>
+    <div class="cert">
+      <h2>Certificate of Completion</h2>
+      <div class="cert-jp">かな基礎</div>
+      <p style="color:var(--text-faint)">This certifies that</p>
+      <input id="certName" type="text" placeholder="Your Name" value="${esc(savedName)}">
+      <div class="cert-name" id="certNameDisplay">${savedName||'Your Name'}</div>
+      <p style="color:var(--text-faint)">has completed the Hookitlingo <strong>Kana Foundations</strong> course, mastering hiragana, katakana, and their sound modifiers.</p>
+      <p style="color:var(--text-faint); font-size:.85em">${new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'})} · ${done} / ${CHAPTERS.length} units completed · ${State.xp} XP</p>
+    </div>
+    <h3>Badges Earned</h3>
+    <div class="badge-grid">${BADGE_DEFS.map(b=>`
+      <div class="badge ${State.badges[b.id]?'earned':''}"><div class="icon">${b.icon}</div><div class="name">${b.name}</div></div>`).join('')}</div>
+    <div class="btn-row" style="justify-content:center">
+      <button class="btn" onclick="window.print()">🖨️ Print Certificate</button>
+      <button class="btn secondary" onclick="goTo('next-steps')">What's Next →</button>
+    </div>
+  `;
+  el.querySelector('#certName').addEventListener('input', (e)=>{
+    localStorage.setItem('kf_name', e.target.value);
+    el.querySelector('#certNameDisplay').textContent = e.target.value || 'Your Name';
+  });
+}
+
+function renderNextSteps(el){
+  el.innerHTML = `
+    <div class="eyebrow">Finish</div>
+    <h1>Where To Go From Here</h1>
+    <p>You can now read and write every hiragana and katakana sound, including modifiers and the trickiest look-alikes. That is the single hardest psychological hurdle in learning Japanese, and it is behind you.</p>
+    <div class="callout"><span class="callout-label">Up Next</span>Phase 1 of the full Japanese roadmap builds directly on this: basic greetings and vocabulary, your first grammar patterns, and the very first Jōyō kanji — introduced word-first, exactly the way you just learned kana.</div>
+    <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Keep reading real Japanese daily, even just menu items or product packaging photos — recognition speed comes from mileage, not more study sessions.</div>
+    <div class="btn-row"><button class="btn secondary" onclick="goTo('flashcards')">Keep Practicing Kana</button></div>
+  `;
+}
+
+function renderSupport(el){
+  el.innerHTML = `
+    <div class="eyebrow">Support</div>
+    <h1>Support Hookitlingo</h1>
+    <div id="hksMountPoint"></div>
+  `;
+  HookitSupport.mount(el.querySelector('#hksMountPoint'), { context: 'Kana Foundations' });
+}
+
+/* ============================================================
+   7. CHAPTER REGISTRY
+   ============================================================ */
+const CHAPTERS = [
+  {id:'cover', group:'Start', title:'Cover', render:renderCover},
+  {id:'roadmap', group:'Start', title:'Learning Roadmap', render:renderRoadmap},
+  {id:'intro', group:'Start', title:'What Is Kana?', render:renderIntro},
+  {id:'why-easy', group:'Start', title:'Why Kana Is Easy', render:renderWhyEasy},
+
+  {id:'vowels', group:'The Building Blocks', title:'Vowels — あいうえお', render:renderKanaRowChapter('vowels')},
+  {id:'krow', group:'The Building Blocks', title:'K-Row — かきくけこ', render:renderKanaRowChapter('krow')},
+  {id:'srow', group:'The Building Blocks', title:'S-Row — さしすせそ', render:renderKanaRowChapter('srow')},
+  {id:'trow', group:'The Building Blocks', title:'T-Row — たちつてと', render:renderKanaRowChapter('trow')},
+  {id:'nrow', group:'The Building Blocks', title:'N-Row — なにぬねの', render:renderKanaRowChapter('nrow')},
+  {id:'hrow', group:'The Building Blocks', title:'H-Row — はひふへほ', render:renderKanaRowChapter('hrow')},
+  {id:'mrow', group:'The Building Blocks', title:'M-Row — まみむめも', render:renderKanaRowChapter('mrow')},
+  {id:'yrow', group:'The Building Blocks', title:'Y-Row — やゆよ', render:renderKanaRowChapter('yrow')},
+  {id:'rrow', group:'The Building Blocks', title:'R-Row — らりるれろ', render:renderKanaRowChapter('rrow')},
+  {id:'wnrow', group:'The Building Blocks', title:'わ, を, ん', render:renderKanaRowChapter('wnrow')},
+
+  {id:'dakuten', group:'Sound Modifiers', title:'Dakuten & Handakuten', render:renderModifiers},
+  {id:'sokuon', group:'Sound Modifiers', title:'Small っ (Sokuon)', render:renderSokuon},
+  {id:'youon', group:'Sound Modifiers', title:'Youon Combos', render:renderYouon},
+  {id:'chouon', group:'Sound Modifiers', title:'Long Vowels (Chōon)', render:renderChouon},
+
+  {id:'confusables', group:'Confusable Kana Clinic', title:'The Look-Alikes, Solved', render:renderConfusables},
+
+  {id:'stroke-order', group:'Reading & Writing', title:'Stroke Order & Handwriting', render:renderStrokeOrder},
+  {id:'reading-practice', group:'Reading & Writing', title:'Reading Practice', render:renderReadingPractice},
+
+  {id:'flashcards', group:'Practice', title:'Flashcard Deck', render:renderFlashcards},
+  {id:'matching', group:'Practice', title:'Match the Pairs', render:renderMatching},
+  {id:'typing', group:'Practice', title:'Typing & Recall Sprint', render:renderTyping},
+  {id:'review-quiz', group:'Practice', title:'Full Review Quiz', render:renderReviewQuiz},
+
+  {id:'final-exam', group:'Finish', title:'Final Assessment', render:renderFinalExam},
+  {id:'certificate', group:'Finish', title:'Certificate', render:renderCertificate},
+  {id:'next-steps', group:'Finish', title:"What's Next", render:renderNextSteps},
+
+  {id:'support', group:'Support', title:'Support Hookitlingo', render:renderSupport}
+];
+
+/* ============================================================
+   8. NAVIGATION / SIDEBAR / TOPBAR
+   ============================================================ */
+function buildSidebar(){
+  const host = document.getElementById('navHost');
+  const groups = {};
+  CHAPTERS.forEach(c=>{ (groups[c.group]=groups[c.group]||[]).push(c); });
+  host.innerHTML = Object.entries(groups).map(([g,list])=>`
+    <div class="nav-group">
+      <div class="nav-group-label">${g}</div>
+      ${list.map(c=>`
+        <button class="nav-item ${State.completed[c.id]?'done':''} ${State.current===c.id?'active':''}" onclick="goTo('${c.id}')">
+          <span class="dot"></span><span class="lbl">${c.title}</span>
+        </button>`).join('')}
+    </div>`).join('');
+}
+
+function goTo(id){
+  const ch = CHAPTERS.find(c=>c.id===id);
+  if(!ch) return;
+  const main = document.getElementById('mainInner');
+  main.innerHTML = '';
+  const el = document.createElement('div');
+  el.className='chapter active';
+  el.id = 'ch-'+id;
+  main.appendChild(el);
+  ch.render(el);
+  State.current = id;
+  saveState();
+  buildSidebar();
+  updateProgressUI();
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('searchResults').classList.add('hidden');
+  window.scrollTo(0,0);
+}
+
+function doSearch(q){
+  const box = document.getElementById('searchResults');
+  q = q.trim().toLowerCase();
+  if(!q){ box.classList.add('hidden'); box.innerHTML=''; return; }
+  const hits = CHAPTERS.filter(c=>c.title.toLowerCase().includes(q) || c.group.toLowerCase().includes(q));
+  if(!hits.length){ box.innerHTML = `<div class="sr-item">No matches.</div>`; }
+  else box.innerHTML = hits.map(c=>`<div class="sr-item" onclick="goTo('${c.id}')">${c.title} <span style="color:var(--text-faint);font-size:.8em">— ${c.group}</span></div>`).join('');
+  box.classList.remove('hidden');
+}
+
+window.addEventListener('scroll', ()=>{
+  const h = document.documentElement;
+  const pct = h.scrollHeight>h.clientHeight ? (h.scrollTop/(h.scrollHeight-h.clientHeight))*100 : 0;
+  const fill = document.getElementById('readbarFill');
+  if(fill) fill.style.width = pct+'%';
+});
+
+/* ============================================================
+   9. PETALS DECORATION
+   ============================================================ */
+function initPetals(){
+  const host = document.getElementById('petals');
+  const n = window.innerWidth<700 ? 10 : 18;
+  let html='';
+  for(let i=0;i<n;i++){
+    const left = Math.random()*100;
+    const size = 10+Math.random()*14;
+    const dur = 10+Math.random()*14;
+    const delay = -Math.random()*20;
+    const drift = (Math.random()*140-70).toFixed(0)+'px';
+    html += `<div class="petal" style="left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift};">
+      <svg viewBox="0 0 24 24"><path fill="${Math.random()<0.5?'var(--petal)':'var(--gold)'}" opacity="0.55" d="M12 2C9 2 7 5 7 8c0 2 2 4 5 4s5-2 5-4c0-3-2-6-5-6zM4 9c-2 0-3 3-3 5.5S3 19 5 19c2 0 4-2 4-4.5S7 9 4 9zm16 0c-3 0-5 3-5 5.5S17.5 19 20 19c2 0 3-2.5 3-4.5S22 9 20 9zM12 14c-3 0-6 2-6 5s3 5 6 5 6-2 6-5-3-5-6-5z"/></svg>
+    </div>`;
+  }
+  host.innerHTML = html;
+}
+
+/* ============================================================
+   10. BOOT
+   ============================================================ */
+function boot(){
+  applyTheme();
+  document.documentElement.style.setProperty('--fs-scale', State.fontScale);
+  buildSidebar();
+  initPetals();
+  const start = CHAPTERS.find(c=>c.id===State.last) ? State.last : 'cover';
+  goTo(start);
+}
+document.addEventListener('DOMContentLoaded', boot);
+</script>
+</body>
+</html>

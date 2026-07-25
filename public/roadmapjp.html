@@ -17,8 +17,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- Razorpay Checkout SDK -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <style>
 :root{
   --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941;
@@ -276,6 +274,8 @@ button{font-family:var(--sans); cursor:pointer;}
 footer{position:relative; z-index:2; text-align:center; padding:10px 5vw 60px; color:var(--text-faint); font-size:.85em;}
 footer a{text-decoration:underline;}
 </style>
+<link rel="stylesheet" href="support-widget.css">
+<script src="support-widget.js"></script>
 </head>
 <body>
 
@@ -328,7 +328,7 @@ const PHASES = [
   {
     num: 1, status: 'active', title: 'Foundations', sub: 'Absolute beginner · Pre-A1',
     courses: [
-      {jp:'かな基礎', en:'Kana Foundations', badge:'あ', status:'soon'},
+      {jp:'かな基礎', en:'Kana Foundations', badge:'あ', status:'soon', file:'courses/kanafoundations.html'},
       {jp:'発音の基礎', en:'Sounds of Japanese', badge:'音', status:'soon'},
       {jp:'はじめての単語と文', en:'First Words, First Sentences', badge:'語', status:'soon'},
       {jp:'数字・時間・挨拶', en:'Numbers, Time & Greetings', badge:'数', status:'soon'},
@@ -506,208 +506,9 @@ applyTheme();
 })();
 
 /* ============================================================
-   SUPPORT MODAL — Backend-secured Razorpay Standard Checkout
+   SUPPORT — Gumroad (see support-widget.js)
    ============================================================ */
-(function(){
-  const AMOUNTS = [99, 199, 499, 999];
-  let selected = null;
-
-  const overlay = document.getElementById('hklOverlay');
-  const body = document.getElementById('hklBody');
-
-  // API base: same origin when deployed, localhost for dev
-  const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:3000' : '';
-
-  function openModal(){ renderAsk(); overlay.classList.add('open'); }
-  function closeModal(){ overlay.classList.remove('open'); }
-
-  function renderAsk(){
-    body.innerHTML = `
-      <div class="hkl-icon">🌸</div>
-      <h3>Keep Hookitlingo free for everyone?</h3>
-      <p>Every course here is free, forever, with no ads. If Hookitlingo has helped you learn Japanese, a small contribution helps fund new lessons — completely optional.</p>
-      <div class="hkl-actions">
-        <button class="hkl-btn hkl-btn-yes" id="hklYes">Yes, I'd like to help 💛</button>
-        <button class="hkl-btn hkl-btn-no" id="hklNo">Not right now</button>
-      </div>`;
-    document.getElementById('hklYes').onclick = renderAmounts;
-    document.getElementById('hklNo').onclick = renderBye;
-  }
-
-  function renderAmounts(){
-    selected = null;
-    body.innerHTML = `
-      <button class="hkl-back" id="hklBack">← back</button>
-      <div class="hkl-icon">🌸</div>
-      <h3>Choose an amount</h3>
-      <p>Every rupee goes straight toward building the next set of courses.</p>
-      <div class="hkl-amounts" id="hklAmounts">
-        ${AMOUNTS.map(a=>`<button class="hkl-amt" data-amt="${a}">₹${a}</button>`).join('')}
-      </div>
-      <div class="hkl-custom-row">
-        <span>₹</span>
-        <input type="number" min="1" placeholder="Custom amount" id="hklCustom">
-      </div>
-      <button class="hkl-pay-btn" id="hklPay" disabled>Continue to payment</button>
-      <p class="hkl-secure-note">🔒 Handled securely by Razorpay. Hookitlingo never sees or stores your card details.</p>`;
-
-    document.getElementById('hklBack').onclick = renderAsk;
-    const payBtn = document.getElementById('hklPay');
-    const customInput = document.getElementById('hklCustom');
-
-    document.querySelectorAll('.hkl-amt').forEach(btn=>{
-      btn.onclick = () => {
-        document.querySelectorAll('.hkl-amt').forEach(b=>b.classList.remove('selected'));
-        btn.classList.add('selected');
-        selected = { type:'preset', amount: btn.dataset.amt };
-        customInput.value = '';
-        payBtn.disabled = false;
-      };
-    });
-
-    customInput.oninput = () => {
-      document.querySelectorAll('.hkl-amt').forEach(b=>b.classList.remove('selected'));
-      const v = parseFloat(customInput.value);
-      if(v > 0){ selected = { type:'custom', amount: v }; payBtn.disabled = false; }
-      else { selected = null; payBtn.disabled = true; }
-    };
-
-    payBtn.onclick = () => {
-      if(!selected) return;
-      initiatePayment(selected);
-    };
-  }
-
-  function renderBye(){
-    body.innerHTML = `
-      <div class="hkl-icon">😢</div>
-      <h3>No worries!</h3>
-      <p>Thanks for learning with us anyway — enjoy the courses.</p>`;
-    setTimeout(closeModal, 1600);
-  }
-
-  // ============================================================
-  // BACKEND-SECURED PAYMENT FLOW
-  // ============================================================
-    async function initiatePayment(sel){
-    console.log('[DEBUG] initiatePayment called with:', sel);
-    const amount = sel.type === 'preset' ? parseInt(sel.amount) : parseFloat(sel.amount);
-    const amountInPaise = Math.round(amount * 100);
-    console.log('[DEBUG] Amount in paise:', amountInPaise);
-
-    body.innerHTML = `
-      <div class="hkl-icon">🌸</div>
-      <h3>Preparing secure checkout...</h3>
-      <div class="hkl-loading-spinner"></div>
-    `;
-
-    try {
-      console.log('[DEBUG] Fetching:', `${API_BASE}/api/create-order`);
-      const orderRes = await fetch(`${API_BASE}/api/create-order`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: amountInPaise })
-      });
-      console.log('[DEBUG] Response status:', orderRes.status);
-
-      if(!orderRes.ok){
-        const err = await orderRes.json();
-        throw new Error(err.error || 'Failed to create order');
-      }
-
-      const data = await orderRes.json();
-      console.log('[DEBUG] Order created:', data);
-
-      if(typeof Razorpay === 'undefined'){
-        throw new Error('Razorpay SDK not loaded');
-      }
-
-      const options = {
-        key: data.key,
-        amount: data.amount,
-        currency: data.currency,
-        name: "Hookitlingo",
-        description: "Support Hookitlingo",
-        order_id: data.orderId,
-        theme: { color: "#e58aa2" },
-        handler: function(response) {
-          console.log('[DEBUG] Payment success:', response);
-          verifyPayment(response, data.orderId);
-        },
-        modal: {
-          ondismiss: function() {
-            console.log('[DEBUG] Razorpay dismissed');
-            renderAmounts();
-          }
-        }
-      };
-
-      console.log('[DEBUG] Opening Razorpay...');
-      const rzp = new Razorpay(options);
-      rzp.open();
-      console.log('[DEBUG] Razorpay.open() called');
-
-    } catch(err){
-      console.error('[DEBUG] Error:', err);
-      body.innerHTML = `
-        <div class="hkl-icon">😢</div>
-        <h3>Error</h3>
-        <p>${err.message}</p>
-        <button class="hkl-btn hkl-btn-yes" id="hklRetry">Try again</button>
-      `;
-      document.getElementById('hklRetry').onclick = renderAmounts;
-    }
-  }
-
-  async function verifyPayment(response, orderId){
-    body.innerHTML = `
-      <div class="hkl-icon">🌸</div>
-      <h3>Verifying payment...</h3>
-      <div class="hkl-loading-spinner"></div>
-    `;
-
-    try {
-      const verifyRes = await fetch(`${API_BASE}/api/verify-payment`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          orderId: response.razorpay_order_id || orderId,
-          paymentId: response.razorpay_payment_id,
-          signature: response.razorpay_signature
-        })
-      });
-
-      const result = await verifyRes.json();
-
-      if(result.verified){
-        body.innerHTML = `
-          <div class="hkl-icon">🎉</div>
-          <h3>Thank you for your support!</h3>
-          <p>Your contribution helps keep Hookitlingo free for everyone.</p>
-          <p style="font-size:.8em; color:var(--text-faint);">Payment ID: <code>${result.paymentId}</code></p>
-        `;
-        setTimeout(closeModal, 4000);
-      } else {
-        throw new Error('Payment verification failed');
-      }
-
-    } catch(err){
-      console.error('Verification failed:', err);
-      body.innerHTML = `
-        <div class="hkl-icon">⚠️</div>
-        <h3>Verification failed</h3>
-        <p>We couldn't verify your payment. If you were charged, please contact us.</p>
-        <button class="hkl-btn hkl-btn-yes" id="hklRetry">Try again</button>
-      `;
-      document.getElementById('hklRetry').onclick = renderAmounts;
-    }
-  }
-
-  document.getElementById('supportBtn').onclick = openModal;
-  document.getElementById('hklClose').onclick = closeModal;
-  overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(); });
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
-})();
+document.getElementById('supportBtn').onclick = () => HookitSupport.open();
 </script>
 </body>
 </html>

@@ -297,7 +297,7 @@ table.logtable td{border-bottom:1px solid var(--paper3); padding:9px 6px; height
   <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
   <button class="secondary" id="pdfHelpBtn">❔ Save as PDF</button>
   <button id="printBtn" onclick="window.print()">Print / Save as PDF</button>
-  <button id="unlockToolbarBtn" style="display:none">🔒 Unlock — ₹99</button>
+  <button id="unlockToolbarBtn" style="display:none">Free</button>
 </div>
 
 <div id="pdfInstructions" style="display:none">
@@ -799,19 +799,11 @@ const WORKBOOK_PAYMENT_KEY = 'hg_workbook_payment_id_grammar';
 let wkFreeCount = 0, wkTotal = 0;
 
 function initPaywall(){
+  // Workbook is 100% free for everyone now — paywall permanently disabled.
   const pages = Array.from(document.querySelectorAll('#book > .page'));
   wkTotal = pages.length;
-  wkFreeCount = Math.max(2, Math.ceil(wkTotal * 0.25));
-
-  const savedPaymentId = localStorage.getItem(WORKBOOK_PAYMENT_KEY);
-  if(savedPaymentId){
-    verifyWorkbookAccess(savedPaymentId).then(ok=>{
-      if(ok){ unlockWorkbook(); }
-      else { localStorage.removeItem(WORKBOOK_PAYMENT_KEY); lockWorkbook(); }
-    });
-  } else {
-    lockWorkbook();
-  }
+  wkFreeCount = wkTotal;
+  unlockWorkbook();
 }
 
 function lockWorkbook(){
@@ -845,9 +837,9 @@ function insertPaywallCard(afterEl){
     <h2 class="kr">잠금 해제</h2>
     <div class="paywall-kicker">Unlock to Continue</div>
     <p>You've previewed the first ${wkFreeCount} pages for free. The remaining <strong>${lockedCount} pages</strong> — predicate drills, sentence-type transformations, error-correction practice, and your printable certificate page — are locked.</p>
-    <div class="price">₹99 <small>one-time</small></div>
+    <div class="price">Free</div>
     <div id="paywallPayArea">
-      <button class="wk-btn" id="paywallPayBtn">Unlock Full Workbook — ₹99</button>
+      <button class="wk-btn" id="paywallPayBtn">Unlocked — 100% Free</button>
       <p class="wk-secure-note">🔒 Handled securely by Razorpay. Pages unlock only after payment is verified.</p>
     </div>
   `;
@@ -865,7 +857,7 @@ function showPaywallBar(){
   const bar = document.createElement('div');
   bar.className = 'paywall-bar';
   bar.id = 'paywallBar';
-  bar.innerHTML = `<span>🔒 ${wkTotal - wkFreeCount} pages locked</span><div class="spacer"></div><button class="wk-btn" id="paywallBarBtn">Unlock — ₹99</button>`;
+  bar.innerHTML = `<span>🔒 ${wkTotal - wkFreeCount} pages locked</span><div class="spacer"></div><button class="wk-btn" id="paywallBarBtn">Free</button>`;
   document.body.appendChild(bar);
   document.getElementById('paywallBarBtn').onclick = jumpToPaywall;
   document.getElementById('unlockToolbarBtn').onclick = jumpToPaywall;
@@ -914,7 +906,7 @@ async function initiateWorkbookPayment(){
 function renderPaywallRetry(){
   const area = document.getElementById('paywallPayArea');
   if(!area) return;
-  area.innerHTML = `<button class="wk-btn" id="paywallPayBtn2">Unlock Full Workbook — ₹99</button><p class="wk-secure-note">🔒 Handled securely by Razorpay.</p>`;
+  area.innerHTML = `<button class="wk-btn" id="paywallPayBtn2">Unlocked — 100% Free</button><p class="wk-secure-note">🔒 Handled securely by Razorpay.</p>`;
   document.getElementById('paywallPayBtn2').onclick = initiateWorkbookPayment;
 }
 
