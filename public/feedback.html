@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hookitlingo — Feedback from Learners</title>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLEMFRK6XH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WLEMFRK6XH');
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941;
+  --border:#4a3550;
+  --text:#f6ecec; --text-dim:#c7b2c4; --text-faint:#8f7a91;
+  --vermilion:#e58aa2; --vermilion-dim:#5a2c3a;
+  --celadon:#5fa688; --celadon-dim:#2a4a3d;
+  --gold:#d9ab5c; --gold-dim:#5c471e;
+  --inkblue:#a084c9; --inkblue-dim:#3a2c50;
+  --petal:#f3b6c6;
+  --wood:#8a6a4a; --wood-dim:#4a3b2c;
+  --radius:16px; --radius-sm:10px;
+  --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --kr:"Noto Serif KR","Apple SD Gothic Neo","Malgun Gothic","Nanum Gothic",sans-serif;
+  --jp:"Noto Serif JP","Apple SD Gothic Neo","Malgun Gothic","Nanum Gothic",sans-serif;
+  --maxw:1000px;
+}
+html[data-theme="light"]{
+  --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6;
+  --border:#eccabb;
+  --text:#3a2530; --text-dim:#79576a; --text-faint:#a98a9c;
+  --vermilion:#c8546f; --vermilion-dim:#f6dae2;
+  --celadon:#3f7d63; --celadon-dim:#d9ece2;
+  --gold:#a4762b; --gold-dim:#f2e2c2;
+  --inkblue:#75509f; --inkblue-dim:#e7ddf2;
+  --petal:#e59fb2;
+  --wood:#a9825a; --wood-dim:#e3cdb2;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--text); font-family:var(--sans); line-height:1.65;
+  background:
+    radial-gradient(1100px 620px at 12% -8%, color-mix(in srgb, var(--vermilion) 16%, transparent), transparent 58%),
+    radial-gradient(900px 520px at 104% 6%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 55%),
+    var(--ink);
+  background-attachment:fixed; min-height:100vh;
+}
+::selection{background:var(--vermilion); color:#fff;}
+h1,h2,h3,h4{font-family:var(--serif); font-weight:600; letter-spacing:.2px; margin:0 0 .4em;}
+p{margin:0 0 1em;}
+a{color:var(--celadon); text-decoration:none;}
+button{font-family:var(--sans); cursor:pointer;}
+
+/* Petals */
+.petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.petal{position:absolute; top:-8%; will-change:transform; animation:petal-fall linear infinite;}
+.petal svg{display:block; filter:drop-shadow(0 1px 1px rgba(0,0,0,.08));}
+@keyframes petal-fall{0%{transform:translate(0,-10vh) rotate(0deg);} 100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}}
+@media (prefers-reduced-motion: reduce){ .petals{display:none;} .tag{animation:none !important;} }
+@media(max-width:900px){ .petals .petal:nth-child(even){display:none;} }
+
+/* Top bar (shared) */
+#topbar{
+  position:sticky; top:0; z-index:30; display:flex; align-items:center; justify-content:space-between;
+  gap:14px; padding:16px 5vw 20px; max-width:1080px; margin:0 auto;
+}
+.brand{display:flex; align-items:center; gap:12px;}
+.brand-block{
+  width:42px;height:42px;border-radius:50%; flex:none; position:relative;
+  background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--vermilion) 88%, #fff 12%), var(--vermilion) 72%);
+  display:flex;align-items:center;justify-content:center; font-family:var(--kr); font-weight:700; font-size:18px; color:#fff9f7;
+  transform:rotate(-7deg); box-shadow:0 4px 12px color-mix(in srgb, var(--vermilion) 50%, transparent);
+}
+.brand-txt strong{display:block; font-family:var(--serif); font-size:1.15em;}
+.brand-txt span{display:block; font-size:.66em; color:var(--text-faint); letter-spacing:.1em; text-transform:uppercase;}
+.top-actions{display:flex; gap:8px; align-items:center;}
+.topbtn{background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); border-radius:8px; padding:7px 14px; font-size:.85em;}
+.topbtn:hover{color:var(--text); border-color:var(--celadon);}
+.topbtn-support{
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+  border:1px solid transparent; color:#fff; font-weight:600;
+}
+.topbtn-support:hover{filter:brightness(1.07); color:#fff;}
+
+/* Hero */
+.hero{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:20px 5vw 6px; text-align:center;}
+.eyebrow{font-size:.78em; letter-spacing:.16em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:14px;}
+.hero h1{font-size:clamp(2em,5vw,3em); margin-bottom:14px;}
+.hero .sub{color:var(--text-dim); font-size:1.08em; max-width:600px; margin:0 auto 10px;}
+
+/* ============================================================
+   THE TREE — branches strung with hanging review tags
+   ============================================================ */
+.grove{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:30px 5vw 100px;}
+
+.branch-art{display:block; width:100%; height:auto; margin-bottom:-6px; opacity:.92;}
+
+.wire-row{position:relative; padding-top:26px; margin-bottom:8px;}
+.wire-row::before{
+  content:''; position:absolute; top:0; left:2%; right:2%; height:2px;
+  background:linear-gradient(90deg, transparent, var(--wood), var(--wood) 92%, transparent);
+  opacity:.55;
+}
+.wire-row .tags-row{
+  display:flex; flex-wrap:wrap; gap:26px 22px; justify-content:center; align-items:flex-start;
+}
+
+.tag-drop{
+  position:relative; padding-top:22px; /* room for the string */
+  animation:sway var(--sway-dur,6s) ease-in-out infinite;
+  transform-origin:top center;
+}
+.tag-drop::before{
+  content:''; position:absolute; top:0; left:50%; width:1px; height:var(--string-len,18px);
+  background:color-mix(in srgb, var(--text-faint) 60%, transparent);
+}
+@keyframes sway{
+  0%,100%{transform:rotate(var(--rot-a,-2deg));}
+  50%{transform:rotate(var(--rot-b,2deg));}
+}
+
+.tag{
+  position:relative; width:132px; min-height:118px; background:var(--surface); border:1px solid var(--border);
+  border-radius:4px 4px 10px 10px; padding:16px 12px 12px; text-align:center; cursor:pointer;
+  box-shadow:0 10px 22px rgba(0,0,0,.22); transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.tag:hover{transform:translateY(-3px) scale(1.03); box-shadow:0 16px 30px rgba(0,0,0,.3); border-color:var(--vermilion);}
+.tag::before{ /* string loop hole */
+  content:''; position:absolute; top:-7px; left:50%; transform:translateX(-50%);
+  width:10px; height:10px; border-radius:50%; background:var(--ink); border:2px solid var(--wood);
+}
+.tag-stamp{
+  position:absolute; top:8px; right:8px; width:16px; height:16px; border-radius:3px;
+  background:var(--vermilion); opacity:.85;
+}
+.tag-stars{color:var(--gold); font-size:.78em; letter-spacing:1px; margin-bottom:8px;}
+.tag-quote{
+  font-family:var(--serif); font-style:italic; font-size:.92em; line-height:1.35; color:var(--text);
+  display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden;
+  margin-bottom:8px;
+}
+.tag-name{font-size:.68em; letter-spacing:.06em; text-transform:uppercase; color:var(--text-faint);}
+
+/* The special "add yours" tag */
+.tag-add{
+  border-style:dashed; border-color:var(--gold); background:var(--gold-dim);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+}
+.tag-add .plus{font-size:1.6em; color:var(--gold); line-height:1;}
+.tag-add .label{font-size:.72em; color:var(--gold); font-weight:700; letter-spacing:.04em;}
+.tag-add:hover{border-color:var(--vermilion); background:var(--vermilion-dim);}
+.tag-add:hover .plus, .tag-add:hover .label{color:var(--vermilion);}
+
+.grove-status{text-align:center; color:var(--text-faint); font-size:.9em; padding:20px 0;}
+
+/* Floating write-review button (always reachable) */
+.fab-write{
+  position:fixed; right:22px; bottom:22px; z-index:40; display:flex; align-items:center; gap:8px;
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+  color:#fff; border:none; border-radius:999px; padding:13px 20px 13px 16px; font-weight:700; font-size:.9em;
+  box-shadow:0 14px 32px color-mix(in srgb, var(--vermilion) 45%, transparent);
+}
+.fab-write:hover{filter:brightness(1.06);}
+@media(max-width:640px){ .fab-write span.fab-text{display:none;} .fab-write{padding:14px;} }
+
+/* ============================================================
+   MODALS (read + write) — shared overlay chrome
+   ============================================================ */
+.hkl-overlay{
+  position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
+  padding:20px; background:rgba(15,8,17,.55); backdrop-filter:blur(3px);
+  opacity:0; pointer-events:none; transition:opacity .25s ease;
+}
+.hkl-overlay.open{opacity:1; pointer-events:auto;}
+.hkl-card{
+  position:relative; width:100%; max-width:420px; max-height:86vh; overflow-y:auto;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:32px 26px 26px; box-shadow:0 30px 70px rgba(0,0,0,.4);
+  transform:translateY(14px) scale(.98); transition:transform .3s cubic-bezier(.2,.9,.2,1); text-align:center;
+}
+.hkl-overlay.open .hkl-card{transform:translateY(0) scale(1);}
+.hkl-close{
+  position:absolute; top:12px; right:14px; background:none; border:none; color:var(--text-faint);
+  font-size:1.2em; line-height:1; padding:6px;
+}
+.hkl-close:hover{color:var(--text);}
+.hkl-icon{font-size:2.2em; margin-bottom:10px;}
+.hkl-card h3{font-size:1.25em; margin-bottom:8px;}
+.hkl-card p{color:var(--text-dim); font-size:.92em;}
+
+/* Read view specifics */
+.read-stars{color:var(--gold); font-size:1.1em; letter-spacing:2px; margin-bottom:12px;}
+.read-quote{font-family:var(--serif); font-style:italic; font-size:1.15em; line-height:1.5; margin-bottom:16px;}
+.read-meta{color:var(--text-faint); font-size:.8em;}
+
+/* Write form */
+.fb-field{text-align:left; margin-bottom:14px;}
+.fb-field label{display:block; font-size:.78em; color:var(--text-faint); margin-bottom:6px; letter-spacing:.03em;}
+.fb-field input[type="text"], .fb-field textarea{
+  width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm);
+  padding:11px 13px; color:var(--text); font-family:var(--sans); font-size:.95em; outline:none; resize:vertical;
+}
+.fb-field input[type="text"]:focus, .fb-field textarea:focus{border-color:var(--vermilion);}
+.fb-honeypot{position:absolute; left:-9999px; width:1px; height:1px; opacity:0;}
+.star-picker{display:flex; gap:6px; font-size:1.6em; justify-content:center; margin-bottom:6px;}
+.star-picker span{cursor:pointer; color:var(--border); transition:color .15s;}
+.star-picker span.active{color:var(--gold);}
+.fb-submit{
+  width:100%; background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+  color:#fff; border-radius:999px; padding:13px; font-size:.95em; font-weight:700; border:none; margin-top:6px;
+}
+.fb-submit:disabled{opacity:.5; cursor:default;}
+.fb-error{color:var(--vermilion); font-size:.82em; margin-top:8px; min-height:1em;}
+.hkl-loading-spinner{
+  width:36px; height:36px; border:3px solid var(--border);
+  border-top-color:var(--vermilion); border-radius:50%;
+  animation:spin 1s linear infinite; margin:16px auto;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+footer{position:relative; z-index:2; text-align:center; padding:10px 5vw 60px; color:var(--text-faint); font-size:.85em;}
+footer a{text-decoration:underline;}
+
+@media(max-width:640px){
+  #topbar{flex-direction:column; align-items:flex-start; gap:10px; padding:14px 5vw 16px;}
+  .top-actions{width:100%; flex-wrap:wrap; gap:8px;}
+  .top-actions .topbtn{flex:1 1 auto; text-align:center; justify-content:center; font-size:.8em; padding:8px 10px; white-space:nowrap;}
+  .hero{padding:16px 5vw 4px;}
+  .hero h1{font-size:1.8em;}
+  .hero .sub{font-size:.95em;}
+  .tag{width:112px; min-height:104px; padding:14px 10px 10px;}
+  .wire-row .tags-row{gap:22px 16px;}
+}
+@media(max-width:380px){
+  .top-actions{gap:6px;}
+  .top-actions .topbtn{font-size:.72em; padding:7px 6px;}
+}
+</style>
+</head>
+<body>
+
+<div class="petals" id="petals" aria-hidden="true"></div>
+
+<div id="topbar">
+  <div class="brand">
+    <div class="brand-block">葉</div>
+    <div class="brand-txt"><strong>Hookitlingo</strong><span>Korean &amp; Japanese, one file at a time</span></div>
+  </div>
+  <div class="top-actions">
+    <a class="topbtn" href="index.html">← Course Catalog</a>
+    <button class="topbtn topbtn-support" id="supportBtn">💛 Support</button>
+    <button class="topbtn" id="themeBtn">☾ Dark</button>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">Words From the Grove</div>
+  <h1>What learners are <span style="color:var(--gold); font-style:italic;">saying</span>.</h1>
+  <p class="sub">Every note here was left by someone learning Korean or Japanese with Hookitlingo. Tap a tag to read the whole thing — or tie up one of your own.</p>
+</div>
+
+<div class="grove">
+  <svg class="branch-art" viewBox="0 0 1000 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 40 Q 250 10 500 34 T 1000 30" fill="none" stroke="var(--wood)" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+    <path d="M120 34 Q 130 12 150 4" fill="none" stroke="var(--wood)" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+    <path d="M420 30 Q 435 8 460 2" fill="none" stroke="var(--wood)" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+    <path d="M760 32 Q 775 10 800 4" fill="none" stroke="var(--wood)" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+    <circle cx="150" cy="4" r="6" fill="var(--petal)" opacity="0.8"/>
+    <circle cx="460" cy="2" r="6" fill="var(--vermilion)" opacity="0.7"/>
+    <circle cx="800" cy="4" r="6" fill="var(--petal)" opacity="0.8"/>
+    <circle cx="300" cy="18" r="4" fill="var(--gold)" opacity="0.7"/>
+    <circle cx="640" cy="16" r="4" fill="var(--petal)" opacity="0.7"/>
+  </svg>
+
+  <div id="groveBody">
+    <div class="grove-status" id="groveStatus">Gathering notes from the branch…</div>
+  </div>
+</div>
+
+<button class="fab-write" id="fabWrite" aria-label="Leave feedback">
+  🌸 <span class="fab-text">Leave feedback</span>
+</button>
+
+<!-- Read modal -->
+<div class="hkl-overlay" id="readOverlay">
+  <div class="hkl-card" id="readCard">
+    <button class="hkl-close" id="readClose" aria-label="Close">✕</button>
+    <div id="readBody"></div>
+  </div>
+</div>
+
+<!-- Write modal -->
+<div class="hkl-overlay" id="writeOverlay">
+  <div class="hkl-card">
+    <button class="hkl-close" id="writeClose" aria-label="Close">✕</button>
+    <div id="writeBody"></div>
+  </div>
+</div>
+
+<!-- Support / Donation Modal (shared with rest of site) -->
+<div class="hkl-overlay" id="hklOverlay">
+  <div class="hkl-card">
+    <button class="hkl-close" id="hklClose" aria-label="Close">✕</button>
+    <div id="hklBody"></div>
+  </div>
+</div>
+
+<footer>
+  <p>Every note on this page came from a real learner — nothing here is written by us.</p>
+  <p>Powered by Hookitlingo</p>
+</footer>
+
+<script>
+/* ============================================================
+   THEME + PETALS (shared behavior with rest of site)
+   ============================================================ */
+const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', ThemeState.theme);
+  document.getElementById('themeBtn').textContent = ThemeState.theme === 'dark' ? '☾ Dark' : '☀ Light';
+}
+document.getElementById('themeBtn').onclick = () => {
+  ThemeState.theme = ThemeState.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('hkl_site_theme', ThemeState.theme);
+  applyTheme();
+};
+applyTheme();
+
+(function spawnPetals(){
+  const host = document.getElementById('petals');
+  if(!host) return;
+  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
+  const count = window.innerWidth < 700 ? 10 : 18;
+  for(let i=0;i<count;i++){
+    const size = 10 + Math.random()*12;
+    const left = Math.random()*100;
+    const dur = 10 + Math.random()*12;
+    const delay = -(Math.random()*dur);
+    const drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)];
+    const rotStart = Math.round(Math.random()*360);
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
+    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
+    host.appendChild(p);
+  }
+})();
+
+/* ============================================================
+   API base
+   ============================================================ */
+const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:3000' : '';
+
+/* ============================================================
+   THE GROVE — fetch, render, and re-render feedback tags
+   ============================================================ */
+let feedbackItems = [];
+
+function starString(n){
+  n = Math.min(5, Math.max(1, n||5));
+  return '★'.repeat(n) + '☆'.repeat(5-n);
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function makeTagEl(item, index){
+  const dur = 5 + Math.random()*3;
+  const delay = -(Math.random()*dur);
+  const rotA = (Math.random()*3 + 1).toFixed(1);
+  const rotB = -(Math.random()*3 + 1).toFixed(1);
+  const stringLen = 14 + Math.round(Math.random()*16);
+  const wrap = document.createElement('div');
+  wrap.className = 'tag-drop';
+  wrap.style.cssText = `--sway-dur:${dur}s; animation-delay:${delay}s; --rot-a:${rotA}deg; --rot-b:${rotB}deg; --string-len:${stringLen}px;`;
+  wrap.innerHTML = `
+    <div class="tag" data-idx="${index}" tabindex="0" role="button" aria-label="Read full review">
+      <div class="tag-stamp"></div>
+      <div class="tag-stars">${starString(item.rating)}</div>
+      <div class="tag-quote">${escapeHtml(item.message)}</div>
+      <div class="tag-name">${escapeHtml(item.name)}</div>
+    </div>`;
+  wrap.querySelector('.tag').addEventListener('click', () => openReadModal(item));
+  wrap.querySelector('.tag').addEventListener('keydown', (e) => { if(e.key === 'Enter') openReadModal(item); });
+  return wrap;
+}
+
+function makeAddTagEl(){
+  const dur = 6 + Math.random()*2;
+  const stringLen = 18;
+  const wrap = document.createElement('div');
+  wrap.className = 'tag-drop';
+  wrap.style.cssText = `--sway-dur:${dur}s; --rot-a:-1.5deg; --rot-b:1.5deg; --string-len:${stringLen}px;`;
+  wrap.innerHTML = `
+    <div class="tag tag-add" tabindex="0" role="button" aria-label="Leave your feedback">
+      <div class="plus">＋</div>
+      <div class="label">Tie up<br>your review</div>
+    </div>`;
+  wrap.querySelector('.tag-add').addEventListener('click', openWriteModal);
+  wrap.querySelector('.tag-add').addEventListener('keydown', (e) => { if(e.key === 'Enter') openWriteModal(); });
+  return wrap;
+}
+
+function renderGrove(){
+  const host = document.getElementById('groveBody');
+  host.innerHTML = '';
+
+  const PER_ROW = window.innerWidth < 640 ? 3 : window.innerWidth < 900 ? 4 : 6;
+  const all = [...feedbackItems];
+
+  // Chunk into rows so each row reads as its own "wire"
+  const rows = [];
+  for(let i=0;i<all.length;i+=PER_ROW) rows.push(all.slice(i, i+PER_ROW));
+  if(rows.length === 0) rows.push([]);
+
+  rows.forEach((rowItems, rowIdx) => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'wire-row';
+    const tagsRow = document.createElement('div');
+    tagsRow.className = 'tags-row';
+    rowItems.forEach((item, i) => tagsRow.appendChild(makeTagEl(item, rowIdx*PER_ROW+i)));
+    // Put the "add yours" tag at the very end of the last row
+    if(rowIdx === rows.length - 1) tagsRow.appendChild(makeAddTagEl());
+    rowEl.appendChild(tagsRow);
+    host.appendChild(rowEl);
+  });
+
+  if(feedbackItems.length === 0){
+    const note = document.createElement('div');
+    note.className = 'grove-status';
+    note.textContent = 'No notes hanging yet — be the first to tie one up.';
+    host.prepend(note);
+  }
+}
+
+async function loadFeedback(){
+  const statusEl = document.getElementById('groveStatus');
+  try{
+    const res = await fetch(`${API_BASE}/api/feedback`);
+    if(!res.ok) throw new Error('bad status');
+    const data = await res.json();
+    feedbackItems = data.items || [];
+    renderGrove();
+  }catch(err){
+    console.error('Failed to load feedback:', err);
+    const host = document.getElementById('groveBody');
+    host.innerHTML = '<div class="grove-status">Couldn\'t load reviews right now — you can still leave one below.</div>';
+    const addRow = document.createElement('div');
+    addRow.className = 'wire-row';
+    const tagsRow = document.createElement('div');
+    tagsRow.className = 'tags-row';
+    tagsRow.appendChild(makeAddTagEl());
+    addRow.appendChild(tagsRow);
+    host.appendChild(addRow);
+  }
+}
+loadFeedback();
+
+/* ============================================================
+   READ MODAL
+   ============================================================ */
+const readOverlay = document.getElementById('readOverlay');
+const readBody = document.getElementById('readBody');
+function openReadModal(item){
+  readBody.innerHTML = `
+    <div class="hkl-icon">🍃</div>
+    <div class="read-stars">${starString(item.rating)}</div>
+    <div class="read-quote">"${escapeHtml(item.message)}"</div>
+    <div class="read-meta">— ${escapeHtml(item.name)}${item.created ? ' · ' + new Date(item.created).toLocaleDateString() : ''}</div>
+  `;
+  readOverlay.classList.add('open');
+}
+function closeReadModal(){ readOverlay.classList.remove('open'); }
+document.getElementById('readClose').onclick = closeReadModal;
+readOverlay.addEventListener('click', (e)=>{ if(e.target === readOverlay) closeReadModal(); });
+
+/* ============================================================
+   WRITE MODAL
+   ============================================================ */
+const writeOverlay = document.getElementById('writeOverlay');
+const writeBody = document.getElementById('writeBody');
+let currentRating = 5;
+
+function renderWriteForm(){
+  currentRating = 5;
+  writeBody.innerHTML = `
+    <div class="hkl-icon">🌸</div>
+    <h3>Tie up your review</h3>
+    <p>A few honest words help other learners — and us.</p>
+    <div class="star-picker" id="starPicker">
+      ${[1,2,3,4,5].map(n=>`<span data-n="${n}">★</span>`).join('')}
+    </div>
+    <div class="fb-field">
+      <label for="fbName">Your name</label>
+      <input type="text" id="fbName" maxlength="60" placeholder="e.g. Priya">
+    </div>
+    <div class="fb-field">
+      <label for="fbMessage">Your review</label>
+      <textarea id="fbMessage" rows="4" maxlength="600" placeholder="What was learning here like for you?"></textarea>
+    </div>
+    <input type="text" class="fb-honeypot" id="fbHp" tabindex="-1" autocomplete="off">
+    <button class="fb-submit" id="fbSubmit">Hang it on the tree</button>
+    <div class="fb-error" id="fbError"></div>
+  `;
+
+  const stars = writeBody.querySelectorAll('#starPicker span');
+  function paintStars(){
+    stars.forEach(s => s.classList.toggle('active', parseInt(s.dataset.n,10) <= currentRating));
+  }
+  paintStars();
+  stars.forEach(s => s.addEventListener('click', () => { currentRating = parseInt(s.dataset.n,10); paintStars(); }));
+
+  document.getElementById('fbSubmit').onclick = submitFeedback;
+}
+
+async function submitFeedback(){
+  const btn = document.getElementById('fbSubmit');
+  const errEl = document.getElementById('fbError');
+  const name = document.getElementById('fbName').value.trim();
+  const message = document.getElementById('fbMessage').value.trim();
+  const hp = document.getElementById('fbHp').value;
+
+  errEl.textContent = '';
+  if(message.length < 3){
+    errEl.textContent = 'Please write a little more before submitting.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Hanging it up…';
+
+  try{
+    const res = await fetch(`${API_BASE}/api/feedback`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, message, rating: currentRating, hp })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'Failed to submit');
+
+    writeBody.innerHTML = `
+      <div class="hkl-icon">🎉</div>
+      <h3>Thank you!</h3>
+      <p>Your review is now hanging on the tree for other learners to see.</p>
+    `;
+    if(data.item){
+      feedbackItems.unshift(data.item);
+      renderGrove();
+    } else {
+      loadFeedback();
+    }
+    setTimeout(closeWriteModal, 1800);
+  }catch(err){
+    console.error('Submit failed:', err);
+    errEl.textContent = err.message || 'Something went wrong — please try again.';
+    btn.disabled = false;
+    btn.textContent = 'Hang it on the tree';
+  }
+}
+
+function openWriteModal(){ renderWriteForm(); writeOverlay.classList.add('open'); }
+function closeWriteModal(){ writeOverlay.classList.remove('open'); }
+document.getElementById('fabWrite').onclick = openWriteModal;
+document.getElementById('writeClose').onclick = closeWriteModal;
+writeOverlay.addEventListener('click', (e)=>{ if(e.target === writeOverlay) closeWriteModal(); });
+
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape'){ closeReadModal(); closeWriteModal(); }
+});
+
+window.addEventListener('resize', () => { renderGrove(); });
+
+/* ============================================================
+   SUPPORT MODAL — same donation flow as the rest of the site
+   ============================================================ */
+(function(){
+  const AMOUNTS = [99, 199, 499, 999];
+  let selected = null;
+  const overlay = document.getElementById('hklOverlay');
+  const body = document.getElementById('hklBody');
+
+  function openModal(){ renderAsk(); overlay.classList.add('open'); }
+  function closeModal(){ overlay.classList.remove('open'); }
+
+  function renderAsk(){
+    body.innerHTML = `
+      <div class="hkl-icon">🌸</div>
+      <h3>Keep Hookitlingo free for everyone?</h3>
+      <p>Every course here is free, forever, with no ads. If Hookitlingo has helped you learn, a small contribution helps fund new lessons — completely optional.</p>
+      <div class="hkl-actions" style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <button class="hkl-btn hkl-btn-yes" id="hklYes" style="border-radius:999px; padding:11px 20px; font-size:.88em; font-weight:700; background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%)); color:#fff; border:none;">Yes, I'd like to help 💛</button>
+        <button class="hkl-btn hkl-btn-no" id="hklNo" style="border-radius:999px; padding:11px 20px; font-size:.88em; font-weight:700; background:var(--surface2); border:1px solid var(--border); color:var(--text-dim);">Not right now</button>
+      </div>`;
+    document.getElementById('hklYes').onclick = renderBye;
+    document.getElementById('hklNo').onclick = renderBye2;
+  }
+  function renderBye(){
+    body.innerHTML = `<div class="hkl-icon">💛</div><h3>Thank you!</h3><p>Head to the <a href="index.html">course catalog</a> to complete your contribution.</p>`;
+  }
+  function renderBye2(){
+    body.innerHTML = `<div class="hkl-icon">😢</div><h3>No worries!</h3><p>Thanks for learning with us anyway.</p>`;
+    setTimeout(closeModal, 1400);
+  }
+
+  document.getElementById('supportBtn').onclick = openModal;
+  document.getElementById('hklClose').onclick = closeModal;
+  overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(); });
+})();
+</script>
+</body>
+</html>

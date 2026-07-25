@@ -15,14 +15,6 @@ const CERT_FONT = fs.readFileSync(path.join(__dirname, 'fonts', 'NotoSansKR.ttf'
 
 const app = express();
 
-// Safe membership check for plain-object whitelists keyed by client input
-// (e.g. ?course=, ?product=). Using `obj[key]` truthiness directly is unsafe
-// because a key like "__proto__" or "constructor" resolves to an inherited
-// property instead of undefined. This always checks the object's OWN keys.
-function hasOwn(obj, key) {
-  return Object.prototype.hasOwnProperty.call(obj, key);
-}
-
 // Only your own frontend(s) may call this API from a browser. Set
 // ALLOWED_ORIGINS in your environment to a comma-separated list of the
 // domains you actually serve the site from, e.g.:
@@ -78,7 +70,7 @@ app.post('/api/create-order', async (req, res) => {
       key: process.env.RAZORPAY_KEY_ID
     });
   } catch (err) {
-    console.error('Order creation failed:', err?.error?.description || err.message);
+    console.error('Order creation failed:', err);
     res.status(500).json({ error: 'Failed to create order' });
   }
 });
@@ -114,7 +106,7 @@ app.post('/api/verify-payment', async (req, res) => {
       notes: { ...(order.notes || {}), certName: safeName }
     });
   } catch (err) {
-    console.error('Failed to lock certificate name on order:', err?.error?.description || err.message);
+    console.error('Failed to lock certificate name on order:', err);
     // Don't fail the whole verification over this — the certificate
     // endpoint falls back to a generic name if certName never got set.
   }
@@ -167,7 +159,7 @@ const certDownloadCounts = new Map();
 app.get('/api/certificate', async (req, res) => {
   const { paymentId, name, course } = req.query;
 
-  if (!paymentId || !course || !hasOwn(CERT_COURSES, course)) {
+  if (!paymentId || !course || !CERT_COURSES[course]) {
     return res.status(400).json({ error: 'Missing or invalid parameters' });
   }
 
@@ -263,7 +255,7 @@ app.get('/api/certificate', async (req, res) => {
     certDownloadCounts.set(paymentId, downloadsSoFar + 1);
 
   } catch (err) {
-    console.error('Certificate generation failed:', err?.error?.description || err.message);
+    console.error('Certificate generation failed:', err);
     if (!res.headersSent) {
       res.status(500).json({ error: 'Failed to verify payment or generate certificate' });
     }
@@ -301,7 +293,7 @@ app.get('/api/workbook-access', async (req, res) => {
   if (!paymentId) {
     return res.status(400).json({ unlocked: false, error: 'Missing paymentId' });
   }
-  if (!hasOwn(WORKBOOK_PRODUCTS, product)) {
+  if (!WORKBOOK_PRODUCTS[product]) {
     return res.status(400).json({ unlocked: false, error: 'Unknown workbook product' });
   }
 
@@ -331,8 +323,142 @@ app.get('/api/workbook-access', async (req, res) => {
 
     res.json({ unlocked: true });
   } catch (err) {
-    console.error('Workbook access check failed:', err?.error?.description || err.message);
+    console.error('Workbook access check failed:', err);
     res.status(500).json({ unlocked: false, error: 'Failed to verify payment' });
+  }
+});
+
+// ============================================================
+// FEEDBACK — stored in Airtable, not a database we run ourselves.
+// Airtable is the single source of truth here, same spirit as
+// using Razorpay directly for payments above: no local file, no
+// disk dependency, nothing to lose on a Render restart/redeploy.
+//
+// Requires three env vars (see .env / Render dashboard):
+//   AIRTABLE_API_KEY   — Personal Access Token from airtable.com
+//   AIRTABLE_BASE_ID   — the base's ID (starts with "app...")
+//   AIRTABLE_TABLE_NAME — e.g. "Feedback"
+// ============================================================
+const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
+const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
+const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME || 'Feedback';
+const AIRTABLE_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`;
+
+// Very small in-memory rate limiter — best-effort only (resets on
+// restart), same tradeoff already accepted for certDownloadCounts
+// above. Purpose here is just to blunt naive spam bots, not to be
+// airtight; Airtable itself is the durable store either way.
+const feedbackRateLimit = new Map(); // ip -> [timestamps]
+const FEEDBACK_MAX_PER_HOUR = 5;
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const hourAgo = now - 60 * 60 * 1000;
+  const hits = (feedbackRateLimit.get(ip) || []).filter(t => t > hourAgo);
+  hits.push(now);
+  feedbackRateLimit.set(ip, hits);
+  return hits.length > FEEDBACK_MAX_PER_HOUR;
+}
+
+// List feedback — newest first, capped so the page never has to
+// deal with an unbounded response.
+app.get('/api/feedback', async (req, res) => {
+  if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
+    return res.status(500).json({ error: 'Feedback storage is not configured yet.' });
+  }
+  try {
+    const url = `${AIRTABLE_URL}?pageSize=100&sort[0][field]=Created&sort[0][direction]=desc`;
+    const airtableRes = await fetch(url, {
+      headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` }
+    });
+    if (!airtableRes.ok) {
+      const errText = await airtableRes.text();
+      console.error('Airtable list failed:', errText);
+      return res.status(502).json({ error: 'Failed to load feedback' });
+    }
+    const data = await airtableRes.json();
+    const items = (data.records || []).map(r => ({
+      id: r.id,
+      name: r.fields.Name || 'Anonymous',
+      message: r.fields.Message || '',
+      rating: r.fields.Rating || 5,
+      created: r.fields.Created || r.createdTime
+    }));
+    res.json({ items });
+  } catch (err) {
+    console.error('Feedback list error:', err);
+    res.status(500).json({ error: 'Failed to load feedback' });
+  }
+});
+
+// Submit feedback — validated and size-capped before it ever
+// reaches Airtable.
+app.post('/api/feedback', async (req, res) => {
+  if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
+    return res.status(500).json({ error: 'Feedback storage is not configured yet.' });
+  }
+
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+  if (isRateLimited(ip)) {
+    return res.status(429).json({ error: 'Too many submissions — please try again later.' });
+  }
+
+  const { name, message, rating, hp } = req.body || {};
+
+  // Honeypot: a real user never fills this hidden field; a bot
+  // filling out every field usually will.
+  if (hp) {
+    return res.json({ ok: true }); // pretend success, do nothing
+  }
+
+  const safeName = String(name || '').trim().slice(0, 60) || 'Anonymous';
+  const safeMessage = String(message || '').trim().slice(0, 600);
+  const safeRating = Math.min(5, Math.max(1, parseInt(rating, 10) || 5));
+
+  if (safeMessage.length < 3) {
+    return res.status(400).json({ error: 'Please write a little more before submitting.' });
+  }
+
+  try {
+    const airtableRes = await fetch(AIRTABLE_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        records: [{
+          fields: {
+            Name: safeName,
+            Message: safeMessage,
+            Rating: safeRating,
+            Created: new Date().toISOString()
+          }
+        }]
+      })
+    });
+
+    if (!airtableRes.ok) {
+      const errText = await airtableRes.text();
+      console.error('Airtable create failed:', errText);
+      return res.status(502).json({ error: 'Failed to save feedback' });
+    }
+
+    const data = await airtableRes.json();
+    const rec = data.records[0];
+    res.json({
+      ok: true,
+      item: {
+        id: rec.id,
+        name: rec.fields.Name,
+        message: rec.fields.Message,
+        rating: rec.fields.Rating,
+        created: rec.fields.Created
+      }
+    });
+  } catch (err) {
+    console.error('Feedback submit error:', err);
+    res.status(500).json({ error: 'Failed to save feedback' });
   }
 });
 
