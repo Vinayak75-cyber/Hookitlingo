@@ -15,15 +15,15 @@
    ============================================================ */
 
 window.SUPPORT_CONFIG = {
-  // TODO: replace with your real Gumroad product URL before going live.
-  // If each tier is a separate Gumroad product, set a "url" on that
-  // tier below instead and this becomes just the fallback.
-  gumroadUrl: "https://GUMROAD_URL_PLACEHOLDER.gumroad.com/l/hookitlingo-supporter",
+  // Fallback only — used if a tier below somehow has no url of its own.
+  // Each tier is its own separate Gumroad product, so its "url" is what's
+  // actually used; this is just a safety net and points at the Supporter tier.
+  gumroadUrl: "https://hookitlingo.gumroad.com/l/ydoivu",
   openInNewTab: true,
   tiers: [
-    { amount: "$20", name: "Supporter Certificate" },
-    { amount: "$50", name: "Founding Supporter Certificate", recommended: true },
-    { amount: "$100", name: "Patron Certificate" }
+    { amount: "$20", name: "Supporter Certificate", url: "https://hookitlingo.gumroad.com/l/ydoivu" },
+    { amount: "$50", name: "Founding Supporter Certificate", recommended: true, url: "https://hookitlingo.gumroad.com/l/pexnlk" },
+    { amount: "$100", name: "Patron Certificate", url: "https://hookitlingo.gumroad.com/l/oufabf" }
   ]
 };
 
