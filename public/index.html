@@ -232,8 +232,6 @@ footer a{color:var(--text-faint); text-decoration:underline;}
   .top-actions .topbtn{font-size:.74em; padding:7px 6px;}
 }
 </style>
-<link rel="stylesheet" href="support-widget.css">
-<script src="support-widget.js"></script>
 </head>
 <body>
 
@@ -246,7 +244,7 @@ footer a{color:var(--text-faint); text-decoration:underline;}
   </div>
   <div class="top-actions">
     <a class="topbtn" href="feedback.html">💬 Feedback</a>
-    <button class="topbtn topbtn-support" id="supportBtn">💛 Support</button>
+    <a class="topbtn topbtn-support" href="supporters.html">💛 Support</a>
     <button class="topbtn topbtn-contact" id="contactBtn">✉️ Contact</button>
     <button class="topbtn" id="themeBtn">☾ Dark</button>
   </div>
@@ -357,9 +355,8 @@ applyTheme();
 })();
 
 /* ============================================================
-   SUPPORT — Gumroad (see support-widget.js)
+   SUPPORT — links to the Supporter Wall (supporters.html)
    ============================================================ */
-document.getElementById('supportBtn').onclick = () => HookitSupport.open();
 
 /* ============================================================
    CONTACT MODAL

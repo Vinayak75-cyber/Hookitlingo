@@ -247,8 +247,6 @@ footer a{text-decoration:underline;}
   .top-actions .topbtn{font-size:.72em; padding:7px 6px;}
 }
 </style>
-<link rel="stylesheet" href="support-widget.css">
-<script src="support-widget.js"></script>
 </head>
 <body>
 
@@ -261,7 +259,7 @@ footer a{text-decoration:underline;}
   </div>
   <div class="top-actions">
     <a class="topbtn" href="index.html">← Course Catalog</a>
-    <button class="topbtn topbtn-support" id="supportBtn">💛 Support</button>
+    <a class="topbtn topbtn-support" href="supporters.html">💛 Support</a>
     <button class="topbtn" id="themeBtn">☾ Dark</button>
   </div>
 </div>
@@ -588,9 +586,8 @@ document.addEventListener('keydown', (e)=>{
 window.addEventListener('resize', () => { renderGrove(); });
 
 /* ============================================================
-   SUPPORT — Gumroad (see support-widget.js)
+   SUPPORT — links to the Supporter Wall (supporters.html)
    ============================================================ */
-document.getElementById('supportBtn').onclick = () => HookitSupport.open();
 </script>
 </body>
 </html>

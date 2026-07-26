@@ -274,8 +274,6 @@ button{font-family:var(--sans); cursor:pointer;}
 footer{position:relative; z-index:2; text-align:center; padding:10px 5vw 60px; color:var(--text-faint); font-size:.85em;}
 footer a{text-decoration:underline;}
 </style>
-<link rel="stylesheet" href="support-widget.css">
-<script src="support-widget.js"></script>
 </head>
 <body>
 
@@ -289,7 +287,7 @@ footer a{text-decoration:underline;}
   <div class="top-actions">
     <a class="topbtn" href="index.html">← Course Catalog</a>
     <a class="topbtn" href="feedback.html">💬 Feedback</a>
-    <button class="topbtn topbtn-support" id="supportBtn">💛 Support</button>
+    <a class="topbtn topbtn-support" href="supporters.html">💛 Support</a>
     <button class="topbtn" id="themeBtn">☾ Dark</button>
   </div>
 </div>
@@ -473,9 +471,8 @@ applyTheme();
 })();
 
 /* ============================================================
-   SUPPORT — Gumroad (see support-widget.js)
+   SUPPORT — links to the Supporter Wall (supporters.html)
    ============================================================ */
-document.getElementById('supportBtn').onclick = () => HookitSupport.open();
 </script>
 </body>
 </html>

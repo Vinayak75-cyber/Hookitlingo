@@ -370,8 +370,6 @@ textarea.note-area{width:100%; min-height:90px; background:var(--surface2); bord
 .cert-locked p{ color:var(--text-dim); }
 #certPayArea{ margin-top:18px; }
 </style>
-<link rel="stylesheet" href="../support-widget.css">
-<script src="../support-widget.js"></script>
 </head>
 <body>
 
@@ -572,7 +570,7 @@ function buildSidebar(){
     if(c.group!==lastGroup){ html+=`<div class="nav-group-label">${c.group}</div>`; lastGroup=c.group; }
     html+=`<button class="nav-item" data-id="${c.id}" onclick="goTo('${c.id}')"><span class="dot"></span><span class="lbl">${c.title}</span></button>`;
     if(c.id==='finalexam'){
-      html+=`<button class="nav-item nav-item-support" data-id="support" onclick="HookitSupport.open('Korean Verb Tenses')"><span class="dot"></span><span class="lbl">💛 Support</span></button>`;
+      html+=`<a class="nav-item nav-item-support" data-id="support" href="../supporters.html" style="text-decoration:none"><span class="dot"></span><span class="lbl">💛 Support</span></a>`;
     }
   });
   nav.innerHTML = html;
@@ -994,7 +992,7 @@ const SUPPORT_API_BASE = window.location.hostname === 'localhost'
   : ''; // same origin when deployed alongside the Express server
 
 /* Support is now handled by the shared Gumroad widget —
-   see ../support-widget.js. SUPPORT_API_BASE above is still
+   SUPPORT now links to ../supporters.html. SUPPORT_API_BASE above is still
    used by the certificate-unlock flow further down. */
 
 function renderNextSteps(el){

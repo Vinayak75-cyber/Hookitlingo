@@ -299,6 +299,49 @@ function isRateLimited(ip) {
   return hits.length > FEEDBACK_MAX_PER_HOUR;
 }
 
+// ============================================================
+// SUPPORTER WALL — reads from a second Airtable table ("Supporters"
+// by default). Entries are added by hand in the Airtable UI for now
+// (each sale's name/tier/message copied over from the Gumroad sale
+// notification + their custom-field answers) — no POST endpoint
+// here on purpose, since write access stays manual until/unless a
+// Gumroad webhook is wired up later. Same base/API key as Feedback,
+// just a different table.
+//   AIRTABLE_SUPPORTERS_TABLE_NAME — e.g. "Supporters" (optional,
+//   defaults to "Supporters")
+// ============================================================
+const AIRTABLE_SUPPORTERS_TABLE_NAME = process.env.AIRTABLE_SUPPORTERS_TABLE_NAME || 'Supporters';
+const AIRTABLE_SUPPORTERS_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_SUPPORTERS_TABLE_NAME)}`;
+
+app.get('/api/supporters', async (req, res) => {
+  if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
+    return res.status(500).json({ error: 'Supporter wall storage is not configured yet.' });
+  }
+  try {
+    const url = `${AIRTABLE_SUPPORTERS_URL}?pageSize=100&sort[0][field]=Created&sort[0][direction]=desc`;
+    const airtableRes = await fetch(url, {
+      headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` }
+    });
+    if (!airtableRes.ok) {
+      const errText = await airtableRes.text();
+      console.error('Airtable supporters list failed:', errText);
+      return res.status(502).json({ error: 'Failed to load supporters' });
+    }
+    const data = await airtableRes.json();
+    const items = (data.records || []).map(r => ({
+      id: r.id,
+      name: r.fields.Name || 'A Supporter',
+      tier: (r.fields.Tier || 'supporter').toLowerCase(), // "supporter" | "founding" | "patron"
+      message: r.fields.Message || '',
+      created: r.fields.Created || r.createdTime
+    }));
+    res.json({ items });
+  } catch (err) {
+    console.error('Supporters list error:', err);
+    res.status(500).json({ error: 'Failed to load supporters' });
+  }
+});
+
 // List feedback — newest first, capped so the page never has to
 // deal with an unbounded response.
 app.get('/api/feedback', async (req, res) => {
