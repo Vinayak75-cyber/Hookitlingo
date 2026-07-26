@@ -18,7 +18,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- Razorpay Checkout SDK — for the Support page's donation flow -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <style>
 /* ============================================================
    TOKENS — same palette as every Hookitlingo course
@@ -1791,127 +1790,11 @@ function renderCertificate(el){
   chapterHeader(el,'Finish','Your Certificate');
   el.insertAdjacentHTML('beforeend', bookmarkRow('certificate'));
 
-  const savedPaymentId = localStorage.getItem('kp_cert_payment_id');
   const savedName = localStorage.getItem('kp_name') || '';
-
-  if(savedPaymentId){
-    renderCertUnlocked(el, savedPaymentId, savedName);
-  } else {
-    renderCertLocked(el, savedName);
-  }
+  renderCertUnlocked(el, savedName);
 }
 
-function renderCertLocked(el, savedName){
-  el.insertAdjacentHTML('beforeend', `
-    <div class="cert-locked">
-      <div class="cert-locked-silhouette" aria-hidden="true">
-        <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
-          <rect x="10" y="10" width="380" height="240" rx="10" fill="none" stroke="var(--border)" stroke-width="3"/>
-          <rect x="30" y="30" width="340" height="200" rx="6" fill="var(--surface2)"/>
-          <rect x="130" y="60" width="140" height="14" rx="4" fill="var(--border)"/>
-          <rect x="150" y="90" width="100" height="24" rx="4" fill="var(--border)"/>
-          <rect x="90" y="140" width="220" height="10" rx="3" fill="var(--border)"/>
-          <rect x="90" y="158" width="220" height="10" rx="3" fill="var(--border)"/>
-          <rect x="130" y="190" width="140" height="10" rx="3" fill="var(--border)"/>
-        </svg>
-        <div class="cert-lock-icon">🔒</div>
-      </div>
-      <h3>You passed the Final Assessment! 🎉</h3>
-      <p>Your official Hookitlingo certificate is ready to be generated with your name on it. Unlock and download the PDF for a one-time <strong style="color:var(--vermilion)">₹99</strong>.</p>
-      <div class="card">
-        <label>Name to print on your certificate:
-          <input type="text" id="certNameInput" placeholder="Your full name" style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); padding:8px 10px; margin-left:8px; width:220px;">
-        </label>
-      </div>
-      <div id="certPayArea">
-        <button class="btn" id="certPayBtn">Unlock Certificate — ₹99</button>
-        <p class="hkl-secure-note">🔒 Handled securely by Razorpay. Your certificate PDF is generated only after payment is verified.</p>
-      </div>
-    </div>`);
-
-  document.getElementById('certNameInput').value = savedName; // set safely — no HTML parsing
-
-  document.getElementById('certPayBtn').onclick = () => {
-    const nameInput = document.getElementById('certNameInput');
-    const nm = nameInput.value.trim();
-    if(!nm){ nameInput.style.borderColor = 'var(--vermilion)'; nameInput.focus(); return; }
-    localStorage.setItem('kp_name', nm);
-    initiateCertPayment(nm);
-  };
-}
-
-async function initiateCertPayment(nm){
-  const payArea = document.getElementById('certPayArea');
-  payArea.innerHTML = `<div class="hkl-loading-spinner"></div><p class="hkl-secure-note">Preparing secure checkout…</p>`;
-
-  try{
-    const orderRes = await fetch(`${SUPPORT_API_BASE}/api/create-order`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ amount: 9900, purpose: 'certificate-particles' })
-    });
-    if(!orderRes.ok){
-      const err = await orderRes.json();
-      throw new Error(err.error || 'Failed to create order');
-    }
-    const { orderId, amount, currency, key } = await orderRes.json();
-
-    const options = {
-      key, amount, currency,
-      name: "Hookitlingo",
-      description: "Hookitlingo · Korean Grammar Part 2: Particles Certificate — official PDF",
-      order_id: orderId,
-      theme: { color: "#e58aa2" },
-      prefill: { name: nm, email:"", contact:"" },
-      handler: async function(response){ await verifyCertPayment(response, orderId, nm); },
-      modal: { ondismiss: function(){ renderCertRetry(nm); } }
-    };
-    const rzp = new Razorpay(options);
-    rzp.open();
-  } catch(err){
-    console.error('Certificate payment initiation failed:', err);
-    payArea.innerHTML = `<p class="hkl-secure-note" style="color:var(--vermilion)">${err.message}</p><button class="btn" id="certRetryBtn">Try again</button>`;
-    document.getElementById('certRetryBtn').onclick = () => initiateCertPayment(nm);
-  }
-}
-
-function renderCertRetry(nm){
-  const payArea = document.getElementById('certPayArea');
-  if(!payArea) return;
-  payArea.innerHTML = `<button class="btn" id="certPayBtn2">Unlock Certificate — ₹99</button><p class="hkl-secure-note">🔒 Handled securely by Razorpay.</p>`;
-  document.getElementById('certPayBtn2').onclick = () => initiateCertPayment(nm);
-}
-
-async function verifyCertPayment(response, orderId, nm){
-  const payArea = document.getElementById('certPayArea');
-  if(payArea) payArea.innerHTML = `<div class="hkl-loading-spinner"></div><p class="hkl-secure-note">Verifying payment…</p>`;
-
-  try{
-    const verifyRes = await fetch(`${SUPPORT_API_BASE}/api/verify-payment`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        orderId: response.razorpay_order_id || orderId,
-        paymentId: response.razorpay_payment_id,
-        signature: response.razorpay_signature,
-        name: nm
-      })
-    });
-    const result = await verifyRes.json();
-    if(!result.verified) throw new Error('Payment verification failed');
-
-    localStorage.setItem('kp_cert_payment_id', result.paymentId);
-    goTo('certificate'); // re-render — will now show the unlocked state
-  } catch(err){
-    console.error('Certificate verification failed:', err);
-    if(payArea){
-      payArea.innerHTML = `<p class="hkl-secure-note" style="color:var(--vermilion)">We couldn't verify your payment. If you were charged, please contact us.</p><button class="btn" id="certRetryBtn2">Try again</button>`;
-      document.getElementById('certRetryBtn2').onclick = () => initiateCertPayment(nm);
-    }
-  }
-}
-
-function renderCertUnlocked(el, paymentId, nm){
+function renderCertUnlocked(el, nm){
   el.insertAdjacentHTML('beforeend', `
   <div class="card">
     <label>Your name: <input type="text" id="certName" placeholder="Enter your name" style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); padding:6px 10px; margin-left:8px;"></label>
@@ -1925,7 +1808,7 @@ function renderCertUnlocked(el, paymentId, nm){
     <div class="cert-name" id="certNameDisplay">________________________</div>
     <p>has successfully completed <strong>Korean Grammar Part 2: Particles</strong>, demonstrating fluent, correct use of 이/가, 은/는, 을/를, 에, 에서, 도, and 만 in original sentences.</p>
     <p style="margin-top:24px; color:var(--text-faint); font-size:.85em">Issued ${new Date().toLocaleDateString()} · XP earned: ${State.xp} · Best streak: ${State.bestStreak}</p>
-    <p style="margin-top:8px; color:var(--celadon); font-size:.8em;">✓ Certificate unlocked</p>
+    <p style="margin-top:8px; color:var(--celadon); font-size:.8em;">✓ Free — download whenever you like</p>
   </div>
   <p id="certDownloadStatus" class="hkl-secure-note"></p>
   `);
@@ -1945,17 +1828,10 @@ function renderCertUnlocked(el, paymentId, nm){
     statusEl.style.color = '';
     statusEl.textContent = 'Generating your certificate…';
     try{
-      const url = `${SUPPORT_API_BASE}/api/certificate?paymentId=${encodeURIComponent(paymentId)}&name=${encodeURIComponent(currentName)}&course=particles`;
+      const url = `${SUPPORT_API_BASE}/api/certificate?name=${encodeURIComponent(currentName)}&course=particles`;
       const res = await fetch(url);
       if(!res.ok){
         const err = await res.json().catch(()=>({error:'Download failed'}));
-        if(res.status === 403){
-          localStorage.removeItem('kp_cert_payment_id');
-          statusEl.style.color = 'var(--vermilion)';
-          statusEl.textContent = "We couldn't verify that payment for this course. Please unlock the certificate again.";
-          setTimeout(() => goTo('certificate'), 1800);
-          return;
-        }
         throw new Error(err.error || 'Download failed');
       }
       const blob = await res.blob();

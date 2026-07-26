@@ -107,6 +107,13 @@ html[data-theme="light"] .nav-item.active{color:#8a2c4a;}
 .nav-item .dot{width:6px;height:6px;border-radius:50%; background:var(--border); flex:none;}
 .nav-item.done .dot{background:var(--celadon);}
 .nav-item .lbl{flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.nav-item-support{
+  background:linear-gradient(135deg, color-mix(in srgb, var(--vermilion) 16%, transparent), color-mix(in srgb, var(--gold) 12%, transparent));
+  border:1px solid color-mix(in srgb, var(--vermilion) 30%, var(--border));
+  margin-top:4px;
+}
+.nav-item-support .lbl{color:var(--vermilion); font-weight:600;}
+.nav-item-support:hover{border-color:var(--vermilion);}
 
 #mainWrap{flex:1; min-width:0; display:flex; flex-direction:column;}
 #topbar{
@@ -142,6 +149,7 @@ main.wide{max-width:1100px;}
 
 /* Cards & callouts */
 .card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin:18px 0;}
+.hkl-secure-note{margin-top:16px; font-size:.74em; color:var(--text-faint);}
 .callout{border-left:3px solid var(--celadon); background:var(--celadon-dim); border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:14px 18px; margin:18px 0; color:var(--text);}
 .callout.warn{border-color:var(--vermilion); background:var(--vermilion-dim);}
 .callout.tip{border-color:var(--gold); background:var(--gold-dim);}
@@ -278,13 +286,14 @@ main.wide{max-width:1100px;}
 
 /* Petals decoration */
 #petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
-.petal{position:absolute; top:-5%; animation:fall linear infinite;}
-.petal svg{width:100%; height:100%; display:block;}
+.petal{position:absolute; top:-8%; will-change:transform; animation:fall linear infinite;}
+.petal svg{display:block; filter:drop-shadow(0 1px 1px rgba(0,0,0,.08));}
 @keyframes fall{
-  from{transform:translateY(-10vh) translateX(0) rotate(0deg);}
-  to{transform:translateY(110vh) translateX(var(--drift)) rotate(340deg);}
+  0%{transform:translate(0,-10vh) rotate(0deg);}
+  100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}
 }
 @media (prefers-reduced-motion: reduce){.petal{display:none;}}
+@media(max-width:900px){ #petals .petal:nth-child(even){display:none;} }
 
 @media print{
   #sidebar,#topbar,#petals,.no-print,.btn-row{display:none !important;}
@@ -339,6 +348,12 @@ main.wide{max-width:1100px;}
 function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 function sample(arr,n){ return shuffle(arr).slice(0,n); }
 function esc(s){ return String(s).replace(/"/g,'&quot;'); }
+
+/* Backend base for the certificate-download and Support widget flows —
+   same origin when deployed alongside the Express server. */
+const SUPPORT_API_BASE = window.location.hostname === 'localhost'
+  ? 'http://localhost:3000'
+  : '';
 
 /* ============================================================
    1. STATE
@@ -1141,27 +1156,60 @@ function renderCertificate(el){
   el.innerHTML = `
     <div class="eyebrow">Finish</div>
     <h1>Your Certificate</h1>
-    <div class="cert">
+    <div class="card">
+      <label>Your name: <input type="text" id="certName" placeholder="Enter your name" value="${esc(savedName)}" style="background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); padding:6px 10px; margin-left:8px;"></label>
+      <button class="btn" style="margin-left:10px" id="certUpdateBtn">Update</button>
+      <button class="btn secondary" style="margin-left:6px" id="certDownloadBtn">⬇ Download Certificate PDF</button>
+    </div>
+    <div class="cert" id="certBody">
       <h2>Certificate of Completion</h2>
       <div class="cert-jp">かな基礎</div>
       <p style="color:var(--text-faint)">This certifies that</p>
-      <input id="certName" type="text" placeholder="Your Name" value="${esc(savedName)}">
-      <div class="cert-name" id="certNameDisplay">${savedName||'Your Name'}</div>
+      <div class="cert-name" id="certNameDisplay">${esc(savedName)||'Your Name'}</div>
       <p style="color:var(--text-faint)">has completed the Hookitlingo <strong>Kana Foundations</strong> course, mastering hiragana, katakana, and their sound modifiers.</p>
       <p style="color:var(--text-faint); font-size:.85em">${new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'})} · ${done} / ${CHAPTERS.length} units completed · ${State.xp} XP</p>
+      <p style="margin-top:8px; color:var(--celadon); font-size:.8em;">✓ Free — download whenever you like</p>
     </div>
+    <p id="certDownloadStatus" class="hkl-secure-note"></p>
     <h3>Badges Earned</h3>
     <div class="badge-grid">${BADGE_DEFS.map(b=>`
       <div class="badge ${State.badges[b.id]?'earned':''}"><div class="icon">${b.icon}</div><div class="name">${b.name}</div></div>`).join('')}</div>
     <div class="btn-row" style="justify-content:center">
-      <button class="btn" onclick="window.print()">🖨️ Print Certificate</button>
       <button class="btn secondary" onclick="goTo('next-steps')">What's Next →</button>
     </div>
   `;
-  el.querySelector('#certName').addEventListener('input', (e)=>{
-    localStorage.setItem('kf_name', e.target.value);
-    el.querySelector('#certNameDisplay').textContent = e.target.value || 'Your Name';
-  });
+
+  document.getElementById('certUpdateBtn').onclick = () => {
+    const v = document.getElementById('certName').value.trim();
+    localStorage.setItem('kf_name', v);
+    document.getElementById('certNameDisplay').textContent = v || 'Your Name';
+  };
+
+  document.getElementById('certDownloadBtn').onclick = async () => {
+    const currentName = document.getElementById('certName').value.trim() || savedName;
+    const statusEl = document.getElementById('certDownloadStatus');
+    statusEl.style.color = '';
+    statusEl.textContent = 'Generating your certificate…';
+    try{
+      const url = `${SUPPORT_API_BASE}/api/certificate?name=${encodeURIComponent(currentName)}&course=kana`;
+      const res = await fetch(url);
+      if(!res.ok){
+        const err = await res.json().catch(()=>({error:'Download failed'}));
+        throw new Error(err.error || 'Download failed');
+      }
+      const blob = await res.blob();
+      const objUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = objUrl; a.download = 'hookitlingo-kana-certificate.pdf';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(objUrl);
+      statusEl.textContent = '';
+    }catch(err){
+      console.error('Certificate download failed:', err);
+      statusEl.style.color = 'var(--vermilion)';
+      statusEl.textContent = err.message;
+    }
+  };
 }
 
 function renderNextSteps(el){
@@ -1173,15 +1221,6 @@ function renderNextSteps(el){
     <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Keep reading real Japanese daily, even just menu items or product packaging photos — recognition speed comes from mileage, not more study sessions.</div>
     <div class="btn-row"><button class="btn secondary" onclick="goTo('flashcards')">Keep Practicing Kana</button></div>
   `;
-}
-
-function renderSupport(el){
-  el.innerHTML = `
-    <div class="eyebrow">Support</div>
-    <h1>Support Hookitlingo</h1>
-    <div id="hksMountPoint"></div>
-  `;
-  HookitSupport.mount(el.querySelector('#hksMountPoint'), { context: 'Kana Foundations' });
 }
 
 /* ============================================================
@@ -1221,9 +1260,7 @@ const CHAPTERS = [
 
   {id:'final-exam', group:'Finish', title:'Final Assessment', render:renderFinalExam},
   {id:'certificate', group:'Finish', title:'Certificate', render:renderCertificate},
-  {id:'next-steps', group:'Finish', title:"What's Next", render:renderNextSteps},
-
-  {id:'support', group:'Support', title:'Support Hookitlingo', render:renderSupport}
+  {id:'next-steps', group:'Finish', title:"What's Next", render:renderNextSteps}
 ];
 
 /* ============================================================
@@ -1239,7 +1276,10 @@ function buildSidebar(){
       ${list.map(c=>`
         <button class="nav-item ${State.completed[c.id]?'done':''} ${State.current===c.id?'active':''}" onclick="goTo('${c.id}')">
           <span class="dot"></span><span class="lbl">${c.title}</span>
-        </button>`).join('')}
+        </button>${c.id==='final-exam' ? `
+        <button class="nav-item nav-item-support" onclick="HookitSupport.open('Kana Foundations')">
+          <span class="dot"></span><span class="lbl">💛 Support</span>
+        </button>` : ''}`).join('')}
     </div>`).join('');
 }
 
@@ -1284,16 +1324,19 @@ window.addEventListener('scroll', ()=>{
    ============================================================ */
 function initPetals(){
   const host = document.getElementById('petals');
+  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
   const n = window.innerWidth<700 ? 10 : 18;
   let html='';
   for(let i=0;i<n;i++){
     const left = Math.random()*100;
-    const size = 10+Math.random()*14;
-    const dur = 10+Math.random()*14;
-    const delay = -Math.random()*20;
-    const drift = (Math.random()*140-70).toFixed(0)+'px';
-    html += `<div class="petal" style="left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift};">
-      <svg viewBox="0 0 24 24"><path fill="${Math.random()<0.5?'var(--petal)':'var(--gold)'}" opacity="0.55" d="M12 2C9 2 7 5 7 8c0 2 2 4 5 4s5-2 5-4c0-3-2-6-5-6zM4 9c-2 0-3 3-3 5.5S3 19 5 19c2 0 4-2 4-4.5S7 9 4 9zm16 0c-3 0-5 3-5 5.5S17.5 19 20 19c2 0 3-2.5 3-4.5S22 9 20 9zM12 14c-3 0-6 2-6 5s3 5 6 5 6-2 6-5-3-5-6-5z"/></svg>
+    const size = 10+Math.random()*12;
+    const dur = 10+Math.random()*12;
+    const delay = -(Math.random()*dur);
+    const drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)];
+    const rotStart = Math.round(Math.random()*360);
+    html += `<div class="petal" style="left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);">
+      <svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>
     </div>`;
   }
   host.innerHTML = html;

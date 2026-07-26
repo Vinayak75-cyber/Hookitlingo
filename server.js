@@ -94,36 +94,12 @@ app.post('/api/verify-payment', async (req, res) => {
     return res.status(400).json({ verified: false, error: 'Invalid signature' });
   }
 
-  // Lock the certificate name onto the order right now, at the one moment
-  // we've just cryptographically confirmed this payment is real. From here
-  // on, /api/certificate always prints THIS name — never whatever a later
-  // request happens to pass in — so a valid or leaked paymentId can't be
-  // reused to print a different name.
-  try {
-    const order = await razorpay.orders.fetch(orderId);
-    const safeName = String(name || '').slice(0, 80).trim();
-    await razorpay.orders.edit(orderId, {
-      notes: { ...(order.notes || {}), certName: safeName }
-    });
-  } catch (err) {
-    console.error('Failed to lock certificate name on order:', err);
-    // Don't fail the whole verification over this — the certificate
-    // endpoint falls back to a generic name if certName never got set.
-  }
-
   res.json({ verified: true, paymentId });
 });
 
-// Certificate PDF — no database needed. Razorpay is the single source of
-// truth: we ask Razorpay directly whether this exact payment was captured,
-// for the exact certificate price, and tagged for this exact course's
-// purpose. The PDF bytes do not exist anywhere until all checks pass.
-const CERT_PRICE_PAISE = 9900; // ₹99 — keep in sync with the frontend
-
-// Server-controlled whitelist — a payment for one course's certificate can
-// never unlock a different course's certificate, because the purpose tag
-// (set at order-creation time, before payment) is course-specific and is
-// checked against this exact list, not against whatever the client sends.
+// Certificate PDF — free for everyone, no payment required. Still
+// server-generated (not a static file) so the learner's name and course
+// are always filled in correctly.
 const CERT_COURSES = {
   hanlingo: {
     name: 'Hangeul',
@@ -144,60 +120,25 @@ const CERT_COURSES = {
   verbs: {
     name: 'Verb Tenses & Conjugation',
     description: "Verb Tenses & Conjugation, demonstrating fluent, correct use of present, past, and future tense, negation, and Korean's major irregular verb patterns."
+  },
+  kana: {
+    name: 'Kana Foundations',
+    description: 'the Kana Foundations course, mastering hiragana, katakana, and their sound modifiers.'
   }
 };
 
-// Caps how many times one payment can be redeemed for a PDF. In-memory, so
-// it resets on a server restart — that's an acceptable grace window here,
-// since it can only ever grant a few extra downloads of something someone
-// already legitimately paid for, never a free one. If you later run
-// multiple server instances behind a load balancer, move this to Redis or
-// a small DB table so the count is shared across instances.
-const MAX_CERT_DOWNLOADS = 3;
-const certDownloadCounts = new Map();
-
 app.get('/api/certificate', async (req, res) => {
-  const { paymentId, name, course } = req.query;
+  const { name, course } = req.query;
 
-  if (!paymentId || !course || !CERT_COURSES[course]) {
+  if (!course || !CERT_COURSES[course]) {
     return res.status(400).json({ error: 'Missing or invalid parameters' });
   }
 
   try {
-    const payment = await razorpay.payments.fetch(paymentId);
-
-    const basicsOk =
-      payment &&
-      payment.status === 'captured' &&
-      payment.currency === 'INR' &&
-      payment.amount === CERT_PRICE_PAISE &&
-      payment.order_id;
-
-    if (!basicsOk) {
-      return res.status(403).json({ error: 'No verified certificate payment found for this ID' });
-    }
-
-    // The purpose tag was set on the ORDER at creation time, before payment —
-    // Razorpay does not copy order notes onto the payment entity, so we must
-    // check the order's notes here, not payment.notes (which is always empty).
-    const order = await razorpay.orders.fetch(payment.order_id);
-    const isValid = order && order.notes && order.notes.purpose === `certificate-${course}`;
-
-    if (!isValid) {
-      return res.status(403).json({ error: 'No verified certificate payment found for this ID' });
-    }
-
-    const downloadsSoFar = certDownloadCounts.get(paymentId) || 0;
-    if (downloadsSoFar >= MAX_CERT_DOWNLOADS) {
-      return res.status(429).json({ error: 'This certificate has already been downloaded the maximum number of times. Contact support if you need another copy.' });
-    }
-
-    // The name itself comes from what was locked onto the order at verified
-    // payment time — never from this request's query string — so a valid
-    // paymentId can't be replayed with a different name. Control characters
-    // are stripped for safety; the font below covers Latin, Hangul, and
-    // most other scripts, so we no longer need to strip non-Latin text.
-    const rawName = String(order.notes.certName || name || '').slice(0, 80).trim();
+    // Name comes straight from the request now — there's no payment to
+    // lock it against. Control characters are stripped for safety; the
+    // font below covers Latin, Hangul, and most other scripts.
+    const rawName = String(name || '').slice(0, 80).trim();
     const safeName = rawName.replace(/[\x00-\x1F\x7F]/g, '').trim() || 'Hookitlingo Learner';
     const courseInfo = CERT_COURSES[course];
 
@@ -239,7 +180,7 @@ app.get('/api/certificate', async (req, res) => {
 
         doc.moveDown(2.5);
         doc.fontSize(10).fillColor('#8f7a91')
-          .text(`Issued ${new Date().toLocaleDateString()}  ·  Payment ID: ${paymentId}`, { align: 'center' });
+          .text(`Issued ${new Date().toLocaleDateString()}`, { align: 'center' });
 
         doc.end();
       } catch (drawErr) {
@@ -252,12 +193,10 @@ app.get('/api/certificate', async (req, res) => {
     res.setHeader('Content-Length', pdfBuffer.length);
     res.end(pdfBuffer);
 
-    certDownloadCounts.set(paymentId, downloadsSoFar + 1);
-
   } catch (err) {
     console.error('Certificate generation failed:', err);
     if (!res.headersSent) {
-      res.status(500).json({ error: 'Failed to verify payment or generate certificate' });
+      res.status(500).json({ error: 'Failed to generate certificate' });
     }
   }
 });
