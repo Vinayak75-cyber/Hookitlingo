@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOPIK I · Day 1 — Hangul Foundations</title>
+<!--
+  This file works completely offline once downloaded: no external scripts, no network
+  calls required to function. All progress is saved to this browser's localStorage
+  under the "td1_" prefix. The Google Fonts link below is a progressive enhancement
+  only — if there's no internet on first load, the CSS fallback stacks (system serif /
+  sans / Korean fonts) are used instead and nothing breaks.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941;
+  --border:#4a3550;
+  --text:#f6ecec; --text-dim:#c7b2c4; --text-faint:#8f7a91;
+  --vermilion:#e58aa2; --vermilion-dim:#5a2c3a;
+  --celadon:#5fa688; --celadon-dim:#2a4a3d;
+  --gold:#d9ab5c; --gold-dim:#5c471e;
+  --inkblue:#a084c9; --inkblue-dim:#3a2c50;
+  --petal:#f3b6c6;
+  --radius:16px; --radius-sm:10px;
+  --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --kr:"Noto Serif KR","Apple SD Gothic Neo","Malgun Gothic","Nanum Gothic",sans-serif;
+  --maxw:880px;
+  --fs-scale:1;
+}
+html[data-theme="light"]{
+  --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6;
+  --border:#eccabb;
+  --text:#3a2530; --text-dim:#79576a; --text-faint:#a98a9c;
+  --vermilion:#c8546f; --vermilion-dim:#f6dae2;
+  --celadon:#3f7d63; --celadon-dim:#d9ece2;
+  --gold:#a4762b; --gold-dim:#f2e2c2;
+  --inkblue:#75509f; --inkblue-dim:#e7ddf2;
+  --petal:#e59fb2;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--text); font-family:var(--sans);
+  font-size:calc(16px*var(--fs-scale)); line-height:1.65; transition:background .3s,color .3s;
+  background:
+    radial-gradient(1100px 620px at 12% -8%, color-mix(in srgb, var(--vermilion) 16%, transparent), transparent 58%),
+    radial-gradient(900px 520px at 104% 6%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 55%),
+    var(--ink);
+  background-attachment:fixed;
+}
+body.print-mode{background:#fff;color:#111;}
+::selection{background:var(--vermilion); color:#fff;}
+h1,h2,h3,h4{font-family:var(--serif); font-weight:600; letter-spacing:.2px; margin:0 0 .5em;}
+h1{font-size:2.1em;} h2{font-size:1.5em;} h3{font-size:1.22em;} h4{font-size:1.03em;}
+p{margin:0 0 1em;}
+a{color:var(--celadon);}
+.kr{font-family:var(--kr);}
+button{font-family:var(--sans); cursor:pointer;}
+.hidden{display:none !important;}
+
+#app{display:flex; min-height:100vh; position:relative; z-index:2;}
+#sidebar{
+  width:280px; flex:none; background:var(--surface); border-right:1px solid var(--border);
+  position:sticky; top:0; height:100vh; overflow-y:auto; padding:18px 14px 40px;
+  transition:transform .3s; z-index:40;
+}
+#sidebar::-webkit-scrollbar{width:6px;} #sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+.brand{display:flex; align-items:center; gap:12px; padding:6px 8px 18px; border-bottom:1px solid var(--border); margin-bottom:14px;}
+.brand-block{
+  width:44px;height:44px;border-radius:50%; flex:none; position:relative;
+  background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--vermilion) 88%, #fff 12%), var(--vermilion) 72%);
+  display:flex;align-items:center;justify-content:center; font-family:var(--kr); font-weight:700; font-size:16px; color:#fff9f7;
+  transform:rotate(-7deg);
+  box-shadow:0 4px 12px color-mix(in srgb, var(--vermilion) 50%, transparent), inset 0 0 0 2px color-mix(in srgb, #fff 22%, transparent);
+}
+.brand-txt strong{display:block; font-family:var(--serif); font-size:1.1em; letter-spacing:.2px;}
+.brand-txt span{display:block; font-size:.68em; color:var(--text-faint); letter-spacing:.1em; text-transform:uppercase;}
+
+.progress-mini{margin:0 8px 16px; padding:10px 12px; background:var(--surface2); border-radius:var(--radius-sm); border:1px solid var(--border);}
+.progress-mini .row{display:flex; justify-content:space-between; font-size:.78em; color:var(--text-dim); margin-bottom:6px;}
+.bar-track{height:6px; background:var(--surface3); border-radius:4px; overflow:hidden;}
+.bar-fill{height:100%; background:linear-gradient(90deg,var(--vermilion),var(--gold)); width:0%; transition:width .4s;}
+
+.nav-group-label{font-size:.66em; text-transform:uppercase; letter-spacing:.1em; color:var(--text-faint); padding:14px 10px 6px;}
+.nav-item{
+  display:flex; align-items:center; gap:9px; width:100%; text-align:left; padding:8px 10px; border-radius:8px;
+  background:transparent; border:none; color:var(--text-dim); font-size:.86em; margin-bottom:1px;
+}
+.nav-item:hover{background:var(--surface2); color:var(--text);}
+.nav-item.active{background:var(--vermilion-dim); color:var(--vermilion); font-weight:600;}
+html[data-theme="light"] .nav-item.active{color:#8a2c4a;}
+.nav-item .dot{width:6px;height:6px;border-radius:50%; background:var(--border); flex:none;}
+.nav-item.done .dot{background:var(--celadon);}
+.nav-item .lbl{flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.nav-item-support{
+  background:linear-gradient(135deg, color-mix(in srgb, var(--vermilion) 16%, transparent), color-mix(in srgb, var(--gold) 12%, transparent));
+  margin-top:4px;
+}
+
+#mainWrap{flex:1; min-width:0; display:flex; flex-direction:column;}
+#topbar{
+  position:sticky; top:0; z-index:30; display:flex; align-items:center; gap:10px;
+  padding:10px 20px 14px; background:color-mix(in srgb, var(--ink) 85%, transparent); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+#menuBtn{display:none; background:none;border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 10px;}
+.readbar-track{flex:1; height:4px; background:var(--surface2); border-radius:3px; overflow:hidden;}
+.readbar-fill{height:100%; width:0%; background:linear-gradient(90deg,var(--celadon),var(--inkblue)); transition:width .15s;}
+.topbtn{background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); border-radius:8px; padding:6px 10px; font-size:.85em; display:flex; align-items:center; gap:5px;}
+.topbtn:hover{color:var(--text); border-color:var(--celadon);}
+.topbtn.active-toggle{color:var(--gold); border-color:var(--gold-dim);}
+
+main{flex:1; padding:36px 40px 80px; max-width:var(--maxw); margin:0 auto; width:100%;}
+.chapter{display:none; animation:fadeIn .35s ease;}
+.chapter.active{display:block;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+.eyebrow{font-size:.74em; letter-spacing:.14em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:8px;}
+.chapter-meta{display:flex; gap:14px; color:var(--text-faint); font-size:.82em; margin-bottom:26px; flex-wrap:wrap;}
+
+.card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin:18px 0;}
+.callout{border-left:3px solid var(--celadon); background:var(--celadon-dim); border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:14px 18px; margin:18px 0; color:var(--text);}
+.callout.warn{border-color:var(--vermilion); background:var(--vermilion-dim);}
+.callout.tip{border-color:var(--gold); background:var(--gold-dim);}
+.callout.fact{border-color:var(--inkblue); background:var(--inkblue-dim);}
+.callout-label{font-weight:700; font-size:.78em; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px; display:block;}
+
+.tile-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:14px; margin:20px 0;}
+.letter-tile{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px;
+  text-align:center; position:relative; transition:border-color .2s, transform .2s;
+}
+.letter-tile:hover{border-color:var(--celadon); transform:translateY(-2px);}
+.letter-tile .glyph{font-family:var(--kr); font-size:2.4em; line-height:1; margin-bottom:6px; color:var(--text);}
+.letter-tile .rom{font-family:var(--serif); font-style:italic; color:var(--gold); font-size:1.02em;}
+.letter-tile .spk{margin-top:10px;}
+
+.spk-btn{
+  background:var(--surface2); border:1px solid var(--border); color:var(--text-dim);
+  border-radius:20px; padding:5px 12px; font-size:.78em; display:inline-flex; align-items:center; gap:6px;
+}
+.spk-btn:hover{border-color:var(--vermilion); color:var(--vermilion);}
+.spk-btn.playing{border-color:var(--celadon); color:var(--celadon);}
+
+/* Letter detail panel (per-letter breakdown) */
+.letter-detail{
+  display:grid; grid-template-columns:180px 1fr; gap:24px; background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:24px; margin:20px 0; align-items:start;
+}
+.letter-detail .big-glyph{font-family:var(--kr); font-size:5em; text-align:center; line-height:1; color:var(--text); background:var(--surface2); border-radius:var(--radius-sm); padding:20px 0;}
+.letter-detail .facts{font-size:.92em;}
+.letter-detail .facts dt{color:var(--text-faint); font-size:.75em; text-transform:uppercase; letter-spacing:.06em; margin-top:10px;}
+.letter-detail .facts dd{margin:2px 0 0; color:var(--text);}
+@media(max-width:640px){.letter-detail{grid-template-columns:1fr;}}
+
+/* Syllable / block builder */
+.block-box{
+  width:130px; height:130px; border:2px solid var(--border); border-radius:10px; position:relative; background:var(--surface2);
+  display:grid; place-items:center; flex:none;
+}
+.block-slot{position:absolute; font-family:var(--kr); font-size:2.2em; color:var(--text);}
+.builder-wrap{display:flex; gap:24px; align-items:center; flex-wrap:wrap; margin:20px 0;}
+
+/* Cherry blossom petals */
+.petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.petal{position:absolute; top:-8%; will-change:transform; animation:petal-fall linear infinite;}
+.petal svg{display:block; filter:drop-shadow(0 1px 1px rgba(0,0,0,.08));}
+@keyframes petal-fall{
+  0%{transform:translate(0,-10vh) rotate(0deg);}
+  100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}
+}
+@media (prefers-reduced-motion: reduce){ .petals{display:none;} }
+@media print{ .petals{display:none;} }
+@media(max-width:900px){ .petals .petal:nth-child(even){display:none;} }
+
+.btn{background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%)); color:#fff; border:none; border-radius:999px; padding:11px 22px; font-size:.9em; font-weight:600; letter-spacing:.2px;}
+.btn:hover{filter:brightness(1.06); box-shadow:0 6px 18px color-mix(in srgb, var(--vermilion) 35%, transparent);}
+.btn.secondary{background:var(--surface2); color:var(--text); border:1px solid var(--border); border-radius:999px;}
+.btn.secondary:hover{border-color:var(--celadon); color:var(--celadon);}
+.btn:disabled{opacity:.4; cursor:default;}
+.btn-row{display:flex; gap:10px; flex-wrap:wrap; margin:16px 0;}
+
+.flash-wrap{max-width:420px; margin:20px auto;}
+.flashcard{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); height:220px;
+  display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:20px;
+  cursor:pointer; user-select:none; position:relative;
+}
+.flashcard .fc-face{font-family:var(--kr); font-size:2.8em;}
+.flashcard .fc-sub{color:var(--text-faint); font-size:.8em; margin-top:10px;}
+.flashcard .fc-back{display:none;}
+.flashcard.flipped .fc-front{display:none;} .flashcard.flipped .fc-back{display:flex; flex-direction:column; align-items:center;}
+.flash-controls{display:flex; justify-content:space-between; align-items:center; margin-top:14px;}
+.flash-counter{color:var(--text-faint); font-size:.85em;}
+
+.quiz-q{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin:16px 0;}
+.quiz-q .qtext{font-family:var(--kr); font-size:1.3em; margin-bottom:14px;}
+.quiz-q .qtext.eng{font-family:var(--sans); font-size:1.02em;}
+.qopts{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+@media(max-width:520px){.qopts{grid-template-columns:1fr;}}
+.qopt{background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:10px 14px; text-align:left; color:var(--text); font-size:.95em;}
+.qopt:hover{border-color:var(--celadon);}
+.qopt.correct{background:var(--celadon-dim); border-color:var(--celadon); color:var(--celadon);}
+.qopt.wrong{background:var(--vermilion-dim); border-color:var(--vermilion); color:var(--vermilion);}
+.qopt:disabled{pointer-events:none;}
+.qfeedback{margin-top:10px; font-size:.85em; color:var(--text-dim); min-height:1.2em;}
+.quiz-score{font-family:var(--serif); font-size:1.4em; text-align:center; margin:20px 0;}
+
+.word-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; margin:12px 0;}
+.word-card .wc-top{display:flex; justify-content:space-between; align-items:flex-start; gap:14px; flex-wrap:wrap;}
+.word-card .wc-kr{font-family:var(--kr); font-size:1.5em;}
+.word-card .wc-rom{color:var(--gold); font-family:var(--serif); font-style:italic;}
+.word-card .wc-meaning{color:var(--text-dim); font-size:.92em; margin-top:4px;}
+.word-card .wc-ex{margin-top:10px; padding-top:10px; border-top:1px dashed var(--border); font-size:.88em; color:var(--text-dim);}
+.tag{display:inline-block; font-size:.66em; text-transform:uppercase; letter-spacing:.06em; padding:2px 8px; border-radius:12px; background:var(--surface3); color:var(--text-faint); margin-right:6px;}
+
+.badge-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:14px; margin:18px 0;}
+.badge{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px 10px; text-align:center; opacity:.35;}
+.badge.earned{opacity:1; border-color:var(--gold);}
+.badge .bicon{font-size:2em; margin-bottom:6px;}
+.badge .bname{font-size:.76em; color:var(--text-dim);}
+
+.sched-table{width:100%; border-collapse:collapse; margin:18px 0; font-size:.92em;}
+.sched-table th,.sched-table td{border-bottom:1px solid var(--border); padding:9px 10px; text-align:left;}
+.sched-table th{color:var(--text-faint); font-size:.78em; text-transform:uppercase; letter-spacing:.06em;}
+
+.cover{min-height:calc(100vh - 60px); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:40px 20px;}
+.presents{font-family:var(--serif); font-style:italic; color:var(--text-faint); font-size:1em; letter-spacing:.03em; margin-bottom:10px;}
+.cover-block{width:180px;height:180px; margin:0 auto 26px; position:relative;}
+.cover-block svg{width:100%;height:100%;}
+.cover h1{font-size:2.7em; margin-bottom:6px;}
+.cover .sub{color:var(--text-dim); font-size:1.1em; max-width:520px; margin:0 auto 26px;}
+.cover-stats{display:flex; gap:30px; margin:26px 0; flex-wrap:wrap; justify-content:center;}
+.cover-stats div{text-align:center;}
+.cover-stats b{display:block; font-family:var(--serif); font-size:1.5em; color:var(--gold);}
+.cover-stats span{color:var(--text-faint); font-size:.76em; text-transform:uppercase; letter-spacing:.06em;}
+
+textarea.note-area{width:100%; min-height:80px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--text); padding:10px; font-family:var(--sans); font-size:.9em; resize:vertical;}
+
+/* Sentence builder */
+.sb-box{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin:16px 0;}
+.sb-answer{min-height:56px; border:1px dashed var(--border); border-radius:10px; padding:10px; display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; background:var(--surface2);}
+.sb-chip{background:var(--surface3); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:7px 12px; font-family:var(--kr); font-size:1.1em;}
+.sb-chip:hover{border-color:var(--vermilion);}
+.sb-chip.used{opacity:.3; pointer-events:none;}
+.sb-eng{color:var(--text-faint); font-size:.85em; margin-top:2px;}
+.sb-result{margin-top:8px; font-size:.85em; min-height:1.2em;}
+
+/* Error log */
+.err-item{background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--vermilion); border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:10px 14px; margin:10px 0; font-size:.9em;}
+.err-item b{font-family:var(--kr); font-size:1.1em;}
+
+@media print{
+  #sidebar,#topbar,.no-print{display:none !important;}
+  #mainWrap{width:100%;}
+  main{max-width:100%; padding:0;}
+  body{background:#fff; color:#000;}
+  .chapter{display:block !important;}
+}
+@media(max-width:900px){
+  #sidebar{position:fixed; left:0; top:0; transform:translateX(-100%); box-shadow:0 0 40px rgba(0,0,0,.5); height:100vh;}
+  #sidebar.open{transform:translateX(0);}
+  #menuBtn{display:block;}
+  main{padding:24px 18px 70px;}
+  #topbar{flex-wrap:wrap; row-gap:8px;}
+  .topbtn{padding:6px 8px; font-size:.8em;}
+}
+.focus-mode #sidebar, .focus-mode #topbar .aux{display:none;}
+.overlay-bg{position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:35; display:none;}
+.overlay-bg.show{display:block;}
+</style>
+</head>
+<body>
+
+<div class="petals no-print" id="petals" aria-hidden="true"></div>
+
+<div id="app">
+  <div class="overlay-bg" id="overlayBg"></div>
+
+  <aside id="sidebar">
+    <div class="brand">
+      <div class="brand-block kr">한</div>
+      <div class="brand-txt"><strong>TOPIK I · Day 1</strong><span>28-Day Roadmap</span></div>
+    </div>
+    <div class="progress-mini">
+      <div class="row"><span>Day 1 progress</span><span id="pctLabel">0%</span></div>
+      <div class="bar-track"><div class="bar-fill" id="sideBar"></div></div>
+    </div>
+    <nav id="navList"></nav>
+  </aside>
+
+  <div id="mainWrap">
+    <div id="topbar">
+      <button id="menuBtn">☰</button>
+      <div class="readbar-track"><div class="readbar-fill" id="readbarFill"></div></div>
+      <div class="aux" style="display:flex; gap:8px;">
+        <button class="topbtn" id="focusBtn">Focus</button>
+        <button class="topbtn" id="themeBtn">☾ Dark</button>
+        <button class="topbtn" id="printBtn">Print</button>
+      </div>
+    </div>
+    <main id="main"></main>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   0. DATA
+   ============================================================ */
+const VOWELS = [
+ {ch:'ㅣ', rom:'i', sound:'like "ee" in "see"', mouth:'Lips relaxed and wide, tongue high and forward', memory:'A single upright human — 인(人), the vertical stroke of 천지인.', ex:[['이','this / tooth']]},
+ {ch:'ㅡ', rom:'eu', sound:'like "oo" in "book" but unrounded — smile while saying "uh"', mouth:'Lips flat and wide, do not round them', memory:'A single flat line — 지(地), the earth stroke.', ex:[['그','that (thing)']]},
+ {ch:'ㅏ', rom:'a', sound:'like "a" in "father"', mouth:'Open your jaw wide and relaxed', memory:'Human line (ㅣ) with the sun (dot) rising on the right, mouth wide open.', ex:[['아이','child'],['가다','to go']]},
+ {ch:'ㅓ', rom:'eo', sound:'like "u" in "cup", said with an open throat', mouth:'Jaw drops, tongue pulled slightly back — the "unhappy face" vowel', memory:'Human line (ㅣ) with the sun on the left — the mirror of ㅏ.', ex:[['어머니','mother']]},
+ {ch:'ㅗ', rom:'o', sound:'like "o" in "go"', mouth:'Round your lips forward into a small circle', memory:'Earth line (ㅡ) with the sun rising above it.', ex:[['오다','to come']]},
+ {ch:'ㅜ', rom:'u', sound:'like "oo" in "moon"', mouth:'Push your lips further forward than ㅗ', memory:'Earth line (ㅡ) with the sun setting below it.', ex:[['우유','milk']]},
+ {ch:'ㅑ', rom:'ya', sound:'"ya" as in "yard"', mouth:'Same as ㅏ but glide into it with a y-sound', memory:'ㅏ with one extra stroke = add a Y glide.', ex:[['야구','baseball']]},
+ {ch:'ㅕ', rom:'yeo', sound:'"yuh" — y + eo', mouth:'Same as ㅓ with a y-glide', memory:'ㅓ with one extra stroke.', ex:[['여자','woman']]},
+ {ch:'ㅛ', rom:'yo', sound:'"yo" as in "yo-yo"', mouth:'Same as ㅗ with a y-glide', memory:'ㅗ with one extra stroke.', ex:[['교실','classroom']]},
+ {ch:'ㅠ', rom:'yu', sound:'"you"', mouth:'Same as ㅜ with a y-glide', memory:'ㅜ with one extra stroke.', ex:[['우유','milk (note: 유 alone means "oil/milk" root)']]},
+];
+const CONSONANTS = [
+ {ch:'ㄱ', name:'giyeok', rom:'g/k', sound:'between English G and K', mouth:'Back of the tongue touches the soft palate, blocking air briefly', memory:'The shape traces the side profile of the tongue lifting at the back of the mouth.', ex:[['가다','to go'],['고기','meat']]},
+ {ch:'ㄴ', name:'nieun', rom:'n', sound:'like English N', mouth:'Tongue tip touches just behind the upper teeth (slightly lower than English N)', memory:'The shape traces the tongue tip curling up behind the teeth.', ex:[['나','I/me'],['누나','older sister (of a male)']]},
+ {ch:'ㄷ', name:'digeut', rom:'d/t', sound:'between English D and T', mouth:'Tongue touches the ridge behind the teeth then releases', memory:'ㄴ + one line on top = the softer n-sound becomes a crisper d/t.', ex:[['다리','leg/bridge']]},
+ {ch:'ㄹ', name:'rieul', rom:'r/l', sound:'a light flap, between English R and L', mouth:'Tongue tip taps once against the ridge behind the teeth', memory:'A curved zig-zag shape, a bit like the number 2 or letter Z.', ex:[['라디오','radio'],['우리','we/us']]},
+ {ch:'ㅁ', name:'mieum', rom:'m', sound:'like English M', mouth:'Lips pressed fully closed, sound hums through the nose', memory:'A closed square — your mouth sealed shut on all four sides.', ex:[['엄마','mom'],['마시다','to drink']]},
+ {ch:'ㅂ', name:'bieup', rom:'b/p', sound:'between English B and P', mouth:'Lips press shut then release with a small pop', memory:'ㅁ + two short lines on top = the sealed mouth releasing with force.', ex:[['바다','sea'],['비','rain']]},
+ {ch:'ㅅ', name:'siot', rom:'s', sound:'a soft "s", slightly softer than English', mouth:'Tongue tip near the ridge behind the teeth, air hisses through', memory:'Two points like the eyes of a smiling face — think "smile" starts with S.', ex:[['사람','person'],['시간','time']]},
+ {ch:'ㅇ', name:'ieung', rom:'silent/ng', sound:'silent at the start of a syllable; "ng" (as in "sing") at the end', mouth:'At the start: no obstruction at all, just shapes the vowel. At the end: back of tongue touches the soft palate, air through the nose', memory:'A circle — an empty, open mouth with nothing blocking it.', ex:[['아이','child (silent ㅇ)'],['사랑','love (final ㅇ = "ng")']]},
+ {ch:'ㅈ', name:'jieut', rom:'j', sound:'between English J and CH', mouth:'Tongue blade presses the ridge, releases with light friction', memory:'ㅅ + one line on top = more friction/force.', ex:[['자다','to sleep'],['주스','juice']]},
+ {ch:'ㅊ', name:'chieut', rom:'ch', sound:'a strongly aspirated CH, with a puff of air', mouth:'Same as ㅈ, release with extra breath', memory:'ㅈ + one more line = even more air.', ex:[['차','tea/car'],['치마','skirt']]},
+ {ch:'ㅋ', name:'kieuk', rom:'k', sound:'a strongly aspirated K, with a puff of air', mouth:'Same tongue position as ㄱ, release with extra breath', memory:'ㄱ + one extra stroke = more air, more force.', ex:[['커피','coffee'],['카드','card']]},
+ {ch:'ㅌ', name:'tieut', rom:'t', sound:'a strongly aspirated T, with a puff of air', mouth:'Same position as ㄷ, release with extra breath', memory:'ㄷ + one more line = even more force/air.', ex:[['토끼','rabbit'],['타다','to ride']]},
+ {ch:'ㅍ', name:'pieup', rom:'p', sound:'a strongly aspirated P, with a puff of air', mouth:'Same as ㅂ, release with extra breath', memory:'ㅁ with four lines = maximum air release.', ex:[['피아노','piano'],['파티','party']]},
+ {ch:'ㅎ', name:'hieut', rom:'h', sound:'like English H', mouth:'Open airflow from the throat, like exhaling', memory:'ㅇ + two strokes on top = the empty circle now releases a breath of air.', ex:[['하다','to do'],['한국','Korea']]},
+];
+const READING_ROWS = [
+ ['가','나','다','라','마','바','사','아','자','하'],
+ ['거','너','더','러','머','버','서','어','저','허'],
+ ['고','노','도','로','모','보','소','오','조','호'],
+ ['구','누','두','루','무','부','수','우','주','후'],
+];
+const VOCAB_PEOPLE_PLACES = [
+ {kr:'사람', rom:'saram', en:'person', cat:'People & Places'},
+ {kr:'학생', rom:'haksaeng', en:'student', cat:'People & Places'},
+ {kr:'선생님', rom:'seonsaengnim', en:'teacher', cat:'People & Places'},
+ {kr:'친구', rom:'chingu', en:'friend', cat:'People & Places'},
+ {kr:'가족', rom:'gajok', en:'family', cat:'People & Places'},
+ {kr:'학교', rom:'hakgyo', en:'school', cat:'People & Places'},
+ {kr:'집', rom:'jip', en:'home / house', cat:'People & Places'},
+ {kr:'회사', rom:'hoesa', en:'company', cat:'People & Places'},
+ {kr:'한국', rom:'hanguk', en:'Korea', cat:'People & Places'},
+ {kr:'나라', rom:'nara', en:'country', cat:'People & Places'},
+];
+const VOCAB_EVERYDAY = [
+ {kr:'이름', rom:'ireum', en:'name', cat:'Everyday'},
+ {kr:'책', rom:'chaek', en:'book', cat:'Everyday'},
+ {kr:'물', rom:'mul', en:'water', cat:'Everyday'},
+ {kr:'밥', rom:'bap', en:'rice / meal', cat:'Everyday'},
+ {kr:'음식', rom:'eumsik', en:'food', cat:'Everyday'},
+ {kr:'시간', rom:'sigan', en:'time', cat:'Everyday'},
+ {kr:'오늘', rom:'oneul', en:'today', cat:'Everyday'},
+ {kr:'내일', rom:'naeil', en:'tomorrow', cat:'Everyday'},
+ {kr:'어제', rom:'eoje', en:'yesterday', cat:'Everyday'},
+ {kr:'지금', rom:'jigeum', en:'now', cat:'Everyday'},
+];
+const VOCAB_VERBS = [
+ {kr:'가다', rom:'gada', en:'to go', cat:'Verbs'},
+ {kr:'오다', rom:'oda', en:'to come', cat:'Verbs'},
+ {kr:'먹다', rom:'meokda', en:'to eat', cat:'Verbs'},
+ {kr:'마시다', rom:'masida', en:'to drink', cat:'Verbs'},
+ {kr:'보다', rom:'boda', en:'to see / watch', cat:'Verbs'},
+ {kr:'하다', rom:'hada', en:'to do', cat:'Verbs'},
+ {kr:'공부하다', rom:'gongbuhada', en:'to study', cat:'Verbs'},
+ {kr:'살다', rom:'salda', en:'to live', cat:'Verbs'},
+ {kr:'만나다', rom:'mannada', en:'to meet', cat:'Verbs'},
+ {kr:'좋아하다', rom:'joahada', en:'to like', cat:'Verbs'},
+];
+const VOCAB_ALL = [...VOCAB_PEOPLE_PLACES, ...VOCAB_EVERYDAY, ...VOCAB_VERBS];
+const QUESTION_WORDS = [
+ {kr:'누구', rom:'nugu', en:'who'},
+ {kr:'무엇', rom:'mueot', en:'what'},
+ {kr:'뭐', rom:'mwo', en:'what (casual)'},
+ {kr:'어디', rom:'eodi', en:'where'},
+ {kr:'언제', rom:'eonje', en:'when'},
+ {kr:'왜', rom:'wae', en:'why'},
+ {kr:'어떻게', rom:'eotteoke', en:'how'},
+ {kr:'몇', rom:'myeot', en:'how many / what number'},
+];
+const SENTENCES = [
+ {chunks:['저는','학생이에요.'], en:'I am a student.'},
+ {chunks:['저는','친구예요.'], en:'I am a friend.'},
+ {chunks:['저는','한국어','학생이에요.'], en:'I am a Korean-language student.'},
+ {chunks:['저는','한국어를','공부해요.'], en:'I study Korean.'},
+ {chunks:['친구는','학생이에요.'], en:'My friend is a student.'},
+ {chunks:['한국은','나라예요.'], en:'Korea is a country.'},
+ {chunks:['학교는','여기예요.'], en:'The school is here.'},
+ {chunks:['저는','집에','가요.'], en:'I go home.'},
+ {chunks:['저는','물을','마셔요.'], en:'I drink water.'},
+];
+const LISTEN_SENTENCES = ['저는 학생이에요.','저는 친구예요.','저는 한국어를 공부해요.','저는 집에 가요.','저는 물을 마셔요.','학교는 여기예요.'];
+
+/* ============================================================
+   1. STATE
+   ============================================================ */
+const State = {
+  theme: localStorage.getItem('td1_theme') || 'dark',
+  fontScale: parseFloat(localStorage.getItem('td1_font')||'1'),
+  completed: JSON.parse(localStorage.getItem('td1_completed')||'{}'),
+  xp: parseInt(localStorage.getItem('td1_xp')||'0'),
+  badges: JSON.parse(localStorage.getItem('td1_badges')||'{}'),
+  notes: JSON.parse(localStorage.getItem('td1_notes')||'{}'),
+  errorLog: JSON.parse(localStorage.getItem('td1_errlog')||'[]'),
+  last: localStorage.getItem('td1_last') || 'cover',
+  current: null,
+};
+function saveState(){
+  localStorage.setItem('td1_theme', State.theme);
+  localStorage.setItem('td1_font', State.fontScale);
+  localStorage.setItem('td1_completed', JSON.stringify(State.completed));
+  localStorage.setItem('td1_xp', State.xp);
+  localStorage.setItem('td1_badges', JSON.stringify(State.badges));
+  localStorage.setItem('td1_notes', JSON.stringify(State.notes));
+  localStorage.setItem('td1_errlog', JSON.stringify(State.errorLog));
+  localStorage.setItem('td1_last', State.current);
+}
+function addXP(n){ State.xp += n; saveState(); updateProgressUI(); }
+function markComplete(id){
+  if(!State.completed[id]){ State.completed[id]=true; addXP(10); checkBadges(); }
+  saveState(); updateProgressUI();
+}
+function logError(q, correct, chapter){
+  const existing = State.errorLog.find(e=>e.q===q);
+  if(existing){ existing.chapter = chapter; existing.correct = correct; existing.count = (existing.count||1)+1; }
+  else{ State.errorLog.push({q, correct, chapter, count:1}); }
+  saveState();
+}
+const BADGE_DEFS = [
+ {id:'hangul', icon:'🔤', name:'Hangul Starter', test:()=>State.completed['vowels']&&State.completed['consonants']},
+ {id:'reader', icon:'📖', name:'First Reader', test:()=>State.completed['first-reading']&&State.completed['syllable-blocks']},
+ {id:'vocab30', icon:'📚', name:'30-Word Vocab', test:()=>State.completed['vocab-people-places']&&State.completed['vocab-everyday']&&State.completed['vocab-verbs']},
+ {id:'grammar', icon:'🧩', name:'Grammar Starter', test:()=>State.completed['topic-marker']&&State.completed['copula']&&State.completed['sentence-builder']},
+ {id:'topik', icon:'🎯', name:'TOPIK Rookie', test:()=>State.completed['question-words']&&State.completed['reading-strategy']},
+ {id:'graduate', icon:'🎓', name:'Day 1 Graduate', test:()=>State.completed['daily-test']},
+];
+function checkBadges(){ BADGE_DEFS.forEach(b=>{ if(!State.badges[b.id] && b.test()){ State.badges[b.id]=true; } }); saveState(); }
+
+/* ============================================================
+   2. AUDIO — Web Speech API (built into the browser, works offline)
+   ============================================================ */
+const Audio_ = {
+  supported: (typeof window!=='undefined' && 'speechSynthesis' in window),
+  speak(text, btn){
+    if(!this.supported){ if(btn){ const o=btn.innerHTML; btn.innerHTML='🔇 No TTS'; setTimeout(()=>btn.innerHTML=o,1500);} return; }
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'ko-KR'; u.rate = 0.85;
+    if(btn) btn.classList.add('playing');
+    u.onend = ()=>{ if(btn) btn.classList.remove('playing'); };
+    u.onerror = ()=>{ if(btn) btn.classList.remove('playing'); };
+    window.speechSynthesis.speak(u);
+  }
+};
+function spkBtn(text, label){
+  label = label || '🔊 Listen';
+  const safe = JSON.stringify(text).replace(/"/g,'&quot;');
+  return `<button class="spk-btn no-print" onclick="Audio_.speak(${safe}, this)">${label}</button>`;
+}
+
+/* ============================================================
+   3. CHAPTERS
+   ============================================================ */
+const CHAPTERS = [
+ {id:'cover', group:'Start', title:'Cover', render: renderCover},
+ {id:'mission', group:'Start', title:"Today's Mission", render: renderMission},
+ {id:'vowels', group:'Hour 1 · Hangul', title:'10 Basic Vowels', render: renderVowels},
+ {id:'consonants', group:'Hour 1 · Hangul', title:'14 Basic Consonants', render: renderConsonants},
+ {id:'first-reading', group:'Hour 1 · Hangul', title:'First Reading Drill', render: renderFirstReading},
+ {id:'syllable-blocks', group:'Hour 2 · Syllable Blocks', title:'How Syllable Blocks Work', render: renderSyllableBlocks},
+ {id:'vocab-people-places', group:'Hour 3 · Vocabulary', title:'People & Places', render: (el)=>renderVocabChapter(el,'vocab-people-places','People & Places', VOCAB_PEOPLE_PLACES)},
+ {id:'vocab-everyday', group:'Hour 3 · Vocabulary', title:'Everyday Words', render: (el)=>renderVocabChapter(el,'vocab-everyday','Everyday Words', VOCAB_EVERYDAY)},
+ {id:'vocab-verbs', group:'Hour 3 · Vocabulary', title:'Basic Verbs', render: (el)=>renderVocabChapter(el,'vocab-verbs','Basic Verbs', VOCAB_VERBS)},
+ {id:'flashcards', group:'Hour 3 · Vocabulary', title:'Flashcard Deck (30 words)', render: renderFlashcards},
+ {id:'vocab-test', group:'Hour 3 · Vocabulary', title:'Vocabulary Test', render: renderVocabTest},
+ {id:'word-order', group:'Hour 4 · Grammar', title:'Korean Word Order', render: renderWordOrder},
+ {id:'topic-marker', group:'Hour 4 · Grammar', title:'은 / 는 — Topic Marker', render: renderTopicMarker},
+ {id:'copula', group:'Hour 4 · Grammar', title:'이에요 / 예요 — "am/is/are"', render: renderCopula},
+ {id:'sentence-builder', group:'Hour 4 · Grammar', title:'Build 9 Sentences', render: renderSentenceBuilder},
+ {id:'question-words', group:'Hour 5 · TOPIK Practice', title:'TOPIK Question Words', render: renderQuestionWords},
+ {id:'reading-strategy', group:'Hour 5 · TOPIK Practice', title:'TOPIK Reading Strategy', render: renderReadingStrategy},
+ {id:'listening', group:'Hour 5 · TOPIK Practice', title:'Listening & Shadowing', render: renderListening},
+ {id:'daily-test', group:'Finish', title:'Day 1 Final Test', render: renderDailyTest},
+ {id:'error-log', group:'Finish', title:'Error Log', render: renderErrorLog},
+ {id:'day-complete', group:'Finish', title:'Day 1 Complete', render: renderDayComplete},
+];
+
+/* ============================================================
+   4. NAV / SIDEBAR / TOPBAR
+   ============================================================ */
+function buildSidebar(){
+  const nav = document.getElementById('navList');
+  let html=''; let lastGroup=null;
+  CHAPTERS.forEach(c=>{
+    if(c.group!==lastGroup){ html+=`<div class="nav-group-label">${c.group}</div>`; lastGroup=c.group; }
+    html+=`<button class="nav-item" data-id="${c.id}" onclick="goTo('${c.id}')"><span class="dot"></span><span class="lbl">${c.title}</span></button>`;
+    if(c.id==='daily-test'){
+      html+=`<a class="nav-item nav-item-support" data-id="support" href="../supporters.html" style="text-decoration:none"><span class="dot"></span><span class="lbl">💛 Support</span></a>`;
+    }
+  });
+  nav.innerHTML = html;
+}
+function updateProgressUI(){
+  const total = CHAPTERS.length;
+  const done = Object.keys(State.completed).length;
+  const pct = Math.round((done/total)*100);
+  document.getElementById('sideBar').style.width = pct+'%';
+  document.getElementById('pctLabel').textContent = pct+'% • '+State.xp+' XP';
+  document.querySelectorAll('.nav-item').forEach(elx=>{
+    elx.classList.toggle('done', !!State.completed[elx.dataset.id]);
+    elx.classList.toggle('active', elx.dataset.id===State.current);
+  });
+}
+function goTo(id){
+  const chap = CHAPTERS.find(c=>c.id===id);
+  if(!chap) return;
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
+  State.current = id; saveState();
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  const section = document.createElement('div');
+  section.className='chapter active'; section.id='chap-'+id;
+  main.appendChild(section);
+  chap.render(section);
+  updateProgressUI();
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlayBg').classList.remove('show');
+  window.scrollTo(0,0); main.scrollTop = 0;
+  if(id!=='cover'){
+    clearTimeout(window._completeTimer);
+    window._completeTimer = setTimeout(()=>markComplete(id), 3000);
+  }
+}
+function updateReadbar(){
+  const main = document.getElementById('main');
+  const scrollable = main.scrollHeight - window.innerHeight;
+  const pct = scrollable>0 ? Math.min(100, Math.max(0,(window.scrollY/scrollable)*100)) : 0;
+  document.getElementById('readbarFill').style.width = pct+'%';
+}
+window.addEventListener('scroll', updateReadbar);
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', State.theme);
+  document.getElementById('themeBtn').textContent = State.theme==='dark' ? '☾ Dark' : '☀ Light';
+}
+document.getElementById('themeBtn').onclick = ()=>{ State.theme = State.theme==='dark'?'light':'dark'; saveState(); applyTheme(); };
+document.getElementById('focusBtn').onclick = ()=>{ document.body.classList.toggle('focus-mode'); document.getElementById('focusBtn').classList.toggle('active-toggle'); };
+document.getElementById('printBtn').onclick = ()=> window.print();
+document.getElementById('menuBtn').onclick = ()=>{ document.getElementById('sidebar').classList.add('open'); document.getElementById('overlayBg').classList.add('show'); };
+document.getElementById('overlayBg').onclick = ()=>{ document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlayBg').classList.remove('show'); };
+
+/* ============================================================
+   5. SHARED HELPERS
+   ============================================================ */
+function chapterHeader(container, eyebrow, title, meta){
+  const h = document.createElement('div');
+  h.innerHTML = `<div class="eyebrow">${eyebrow}</div><h1>${title}</h1>${meta?`<div class="chapter-meta">${meta}</div>`:''}`;
+  container.appendChild(h);
+}
+function noteBox(id){
+  const val = State.notes[id]||'';
+  return `<div class="card no-print"><h4>📝 My Notes</h4><textarea class="note-area" id="note-${id}" oninput="State.notes['${id}']=this.value; saveState();">${val}</textarea></div>`;
+}
+function letterTileHTML(l){
+  return `<div class="letter-tile"><div class="glyph">${l.ch}</div><div class="rom">${l.rom}</div><div class="spk">${spkBtn(l.ch)}</div></div>`;
+}
+function letterDetailHTML(l){
+  return `<div class="letter-detail">
+    <div class="big-glyph">${l.ch}</div>
+    <div class="facts">
+      <h4 style="margin-bottom:2px">${l.rom}${l.name?' <span style="color:var(--text-faint); font-weight:400; font-size:.8em">('+l.name+')</span>':''} ${spkBtn(l.ch)}</h4>
+      <dl>
+        <dt>Sound</dt><dd>${l.sound}</dd>
+        <dt>Mouth / Tongue Position</dt><dd>${l.mouth||'—'}</dd>
+        <dt>Memory Trick</dt><dd>${l.memory}</dd>
+        <dt>Practice Words</dt><dd>${l.ex.map(w=>`<span class="kr">${w[0]}</span> — ${w[1]} ${spkBtn(w[0],'🔊')}`).join('<br>')}</dd>
+      </dl>
+    </div>
+  </div>`;
+}
+function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function sample(arr,n){ return shuffle(arr).slice(0,n); }
+
+/* ============================================================
+   6. QUIZ ENGINE (records misses into the error log)
+   ============================================================ */
+function buildQuiz(id, data, chapterId, isFinal){
+  const wrap = document.createElement('div');
+  wrap.id = id;
+  let idx=0, score=0;
+  function draw(){
+    if(idx>=data.length){
+      const pct = Math.round((score/data.length)*100);
+      wrap.innerHTML = `<div class="quiz-score">Score: ${score} / ${data.length} (${pct}%)</div>
+        ${isFinal ? (pct>=70 ? `<div class="callout"><span class="callout-label">Passed!</span>You hit the 70% passing mark for Day 1. <button class="btn" style="margin-top:8px" onclick="markComplete('daily-test'); goTo('day-complete')">See Day 1 Summary →</button></div>` : `<div class="callout warn"><span class="callout-label">Almost there</span>Review the Error Log and try again — 70% is the passing mark.</div>`) : ''}
+        <div class="btn-row" style="justify-content:center"><button class="btn secondary" onclick="goTo('${chapterId}')">Retry Quiz</button></div>`;
+      addXP(score*2);
+      return;
+    }
+    const q = data[idx];
+    wrap.innerHTML = `
+      <div class="quiz-q">
+        <div class="qtext ${q.isKr?'kr':'eng'}">${q.q}</div>
+        <div class="qopts">${q.options.map(o=>`<button class="qopt" data-o="${o.replace(/"/g,'&quot;')}">${o}</button>`).join('')}</div>
+        <div class="qfeedback"></div>
+        <div style="margin-top:8px;color:var(--text-faint);font-size:.78em">${idx+1} / ${data.length}</div>
+      </div>`;
+    wrap.querySelectorAll('.qopt').forEach(btn=>{
+      btn.onclick = ()=>{
+        wrap.querySelectorAll('.qopt').forEach(b=>b.disabled=true);
+        const correct = btn.dataset.o === q.answer;
+        btn.classList.add(correct?'correct':'wrong');
+        if(!correct){
+          const correctBtn = [...wrap.querySelectorAll('.qopt')].find(b=>b.dataset.o===q.answer);
+          if(correctBtn) correctBtn.classList.add('correct');
+          logError(q.q, q.answer, chapterId);
+        }
+        wrap.querySelector('.qfeedback').textContent = correct ? '✓ Correct!' : `The correct answer is "${q.answer}".`;
+        if(correct) score++;
+        setTimeout(()=>{ idx++; draw(); }, 850);
+      };
+    });
+  }
+  draw();
+  return wrap;
+}
+
+/* ============================================================
+   7. RENDERERS
+   ============================================================ */
+function renderCover(el){
+  el.innerHTML = `
+  <div class="cover">
+    <div class="cover-block">
+      <svg viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="62" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="2 5" opacity="0.6"/>
+        <circle cx="100" cy="100" r="50" fill="url(#sealGrad)"/>
+        <circle cx="100" cy="100" r="50" fill="none" stroke="color-mix(in srgb, var(--vermilion) 60%, #fff 10%)" stroke-width="2" opacity="0.6"/>
+        <text x="100" y="122" text-anchor="middle" font-size="52" font-family="var(--kr)" font-weight="700" fill="#fff9f7">한</text>
+        <defs><radialGradient id="sealGrad" cx="35%" cy="30%" r="75%">
+          <stop offset="0%" stop-color="color-mix(in srgb, var(--vermilion) 85%, #fff 15%)"/>
+          <stop offset="100%" stop-color="var(--vermilion)"/>
+        </radialGradient></defs>
+      </svg>
+    </div>
+    <div class="presents">TOPIK I · Level 1</div>
+    <div class="eyebrow">28-Day Roadmap — Day 1 of 28</div>
+    <h1>Hangul Foundations</h1>
+    <p class="sub">Today you'll learn to read Hangul, memorize 30 core words, understand your first two grammar patterns, and take your very first TOPIK-style reading and listening exercises. This file works completely offline — your progress saves right in this browser.</p>
+    <div class="cover-stats">
+      <div><b>5</b><span>Hours</span></div>
+      <div><b>24</b><span>Letters</span></div>
+      <div><b>30</b><span>Words</span></div>
+      <div><b>2</b><span>Grammar Points</span></div>
+    </div>
+    <div class="btn-row" style="justify-content:center">
+      <button class="btn" onclick="goTo('mission')">Start Day 1 →</button>
+      <button class="btn secondary" onclick="goTo('${State.last!=='cover'?State.last:'mission'}')">Continue Where I Left Off</button>
+    </div>
+  </div>`;
+}
+
+function renderMission(el){
+  chapterHeader(el,'Orientation',"Today's Objective");
+  el.insertAdjacentHTML('beforeend', `
+  <p>By the end of Day 1, you should be able to:</p>
+  <div class="card"><ul>
+    <li>Recognize the 10 basic Korean vowels and 14 basic consonants</li>
+    <li>Understand Korean syllable blocks and read simple syllables</li>
+    <li>Understand the concept of 받침 (final consonants)</li>
+    <li>Read 30–50 beginner Korean words slowly, and memorize 30 high-frequency words</li>
+    <li>Understand 은/는 and 이에요/예요</li>
+    <li>Understand basic Korean word order and build 9 basic sentences</li>
+    <li>Recognize basic TOPIK question words</li>
+    <li>Complete your first TOPIK-style reading and listening exercises</li>
+    <li>Start an error log and vocabulary system</li>
+  </ul></div>
+  <h3>Your 5-Hour Schedule</h3>
+  <table class="sched-table">
+    <tr><th>Session</th><th>Time</th><th>Focus</th></tr>
+    <tr><td>1</td><td>60 min</td><td>Hangul: vowels + consonants</td></tr>
+    <tr><td>2</td><td>60 min</td><td>Syllable blocks + reading</td></tr>
+    <tr><td>3</td><td>60 min</td><td>Vocabulary: 30 core words</td></tr>
+    <tr><td>4</td><td>60 min</td><td>Grammar + sentence building</td></tr>
+    <tr><td>5</td><td>60 min</td><td>TOPIK listening + reading + review</td></tr>
+  </table>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Study 50 minutes, then take a 10-minute break — after every hour. The breaks are part of the plan. Don't sit for five hours continuously.</div>
+  <div class="callout fact"><span class="callout-label">Fun Fact</span>Hangul was designed in 1443 under King Sejong specifically so ordinary people could learn to read in about a morning — you're about to test that 500-year-old promise for yourself.</div>
+  <div class="btn-row"><button class="btn" onclick="goTo('vowels')">Begin Hour 1 →</button></div>
+  `);
+}
+
+function renderVowels(el){
+  chapterHeader(el,'Hour 1 · 00:00–00:30','Hangul Foundation: 10 Basic Vowels');
+  el.insertAdjacentHTML('beforeend', `
+  <p>Korean letters are grouped into syllable blocks, not written in a straight line like English. For example, <span class="kr" style="font-size:1.3em">한국</span> is really <span class="kr">한</span> + <span class="kr">국</span> — and <span class="kr">한</span> itself is built from <span class="kr">ㅎ + ㅏ + ㄴ</span>. Your brain needs to learn to see syllable blocks, not individual letters — that is the single most important mindset for Day 1.</p>
+  <p>Memorize these 10 vowels first. Tap 🔊 to hear each one, then try covering the romanization and saying the sound before you check.</p>
+  <div class="tile-grid">${VOWELS.map(letterTileHTML).join('')}</div>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Say every sound out loud. Reading silently is not enough for Day 1 — your mouth needs to learn these shapes too.</div>
+  <h3>Every Vowel, Broken Down</h3>
+  <p>Tap through each one below — sound, mouth position, a memory trick, and a practice word.</p>
+  `);
+  VOWELS.forEach(v=> el.insertAdjacentHTML('beforeend', letterDetailHTML(v)));
+  el.insertAdjacentHTML('beforeend', `<h3>Quick Check</h3>`);
+  const quiz = [...VOWELS].map(v=>{
+    const wrongs = sample(VOWELS.filter(x=>x.ch!==v.ch),3).map(x=>x.rom);
+    return {q:v.ch, isKr:true, options:shuffle([v.rom,...wrongs]), answer:v.rom};
+  });
+  el.appendChild(buildQuiz('vowels-quiz', sample(quiz,6), 'vowels'));
+  el.insertAdjacentHTML('beforeend', noteBox('vowels'));
+}
+
+function renderConsonants(el){
+  chapterHeader(el,'Hour 1 · 00:30–00:50','14 Basic Consonants');
+  el.insertAdjacentHTML('beforeend', `
+  <p>Don't worry about mastering pronunciation differences today — your priority is visual recognition plus a rough sound.</p>
+  <div class="tile-grid">${CONSONANTS.map(letterTileHTML).join('')}</div>
+  <div class="callout fact"><span class="callout-label">Fun Fact</span>Korean consonant shapes are not random — many were originally simplified diagrams of the mouth or tongue making that sound. ㄱ traces the back of the tongue blocking the throat; ㅁ traces the shape of closed lips.</div>
+  <h3>Every Consonant, Broken Down</h3>
+  <p>Tap through each one below — sound, mouth position, a memory trick, and a practice word.</p>
+  `);
+  CONSONANTS.forEach(c=> el.insertAdjacentHTML('beforeend', letterDetailHTML(c)));
+  el.insertAdjacentHTML('beforeend', `<h3>Quick Check</h3>`);
+  const quiz = CONSONANTS.map(c=>{
+    const wrongs = sample(CONSONANTS.filter(x=>x.ch!==c.ch),3).map(x=>x.rom);
+    return {q:c.ch, isKr:true, options:shuffle([c.rom,...wrongs]), answer:c.rom};
+  });
+  el.appendChild(buildQuiz('cons-quiz', sample(quiz,7), 'consonants'));
+  el.insertAdjacentHTML('beforeend', noteBox('consonants'));
+}
+
+function renderFirstReading(el){
+  chapterHeader(el,'Hour 1 · 00:50–01:00','First Reading Drill');
+  el.insertAdjacentHTML('beforeend', `<p>Read each row aloud, left to right. Your goal: begin recognizing <span class="kr">ㄱ+ㅏ=가</span> as one shape, rather than mentally spelling it out every time.</p>`);
+  READING_ROWS.forEach(row=>{
+    el.insertAdjacentHTML('beforeend', `<div class="tile-grid" style="grid-template-columns:repeat(10,1fr)">${row.map(ch=>`<div class="letter-tile" style="padding:10px"><div class="glyph" style="font-size:1.8em">${ch}</div>${spkBtn(ch,'🔊')}</div>`).join('')}</div>`);
+  });
+  el.insertAdjacentHTML('beforeend', `
+  <div class="callout tip"><span class="callout-label">Speed Drill</span>Set a 60-second timer and read as many syllables above as you can, twice through. Your goal is not perfect speed — it's reducing hesitation.</div>
+  `);
+  el.insertAdjacentHTML('beforeend', noteBox('first-reading'));
+}
+
+function renderSyllableBlocks(el){
+  chapterHeader(el,'Hour 2 · 01:00–01:30','How Syllable Blocks Work');
+  el.insertAdjacentHTML('beforeend', `
+  <p>This is the single most important idea in reading Hangul, so take your time here. Korean letters are not written in a straight line like English. Instead, letters are grouped into <strong>square syllable blocks</strong>, with each block representing one spoken syllable.</p>
+  <p>Every block contains, at minimum: one <strong>initial consonant</strong> and one <strong>vowel</strong>. Many blocks also contain a <strong>final consonant</strong> (called <em class="kr">받침</em> / batchim).</p>
+  <div class="builder-wrap">
+    <div class="block-box"><div class="block-slot" style="left:14px; top:20px;">ㄱ</div><div class="block-slot" style="right:16px; top:20px;">ㅏ</div></div>
+    <div>
+      <h4>Case 1 — tall vowel, side by side</h4>
+      <p>If the vowel has a tall, vertical shape (like ㅏ, ㅓ, ㅣ), the consonant sits to its <strong>left</strong>, and together they form <strong class="kr">가</strong> (<em>ga</em>). ${spkBtn('가')}</p>
+    </div>
+  </div>
+  <div class="builder-wrap">
+    <div class="block-box"><div class="block-slot" style="left:38px; top:10px;">ㄱ</div><div class="block-slot" style="left:38px; bottom:16px;">ㅗ</div></div>
+    <div>
+      <h4>Case 2 — wide vowel, stacked</h4>
+      <p>If the vowel is wide and horizontal (like ㅗ, ㅜ, ㅡ), the consonant sits <strong>on top</strong>, forming <strong class="kr">고</strong> (<em>go</em>). ${spkBtn('고')}</p>
+    </div>
+  </div>
+  <div class="builder-wrap">
+    <div class="block-box"><div class="block-slot" style="left:16px; top:8px; font-size:1.6em">ㅎ</div><div class="block-slot" style="right:18px; top:8px; font-size:1.6em">ㅏ</div><div class="block-slot" style="left:16px; bottom:10px; font-size:1.6em">ㄴ</div></div>
+    <div>
+      <h4>Case 3 — adding a final consonant (받침)</h4>
+      <p>If there is a final sound closing the syllable, it drops to the <strong>bottom</strong> of the block, shrinking the other letters slightly to fit. Here: <strong class="kr">한</strong> (<em>han</em>) — the first syllable of <em>Hanguk</em>, "Korea." ${spkBtn('한')}</p>
+    </div>
+  </div>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Read every block in this fixed order: top-left → top-right (or straight down, for stacked vowels) → bottom. Left-to-right, top-to-bottom, exactly like English reading order — just compressed into a square.</div>
+  <h3>Understanding ㅇ</h3>
+  <p>At the <b>start</b> of a syllable, <span class="kr">ㅇ</span> is silent — <span class="kr">아</span> is simply "a". At the <b>end</b> of a syllable, <span class="kr">ㅇ</span> sounds like "ng" — <span class="kr">방</span> is roughly "bang". ${spkBtn('아 방')}</p>
+  <div class="callout warn"><span class="callout-label">Don't Panic</span>You do not need to memorize every batchim rule today. Just recognize that when spoken Korean doesn't match a word's spelling exactly, it's usually one of these regular patterns — not a random exception.</div>
+  <h3>Quick Check</h3>
+  `);
+  const quiz = [
+    {q:'What is the term for a final consonant at the bottom of a syllable block?', options:shuffle(['받침 (batchim)','이에요','은/는','TOPIK']), answer:'받침 (batchim)'},
+    {q:'At the START of a syllable, ㅇ is:', options:shuffle(['Silent','Pronounced "ng"','Pronounced "k"','Never used']), answer:'Silent'},
+    {q:'At the END of a syllable, ㅇ sounds like:', options:shuffle(['"ng"','"k"','Silent','"s"']), answer:'"ng"'},
+  ];
+  el.appendChild(buildQuiz('syl-quiz', quiz, 'syllable-blocks'));
+  el.insertAdjacentHTML('beforeend', noteBox('syllable-blocks'));
+}
+
+function wordCardsHTML(words){
+  return words.map(w=>`<div class="word-card">
+    <div class="wc-top">
+      <div><div class="wc-kr">${w.kr}</div><div class="wc-rom">${w.rom}</div></div>
+      ${spkBtn(w.kr)}
+    </div>
+    <div class="wc-meaning">${w.en}</div>
+  </div>`).join('');
+}
+function renderVocabChapter(el, id, title, words){
+  chapterHeader(el,'Hour 3 · Vocabulary', title);
+  el.insertAdjacentHTML('beforeend', `<p>Learn these deeply — both directions. Don't worry about grammar yet; today you're training visual recognition and recall.</p>`);
+  el.insertAdjacentHTML('beforeend', wordCardsHTML(words));
+  const quiz = words.map(w=>{
+    const wrongs = sample(VOCAB_ALL.filter(x=>x.kr!==w.kr),3).map(x=>x.en);
+    return {q:w.kr, isKr:true, options:shuffle([w.en,...wrongs]), answer:w.en};
+  });
+  el.insertAdjacentHTML('beforeend', '<h3>Quick Check</h3>');
+  el.appendChild(buildQuiz(id+'-quiz', sample(quiz,6), id));
+  el.insertAdjacentHTML('beforeend', noteBox(id));
+}
+
+function renderFlashcards(el){
+  chapterHeader(el,'Hour 3 · Active Recall','Flashcard Deck — All 30 Words');
+  const deck = shuffle(VOCAB_ALL);
+  let idx = 0;
+  const wrap = document.createElement('div');
+  el.appendChild(wrap);
+  function draw(){
+    const w = deck[idx];
+    wrap.innerHTML = `
+    <div class="flash-wrap">
+      <div class="flashcard" id="fcEl" onclick="this.classList.toggle('flipped')">
+        <div class="fc-front"><div class="fc-face kr">${w.kr}</div><div class="fc-sub">${w.rom} · tap to flip</div></div>
+        <div class="fc-back"><div class="fc-face">${w.en}</div><div class="fc-sub kr">${w.kr} · ${w.rom}</div></div>
+      </div>
+      <div class="flash-controls">
+        <span class="flash-counter">${idx+1} / ${deck.length}</span>
+        <div class="btn-row" style="margin:0">
+          ${spkBtn(w.kr)}
+          <button class="btn secondary" onclick="event.stopPropagation();window._fcNext()">Next →</button>
+        </div>
+      </div>
+    </div>`;
+  }
+  window._fcNext = ()=>{ idx = (idx+1)%deck.length; draw(); };
+  draw();
+  el.insertAdjacentHTML('beforeend', noteBox('flashcards'));
+}
+
+function renderVocabTest(el){
+  chapterHeader(el,'Hour 3 · Active Recall','Vocabulary Test — 15 Words');
+  el.insertAdjacentHTML('beforeend', `<p>Close your notes mentally and answer. Target: 12/15 or higher.</p>`);
+  const words = sample(VOCAB_ALL,15);
+  const quiz = words.map(w=>{
+    if(Math.random()<0.5){
+      const wrongs = sample(VOCAB_ALL.filter(x=>x.kr!==w.kr),3).map(x=>x.en);
+      return {q:w.kr, isKr:true, options:shuffle([w.en,...wrongs]), answer:w.en};
+    } else {
+      const wrongs = sample(VOCAB_ALL.filter(x=>x.kr!==w.kr),3).map(x=>x.kr);
+      return {q:w.en, options:shuffle([w.kr,...wrongs]), answer:w.kr};
+    }
+  });
+  el.appendChild(buildQuiz('vocab-test-quiz', quiz, 'vocab-test'));
+  el.insertAdjacentHTML('beforeend', noteBox('vocab-test'));
+}
+
+function renderWordOrder(el){
+  chapterHeader(el,'Hour 4 · 03:00–03:15','Korean Word Order');
+  el.insertAdjacentHTML('beforeend', `
+  <p>English: <b>I + study + Korean.</b> (Subject + Verb + Object)</p>
+  <p>Korean: <b class="kr">저는 한국어를 공부해요.</b> — literally "I + Korean + study." (Subject + Object + Verb) ${spkBtn('저는 한국어를 공부해요')}</p>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>The verb always comes last in a Korean sentence. Get used to listening — and reading — all the way to the end before you know what's happening.</div>
+  <h3>Quick Check</h3>
+  `);
+  const quiz = [{q:'What is the basic Korean sentence order?', options:shuffle(['Subject + Object + Verb','Subject + Verb + Object','Verb + Subject + Object','Object + Verb + Subject']), answer:'Subject + Object + Verb'}];
+  el.appendChild(buildQuiz('wo-quiz', quiz, 'word-order'));
+  el.insertAdjacentHTML('beforeend', noteBox('word-order'));
+}
+
+function renderTopicMarker(el){
+  chapterHeader(el,'Hour 4 · 03:15–03:30','은 / 는 — The Topic Marker');
+  el.insertAdjacentHTML('beforeend', `
+  <p><span class="kr" style="font-size:1.2em">은 / 는</span> attaches to a noun to mean roughly "as for...". For now, just recognize <span class="kr">저는</span> as "as for me / I".</p>
+  <div class="card">
+    <p><span class="kr">저는</span> — as for me ${spkBtn('저는')}</p>
+    <p><span class="kr">나는</span> — as for me (casual) ${spkBtn('나는')}</p>
+    <p><span class="kr">한국은</span> — as for Korea ${spkBtn('한국은')}</p>
+  </div>
+  <div class="callout fact"><span class="callout-label">Bonus — Optional</span>You don't need this yet, but if you're curious: 는 follows a word ending in a vowel (저 → 저는), and 은 follows a word ending in a consonant/받침 (한국 → 한국은, since 국 ends in ㄱ).</div>
+  <h3>Quick Check</h3>
+  `);
+  const quiz = [
+    {q:'저는', isKr:true, options:shuffle(['As for me / I','A question word','A place name','A verb']), answer:'As for me / I'},
+    {q:'What does 은/는 roughly mean?', options:shuffle(['"As for..."','"I am..."','"Where is..."','"Please..."']), answer:'"As for..."'},
+  ];
+  el.appendChild(buildQuiz('tm-quiz', quiz, 'topic-marker'));
+  el.insertAdjacentHTML('beforeend', noteBox('topic-marker'));
+}
+
+function renderCopula(el){
+  chapterHeader(el,'Hour 4 · 03:30–03:45','이에요 / 예요 — "am / is / are"');
+  el.insertAdjacentHTML('beforeend', `
+  <p>After a consonant-ending word, use <span class="kr">이에요</span>. After a vowel-ending word, use <span class="kr">예요</span>.</p>
+  <div class="card">
+    <p><span class="kr">학생이에요.</span> — I am a student. ${spkBtn('학생이에요')}</p>
+    <p><span class="kr">친구예요.</span> — I am a friend. ${spkBtn('친구예요')}</p>
+  </div>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>There's also a more formal "am/is" — 입니다 — but you can leave that for later. Just recognize it if you see it.</div>
+  <h3>Quick Check</h3>
+  `);
+  const quiz = [
+    {q:'학생 ends in a consonant (ㅇ batchim). Which form is correct?', isKr:false, options:shuffle(['학생이에요','학생예요','학생은','학생를']), answer:'학생이에요'},
+    {q:'친구 ends in a vowel. Which form is correct?', options:shuffle(['친구예요','친구이에요','친구는가','친구하다']), answer:'친구예요'},
+  ];
+  el.appendChild(buildQuiz('cp-quiz', quiz, 'copula'));
+  el.insertAdjacentHTML('beforeend', noteBox('copula'));
+}
+
+function renderSentenceBuilder(el){
+  chapterHeader(el,'Hour 4 · 03:45–04:00','Build 9 Sentences');
+  el.insertAdjacentHTML('beforeend', `<p>Tap the word chunks below in the correct order to build each sentence. Korean order is Subject → Object → Verb.</p>`);
+  SENTENCES.forEach((s,i)=>{
+    const box = document.createElement('div');
+    box.className = 'sb-box';
+    const chunks = shuffle(s.chunks);
+    let answer = [];
+    box.innerHTML = `<div style="font-weight:600;margin-bottom:4px">Sentence ${i+1}</div>
+      <div class="sb-answer" id="sb-ans-${i}"></div>
+      <div class="chip-row" id="sb-chips-${i}">${chunks.map((c,ci)=>`<button class="sb-chip" data-c="${c}" id="sb-chip-${i}-${ci}">${c}</button>`).join('')}</div>
+      <div class="sb-result" id="sb-res-${i}"></div>
+      <div class="btn-row" style="margin-top:6px">
+        <button class="btn secondary" onclick="window._sbReset(${i})">Reset</button>
+        <button class="btn secondary" onclick="document.getElementById('sb-eng-${i}').classList.toggle('hidden')">Show / Hide Translation</button>
+      </div>
+      <div class="sb-eng hidden" id="sb-eng-${i}">${s.en}</div>`;
+    el.appendChild(box);
+    function chipClick(ci){
+      const chipEl = document.getElementById(`sb-chip-${i}-${ci}`);
+      if(chipEl.classList.contains('used')) return;
+      chipEl.classList.add('used');
+      answer.push(chunks[ci]);
+      document.getElementById(`sb-ans-${i}`).innerHTML = answer.map(w=>`<span class="sb-chip">${w}</span>`).join('');
+      if(answer.length===s.chunks.length){
+        const correct = answer.join(' ')===s.chunks.join(' ');
+        const res = document.getElementById(`sb-res-${i}`);
+        if(correct){ res.style.color='var(--celadon)'; res.textContent='✓ Correct order!'; markComplete('sentence-builder-'+i); }
+        else{ res.style.color='var(--vermilion)'; res.textContent='Not quite — the correct order is: '+s.chunks.join(' '); logError(s.chunks.join(' '), s.chunks.join(' '), 'sentence-builder'); }
+      }
+    }
+    chunks.forEach((c,ci)=>{ document.getElementById(`sb-chip-${i}-${ci}`).onclick = ()=>chipClick(ci); });
+  });
+  window._sbReset = function(i){ goTo('sentence-builder'); };
+  el.insertAdjacentHTML('beforeend', noteBox('sentence-builder'));
+}
+
+function renderQuestionWords(el){
+  chapterHeader(el,'Hour 5 · 04:20–04:35','TOPIK Question Words');
+  el.insertAdjacentHTML('beforeend', `<p>These eight words are high priority for every TOPIK reading and listening question from here on.</p>
+  <div class="tile-grid">${QUESTION_WORDS.map(q=>`<div class="letter-tile"><div class="glyph">${q.kr}</div><div class="rom">${q.rom}</div><div style="color:var(--text-faint);font-size:.8em;margin-top:2px">${q.en}</div><div class="spk">${spkBtn(q.kr)}</div></div>`).join('')}</div>`);
+  const quiz = QUESTION_WORDS.map(q=>{
+    const wrongs = sample(QUESTION_WORDS.filter(x=>x.kr!==q.kr),3).map(x=>x.en);
+    return {q:q.kr, isKr:true, options:shuffle([q.en,...wrongs]), answer:q.en};
+  });
+  el.insertAdjacentHTML('beforeend', '<h3>Quick Check</h3>');
+  el.appendChild(buildQuiz('qw-quiz', quiz, 'question-words'));
+  el.insertAdjacentHTML('beforeend', noteBox('question-words'));
+}
+
+function renderReadingStrategy(el){
+  chapterHeader(el,'Hour 5 · 04:35–05:20','TOPIK Reading Strategy');
+  el.insertAdjacentHTML('beforeend', `
+  <p>Look at: <span class="kr" style="font-size:1.2em">저는 학교에 가요.</span> Question: <span class="kr">어디에 가요?</span></p>
+  <p>You don't need to translate the whole sentence. Recognize <span class="kr">어디</span> = where, then scan for the location word: <span class="kr">학교</span>. Answer: <b>학교</b>.</p>
+  <div class="callout tip"><span class="callout-label">TOPIK Strategy</span>Question word → Find the required information → Answer. Don't translate everything automatically — this becomes essential once questions get longer.</div>
+  <h3>Reading Mini-Test</h3>
+  `);
+  const rc = [
+    {passage:'저는 학생이에요.', question:'Who is the speaker?', options:['Student','Teacher','Friend','Company employee'], answer:'Student'},
+    {passage:'저는 학교에 가요.', question:'Where does the person go?', options:['School','Home','Company','Korea'], answer:'School'},
+    {passage:'저는 물을 마셔요.', question:'What does the person drink?', options:['Water','Rice','Food','Tea'], answer:'Water'},
+    {passage:'저는 한국어를 공부해요.', question:'What does the person study?', options:['Korean','English','Math','History'], answer:'Korean'},
+  ];
+  const quiz = rc.map(r=>({q:`${r.passage}\n\n${r.question}`, options:shuffle(r.options), answer:r.answer}));
+  el.appendChild(buildQuiz('rs-quiz', quiz, 'reading-strategy'));
+  el.insertAdjacentHTML('beforeend', noteBox('reading-strategy'));
+}
+
+function renderListening(el){
+  chapterHeader(el,'Hour 5 · 04:50–05:05','Listening & Shadowing');
+  el.insertAdjacentHTML('beforeend', `<p>For each sentence: (1) Listen without looking. (2) Look at the text. (3) Listen again without looking. (4) Repeat it aloud yourself — this is called Listen → Check → Listen → Shadow.</p>`);
+  LISTEN_SENTENCES.forEach(s=>{
+    el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${s}</div>${spkBtn(s,'🔊 Play')}</div></div>`);
+  });
+  if(!Audio_.supported){
+    el.insertAdjacentHTML('beforeend', `<div class="callout warn"><span class="callout-label">Heads up</span>Your browser doesn't support built-in text-to-speech. Read each sentence aloud yourself using the pronunciation you've learned so far.</div>`);
+  }
+  el.insertAdjacentHTML('beforeend', noteBox('listening'));
+}
+
+function renderDailyTest(el){
+  chapterHeader(el,'Finish','Day 1 Final Test', 'Passing mark: 70%');
+  el.insertAdjacentHTML('beforeend', `<p>This combines vowels, consonants, vocabulary, grammar, and TOPIK reading strategy from today. Take your time.</p>`);
+  const data = [];
+  sample(VOWELS,3).forEach(v=>{ const wrongs=sample(VOWELS.filter(x=>x.ch!==v.ch),3).map(x=>x.rom); data.push({q:v.ch, isKr:true, options:shuffle([v.rom,...wrongs]), answer:v.rom}); });
+  sample(CONSONANTS,3).forEach(c=>{ const wrongs=sample(CONSONANTS.filter(x=>x.ch!==c.ch),3).map(x=>x.rom); data.push({q:c.ch, isKr:true, options:shuffle([c.rom,...wrongs]), answer:c.rom}); });
+  sample(VOCAB_ALL,6).forEach(w=>{ const wrongs=sample(VOCAB_ALL.filter(x=>x.kr!==w.kr),3).map(x=>x.en); data.push({q:w.kr, isKr:true, options:shuffle([w.en,...wrongs]), answer:w.en}); });
+  data.push({q:'학생 (ends in a consonant) + "am" =', options:shuffle(['학생이에요','학생예요','학생는','학생가']), answer:'학생이에요'});
+  data.push({q:'What is the basic Korean sentence order?', options:shuffle(['Subject + Object + Verb','Subject + Verb + Object','Verb + Object + Subject']), answer:'Subject + Object + Verb'});
+  data.push({q:'저는 학교에 가요. — Where does the person go?', options:shuffle(['School','Home','Company','Restaurant']), answer:'School'});
+  data.push({q:'어디 means:', options:shuffle(['Where','Who','What','When']), answer:'Where'});
+  el.appendChild(buildQuiz('daily-test-quiz', shuffle(data), 'daily-test', true));
+}
+
+function renderErrorLog(el){
+  chapterHeader(el,'Finish','Your Error Log');
+  if(!State.errorLog.length){
+    el.insertAdjacentHTML('beforeend', `<div class="callout"><span class="callout-label">Nothing here yet</span>Every question you miss in a quiz today gets logged here automatically, so you know exactly what to review tomorrow.</div>`);
+  } else {
+    el.insertAdjacentHTML('beforeend', `<p>These are auto-collected from quiz misses today. Review these first tomorrow.</p>`);
+    State.errorLog.forEach(e=>{
+      el.insertAdjacentHTML('beforeend', `<div class="err-item"><b>${e.q.split('\n')[0]}</b><br>Correct answer: ${e.correct} <span style="color:var(--text-faint)">· missed ${e.count||1}x · ${e.chapter}</span></div>`);
+    });
+  }
+  el.insertAdjacentHTML('beforeend', `<h3>Additional Notes</h3>` + noteBox('error-log'));
+}
+
+function renderDayComplete(el){
+  chapterHeader(el,'Finish','Day 1 Complete 🎉');
+  el.insertAdjacentHTML('beforeend', `<p>Great work. Here's your badge progress for Day 1:</p>
+  <div class="badge-grid">${BADGE_DEFS.map(b=>`<div class="badge ${State.badges[b.id]?'earned':''}"><div class="bicon">${b.icon}</div><div class="bname">${b.name}</div></div>`).join('')}</div>
+  <div class="callout"><span class="callout-label">Say This Aloud — Day 1 Ending Ritual</span>
+  <p class="kr" style="margin:6px 0">안녕하세요. 저는 [your name]이에요. 저는 학생이에요. 저는 한국어를 공부해요. 감사합니다.</p>
+  ${spkBtn('안녕하세요. 저는 학생이에요. 저는 한국어를 공부해요. 감사합니다.','🔊 Play greeting')}
+  </div>
+  <h3>Tomorrow — Day 2 Preview</h3>
+  <div class="callout tip"><span class="callout-label">Coming Up</span>Day 2 builds directly on today: more batchim patterns, 20 new vocabulary words, the particles 이/가 and 을/를, and your second TOPIK reading passage.</div>
+  <div class="btn-row"><button class="btn secondary" onclick="goTo('error-log')">Review Error Log</button> <button class="btn secondary" onclick="goTo('cover')">Back to Cover</button></div>
+  `);
+}
+
+/* ============================================================
+   8. INIT
+   ============================================================ */
+applyTheme();
+document.documentElement.style.setProperty('--fs-scale', State.fontScale);
+buildSidebar();
+goTo(State.last && CHAPTERS.find(c=>c.id===State.last) ? State.last : 'cover');
+window.addEventListener('keydown', e=>{
+  const idx = CHAPTERS.findIndex(c=>c.id===State.current);
+  if(e.key==='ArrowRight' && idx<CHAPTERS.length-1) goTo(CHAPTERS[idx+1].id);
+  if(e.key==='ArrowLeft' && idx>0) goTo(CHAPTERS[idx-1].id);
+});
+
+/* Drifting cherry blossom petals — purely decorative, respects prefers-reduced-motion via CSS */
+(function spawnPetals(){
+  const host = document.getElementById('petals');
+  if(!host) return;
+  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
+  const count = window.innerWidth < 700 ? 10 : 18;
+  for(let i=0;i<count;i++){
+    const size = 10 + Math.random()*12;
+    const left = Math.random()*100;
+    const dur = 10 + Math.random()*12;
+    const delay = -(Math.random()*dur);
+    const drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)];
+    const rotStart = Math.round(Math.random()*360);
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
+    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
+    host.appendChild(p);
+  }
+})();
+</script>
+</body>
+</html>
