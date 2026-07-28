@@ -162,6 +162,9 @@ button{font-family:var(--sans); cursor:pointer;}
   background:var(--surface); border:3px solid var(--border); z-index:2;
 }
 @media(max-width:820px){.rcard::before{left:-50px; width:12px; height:12px; border-width:2px;}}
+.rcard.done{border-color:color-mix(in srgb, var(--celadon) 50%, var(--border));}
+.rcard.done::before{border-color:var(--celadon); background:var(--celadon);}
+.rcard.done:hover{transform:translateX(4px); border-color:var(--celadon);}
 .rcard.next{border-color:color-mix(in srgb, var(--gold) 50%, var(--border));}
 .rcard.next::before{border-color:var(--gold); background:var(--gold);}
 .rcard.next:hover{transform:translateX(4px); border-color:var(--gold);}
@@ -175,6 +178,7 @@ button{font-family:var(--sans); cursor:pointer;}
   width:42px;height:42px;border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
   font-family:var(--serif); font-weight:700; font-size:15px; color:#fff; text-align:center; line-height:1.1;
 }
+.rcard.done .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--celadon) 88%, #fff 12%), var(--celadon) 72%);}
 .rcard.next .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--gold) 88%, #fff 12%), var(--gold) 72%);}
 .rcard.milestone .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--vermilion) 88%, #fff 12%), var(--vermilion) 72%);}
 .rcard.soon .rcard-badge{background:var(--surface3); color:var(--text-faint);}
@@ -182,6 +186,7 @@ button{font-family:var(--sans); cursor:pointer;}
 .rcard-body{flex:1; min-width:0;}
 .rcard-body .rc-title{font-size:1.02em; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
 .rcard-body .rc-en{color:var(--text-dim); font-size:.85em; margin-top:3px;}
+.rc-done-tag{font-size:.6em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--celadon-dim); color:var(--celadon);}
 .rc-next-tag{font-size:.6em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--gold-dim); color:var(--gold);}
 .rc-milestone-tag{font-size:.6em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--vermilion-dim); color:var(--vermilion);}
 .rc-soon-tag{font-size:.6em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--surface2); color:var(--text-faint); border:1px solid var(--border); display:inline-flex; align-items:center; gap:4px;}
@@ -190,6 +195,8 @@ button{font-family:var(--sans); cursor:pointer;}
 .rc-btn{
   font-size:.8em; font-weight:600; padding:7px 13px; border-radius:999px; white-space:nowrap;
 }
+.rc-btn.done{background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--inkblue) 45%)); color:#fff;}
+.rc-btn.done:hover{filter:brightness(1.06);}
 .rc-btn.primary{background:linear-gradient(135deg,var(--gold), color-mix(in srgb, var(--gold) 55%, var(--ember) 45%)); color:#fff;}
 .rc-btn.primary:hover{filter:brightness(1.06);}
 .rc-btn.milestone{background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%)); color:#fff;}
@@ -278,9 +285,9 @@ const WEEKS = [
   {
     num: 1, status: 'w1', title: 'Week 1 — Hangeul & The Basics', sub: 'Read Korean, count in it, and build your first real sentences',
     days: [
-      {d:1, en:'Hangul Foundations &amp; First Korean Sentences', desc:'Vowels, first consonants, and your very first complete sentences.', kind:'soon', file:'courses/day-01.html'},
-      {d:2, en:'Hangul Mastery, Pronunciation &amp; 받침', desc:'Remaining consonants, batchim (final consonants), and reading speed.', kind:'soon', file:'day-02.html'},
-      {d:3, en:'Korean Numbers, Counters &amp; Basic Counting', desc:'Sino-Korean vs. native numbers, and your first counters.', kind:'soon', file:'day-03.html'},
+      {d:1, en:'Hangul Foundations &amp; First Korean Sentences', desc:'Vowels, first consonants, and your very first complete sentences.', kind:'done', file:'courses/day-01.html'},
+      {d:2, en:'Hangul Mastery, Pronunciation &amp; 받침', desc:'Remaining consonants, batchim (final consonants), and reading speed.', kind:'done', file:'courses/day-02.html'},
+      {d:3, en:'Korean Numbers, Counters &amp; Basic Counting', desc:'Sino-Korean vs. native numbers, and your first counters.', kind:'next', file:'day-03.html'},
       {d:4, en:'Dates, Days, Months, Time &amp; Age', desc:'Telling time, calendar dates, and asking/giving age.', kind:'soon', file:'day-04.html'},
       {d:5, en:'Essential Particles: 은/는, 이/가, 을/를', desc:'The three particles that hold every Korean sentence together.', kind:'soon', file:'day-05.html'},
       {d:6, en:'Present Tense &amp; Daily Activities', desc:'해요체 present tense — talk about what you do every day.', kind:'soon', file:'day-06.html'},
@@ -335,6 +342,7 @@ function renderOverall(){
     <div class="op-row"><span>Days mapped</span><b>${total} / ${total}</b></div>
     <div class="op-track"><div class="op-fill" style="width:100%"></div></div>
     <div class="op-legend">
+      <span><span class="op-dot" style="background:var(--celadon)"></span> Ready to start</span>
       <span><span class="op-dot" style="background:var(--gold)"></span> Up next to build</span>
       <span><span class="op-dot" style="background:var(--vermilion)"></span> Weekly milestone / test</span>
       <span><span class="op-dot" style="background:var(--border)"></span> Coming soon</span>
@@ -343,6 +351,19 @@ function renderOverall(){
 }
 
 function dayCard(c){
+  if(c.kind==='done'){
+    return `
+    <div class="rcard done">
+      <div class="rcard-badge">D${c.d}</div>
+      <div class="rcard-body">
+        <div class="rc-title">Day ${c.d} — ${c.en} <span class="rc-done-tag">✅ Ready</span></div>
+        <div class="rc-en">${c.desc}</div>
+      </div>
+      <div class="rcard-actions">
+        <a class="rc-btn done" href="${c.file}">Start →</a>
+      </div>
+    </div>`;
+  }
   if(c.kind==='next'){
     return `
     <div class="rcard next">
