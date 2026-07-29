@@ -3,7 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>한글 — Learn to Read Korean in One Hour</title>
+<title>Learn to Read Korean in One Hour — Hangeul Course | Hookitlingo</title>
+<meta name="description" content="Learn Hangeul, the Korean alphabet, in one hour with this free interactive course. Read, pronounce, and write Korean — no subscription, fully offline.">
+<link rel="canonical" href="https://hookit.online/courses/hanlingo.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Learn to Read Korean in One Hour — Hangeul Course | Hookitlingo">
+<meta property="og:description" content="Learn Hangeul, the Korean alphabet, in one hour with this free interactive course. Read, pronounce, and write Korean — no subscription, fully offline.">
+<meta property="og:url" content="https://hookit.online/courses/hanlingo.html">
+<meta property="og:site_name" content="Hookitlingo">
+<meta property="og:image" content="https://hookit.online/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Learn to Read Korean in One Hour — Hangeul Course | Hookitlingo">
+<meta name="twitter:description" content="Learn Hangeul, the Korean alphabet, in one hour with this free interactive course. Read, pronounce, and write Korean — no subscription, fully offline.">
+<meta name="twitter:image" content="https://hookit.online/og-image.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Learn to Read Korean in One Hour",
+  "description": "An interactive beginner course teaching the Hangeul Korean alphabet: reading, pronunciation, and writing.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Hookitlingo",
+    "url": "https://hookit.online",
+    "logo": "https://hookit.online/og-image.png"
+  },
+  "url": "https://hookit.online/courses/hanlingo.html",
+  "inLanguage": "ko",
+  "isAccessibleForFree": true,
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "online",
+    "courseWorkload": "PT1H"
+  },
+  "teaches": "Hangeul (Korean alphabet)"
+}
+</script>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WLEMFRK6XH"></script>
@@ -805,6 +847,7 @@ function buildSidebar(){
     html+=`<button class="nav-item" data-id="${c.id}" onclick="goTo('${c.id}')"><span class="dot"></span><span class="lbl">${c.title}</span></button>`;
     if(c.id==='final-exam'){
       html+=`<a class="nav-item nav-item-support" data-id="support" href="../supporters.html" style="text-decoration:none"><span class="dot"></span><span class="lbl">💛 Support</span></a>`;
+      html+=`<a class="nav-item" data-id="roadmap" href="../roadmap.html" style="text-decoration:none"><span class="dot"></span><span class="lbl">🗺️ Roadmap</span></a>`;
     }
   });
   nav.innerHTML = html;
