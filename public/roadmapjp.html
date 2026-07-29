@@ -181,7 +181,7 @@ button{font-family:var(--sans); cursor:pointer;}
 
 .rcard{
   position:relative; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  padding:18px 20px; display:flex; align-items:center; gap:16px; opacity:.72; transition:border-color .2s, opacity .2s;
+  padding:18px 20px; display:flex; align-items:center; gap:16px; opacity:.72; transition:border-color .2s, opacity .2s, transform .2s;
 }
 .rcard::before{
   content:''; position:absolute; left:-76px; top:50%; transform:translateY(-50%); width:14px; height:14px; border-radius:50%;
@@ -189,6 +189,14 @@ button{font-family:var(--sans); cursor:pointer;}
 }
 @media(max-width:820px){.rcard::before{left:-50px; width:12px; height:12px; border-width:2px;}}
 .rcard:hover{opacity:.92;}
+.rcard.next{opacity:1; border-color:color-mix(in srgb, var(--gold) 50%, var(--border));}
+.rcard.next::before{border-color:var(--gold); background:var(--gold);}
+.rcard.next:hover{transform:translateX(4px); border-color:var(--gold);}
+.rcard.next .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--gold) 88%, #fff 12%), var(--gold) 72%); color:#fff;}
+.rc-next-tag{font-size:.62em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--gold-dim); color:var(--gold);}
+.rc-btn{font-size:.8em; font-weight:600; padding:8px 15px; border-radius:999px; white-space:nowrap;}
+.rc-btn.primary{background:linear-gradient(135deg,var(--gold), color-mix(in srgb, var(--gold) 55%, var(--vermilion) 45%)); color:#fff;}
+.rc-btn.primary:hover{filter:brightness(1.06);}
 
 .rcard-badge{
   width:48px;height:48px;border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
@@ -273,7 +281,7 @@ footer a{text-decoration:underline;}
 </div>
 
 <div class="roadfoot">
-  <p>Nothing here is built yet — this page exists so you can see exactly where the Japanese track is headed while the Korean courses come first.</p>
+  <p>N5 has a full day-by-day roadmap ready to explore — N4 through N1 will follow the same treatment once N5's courses are built.</p>
 </div>
 
 <footer>
@@ -289,6 +297,7 @@ const JLPT_LEVELS = [
   {
     badge:'N5', native:'五級', en:'First Steps in Japanese',
     desc:'Hiragana, katakana, ~100 basic kanji, and simple everyday sentences. ~800 words — enough to introduce yourself and get by with help.',
+    status:'next', file:'jlptn5roadmap.html',
   },
   {
     badge:'N4', native:'四級', en:'Everyday Conversations',
@@ -313,16 +322,31 @@ const JLPT_LEVELS = [
    ============================================================ */
 function renderOverall(){
   const total = JLPT_LEVELS.length;
+  const ready = JLPT_LEVELS.filter(l=>l.status==='next').length;
   document.getElementById('overallProgress').innerHTML = `
-    <div class="op-row"><span>Levels mapped</span><b>0 / ${total}</b></div>
-    <div class="op-track"><div class="op-fill" style="width:4%"></div></div>
+    <div class="op-row"><span>Levels with a roadmap</span><b>${ready} / ${total}</b></div>
+    <div class="op-track"><div class="op-fill" style="width:${Math.max(8, ready/total*100)}%"></div></div>
     <div class="op-legend">
-      <span><span class="op-dot" style="background:var(--border)"></span> Coming soon — Korean is first</span>
+      <span><span class="op-dot" style="background:var(--gold)"></span> Roadmap ready</span>
+      <span><span class="op-dot" style="background:var(--border)"></span> Coming soon</span>
     </div>
   `;
 }
 
 function levelCard(c){
+  if(c.status==='next'){
+    return `
+    <div class="rcard next">
+      <div class="rcard-badge">${c.badge}</div>
+      <div class="rcard-body">
+        <div class="rc-title">${c.en} <span class="native jp">${c.native}</span> <span class="rc-next-tag">84-Day Plan Ready</span></div>
+        <div class="rc-en">${c.desc}</div>
+      </div>
+      <div class="rcard-actions">
+        <a class="rc-btn primary" href="${c.file}">Open Roadmap →</a>
+      </div>
+    </div>`;
+  }
   return `
     <div class="rcard">
       <div class="rcard-badge">${c.badge}</div>
