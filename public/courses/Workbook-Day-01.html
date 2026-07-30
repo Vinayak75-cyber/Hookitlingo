@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOPIK I · Day 1 — Printable Workbook</title>
+<!--
+  Premium printable companion workbook for "TOPIK I · Day 1 — Hangul Foundations".
+  Single self-contained file. No frameworks, no external dependencies except the
+  optional Google Fonts progressive enhancement below (falls back to system fonts
+  offline). Works completely offline. Press Ctrl+P / Cmd+P to save as PDF.
+  All student progress is stored in this browser's localStorage under "wbd1_".
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   0. DESIGN TOKENS — reused from the Day 1 lesson's visual identity,
+      re-tuned to a light, ink-friendly, print-first palette.
+   ============================================================ */
+:root{
+  --ink:#2a1e26; --text:#2a1e26; --text-dim:#5c4753; --text-faint:#8d7986;
+  --paper:#fffdfb; --surface:#faf3ee; --surface2:#f4e9e1;
+  --border:#ddc7bb; --border-soft:#ead9cd;
+  --vermilion:#a83e58; --vermilion-tint:#f7e3e7;
+  --celadon:#3d7a5e; --celadon-tint:#e3efe8;
+  --gold:#9c701f; --gold-tint:#f4e7cf;
+  --inkblue:#5f4890; --inkblue-tint:#e9e2f4;
+  --radius:14px; --radius-sm:8px;
+  --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --kr:"Noto Serif KR","Apple SD Gothic Neo","Malgun Gothic","Nanum Gothic",sans-serif;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:#e7ded6; color:var(--text); font-family:var(--sans);
+  line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+body.canvas-dark{background:#231b22;}
+h1,h2,h3,h4{font-family:var(--serif); font-weight:600; margin:0 0 .45em; color:var(--ink);}
+.kr{font-family:var(--kr);}
+p{margin:0 0 .9em;}
+button{font-family:var(--sans); cursor:pointer;}
+.hidden{display:none !important;}
+
+/* ============================================================
+   1. TOOLBAR (screen only — never printed)
+   ============================================================ */
+#toolbar{
+  position:sticky; top:0; z-index:50; display:flex; align-items:center; gap:10px;
+  padding:10px 18px; background:rgba(38,25,32,.94); backdrop-filter:blur(8px);
+  color:#f6ecec; flex-wrap:wrap;
+}
+#toolbar .tb-title{font-family:var(--serif); font-weight:600; font-size:1.05em; margin-right:auto; white-space:nowrap;}
+#toolbar .tb-title span{display:block; font-size:.62em; letter-spacing:.12em; text-transform:uppercase; color:#c7b2c4; font-family:var(--sans);}
+.tbtn{background:#3b2933; border:1px solid #55404b; color:#f0e2e6; border-radius:20px; padding:7px 14px; font-size:.82em; display:flex; align-items:center; gap:6px;}
+.tbtn:hover{border-color:var(--vermilion); }
+.tbtn.on{background:var(--vermilion); border-color:var(--vermilion); color:#fff;}
+.tb-progress{display:flex; align-items:center; gap:8px; font-size:.78em; color:#d8c6cf;}
+.tb-track{width:110px; height:6px; background:#4a3540; border-radius:4px; overflow:hidden;}
+.tb-fill{height:100%; width:0%; background:linear-gradient(90deg,var(--vermilion),var(--gold));}
+
+/* ============================================================
+   2. PAGE FRAME (screen: simulated sheet of paper; print: real page)
+   ============================================================ */
+#book{max-width:900px; margin:0 auto; padding:26px 0 70px;}
+.page{
+  background:var(--paper); width:210mm; min-height:250mm; margin:0 auto 26px;
+  padding:16mm 15mm 13mm; box-shadow:0 6px 28px rgba(0,0,0,.16); position:relative;
+  display:flex; flex-direction:column;
+}
+.page-header{
+  display:flex; justify-content:space-between; font-size:.68em; text-transform:uppercase;
+  letter-spacing:.09em; color:var(--text-faint); border-bottom:1px solid var(--border-soft);
+  padding-bottom:7px; margin-bottom:16px;
+}
+.page-body{flex:1;}
+.page-title{font-size:1.7em; margin-bottom:.3em;}
+.page-kicker{font-size:.72em; letter-spacing:.13em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:6px;}
+.teacher-line{font-size:.82em; color:var(--text-faint); border-top:1px dashed var(--border); margin-top:14px; padding-top:8px;}
+.page-footer{
+  display:flex; justify-content:space-between; align-items:baseline; font-size:.72em; color:var(--text-faint);
+  border-top:1px solid var(--border-soft); margin-top:14px; padding-top:8px;
+}
+.fill{border-bottom:1px solid var(--text-faint); padding:0 4px; font-style:normal;}
+.fill.long{display:inline-block; min-width:260px;}
+
+/* ============================================================
+   3. TYPOGRAPHIC COMPONENTS
+   ============================================================ */
+.card{background:var(--surface); border:1px solid var(--border-soft); border-radius:var(--radius); padding:14px 18px; margin:14px 0;}
+.callout{border-left:3px solid var(--celadon); background:var(--celadon-tint); border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:10px 16px; margin:14px 0; font-size:.93em;}
+.callout.warn{border-color:var(--vermilion); background:var(--vermilion-tint);}
+.callout.tip{border-color:var(--gold); background:var(--gold-tint);}
+.callout.fact{border-color:var(--inkblue); background:var(--inkblue-tint);}
+.callout-label{font-weight:700; font-size:.75em; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:3px;}
+.two-col{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.three-col{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;}
+table.sched{width:100%; border-collapse:collapse; margin:12px 0; font-size:.9em;}
+table.sched th, table.sched td{border:1px solid var(--border); padding:6px 10px; text-align:left;}
+table.sched th{background:var(--surface2);}
+.no-break{break-inside:avoid; page-break-inside:avoid;}
+
+/* Ans / answer key toggle */
+.ans{display:none;}
+body.show-answers .ans{display:inline; color:var(--celadon); font-weight:700;}
+.answer-toggle-note{font-size:.72em; color:var(--text-faint); font-style:italic;}
+
+/* Checkbox rows (self-eval, checklists) */
+.pchk{display:flex; gap:8px; align-items:flex-start; margin:5px 0; font-size:.92em;}
+.pchk input{margin-top:3px;}
+
+/* Writing lines */
+.wline{border-bottom:1px solid #c9b6ab; height:32px;}
+.wline.dashed{border-bottom-style:dashed;}
+.wline-set{margin:8px 0 14px;}
+
+/* Large tracing row */
+.trace-row{display:flex; gap:7px; margin:10px 0; flex-wrap:wrap;}
+.trace-cell{flex:1; min-width:52px; height:70px; border:1px solid var(--border); border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:var(--kr); font-size:2.15em;}
+.trace-cell.ghost{color:#d9c8bd;}
+.trace-cell.blank{color:transparent;}
+
+/* 원고지-style guided grid boxes */
+.grid-boxes{display:grid; grid-template-columns:repeat(10,1fr); gap:6px; margin:6px 0 16px;}
+.gbox{position:relative; aspect-ratio:1/1; border:1px solid var(--border); border-radius:4px;}
+.gbox::before,.gbox::after{content:""; position:absolute; background:var(--border-soft);}
+.gbox::before{left:50%; top:6%; bottom:6%; width:1px; transform:translateX(-50%);}
+.gbox::after{top:50%; left:6%; right:6%; height:1px; transform:translateY(-50%);}
+.gbox.ghost{display:flex; align-items:center; justify-content:center; font-family:var(--kr); color:#e3d6cc; font-size:1.5em;}
+
+/* Letter tiles */
+.tile-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:10px; margin:14px 0;}
+.letter-tile{border:1px solid var(--border); border-radius:var(--radius-sm); padding:10px; text-align:center;}
+.letter-tile .glyph{font-family:var(--kr); font-size:1.9em; line-height:1;}
+.letter-tile .rom{font-family:var(--serif); font-style:italic; color:var(--gold); font-size:.92em;}
+
+/* Word / vocab cards */
+.word-card{border:1px solid var(--border-soft); border-radius:var(--radius-sm); padding:10px 12px; margin:8px 0;}
+.word-card .wk{font-family:var(--kr); font-size:1.3em;}
+.word-card .wr{color:var(--text-faint); font-size:.82em;}
+
+/* Contenteditable "digital ruled paper" for notes / free writing / reflection */
+.editable{
+  border:1px solid var(--border); border-radius:var(--radius-sm); padding:10px 12px;
+  background-image:repeating-linear-gradient(transparent, transparent 27px, var(--border-soft) 28px);
+  line-height:28px; font-size:.94em; color:var(--text);
+}
+.editable:empty:before{content:attr(data-ph); color:var(--text-faint);}
+
+/* Picture placeholder box */
+.pic-box{border:1.5px dashed var(--border); border-radius:var(--radius-sm); height:70px; display:flex; align-items:center; justify-content:center; color:var(--text-faint); font-size:.78em; margin:6px 0;}
+.dp-hero{background:var(--gold-tint); border:1px solid var(--border-soft); border-radius:var(--radius); padding:14px 20px; margin-bottom:16px; text-align:center;}
+.dp-hero-kr{font-family:var(--kr); font-size:2.3em; line-height:1.1; color:var(--ink);}
+.dp-hero-meta{font-size:.92em; color:var(--text-faint); margin-top:3px;}
+.dp-section{margin-bottom:6px;}
+.dp-section .grid-boxes{margin:5px 0 14px; max-width:460px;}
+.dp-section.dp-below{background:var(--surface); border:1px solid var(--border-soft); border-radius:var(--radius); padding:14px 18px; margin-top:14px;}
+.dp-label{font-size:.83em; font-weight:600; margin:0 0 4px;}
+
+/* Difficulty bubbles */
+.diff-row{display:flex; gap:6px; align-items:center; font-size:.82em; margin:4px 0;}
+.diff-bub{width:16px; height:16px; border:1px solid var(--text-faint); border-radius:50%; display:inline-block;}
+
+/* Sentence chip boxes (unscramble) */
+.chip-row{display:flex; gap:8px; flex-wrap:wrap; margin:8px 0;}
+.chip{border:1px solid var(--border); border-radius:20px; padding:5px 14px; font-family:var(--kr);}
+.slot-row{display:flex; gap:8px; flex-wrap:wrap; margin:8px 0 4px;}
+.slot{border-bottom:2px solid var(--text-dim); min-width:70px; height:30px;}
+
+/* Reading comprehension */
+.passage{font-family:var(--kr); font-size:1.15em; line-height:1.9; padding:10px 14px; border:1px solid var(--border-soft); border-radius:var(--radius-sm); background:var(--surface);}
+
+/* Badge / stamp for certificate */
+.seal{width:150px; height:150px; margin:0 auto; border-radius:50%; border:3px double var(--vermilion); display:flex; align-items:center; justify-content:center; font-family:var(--kr); font-size:3.4em; color:var(--vermilion);}
+
+/* ============================================================
+   4. PRINT RULES
+   ============================================================ */
+@media print{
+  @page{ margin:14mm 12mm; }
+  body{background:#fff;}
+  #toolbar,.no-print{display:none !important;}
+  #book{max-width:none; padding:0; margin:0;}
+  .page{ box-shadow:none; width:auto; min-height:0; margin:0; padding:0; page-break-after:always; break-after:page; }
+  .page:last-of-type{page-break-after:auto;}
+  .no-break{page-break-inside:avoid; break-inside:avoid;}
+  .editable{background-image:repeating-linear-gradient(transparent, transparent 27px, #ccc 28px);}
+}
+@media(max-width:820px){
+  .page{width:100%; min-height:auto; padding:20px;}
+  .two-col,.three-col{grid-template-columns:1fr;}
+  #toolbar .tb-title span{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div id="toolbar" class="no-print">
+  <div class="tb-title">Workbook · Day 1<span>TOPIK I — Hangul Foundations</span></div>
+  <div class="tb-progress"><span id="pctLabel">0%</span><div class="tb-track"><div class="tb-fill" id="pFill"></div></div></div>
+  <button class="tbtn" id="answerBtn">🔑 Show Answer Key</button>
+  <button class="tbtn" id="darkBtn">◐ Dark Canvas</button>
+  <button class="tbtn" id="resetBtn">↺ Reset Progress</button>
+  <button class="tbtn" id="printBtn" style="background:var(--vermilion);border-color:var(--vermilion)">🖨️ Print / Save PDF</button>
+</div>
+
+<div id="book"></div>
+
+<script>
+/* ============================================================
+   0. SOURCE DATA — extracted directly from the Day 1 lesson.
+      Nothing here introduces topics beyond what that lesson taught.
+   ============================================================ */
+const VOWELS = [
+ {ch:'ㅣ', rom:'i', sound:'like "ee" in "see"', mouth:'Lips relaxed and wide, tongue high and forward', memory:'A single upright human — the vertical stroke of 천지인.', ex:[['이','this / tooth']]},
+ {ch:'ㅡ', rom:'eu', sound:'like "oo" in "book" but unrounded — smile while saying "uh"', mouth:'Lips flat and wide, do not round them', memory:'A single flat line — the earth stroke.', ex:[['그','that (thing)']]},
+ {ch:'ㅏ', rom:'a', sound:'like "a" in "father"', mouth:'Open your jaw wide and relaxed', memory:'Human line (ㅣ) with the sun (dot) rising on the right.', ex:[['아이','child'],['가다','to go']]},
+ {ch:'ㅓ', rom:'eo', sound:'like "u" in "cup", said with an open throat', mouth:'Jaw drops, tongue pulled slightly back', memory:'Human line (ㅣ) with the sun on the left — mirror of ㅏ.', ex:[['어머니','mother']]},
+ {ch:'ㅗ', rom:'o', sound:'like "o" in "go"', mouth:'Round your lips forward into a small circle', memory:'Earth line (ㅡ) with the sun rising above it.', ex:[['오다','to come']]},
+ {ch:'ㅜ', rom:'u', sound:'like "oo" in "moon"', mouth:'Push your lips further forward than ㅗ', memory:'Earth line (ㅡ) with the sun setting below it.', ex:[['우유','milk']]},
+ {ch:'ㅑ', rom:'ya', sound:'"ya" as in "yard"', mouth:'Same as ㅏ but glide into it with a y-sound', memory:'ㅏ with one extra stroke = add a Y glide.', ex:[['야구','baseball']]},
+ {ch:'ㅕ', rom:'yeo', sound:'"yuh" — y + eo', mouth:'Same as ㅓ with a y-glide', memory:'ㅓ with one extra stroke.', ex:[['여자','woman']]},
+ {ch:'ㅛ', rom:'yo', sound:'"yo" as in "yo-yo"', mouth:'Same as ㅗ with a y-glide', memory:'ㅗ with one extra stroke.', ex:[['교실','classroom']]},
+ {ch:'ㅠ', rom:'yu', sound:'"you"', mouth:'Same as ㅜ with a y-glide', memory:'ㅜ with one extra stroke.', ex:[['우유','milk (root 유 = "oil/milk")']]},
+];
+const CONSONANTS = [
+ {ch:'ㄱ', name:'giyeok', rom:'g/k', sound:'between English G and K', mouth:'Back of the tongue touches the soft palate, blocking air briefly', memory:'Traces the side profile of the tongue lifting at the back of the mouth.', ex:[['가다','to go'],['고기','meat']]},
+ {ch:'ㄴ', name:'nieun', rom:'n', sound:'like English N', mouth:'Tongue tip touches just behind the upper teeth', memory:'Traces the tongue tip curling up behind the teeth.', ex:[['나','I/me'],['누나','older sister (of a male)']]},
+ {ch:'ㄷ', name:'digeut', rom:'d/t', sound:'between English D and T', mouth:'Tongue touches the ridge behind the teeth then releases', memory:'ㄴ + one line on top = the softer n-sound becomes a crisper d/t.', ex:[['다리','leg/bridge']]},
+ {ch:'ㄹ', name:'rieul', rom:'r/l', sound:'a light flap, between English R and L', mouth:'Tongue tip taps once against the ridge behind the teeth', memory:'A curved zig-zag, a bit like the number 2 or letter Z.', ex:[['라디오','radio'],['우리','we/us']]},
+ {ch:'ㅁ', name:'mieum', rom:'m', sound:'like English M', mouth:'Lips pressed fully closed, sound hums through the nose', memory:'A closed square — your mouth sealed shut on all four sides.', ex:[['엄마','mom'],['마시다','to drink']]},
+ {ch:'ㅂ', name:'bieup', rom:'b/p', sound:'between English B and P', mouth:'Lips press shut then release with a small pop', memory:'ㅁ + two short lines on top = the sealed mouth releasing with force.', ex:[['바다','sea'],['비','rain']]},
+ {ch:'ㅅ', name:'siot', rom:'s', sound:'a soft "s", slightly softer than English', mouth:'Tongue tip near the ridge behind the teeth, air hisses through', memory:'Two points like the eyes of a smiling face — "smile" starts with S.', ex:[['사람','person'],['시간','time']]},
+ {ch:'ㅇ', name:'ieung', rom:'silent/ng', sound:'silent at the start of a syllable; "ng" at the end', mouth:'At the start: no obstruction. At the end: back of tongue touches soft palate, air through the nose', memory:'A circle — an empty, open mouth with nothing blocking it.', ex:[['아이','child (silent ㅇ)'],['사랑','love (final ㅇ = "ng")']]},
+ {ch:'ㅈ', name:'jieut', rom:'j', sound:'between English J and CH', mouth:'Tongue blade presses the ridge, releases with light friction', memory:'ㅅ + one line on top = more friction/force.', ex:[['자다','to sleep'],['주스','juice']]},
+ {ch:'ㅊ', name:'chieut', rom:'ch', sound:'a strongly aspirated CH, with a puff of air', mouth:'Same as ㅈ, release with extra breath', memory:'ㅈ + one more line = even more air.', ex:[['차','tea/car'],['치마','skirt']]},
+ {ch:'ㅋ', name:'kieuk', rom:'k', sound:'a strongly aspirated K, with a puff of air', mouth:'Same tongue position as ㄱ, release with extra breath', memory:'ㄱ + one extra stroke = more air, more force.', ex:[['커피','coffee'],['카드','card']]},
+ {ch:'ㅌ', name:'tieut', rom:'t', sound:'a strongly aspirated T, with a puff of air', mouth:'Same position as ㄷ, release with extra breath', memory:'ㄷ + one more line = even more force/air.', ex:[['토끼','rabbit'],['타다','to ride']]},
+ {ch:'ㅍ', name:'pieup', rom:'p', sound:'a strongly aspirated P, with a puff of air', mouth:'Same as ㅂ, release with extra breath', memory:'ㅁ with four lines = maximum air release.', ex:[['피아노','piano'],['파티','party']]},
+ {ch:'ㅎ', name:'hieut', rom:'h', sound:'like English H', mouth:'Open airflow from the throat, like exhaling', memory:'ㅇ + two strokes on top = the empty circle releases a breath of air.', ex:[['하다','to do'],['한국','Korea']]},
+];
+const READING_ROWS = [
+ ['가','나','다','라','마','바','사','아','자','하'],
+ ['거','너','더','러','머','버','서','어','저','허'],
+ ['고','노','도','로','모','보','소','오','조','호'],
+ ['구','누','두','루','무','부','수','우','주','후'],
+];
+const VOCAB_PEOPLE_PLACES = [
+ {kr:'사람', rom:'saram', en:'person'}, {kr:'학생', rom:'haksaeng', en:'student'},
+ {kr:'선생님', rom:'seonsaengnim', en:'teacher'}, {kr:'친구', rom:'chingu', en:'friend'},
+ {kr:'가족', rom:'gajok', en:'family'}, {kr:'학교', rom:'hakgyo', en:'school'},
+ {kr:'집', rom:'jip', en:'home / house'}, {kr:'회사', rom:'hoesa', en:'company'},
+ {kr:'한국', rom:'hanguk', en:'Korea'}, {kr:'나라', rom:'nara', en:'country'},
+];
+const VOCAB_EVERYDAY = [
+ {kr:'이름', rom:'ireum', en:'name'}, {kr:'책', rom:'chaek', en:'book'},
+ {kr:'물', rom:'mul', en:'water'}, {kr:'밥', rom:'bap', en:'rice / meal'},
+ {kr:'음식', rom:'eumsik', en:'food'}, {kr:'시간', rom:'sigan', en:'time'},
+ {kr:'오늘', rom:'oneul', en:'today'}, {kr:'내일', rom:'naeil', en:'tomorrow'},
+ {kr:'어제', rom:'eoje', en:'yesterday'}, {kr:'지금', rom:'jigeum', en:'now'},
+];
+const VOCAB_VERBS = [
+ {kr:'가다', rom:'gada', en:'to go'}, {kr:'오다', rom:'oda', en:'to come'},
+ {kr:'먹다', rom:'meokda', en:'to eat'}, {kr:'마시다', rom:'masida', en:'to drink'},
+ {kr:'보다', rom:'boda', en:'to see / watch'}, {kr:'하다', rom:'hada', en:'to do'},
+ {kr:'공부하다', rom:'gongbuhada', en:'to study'}, {kr:'살다', rom:'salda', en:'to live'},
+ {kr:'만나다', rom:'mannada', en:'to meet'}, {kr:'좋아하다', rom:'joahada', en:'to like'},
+];
+const VOCAB_ALL = [...VOCAB_PEOPLE_PLACES, ...VOCAB_EVERYDAY, ...VOCAB_VERBS];
+const QUESTION_WORDS = [
+ {kr:'누구', rom:'nugu', en:'who'}, {kr:'무엇', rom:'mueot', en:'what'},
+ {kr:'뭐', rom:'mwo', en:'what (casual)'}, {kr:'어디', rom:'eodi', en:'where'},
+ {kr:'언제', rom:'eonje', en:'when'}, {kr:'왜', rom:'wae', en:'why'},
+ {kr:'어떻게', rom:'eotteoke', en:'how'}, {kr:'몇', rom:'myeot', en:'how many / what number'},
+];
+const SENTENCES = [
+ {chunks:['저는','학생이에요.'], en:'I am a student.'},
+ {chunks:['저는','친구예요.'], en:'I am a friend.'},
+ {chunks:['저는','한국어','학생이에요.'], en:'I am a Korean-language student.'},
+ {chunks:['저는','한국어를','공부해요.'], en:'I study Korean.'},
+ {chunks:['친구는','학생이에요.'], en:'My friend is a student.'},
+ {chunks:['한국은','나라예요.'], en:'Korea is a country.'},
+ {chunks:['학교는','여기예요.'], en:'The school is here.'},
+ {chunks:['저는','집에','가요.'], en:'I go home.'},
+ {chunks:['저는','물을','마셔요.'], en:'I drink water.'},
+];
+const LISTEN_SENTENCES = ['저는 학생이에요.','저는 친구예요.','저는 한국어를 공부해요.','저는 집에 가요.','저는 물을 마셔요.','학교는 여기예요.'];
+const READING_PASSAGES = [
+ {passage:'저는 학생이에요.', question:'Who is the speaker?', options:['Student','Teacher','Friend','Company employee'], answer:'Student'},
+ {passage:'저는 학교에 가요.', question:'Where does the person go?', options:['School','Home','Company','Korea'], answer:'School'},
+ {passage:'저는 물을 마셔요.', question:'What does the person drink?', options:['Water','Rice','Food','Tea'], answer:'Water'},
+ {passage:'저는 한국어를 공부해요.', question:'What does the person study?', options:['Korean','English','Math','History'], answer:'Korean'},
+];
+const TEACHER_TIPS = ['Do not memorize this. Write it.','Read aloud three times.','Cover the answer before writing.','Check your stroke order.','Do not rush.','Focus on accuracy first.','Repeat until effortless.'];
+function tip(i){ return TEACHER_TIPS[i % TEACHER_TIPS.length]; }
+
+/* Batchim helper — determines whether a Korean word ends in a final
+   consonant, exactly the rule taught in the lesson's 은/는 and 이에요/예요
+   sections. Used to auto-generate linguistically correct fill-in-blank drills. */
+function hasBatchim(word){
+  const last = word[word.length-1];
+  const code = last.codePointAt(0) - 0xAC00;
+  if(code<0||code>11171) return null;
+  return (code % 28) !== 0;
+}
+function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+/* ============================================================
+   1. REUSABLE PRINT/PRACTICE COMPONENTS
+   ============================================================ */
+let CB_COUNTER = 0, ED_COUNTER = 0;
+function lines(n){ let h='<div class="wline-set">'; for(let i=0;i<n;i++) h+='<div class="wline"></div>'; return h+'</div>'; }
+function dashedLines(n){ let h='<div class="wline-set">'; for(let i=0;i<n;i++) h+='<div class="wline dashed"></div>'; return h+'</div>'; }
+function traceRow(ch, ghostCount, blankCount){
+  let h='<div class="trace-row">';
+  for(let i=0;i<ghostCount;i++) h+=`<div class="trace-cell ghost">${ch}</div>`;
+  for(let i=0;i<blankCount;i++) h+=`<div class="trace-cell blank">${ch}</div>`;
+  return h+'</div>';
+}
+function gridBoxes(n, ghostCh){
+  let h='<div class="grid-boxes">';
+  for(let i=0;i<n;i++) h+= ghostCh && i===0 ? `<div class="gbox ghost">${ghostCh}</div>` : '<div class="gbox"></div>';
+  return h+'</div>';
+}
+function chk(label){ CB_COUNTER++; return `<label class="pchk"><input type="checkbox" class="pcheck" data-key="cb-${CB_COUNTER}"> <span>${label}</span></label>`; }
+function editable(placeholder, minLines){ ED_COUNTER++; const h = (minLines||3)*28; return `<div class="editable" contenteditable="true" data-key="ed-${ED_COUNTER}" data-ph="${placeholder}" style="min-height:${h}px"></div>`; }
+function ans(text){ return `<span class="ans">${text}</span>`; }
+
+/* ============================================================
+   2. PAGE REGISTRY
+   ============================================================ */
+const PAGES = [];
+function addPage(section, title, body, opts){
+  opts = opts || {};
+  PAGES.push({section, title, body, teacher: !!opts.teacher, kicker: opts.kicker||''});
+}
+
+/* ---------- FRONT MATTER ---------- */
+addPage('Front Matter','TOPIK I · Level 1', `
+  <div style="text-align:center; margin-top:8mm;">
+    <div class="seal kr">한</div>
+    <div class="page-kicker" style="margin-top:22px">28-Day Roadmap — Day 1 of 28</div>
+    <h1 style="font-size:2.6em">Hangul Foundations</h1>
+    <h3 style="color:var(--text-dim); font-weight:500; font-style:italic;">Printable Companion Workbook</h3>
+    <p style="max-width:120mm; margin:16px auto 0; color:var(--text-dim)">
+      Use this workbook side by side with the Day 1 online lesson. The lesson teaches —
+      this workbook makes you practice. Write on every page. Do not skip the blanks.
+    </p>
+    <div class="two-col" style="max-width:120mm; margin:26px auto 0; text-align:left;">
+      <div class="card" style="text-align:center"><b style="font-size:1.4em">24</b><br><span style="font-size:.8em;color:var(--text-faint)">Hangul Letters</span></div>
+      <div class="card" style="text-align:center"><b style="font-size:1.4em">30</b><br><span style="font-size:.8em;color:var(--text-faint)">Vocabulary Words</span></div>
+    </div>
+  </div>
+`);
+addPage('Front Matter','Student Information', `
+  <div class="card"><p><b>Student name:</b> <i class="fill long"></i></p>
+  <p><b>Start date:</b> <i class="fill"></i> &nbsp;&nbsp; <b>Target TOPIK level:</b> <i class="fill"></i></p>
+  <p><b>Study location:</b> <i class="fill long"></i></p>
+  <p><b>Why I am learning Korean:</b></p>${editable('Write your reason for learning Korean…',3)}</div>
+  <h3>Before You Begin</h3>
+  <p>Print this workbook once, or print it a day at a time as you progress through the roadmap. Keep a pencil and eraser nearby — Hangul is a stroke-based writing system, and accuracy matters more than speed on Day 1.</p>
+  <div class="callout tip"><span class="callout-label">Teacher's Note</span>${tip(0)} A workbook only works if you write in it.</div>
+`);
+addPage('Front Matter','How To Use This Workbook', `
+  <p>This workbook mirrors the five one-hour sessions of the Day 1 online lesson. Complete each section of the workbook right after finishing the matching section of the lesson — do not do all the writing at the end.</p>
+  <table class="sched"><tr><th>Session</th><th>Lesson Covers</th><th>Workbook Pages</th></tr>
+  <tr><td>Hour 1</td><td>Vowels + Consonants</td><td>Hangul practice pages</td></tr>
+  <tr><td>Hour 2</td><td>Syllable Blocks</td><td>Syllable-building pages</td></tr>
+  <tr><td>Hour 3</td><td>30 Core Words</td><td>Vocabulary workbook</td></tr>
+  <tr><td>Hour 4</td><td>Grammar + Sentences</td><td>Grammar & sentence-building pages</td></tr>
+  <tr><td>Hour 5</td><td>TOPIK Practice</td><td>Reading & listening pages</td></tr></table>
+  <h3>Symbols Used In This Workbook</h3>
+  <div class="card">
+    <p>✍️ <b>Write</b> — copy or produce Korean by hand.</p>
+    <p>👁️ <b>Recognize</b> — identify a letter, word, or pattern without writing.</p>
+    <p>🧠 <b>Recall</b> — produce the answer from memory, with no hint visible.</p>
+    <p>🗣️ <b>Read Aloud</b> — say it out loud before or after writing it.</p>
+    <p>🔑 <span class="ans">Text like this</span> — an answer-key entry. Toggle "Show Answer Key" on screen, or simply cover it with your hand while working from a printed page.</p>
+  </div>
+  <div class="callout warn"><span class="callout-label">Don't Panic</span>You are not expected to be fast or perfect on Day 1. You are expected to be thorough.</div>
+`);
+addPage('Front Matter','Learning Goals & Checklist', `
+  <p>By the end of Day 1 you should be able to:</p>
+  <div class="card">
+    ${chk('Recognize the 10 basic Korean vowels and 14 basic consonants')}
+    ${chk('Understand how Korean syllable blocks are built')}
+    ${chk('Understand the concept of 받침 (final consonants)')}
+    ${chk('Read simple two-letter syllables aloud without hesitating')}
+    ${chk('Recall all 30 core vocabulary words in both directions (Korean → English and English → Korean)')}
+    ${chk('Correctly apply 은/는 (topic marker)')}
+    ${chk('Correctly apply 이에요/예요 ("am/is/are")')}
+    ${chk('Understand basic Korean word order (Subject + Object + Verb)')}
+    ${chk('Build all 9 target sentences from scrambled word chunks')}
+    ${chk('Recognize the 8 basic TOPIK question words')}
+    ${chk('Complete a first TOPIK-style reading and listening exercise')}
+    ${chk('Start an error log and review it before moving to Day 2')}
+  </div>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Study 50 minutes, then rest 10 — after every hour. Do not sit through all five hours without a break.</div>
+`);
+addPage('Front Matter','Table of Contents', `<div id="toc-list"><p style="color:var(--text-faint)">Loading table of contents…</p></div>`);
+
+/* ---------- HANGUL · VOWELS ---------- */
+addPage('Hangul · Vowels','The 10 Basic Vowels — Overview', `
+  <p>Korean letters are not written in a straight line like English — they are grouped into square syllable blocks. Before building blocks, you need to know each individual letter cold. Start here with the 10 basic vowels.</p>
+  <div class="tile-grid">${VOWELS.map(v=>`<div class="letter-tile"><div class="glyph">${v.ch}</div><div class="rom">${v.rom}</div></div>`).join('')}</div>
+  <div class="callout fact"><span class="callout-label">Fun Fact</span>Hangul was designed in 1443 under King Sejong so ordinary people could learn to read in about a morning.</div>
+  <h3>👁️ Recognition Warm-Up</h3>
+  <p>Cover the romanization column above with a piece of paper. Point to each vowel in a random order and say its sound out loud before checking.</p>
+  ${chk('I said all 10 vowel sounds out loud from memory')}
+`, {teacher:true});
+VOWELS.forEach((v,i)=>{
+  addPage('Hangul · Vowels', `Vowel ${i+1} of 10 — ${v.ch} (${v.rom})`, `
+  <div class="page-kicker">Hour 1 · Hangul Foundations</div>
+  <div class="two-col">
+    <div>
+      <h3>✍️ Trace</h3>
+      ${traceRow(v.ch,3,2)}
+      <h3>✍️ Guided Writing</h3>
+      ${gridBoxes(10, v.ch)}
+      <h3>✍️ Independent Writing</h3>
+      ${gridBoxes(10)}
+    </div>
+    <div>
+      <div class="card">
+        <p><b>Sound:</b> ${v.sound}</p>
+        <p><b>Mouth position:</b> ${v.mouth}</p>
+        <p><b>Memory trick:</b> ${v.memory}</p>
+      </div>
+      <h4>🗣️ Practice Words</h4>
+      <div class="word-card">${v.ex.map(w=>`<div class="wk">${w[0]}</div><div class="wr">${w[1]}</div>`).join('<hr style="border:none;border-top:1px solid var(--border-soft);margin:6px 0">')}</div>
+      <p style="font-size:.85em">Copy each practice word three times:</p>
+      ${lines(3)}
+      <div class="callout tip"><span class="callout-label">Teacher's Tip</span>${tip(i)}</div>
+    </div>
+  </div>
+  <div class="card no-break" style="margin-top:auto">
+    <div class="diff-row"><b>Self-rating:</b> Easy <span class="diff-bub"></span> OK <span class="diff-bub"></span> Need Practice <span class="diff-bub"></span></div>
+  </div>
+  `, {teacher:true});
+});
+addPage('Hangul · Vowels','Vowel Recognition Drill', `
+  <p>👁️ No romanization is shown. For each vowel below, write its romanization on the blank line from memory.</p>
+  <div class="three-col">
+    ${shuffle(VOWELS).map(v=>`<div class="card no-break" style="text-align:center"><div class="glyph kr" style="font-size:1.8em">${v.ch}</div><div style="margin-top:8px">rom: <span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> ${ans(v.rom)}</div></div>`).join('')}
+  </div>
+`, {teacher:true});
+addPage('Hangul · Vowels','Vowel Recall Review — No Hints', `
+  <p>🧠 Write all 10 basic vowels from memory, in any order, in the boxes below. Do not look back at earlier pages.</p>
+  ${gridBoxes(10)}
+  <p>Now write each vowel's romanization next to it here:</p>
+  ${lines(10)}
+  <div class="callout warn"><span class="callout-label">Answer Key</span>${VOWELS.map(v=>v.ch+' = '+v.rom).join(' · ')}</div>
+`);
+
+/* ---------- HANGUL · CONSONANTS ---------- */
+addPage('Hangul · Consonants','The 14 Basic Consonants — Overview', `
+  <p>Don't worry about mastering fine pronunciation differences yet — your priority today is visual recognition plus a rough sound.</p>
+  <div class="tile-grid">${CONSONANTS.map(c=>`<div class="letter-tile"><div class="glyph">${c.ch}</div><div class="rom">${c.rom}</div></div>`).join('')}</div>
+  <div class="callout fact"><span class="callout-label">Fun Fact</span>Consonant shapes are not random — many were originally simplified diagrams of the mouth or tongue making that sound. ㄱ traces the back of the tongue blocking the throat; ㅁ traces the shape of closed lips.</div>
+  ${chk('I said all 14 consonant sounds out loud from memory')}
+`, {teacher:true});
+CONSONANTS.forEach((c,i)=>{
+  addPage('Hangul · Consonants', `Consonant ${i+1} of 14 — ${c.ch} (${c.name})`, `
+  <div class="page-kicker">Hour 1 · Hangul Foundations</div>
+  <div class="two-col">
+    <div>
+      <h3>✍️ Trace</h3>
+      ${traceRow(c.ch,3,2)}
+      <h3>✍️ Guided Writing</h3>
+      ${gridBoxes(10, c.ch)}
+      <h3>✍️ Independent Writing</h3>
+      ${gridBoxes(10)}
+    </div>
+    <div>
+      <div class="card">
+        <p><b>Name:</b> ${c.name} &nbsp; <b>Romanization:</b> ${c.rom}</p>
+        <p><b>Sound:</b> ${c.sound}</p>
+        <p><b>Mouth position:</b> ${c.mouth}</p>
+        <p><b>Memory trick:</b> ${c.memory}</p>
+      </div>
+      <h4>🗣️ Practice Words</h4>
+      <div class="word-card">${c.ex.map(w=>`<div class="wk">${w[0]}</div><div class="wr">${w[1]}</div>`).join('<hr style="border:none;border-top:1px solid var(--border-soft);margin:6px 0">')}</div>
+      <p style="font-size:.85em">Copy each practice word three times:</p>
+      ${lines(3)}
+      <div class="callout tip"><span class="callout-label">Teacher's Tip</span>${tip(i+3)}</div>
+    </div>
+  </div>
+  <div class="card no-break" style="margin-top:auto">
+    <div class="diff-row"><b>Self-rating:</b> Easy <span class="diff-bub"></span> OK <span class="diff-bub"></span> Need Practice <span class="diff-bub"></span></div>
+  </div>
+  `, {teacher:true});
+});
+addPage('Hangul · Consonants','Consonant Recognition Drill', `
+  <p>👁️ For each consonant below, write its romanization on the blank line from memory.</p>
+  <div class="three-col">
+    ${shuffle(CONSONANTS).map(c=>`<div class="card no-break" style="text-align:center"><div class="glyph kr" style="font-size:1.8em">${c.ch}</div><div style="margin-top:8px">rom: <span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> ${ans(c.rom)}</div></div>`).join('')}
+  </div>
+`, {teacher:true});
+addPage('Hangul · Consonants','Consonant Recall Review — No Hints', `
+  <p>🧠 Write all 14 basic consonants from memory, in any order, in the boxes below.</p>
+  ${gridBoxes(14)}
+  <p>Now write each consonant's romanization next to it here:</p>
+  ${lines(10)}
+  <div class="callout warn"><span class="callout-label">Answer Key</span>${CONSONANTS.map(c=>c.ch+' = '+c.rom).join(' · ')}</div>
+`);
+
+/* ---------- SYLLABLE BLOCKS ---------- */
+addPage('Syllable Blocks','How Syllable Blocks Work', `
+  <p>This is the single most important idea in reading Hangul. Letters are grouped into square syllable blocks — one block per spoken syllable. Every block has at minimum one initial consonant and one vowel; many also have a final consonant, called 받침 (batchim).</p>
+  <div class="three-col">
+    <div class="card no-break" style="text-align:center"><b>Case 1 — side by side</b><div class="kr" style="font-size:2.4em;margin:10px 0">가</div><p style="font-size:.85em">Tall vowel (ㅏ,ㅓ,ㅣ) → consonant sits to the <b>left</b>.</p></div>
+    <div class="card no-break" style="text-align:center"><b>Case 2 — stacked</b><div class="kr" style="font-size:2.4em;margin:10px 0">고</div><p style="font-size:.85em">Wide vowel (ㅗ,ㅜ,ㅡ) → consonant sits <b>on top</b>.</p></div>
+    <div class="card no-break" style="text-align:center"><b>Case 3 — with 받침</b><div class="kr" style="font-size:2.4em;margin:10px 0">한</div><p style="font-size:.85em">Final sound drops to the <b>bottom</b> of the block.</p></div>
+  </div>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Read every block top-left → top-right (or straight down) → bottom. Same order as English reading — just compressed into a square.</div>
+  <h3>Understanding ㅇ</h3>
+  <p>At the <b>start</b> of a syllable, ㅇ is silent — 아 is simply "a". At the <b>end</b> of a syllable, ㅇ sounds like "ng" — 방 is roughly "bang".</p>
+  <div class="callout warn"><span class="callout-label">Don't Panic</span>You do not need to memorize every batchim rule today — just recognize this pattern exists.</div>
+`, {teacher:true});
+addPage('Syllable Blocks','Build Your Own Syllables', `
+  <p>✍️ Combine each consonant + vowel pair below into one syllable block, written correctly (side-by-side or stacked, per the rule you just learned).</p>
+  <div class="three-col">
+  ${[['ㄱ','ㅏ','가'],['ㄴ','ㅗ','노'],['ㅁ','ㅣ','미'],['ㅂ','ㅜ','부'],['ㅅ','ㅓ','서'],['ㄷ','ㅡ','드'],['ㅈ','ㅑ','쟈'],['ㅎ','ㅕ','혀'],['ㅋ','ㅛ','쿄']].map(pair=>{
+    const a=pair[0], b=pair[1], correct=pair[2];
+    return `<div class="card no-break" style="text-align:center">
+      <div style="font-size:1.2em">${a} + ${b}</div>
+      ${gridBoxes(1)}
+      <div style="font-size:.78em;margin-top:4px">${ans('answer: '+correct)}</div>
+    </div>`;
+  }).join('')}
+  </div>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>${tip(1)}</div>
+`, {teacher:true});
+addPage('Syllable Blocks','받침 Practice — ㅇ Start vs. End', `
+  <p>👁️ Read each word aloud. Circle the ㅇ in each word, then write whether it is <b>silent</b> (syllable start) or sounds like <b>"ng"</b> (syllable end).</p>
+  <div class="two-col">
+    <div class="card no-break"><div class="kr" style="font-size:1.6em">아이</div><p>child — ㅇ is: <span class="fill">________</span> ${ans('silent')}</p></div>
+    <div class="card no-break"><div class="kr" style="font-size:1.6em">사랑</div><p>love — final ㅇ is: <span class="fill">________</span> ${ans('"ng"')}</p></div>
+    <div class="card no-break"><div class="kr" style="font-size:1.6em">방</div><p>room — final ㅇ is: <span class="fill">________</span> ${ans('"ng"')}</p></div>
+    <div class="card no-break"><div class="kr" style="font-size:1.6em">아버지</div><p>father — ㅇ is: <span class="fill">________</span> ${ans('silent')}</p></div>
+  </div>
+  <h3>✍️ Copy Practice</h3>
+  ${lines(4)}
+`, {teacher:true});
+
+/* ---------- READING FLUENCY ---------- */
+[[0,1],[2,3]].forEach((pair,pi)=>{
+  addPage('Reading Fluency', `Reading Fluency Drill ${pi+1} of 2`, `
+  <p>🗣️ Read each row aloud, left to right, three times. Your goal is to recognize each block as one shape — not to spell it out letter by letter.</p>
+  ${pair.map(ri=>`<div class="card no-break"><div class="tile-grid" style="grid-template-columns:repeat(10,1fr)">${READING_ROWS[ri].map(ch=>`<div class="letter-tile" style="padding:6px"><div class="glyph" style="font-size:1.5em">${ch}</div></div>`).join('')}</div></div>`).join('')}
+  <h3>✍️ Copy Each Row Once</h3>
+  ${pair.map(()=>lines(1)).join('')}
+  ${chk('I read both rows aloud three times each')}
+  `, {teacher:true});
+});
+addPage('Reading Fluency','Timed Speed Drill', `
+  <p>Set a 60-second timer. Read as many of the syllables below as you can, twice through, without stopping to sound anything out.</p>
+  <div class="card">${READING_ROWS.flat().map(ch=>`<span class="kr" style="font-size:1.3em;margin:0 8px 8px 0;display:inline-block">${ch}</span>`).join('')}</div>
+  <table class="sched"><tr><th>Attempt</th><th>Syllables read correctly</th><th>Time</th></tr>
+  <tr><td>1</td><td><span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+  <tr><td>2</td><td><span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td><span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr></table>
+  <div class="callout tip"><span class="callout-label">Speed Drill</span>Your goal is not perfect speed — it's reducing hesitation.</div>
+`, {teacher:true});
+
+/* ---------- VOCABULARY ---------- */
+function vocabIntroPage(title, words){
+  addPage('Vocabulary', title, `
+  <p>Learn these deeply, in both directions. Don't worry about grammar yet — today you're training visual recognition and recall.</p>
+  <table class="sched"><tr><th>Korean</th><th>Romanization</th><th>Meaning</th></tr>
+  ${words.map(w=>`<tr><td class="kr">${w.kr}</td><td>${w.rom}</td><td>${w.en}</td></tr>`).join('')}
+  </table>
+  <p>🗣️ Read the whole list aloud once, then cover the Korean column and say each word from the romanization.</p>
+  ${chk('I read this list aloud and can recognize every word')}
+  `, {teacher:true});
+}
+vocabIntroPage('Vocabulary — People & Places (10 words)', VOCAB_PEOPLE_PLACES);
+vocabIntroPage('Vocabulary — Everyday Words (10 words)', VOCAB_EVERYDAY);
+vocabIntroPage('Vocabulary — Basic Verbs (10 words)', VOCAB_VERBS);
+
+function dpLine(label){
+  return `<p class="dp-label">${label}</p><div class="wline" style="margin:0 0 8px"></div>`;
+}
+for(let i=0;i<VOCAB_ALL.length;i++){
+  const w = VOCAB_ALL[i];
+  addPage('Vocabulary', `Deep Practice — Word ${i+1} of 30`, `
+    <div class="dp-hero no-break">
+      <div class="dp-hero-kr">${w.kr}</div>
+      <div class="dp-hero-meta">${w.rom} &nbsp;·&nbsp; ${w.en}</div>
+    </div>
+
+    <div class="dp-section no-break">
+      <p class="dp-label">✍️ Write it 5×:</p>
+      ${gridBoxes(5, w.kr)}
+      <p class="dp-label">🧠 Now from memory, no guide:</p>
+      ${gridBoxes(5)}
+    </div>
+
+    <div class="dp-section dp-below no-break">
+      <p class="dp-label">💡 Create your own memory trick:</p>
+      <div class="fill long" style="display:block;height:22px;margin-bottom:12px"></div>
+
+      <div class="pic-box" style="height:70px;margin-bottom:12px">Draw or paste a picture for this word</div>
+
+      ${dpLine('Use it in a sentence (Korean):')}
+      ${dpLine('Translate your sentence (English):')}
+      ${dpLine('Write your own personal sentence with this word:')}
+
+      <div class="diff-row" style="margin-top:8px">Difficulty: 1 <span class="diff-bub"></span> 2 <span class="diff-bub"></span> 3 <span class="diff-bub"></span> 4 <span class="diff-bub"></span> 5 <span class="diff-bub"></span> ${chk('Reviewed')}</div>
+    </div>
+  `, {teacher:false});
+}
+
+[['People & Places',VOCAB_PEOPLE_PLACES],['Everyday Words',VOCAB_EVERYDAY],['Basic Verbs',VOCAB_VERBS]].forEach(([label,words])=>{
+  const shuffledEn = shuffle(words.map(w=>w.en));
+  addPage('Vocabulary', `Matching — ${label}`, `
+  <p>👁️ Draw a line (or write the matching letter) connecting each Korean word to its English meaning. The English column has been shuffled.</p>
+  <div class="two-col">
+    <div>${words.map((w,i)=>`<div class="word-card" style="margin:6px 0"><b>${String.fromCharCode(65+i)}.</b> <span class="kr">${w.kr}</span> <span style="color:var(--text-faint);font-size:.8em">(${w.rom})</span></div>`).join('')}</div>
+    <div>${shuffledEn.map((en,i)=>`<div class="word-card" style="margin:6px 0"><b>${i+1}.</b> ${en} <span class="fill" style="margin-left:10px">&nbsp;&nbsp;&nbsp;</span></div>`).join('')}</div>
+  </div>
+  <div class="callout warn"><span class="callout-label">Answer Key</span>${words.map(w=>ans(w.kr+' = '+w.en)).join(' · ')}</div>
+  `, {teacher:true});
+});
+[['People & Places',VOCAB_PEOPLE_PLACES],['Everyday Words',VOCAB_EVERYDAY],['Basic Verbs',VOCAB_VERBS]].forEach(([label,words])=>{
+  addPage('Vocabulary', `Recall From Memory — ${label}`, `
+  <p>🧠 Without looking back, write all 10 words from this category — Korean, romanization, and English — from memory.</p>
+  <table class="sched"><tr><th>#</th><th>Korean</th><th>Romanization</th><th>English</th></tr>
+  ${Array(10).fill(0).map((_,i)=>`<tr><td>${i+1}</td><td></td><td></td><td></td></tr>`).join('')}
+  </table>
+  <div class="callout warn"><span class="callout-label">Answer Key</span>${words.map(w=>w.kr+' / '+w.rom+' / '+w.en).join(' · ')}</div>
+  `);
+});
+[[0,15],[15,30]].forEach(([s,e],pi)=>{
+  const set = VOCAB_ALL.slice(s,e);
+  addPage('Vocabulary', `Cut-Out Flashcards ${pi+1} of 2`, `
+  <p>Cut along the lines. Fold each card in half, Korean word on the outside, romanization + meaning on the inside — or simply use these as one-sided flashcards.</p>
+  <div class="tile-grid">${set.map(w=>`<div class="letter-tile no-break" style="padding:14px"><div class="glyph" style="font-size:1.6em">${w.kr}</div><div class="rom">${w.rom}</div><div style="font-size:.78em;color:var(--text-faint);margin-top:4px">${w.en}</div></div>`).join('')}</div>
+  `);
+});
+
+/* ---------- GRAMMAR ---------- */
+addPage('Grammar','Korean Word Order — Explanation', `
+  <p>English: <b>I + study + Korean.</b> (Subject + Verb + Object)</p>
+  <p>Korean: <b class="kr">저는 한국어를 공부해요.</b> — literally "I + Korean + study." (Subject + Object + Verb)</p>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>The verb always comes last in a Korean sentence. Get used to reading all the way to the end before you know what's happening.</div>
+  <h3>✍️ Pattern</h3>
+  <p><b>Subject + Object + Verb</b></p>
+  <p>Copy this sentence 3 times: <span class="kr">저는 한국어를 공부해요.</span></p>
+  ${lines(3)}
+`, {teacher:true});
+addPage('Grammar','Korean Word Order — Practice', `
+  <p>✍️ Sentence Transformation — reorder each scrambled English gloss into correct Korean word order (Subject + Object + Verb), then write the Korean sentence.</p>
+  <div class="card no-break"><p>Scrambled: 마셔요 / 저는 / 물을 &nbsp; → &nbsp;<span class="fill long"></span> ${ans('저는 물을 마셔요.')}</p></div>
+  <div class="card no-break"><p>Scrambled: 가요 / 저는 / 집에 &nbsp; → &nbsp;<span class="fill long"></span> ${ans('저는 집에 가요.')}</p></div>
+  <h3>❌ Error Correction</h3>
+  <p>Each sentence below has the verb in the wrong position. Rewrite it correctly.</p>
+  <div class="card no-break"><p>Incorrect: 공부해요 저는 한국어를 &nbsp;→&nbsp; <span class="fill long"></span> ${ans('저는 한국어를 공부해요.')}</p></div>
+  <h3>🧠 Challenge</h3>
+  <p>Write one original sentence in correct Subject + Object + Verb order using any vocabulary you've learned today:</p>${lines(2)}
+`, {teacher:true});
+addPage('Grammar','은/는 — The Topic Marker', `
+  <p><span class="kr" style="font-size:1.2em">은/는</span> attaches to a noun to mean roughly "as for...". <span class="kr">저는</span> = "as for me / I".</p>
+  <div class="card"><p><span class="kr">저는</span> — as for me &nbsp; <span class="kr">나는</span> — as for me (casual) &nbsp; <span class="kr">한국은</span> — as for Korea</p></div>
+  <div class="callout fact"><span class="callout-label">Bonus — Optional</span>는 follows a word ending in a vowel (저 → 저는); 은 follows a word ending in a consonant/받침 (한국 → 한국은, since 국 ends in ㄱ).</div>
+  <h3>✍️ Fill in the Blank</h3>
+  <p>Add 은 or 는 to each word below. (Use the batchim rule above.)</p>
+  <div class="two-col">
+  ${shuffle(VOCAB_ALL).slice(0,8).map(w=>`<p><span class="kr">${w.kr}</span>___ &nbsp; ${ans(hasBatchim(w.kr)?'은':'는')}</p>`).join('')}
+  </div>
+`, {teacher:true});
+addPage('Grammar','은/는 — More Practice', `
+  <h3>Sentence Transformation</h3>
+  <p>Rewrite each sentence, replacing the subject with the word given in parentheses, adjusting 은/는 correctly.</p>
+  <div class="card no-break"><p>저는 학생이에요. → (친구) <span class="fill long"></span> ${ans('친구는 학생이에요.')}</p></div>
+  <div class="card no-break"><p>한국은 나라예요. → (일본) <span class="fill long"></span> ${ans('일본은 나라예요. (both end in a consonant sound here)')}</p></div>
+  <h3>Translation</h3>
+  <p>"As for Korea, it is a country." → <span class="fill long"></span> ${ans('한국은 나라예요.')}</p>
+  <h3>🧠 Reflection</h3>
+  <p>In your own words, what does 은/는 do in a Korean sentence?</p>${editable('Write your explanation…',3)}
+`, {teacher:true});
+addPage('Grammar','이에요/예요 — "am / is / are"', `
+  <p>After a consonant-ending word, use <span class="kr">이에요</span>. After a vowel-ending word, use <span class="kr">예요</span>.</p>
+  <div class="card"><p><span class="kr">학생이에요.</span> — I am a student. &nbsp; <span class="kr">친구예요.</span> — I am a friend.</p></div>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>There's also a more formal form — 입니다 — but leave that for later. Just recognize it if you see it.</div>
+  <h3>✍️ Fill in the Blank</h3>
+  <div class="two-col">
+  ${shuffle(VOCAB_ALL.filter(w=>hasBatchim(w.kr)!==null)).slice(0,8).map(w=>`<p><span class="kr">${w.kr}</span>___ &nbsp; ${ans(hasBatchim(w.kr)?'이에요':'예요')}</p>`).join('')}
+  </div>
+`, {teacher:true});
+addPage('Grammar','이에요/예요 — More Practice', `
+  <h3>❌ Error Correction</h3>
+  <div class="card no-break"><p>Incorrect: 학생예요. &nbsp;→&nbsp; <span class="fill long"></span> ${ans('학생이에요. (학생 ends in ㅇ, a consonant)')}</p></div>
+  <div class="card no-break"><p>Incorrect: 친구이에요. &nbsp;→&nbsp; <span class="fill long"></span> ${ans('친구예요. (친구 ends in a vowel)')}</p></div>
+  <h3>Translation</h3>
+  <p>"I am a teacher." → <span class="fill long"></span> ${ans('저는 선생님이에요.')}</p>
+  <p>"I am a friend." → <span class="fill long"></span> ${ans('저는 친구예요.')}</p>
+  <h3>🧠 Free Writing</h3>
+  <p>Write 3 true sentences about yourself using 이에요/예요:</p>${lines(3)}
+`, {teacher:true});
+addPage('Grammar','Grammar Challenge — Combining Both Patterns', `
+  <p>🧠 Translate each sentence into Korean, using both 은/는 and 이에요/예요 correctly.</p>
+  <div class="card no-break"><p>"As for my friend, she is a student." <span class="fill long"></span> ${ans('친구는 학생이에요.')}</p></div>
+  <div class="card no-break"><p>"As for Korea, it is a country." <span class="fill long"></span> ${ans('한국은 나라예요.')}</p></div>
+  <div class="card no-break"><p>"As for the school, it is here." <span class="fill long"></span> ${ans('학교는 여기예요.')}</p></div>
+  <h3>Reflection</h3>
+  <p>Which of today's two grammar points felt harder, and why?</p>${editable('Write your reflection…',3)}
+`, {teacher:true});
+
+/* ---------- SENTENCE BUILDING ---------- */
+addPage('Sentence Building','Build 9 Sentences — Introduction', `
+  <p>Korean word order is Subject → Object → Verb. Below, each of the 9 target sentences has been broken into word chunks and scrambled. Your task: write the chunks back in the correct order.</p>
+  <div class="card no-break"><p><b>Example</b> — scrambled: 학생이에요. / 저는 &nbsp;→&nbsp; <span class="kr">저는 학생이에요.</span> (I am a student.)</p></div>
+  ${chk('I understand the task before starting')}
+`, {teacher:true});
+for(let i=0;i<SENTENCES.length;i+=3){
+  const group = SENTENCES.slice(i,i+3);
+  addPage('Sentence Building', `Sentence Building — Sentences ${i+1}–${i+group.length} of 9`, group.map((s,gi)=>{
+    const idx=i+gi+1; const scrambled = shuffle(s.chunks);
+    return `<div class="card no-break">
+      <p><b>Sentence ${idx}</b> — unscramble: ${scrambled.map(c=>`<span class="chip">${c}</span>`).join(' ')}</p>
+      <p style="font-size:.85em">Write in correct order:</p>${lines(1)}
+      <p style="font-size:.85em">Translation: <span class="fill long"></span> ${ans(s.en)}</p>
+      <p style="font-size:.85em">Now write your own similar sentence, changing one word:</p>${lines(1)}
+    </div>`;
+  }).join(''), {teacher:true});
+}
+addPage('Sentence Building','Free Sentence Writing', `
+  <p>🧠 Using today's vocabulary and grammar (은/는, 이에요/예요, Subject+Object+Verb order), write 5 original sentences of your own.</p>
+  ${Array(5).fill(0).map((_,i)=>`<p style="font-size:.85em;margin-top:10px">${i+1}.</p>${lines(1)}`).join('')}
+`, {teacher:true});
+
+/* ---------- TOPIK PRACTICE ---------- */
+addPage('TOPIK Practice','TOPIK Question Words (1/2)', `
+  <p>These eight words are high priority for every TOPIK reading and listening question from here on.</p>
+  <div class="tile-grid">${QUESTION_WORDS.map(q=>`<div class="letter-tile"><div class="glyph">${q.kr}</div><div class="rom">${q.rom}</div><div style="font-size:.75em;color:var(--text-faint)">${q.en}</div></div>`).join('')}</div>
+  <h3>✍️ Copy Each Word Twice</h3>
+  ${QUESTION_WORDS.slice(0,4).map(()=>lines(1)).join('')}
+`, {teacher:true});
+addPage('TOPIK Practice','TOPIK Question Words (2/2) — Matching', `
+  <p>👁️ Match each question word to its English meaning.</p>
+  <div class="two-col">
+    <div>${QUESTION_WORDS.map((q,i)=>`<div class="word-card"><b>${String.fromCharCode(65+i)}.</b> <span class="kr">${q.kr}</span></div>`).join('')}</div>
+    <div>${shuffle(QUESTION_WORDS.map(q=>q.en)).map((en,i)=>`<div class="word-card"><b>${i+1}.</b> ${en} <span class="fill" style="margin-left:10px">&nbsp;&nbsp;&nbsp;</span></div>`).join('')}</div>
+  </div>
+  <div class="callout warn"><span class="callout-label">Answer Key</span>${QUESTION_WORDS.map(q=>ans(q.kr+'='+q.en)).join(' · ')}</div>
+  <h3>🧠 Recall From Memory</h3>
+  <p>Write all 8 question words with their meanings:</p>${lines(8)}
+`, {teacher:true});
+addPage('TOPIK Practice','TOPIK Reading Strategy', `
+  <p>Look at: <span class="kr" style="font-size:1.15em">저는 학교에 가요.</span> Question: <span class="kr">어디에 가요?</span></p>
+  <p>You don't need to translate the whole sentence. Recognize 어디 = where, then scan for the location word: 학교. Answer: <b>학교</b>.</p>
+  <div class="callout tip"><span class="callout-label">TOPIK Strategy</span>Question word → Find the required information → Answer. Don't translate everything automatically.</div>
+  <h3>✍️ Practice</h3>
+  <p>Passage: <span class="kr">저는 집에 가요.</span> &nbsp; Question: 어디에 가요? &nbsp; Answer: <span class="fill"></span> ${ans('집')}</p>
+`, {teacher:true});
+[[0,2],[2,4]].forEach(([s,e],pi)=>{
+  const set = READING_PASSAGES.slice(s,e);
+  addPage('TOPIK Practice', `Reading Comprehension ${pi+1} of 2`, set.map((r,gi)=>`
+  <div class="card no-break">
+    <p>👁️ Circle the subject marker, underline the verb, and highlight (or box) any vocabulary you recognize.</p>
+    <div class="passage">${r.passage}</div>
+    <p style="margin-top:8px"><b>${r.question}</b></p>
+    <div style="margin:6px 0">${r.options.map(o=>`<span style="margin-right:14px">☐ ${o}</span>`).join('')}</div>
+    <p style="font-size:.85em">Answer: <span class="fill"></span> ${ans(r.answer)}</p>
+    <p style="font-size:.85em">🗣️ Read the passage aloud, then write a one-line English summary:</p>${lines(1)}
+  </div>`).join(''), {teacher:true});
+});
+[[0,3],[3,6]].forEach(([s,e],pi)=>{
+  const set = LISTEN_SENTENCES.slice(s,e);
+  addPage('TOPIK Practice', `Listening & Shadowing ${pi+1} of 2`, `
+  <p>For each sentence: (1) Read it silently. (2) Read it aloud once. (3) Cover it and say it from memory. (4) Shadow it again at natural speed. This is Listen → Check → Listen → Shadow.</p>
+  ${set.map(s=>`<div class="card no-break"><div class="kr" style="font-size:1.2em">${s}</div>
+    <div style="margin-top:6px">${chk('Round 1 — read aloud')} ${chk('Round 2 — from memory')} ${chk('Round 3 — shadowed at speed')}</div></div>`).join('')}
+  `, {teacher:true});
+});
+
+/* ---------- REVIEW & ASSESSMENT ---------- */
+addPage('Review & Assessment','My Mistake Log', `
+  <p>Every time you miss something in a quiz, drill, or self-check today, log it here. Review this page first tomorrow, before starting Day 2.</p>
+  <table class="sched"><tr><th>#</th><th>What I missed</th><th>Correct answer</th><th>Section</th></tr>
+  ${Array(10).fill(0).map((_,i)=>`<tr><td>${i+1}</td><td></td><td></td><td></td></tr>`).join('')}
+  </table>
+`);
+addPage('Review & Assessment','Challenge Page 1 — Translation', `
+  <p>🧠 Translate each sentence into Korean without looking back at earlier pages.</p>
+  <div class="card no-break"><p>"I am a student and I study Korean."</p>${lines(2)} ${ans('저는 학생이에요. 저는 한국어를 공부해요.')}</div>
+  <div class="card no-break"><p>"My friend is a teacher."</p>${lines(2)} ${ans('친구는 선생님이에요.')}</div>
+  <div class="card no-break"><p>"Where do you go? — I go home."</p>${lines(2)} ${ans('어디에 가요? — 저는 집에 가요.')}</div>
+`, {teacher:true});
+addPage('Review & Assessment','Challenge Page 2 — Introduce Yourself', `
+  <p>🧠 Write a short self-introduction in Korean (4–6 sentences) using only vocabulary and grammar from today: your name, that you are a student, what you study, where you go, what you drink or eat.</p>
+  ${editable('Write your self-introduction in Korean…',8)}
+  <p style="font-size:.85em;margin-top:10px">Now write the English translation of what you wrote:</p>
+  ${editable('Write the English translation…',5)}
+`, {teacher:true});
+addPage('Review & Assessment','Full Review — Hangul, No Hints', `
+  <p>🧠 Write all 10 vowels, then all 14 consonants, from memory. No peeking.</p>
+  <p style="font-size:.85em">Vowels:</p>${gridBoxes(10)}
+  <p style="font-size:.85em">Consonants:</p>${gridBoxes(14)}
+  <div class="callout warn"><span class="callout-label">Answer Key</span>${VOWELS.map(v=>v.ch).join(' ')} &nbsp;|&nbsp; ${CONSONANTS.map(c=>c.ch).join(' ')}</div>
+`);
+addPage('Review & Assessment','Full Review — All 30 Vocabulary Words', `
+  <p>🧠 Write as many of the 30 core words as you can remember, Korean + English, in 5 minutes.</p>
+  <table class="sched"><tr><th>#</th><th>Korean</th><th>English</th></tr>${Array(15).fill(0).map((_,i)=>`<tr><td>${i+1}</td><td></td><td></td></tr>`).join('')}</table>
+`);
+addPage('Review & Assessment','Full Review — Grammar & Sentences', `
+  <p>🧠 Fill in 은/는 or 이에요/예요 for each, then rebuild all 9 target sentences from memory (English gloss given).</p>
+  <div class="two-col">
+  ${shuffle(VOCAB_ALL).slice(0,6).map(w=>`<p><span class="kr">${w.kr}</span>___ ${ans(hasBatchim(w.kr)?'은/이에요':'는/예요')}</p>`).join('')}
+  </div>
+  <h3>Rebuild the 9 Sentences</h3>
+  ${SENTENCES.map(s=>`<p style="font-size:.9em">"${s.en}" → <span class="fill long"></span> ${ans(s.chunks.join(' '))}</p>`).join('')}
+`);
+addPage('Review & Assessment','Full Review — Translation Mix', `
+  <p>🧠 Translate each into Korean, no hints:</p>
+  ${['I am a friend.','My friend is a student.','Korea is a country.','I go home.','I drink water.','I study Korean.'].map((en,i)=>`<p>${i+1}. "${en}" <span class="fill long"></span> ${ans(SENTENCES[i]?.chunks.join(' ')||'')}</p>`).join('')}
+`);
+addPage('Review & Assessment','Day 1 Mini Test — Part A: Hangul', `
+  <p>Passing mark: 70%. Match each letter to its romanization.</p>
+  <div class="two-col">
+    <div>${shuffle(VOWELS).slice(0,5).map((v,i)=>`<p><b>${i+1}.</b> <span class="kr">${v.ch}</span> <span class="fill" style="margin-left:8px">&nbsp;&nbsp;&nbsp;</span> ${ans(v.rom)}</p>`).join('')}</div>
+    <div>${shuffle(CONSONANTS).slice(0,5).map((c,i)=>`<p><b>${i+6}.</b> <span class="kr">${c.ch}</span> <span class="fill" style="margin-left:8px">&nbsp;&nbsp;&nbsp;</span> ${ans(c.rom)}</p>`).join('')}</div>
+  </div>
+`, {teacher:true});
+addPage('Review & Assessment','Day 1 Mini Test — Part B: Vocabulary & Grammar', `
+  <div class="two-col">
+    <div>${shuffle(VOCAB_ALL).slice(0,6).map((w,i)=>`<p><b>${i+1}.</b> <span class="kr">${w.kr}</span> = <span class="fill"></span> ${ans(w.en)}</p>`).join('')}</div>
+    <div>
+      <p><b>7.</b> 학생 (ends in a consonant) + "am" = <span class="fill"></span> ${ans('학생이에요')}</p>
+      <p><b>8.</b> 친구 (ends in a vowel) + "am" = <span class="fill"></span> ${ans('친구예요')}</p>
+      <p><b>9.</b> Basic Korean sentence order: <span class="fill"></span> ${ans('Subject + Object + Verb')}</p>
+      <p><b>10.</b> 어디 means: <span class="fill"></span> ${ans('Where')}</p>
+    </div>
+  </div>
+`, {teacher:true});
+addPage('Review & Assessment','Day 1 Mini Test — Part C: Reading & Translation', `
+  <div class="passage">저는 학교에 가요.</div>
+  <p><b>11.</b> Where does the person go? <span class="fill"></span> ${ans('School')}</p>
+  <p><b>12.</b> Translate: "I am a student." <span class="fill long"></span> ${ans('저는 학생이에요.')}</p>
+  <p><b>13.</b> Translate: "My friend is a teacher." <span class="fill long"></span> ${ans('친구는 선생님이에요.')}</p>
+  <div class="callout"><span class="callout-label">Scoring</span>Count your correct answers out of 13. 10/13 (≈77%) or higher = passed.</div>
+`, {teacher:true});
+addPage('Review & Assessment','Mini Test — Full Answer Key', `
+  <p>Use this page to grade Parts A, B, and C. Toggle "Show Answer Key" on screen to reveal every inline answer above instead.</p>
+  <h4>Part A</h4><p>All vowel/consonant romanizations as listed on the Hangul overview pages.</p>
+  <h4>Part B</h4><p>학생이에요 · 친구예요 · Subject + Object + Verb · Where</p>
+  <h4>Part C</h4><p>School · 저는 학생이에요. · 친구는 선생님이에요.</p>
+`);
+addPage('Review & Assessment','Self-Evaluation', `
+  <p>Rate yourself honestly on each skill from today (1 = still shaky, 5 = confident).</p>
+  ${['Recognizing vowels','Recognizing consonants','Building syllable blocks','Recalling 30 vocabulary words','Applying 은/는','Applying 이에요/예요','Building sentences in correct order','Reading a short passage','Listening & shadowing'].map(s=>`<div class="diff-row"><span style="width:230px;display:inline-block">${s}</span>1<span class="diff-bub"></span>2<span class="diff-bub"></span>3<span class="diff-bub"></span>4<span class="diff-bub"></span>5<span class="diff-bub"></span></div>`).join('')}
+  <h3>Reflection</h3>
+  <p>What was hardest today, and what will you do differently tomorrow?</p>${editable('Write your reflection…',4)}
+`);
+addPage('Review & Assessment','Teacher Feedback', `
+  <div class="card" style="min-height:60mm">
+  <p><b>Student:</b> <i class="fill long"></i> &nbsp; <b>Date reviewed:</b> <i class="fill"></i></p>
+  <p><b>Strengths observed:</b></p>${lines(2)}
+  <p><b>Areas to review before Day 2:</b></p>${lines(2)}
+  <p><b>Overall rating:</b> ☐ Excellent &nbsp; ☐ Good &nbsp; ☐ Needs More Practice</p>
+  <p><b>Teacher signature:</b> <i class="fill long"></i></p>
+  </div>
+`);
+addPage('Review & Assessment','Homework & Day 2 Preview', `
+  <h3>Tonight's Homework</h3>
+  <div class="card">
+    ${chk('Re-read your Mistake Log once before bed')}
+    ${chk('Say all 30 vocabulary words aloud one more time')}
+    ${chk('Write the 9 target sentences from memory once more')}
+    ${chk('Read the Day 1 self-introduction you wrote aloud, twice')}
+  </div>
+  <h3>Coming Up — Day 2 Preview</h3>
+  <div class="callout tip"><span class="callout-label">Coming Up</span>Day 2 builds directly on today: more batchim patterns, 20 new vocabulary words, the particles 이/가 and 을/를, and your second TOPIK reading passage.</div>
+`);
+addPage('Review & Assessment','Certificate of Completion', `
+  <div style="text-align:center;margin-top:14mm">
+    <div class="seal kr">한</div>
+    <h2 style="margin-top:20px">Certificate of Completion</h2>
+    <p style="color:var(--text-dim)">TOPIK I · 28-Day Roadmap</p>
+    <p style="margin-top:20px">This certifies that</p>
+    <p class="fill long" style="display:inline-block;font-family:var(--serif);font-size:1.3em;min-width:260px;text-align:center;margin:6px 0">&nbsp;</p>
+    <p>has completed <b>Day 1 — Hangul Foundations</b></p>
+    <p style="margin-top:20px">Date: <i class="fill"></i></p>
+    <div class="two-col" style="max-width:120mm;margin:30px auto 0">
+      <div><p class="fill" style="display:block;height:1px;margin-bottom:4px"></p><p style="font-size:.8em;color:var(--text-faint)">Student Signature</p></div>
+      <div><p class="fill" style="display:block;height:1px;margin-bottom:4px"></p><p style="font-size:.8em;color:var(--text-faint)">Teacher Signature</p></div>
+    </div>
+  </div>
+`);
+
+/* ============================================================
+   3. RENDER
+   ============================================================ */
+function renderBook(){
+  const book = document.getElementById('book');
+  let html = '';
+  PAGES.forEach((p,i)=>{
+    html += `<section class="page" data-idx="${i+1}">
+      <div class="page-header"><span>TOPIK I · Day 1 Workbook</span><span>${p.section}</span></div>
+      <div class="page-body">
+        ${p.kicker?`<div class="page-kicker">${p.kicker}</div>`:''}
+        <h1 class="page-title">${p.title}</h1>
+        ${p.body}
+      </div>
+      ${p.teacher?`<div class="teacher-line">Teacher's comments: <i class="fill long"></i></div>`:''}
+      <div class="page-footer">
+        <span>Name: <i class="fill"></i> &nbsp; Date: <i class="fill"></i></span>
+        <span class="pnum"></span>
+      </div>
+    </section>`;
+  });
+  book.innerHTML = html;
+  const total = PAGES.length;
+  document.querySelectorAll('.page').forEach((sec,i)=>{
+    sec.querySelector('.pnum').textContent = `Page ${i+1} / ${total}`;
+  });
+  buildTOC();
+}
+function buildTOC(){
+  const groups = [];
+  PAGES.forEach((p,i)=>{
+    const n=i+1;
+    const last = groups[groups.length-1];
+    if(last && last.name===p.section){ last.last=n; }
+    else groups.push({name:p.section, first:n, last:n});
+  });
+  const html = groups.map(g=>`<div style="display:flex;justify-content:space-between;border-bottom:1px dotted var(--border);padding:6px 0"><span>${g.name}</span><span>pp. ${g.first}–${g.last}</span></div>`).join('');
+  const tocEl = document.querySelector('#toc-list');
+  if(tocEl) tocEl.innerHTML = html;
+}
+
+/* ============================================================
+   4. INTERACTIVITY — progress saving, answer key, notes, reset
+   ============================================================ */
+const LS_PROGRESS = 'wbd1_progress', LS_NOTES = 'wbd1_notes', LS_ANSWERS='wbd1_answers', LS_DARK='wbd1_dark';
+
+function loadProgress(){
+  const saved = JSON.parse(localStorage.getItem(LS_PROGRESS)||'{}');
+  document.querySelectorAll('.pcheck').forEach(cb=>{ if(saved[cb.dataset.key]) cb.checked = true; });
+}
+function saveProgress(){
+  const data = {};
+  document.querySelectorAll('.pcheck').forEach(cb=>{ if(cb.checked) data[cb.dataset.key]=true; });
+  localStorage.setItem(LS_PROGRESS, JSON.stringify(data));
+  updateProgressUI();
+}
+function updateProgressUI(){
+  const boxes = document.querySelectorAll('.pcheck');
+  const done = document.querySelectorAll('.pcheck:checked').length;
+  const pct = boxes.length ? Math.round((done/boxes.length)*100) : 0;
+  document.getElementById('pFill').style.width = pct+'%';
+  document.getElementById('pctLabel').textContent = pct+'% complete';
+}
+function loadNotes(){
+  const saved = JSON.parse(localStorage.getItem(LS_NOTES)||'{}');
+  document.querySelectorAll('.editable').forEach(ed=>{ if(saved[ed.dataset.key]) ed.textContent = saved[ed.dataset.key]; });
+}
+function saveNotes(){
+  const data = {};
+  document.querySelectorAll('.editable').forEach(ed=>{ if(ed.textContent.trim()) data[ed.dataset.key]=ed.textContent; });
+  localStorage.setItem(LS_NOTES, JSON.stringify(data));
+}
+function initInteractivity(){
+  loadProgress(); loadNotes(); updateProgressUI();
+  document.body.addEventListener('change', e=>{ if(e.target.classList.contains('pcheck')) saveProgress(); });
+  document.body.addEventListener('input', e=>{ if(e.target.classList.contains('editable')) saveNotes(); });
+
+  const answerOn = localStorage.getItem(LS_ANSWERS)==='1';
+  if(answerOn){ document.body.classList.add('show-answers'); document.getElementById('answerBtn').classList.add('on'); document.getElementById('answerBtn').textContent='🔒 Hide Answer Key'; }
+  document.getElementById('answerBtn').onclick = ()=>{
+    const on = document.body.classList.toggle('show-answers');
+    localStorage.setItem(LS_ANSWERS, on?'1':'0');
+    document.getElementById('answerBtn').classList.toggle('on', on);
+    document.getElementById('answerBtn').textContent = on ? '🔒 Hide Answer Key' : '🔑 Show Answer Key';
+  };
+
+  const darkOn = localStorage.getItem(LS_DARK)==='1';
+  if(darkOn){ document.body.classList.add('canvas-dark'); document.getElementById('darkBtn').classList.add('on'); }
+  document.getElementById('darkBtn').onclick = ()=>{
+    const on = document.body.classList.toggle('canvas-dark');
+    localStorage.setItem(LS_DARK, on?'1':'0');
+    document.getElementById('darkBtn').classList.toggle('on', on);
+  };
+
+  document.getElementById('printBtn').onclick = ()=> window.print();
+  document.getElementById('resetBtn').onclick = ()=>{
+    if(!confirm('Reset all saved progress, checkboxes, and notes in this workbook? This cannot be undone.')) return;
+    localStorage.removeItem(LS_PROGRESS); localStorage.removeItem(LS_NOTES);
+    document.querySelectorAll('.pcheck').forEach(cb=>cb.checked=false);
+    document.querySelectorAll('.editable').forEach(ed=>ed.textContent='');
+    updateProgressUI();
+  };
+}
+
+renderBook();
+initInteractivity();
+</script>
+</body>
+</html>

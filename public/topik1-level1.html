@@ -333,7 +333,7 @@ const WEEKS = [
       {d:4, en:'Dates, Days, Months, Time &amp; Age', desc:'Telling time, calendar dates, and asking/giving age.', kind:'done', file:'courses/day-04.html'},
       {d:5, en:'Essential Particles: 은/는, 이/가, 을/를', desc:'The three particles that hold every Korean sentence together.', kind:'done', file:'courses/day-05.html'},
       {d:6, en:'Present Tense &amp; Daily Activities', desc:'해요체 present tense — talk about what you do every day.', kind:'done', file:'courses/day-06.html'},
-      {d:7, en:'Week 1 Review &amp; Mini TOPIK Test', desc:'Consolidate everything so far with a short, timed check-in.', kind:'milestone', file:'day-07.html'},
+      {d:7, en:'Week 1 Review &amp; Mini TOPIK Test', desc:'Consolidate everything so far with a short, timed check-in.', kind:'milestone-done', file:'courses/day-07.html'},
     ]
   },
   {
@@ -416,6 +416,19 @@ function dayCard(c){
       </div>
       <div class="rcard-actions">
         <a class="rc-btn primary" href="${c.file}">Preview</a>
+      </div>
+    </div>`;
+  }
+  if(c.kind==='milestone-done'){
+    return `
+    <div class="rcard milestone">
+      <div class="rcard-badge">D${c.d}</div>
+      <div class="rcard-body">
+        <div class="rc-title">Day ${c.d} — ${c.en} <span class="rc-milestone-tag">🎯 Milestone</span> <span class="rc-done-tag">✅ Ready</span></div>
+        <div class="rc-en">${c.desc}</div>
+      </div>
+      <div class="rcard-actions">
+        <a class="rc-btn milestone" href="${c.file}">Start →</a>
       </div>
     </div>`;
   }
