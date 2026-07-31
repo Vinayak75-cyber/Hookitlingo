@@ -400,13 +400,13 @@ const HIRAGANA_NA2 = [
  {ch:'に', rom:'ni', sound:'like "knee"', memory:'n + い.', ex:[['にほん','Japan'],['にく','meat']]},
  {ch:'ぬ', rom:'nu', sound:'like "noo" (short)', memory:'n + う.', ex:[['いぬ','dog'],['ぬの','cloth']]},
  {ch:'ね', rom:'ne', sound:'like "neh" in "net"', memory:'n + え.', ex:[['ねこ','cat'],['ねる','to sleep']]},
- {ch:'の', rom:'no', sound:'like "no"', memory:'n + お — this is also the possession particle you learned on Day 1!', ex:[['のみもの','drink'],['わたしの','mine']]},
+ {ch:'の', rom:'no', sound:'like "no"', memory:'n + お - this is also the possession particle you learned on Day 1!', ex:[['のみもの','drink'],['わたしの','mine']]},
 ];
 const HIRAGANA_HA = [
- {ch:'は', rom:'ha', sound:'like "hah"', memory:'h + あ — remember, this becomes "wa" only when used as the topic particle.', ex:[['はな','flower'],['はし','bridge / chopsticks']]},
+ {ch:'は', rom:'ha', sound:'like "hah"', memory:'h + あ - remember, this becomes "wa" only when used as the topic particle.', ex:[['はな','flower'],['はし','bridge / chopsticks']]},
  {ch:'ひ', rom:'hi', sound:'like "he" with a light breath', memory:'h + い.', ex:[['ひと','person'],['ひ','fire / day']]},
- {ch:'ふ', rom:'fu', sound:'a soft breathy "fu" — lips barely touching, not like English "foo"', memory:'The one irregular reading in this row.', ex:[['ふゆ','winter'],['ふね','boat']]},
- {ch:'へ', rom:'he', sound:'like "heh" in "hen"', memory:'h + え — also doubles as a direction particle meaning "toward" (a later lesson).', ex:[['へや','room']]},
+ {ch:'ふ', rom:'fu', sound:'a soft breathy "fu" lips barely touching, not like English "foo"', memory:'The one irregular reading in this row.', ex:[['ふゆ','winter'],['ふね','boat']]},
+ {ch:'へ', rom:'he', sound:'like "heh" in "hen"', memory:'h + え - also doubles as a direction particle meaning "toward" (a later lesson).', ex:[['へや','room']]},
  {ch:'ほ', rom:'ho', sound:'like "hoe"', memory:'h + お.', ex:[['ほん','book'],['ほし','star']]},
 ];
 const HIRAGANA_MA = [
@@ -422,16 +422,16 @@ const HIRAGANA_YA = [
  {ch:'よ', rom:'yo', sound:'like "yo"', memory:'y + お.', ex:[['よる','night'],['よむ','to read']]},
 ];
 const HIRAGANA_RA = [
- {ch:'ら', rom:'ra', sound:'a light tap between English "r" and "l" — like "la"', memory:'r + あ.', ex:[['さくら','cherry blossom']]},
+ {ch:'ら', rom:'ra', sound:'a light tap between English "r" and "l" like "la"', memory:'r + あ.', ex:[['さくら','cherry blossom']]},
  {ch:'り', rom:'ri', sound:'like "ree" with a light tap', memory:'r + い.', ex:[['りんご','apple']]},
  {ch:'る', rom:'ru', sound:'like "roo" (short, light tap)', memory:'r + う.', ex:[['くる','to come']]},
  {ch:'れ', rom:'re', sound:'like "reh" with a light tap', memory:'r + え.', ex:[['これ','this']]},
  {ch:'ろ', rom:'ro', sound:'like "roe" with a light tap', memory:'r + お.', ex:[['いろ','color']]},
 ];
 const HIRAGANA_WA = [
- {ch:'わ', rom:'wa', sound:'like "wah"', memory:'The last full row — only two special characters left after this.', ex:[['わたし','I / me'],['わかる','to understand']]},
- {ch:'を', rom:'o', sound:'pronounced simply "o" — identical to お', memory:'Almost only ever used as the object-marking particle, which you\'ll meet properly in a later lesson.', ex:[['ほんを よむ','read a book']]},
- {ch:'ん', rom:'n', sound:'a nasal "n" with no vowel attached', memory:'The only hiragana that is a consonant alone. It never starts a word — always ends a syllable, like in にほん (Nihon).', ex:[['にほん','Japan'],['ほん','book']]},
+ {ch:'わ', rom:'wa', sound:'like "wah"', memory:'The last full row, only two special characters left after this.', ex:[['わたし','I / me'],['わかる','to understand']]},
+ {ch:'を', rom:'o', sound:'pronounced simply "o" identical to お', memory:'Almost only ever used as the object-marking particle, which you\'ll meet properly in a later lesson.', ex:[['ほんを よむ','read a book']]},
+ {ch:'ん', rom:'n', sound:'a nasal "n" with no vowel attached', memory:'The only hiragana that is a consonant alone. It never starts a word, always ends a syllable, like in にほん (Nihon).', ex:[['にほん','Japan'],['ほん','book']]},
 ];
 const HIRAGANA_BLOCK1_D2 = HIRAGANA_TE.concat(HIRAGANA_NA2, HIRAGANA_HA);
 const HIRAGANA_BLOCK2_D2 = HIRAGANA_MA.concat(HIRAGANA_YA, HIRAGANA_RA, HIRAGANA_WA);
@@ -812,14 +812,14 @@ function renderReviewDay1(el){
 }
 
 function renderHiragana1(el){
-  chapterHeader(el, 'Session 2 · 00:40–01:05', 'Finish Basic Hiragana — て–ほ', '12 characters: て・と row, な row, は row');
+  chapterHeader(el, 'Session 2 · 00:40–01:05', 'Finish Basic Hiragana - て–ほ', '12 characters: て・と row, な row, は row');
   el.insertAdjacentHTML('beforeend', `
   <p>Same method as yesterday: say it, then write it ten times while saying the sound aloud. Never write silently.</p>
   ${tileGrid(HIRAGANA_BLOCK1_D2)}
   <div class="callout tip"><span class="callout-label">Recognition Drill</span>Mix these with yesterday's characters and quiz yourself randomly. Can you instantly identify a character without hesitating more than 2 seconds?</div>
   <h3>Character Details</h3>
   ${letterDetails(HIRAGANA_BLOCK1_D2)}
-  <div class="callout fact"><span class="callout-label">Fun fact</span><span class="jp">は</span> is the same character you learned yesterday as the topic-marking particle (pronounced "wa" in that job). As a normal hiragana character on its own, it's simply "ha" — this dual identity is completely normal in Japanese.</div>
+  <div class="callout fact"><span class="callout-label">Fun fact</span><span class="jp">は</span> is the same character you learned yesterday as the topic-marking particle (pronounced "wa" in that job). As a normal hiragana character on its own, it's simply "ha", this dual identity is completely normal in Japanese.</div>
   <h3>Quick Check</h3>
   `);
   const quiz = HIRAGANA_BLOCK1_D2.map(h=>{
@@ -831,14 +831,14 @@ function renderHiragana1(el){
 }
 
 function renderHiragana2(el){
-  chapterHeader(el, 'Session 2 (cont.) · 01:05–01:30', 'Finish Basic Hiragana — ま–ん + Reading', '16 characters: ま row, や row, ら row, わ row + ん, then reading practice');
+  chapterHeader(el, 'Session 2 (cont.) · 01:05–01:30', 'Finish Basic Hiragana - ま–ん + Reading', '16 characters: ま row, や row, ら row, わ row + ん, then reading practice');
   el.insertAdjacentHTML('beforeend', `
   ${tileGrid(HIRAGANA_BLOCK2_D2)}
-  <div class="callout warn"><span class="callout-label">Watch for irregulars</span><span class="jp">を</span> is pronounced exactly like <span class="jp">お</span>, and <span class="jp">ん</span> is the only hiragana with no vowel sound at all — it's a pure nasal "n". Neither of these behaves like a normal row character.</div>
+  <div class="callout warn"><span class="callout-label">Watch for irregulars</span><span class="jp">を</span> is pronounced exactly like <span class="jp">お</span>, and <span class="jp">ん</span> is the only hiragana with no vowel sound at all, it's a pure nasal "n". Neither of these behaves like a normal row character.</div>
   <h3>Character Details</h3>
   ${letterDetails(HIRAGANA_BLOCK2_D2)}
   <div class="callout fact"><span class="callout-label">Fun fact</span>Because <span class="jp">ん</span> can never start a word, it plays a special role in the classic Japanese word-chain game しりとり (shiritori): if the word you say ends in <span class="jp">ん</span>, you automatically lose, since no word can continue from there!</div>
-  <h3>Step 3 — Read Combinations</h3>
+  <h3>Step 3 - Read Combinations</h3>
   <p>Read these aloud, focusing on smooth reading rather than translating word by word.</p>
   <div class="tile-grid">${READING_COMBOS_D2.map(c=>`<div class="letter-tile"><div class="glyph">${c.jp}</div><div class="spk">${spkBtn(c.jp)}</div></div>`).join('')}</div>
   <h3>Quick Check</h3>
@@ -862,7 +862,7 @@ function renderGreetings(el){
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div><div class="wc-jp">${w.jp}</div><div class="wc-rom">${w.rom}</div></div>${spkBtn(w.jp)}</div><div class="wc-meaning">${w.en}</div></div>`);
   });
   el.insertAdjacentHTML('beforeend', `
-  <div class="callout tip"><span class="callout-label">Teacher's tip</span><span class="jp">ありがとう</span> is casual "thanks," used with friends and family. Adding <span class="jp">ございます</span> makes it <span class="jp">ありがとうございます</span> — the polite form you'll use with teachers, strangers, and in most public situations. When in doubt, use the polite form.</div>
+  <div class="callout tip"><span class="callout-label">Teacher's tip</span><span class="jp">ありがとう</span> is casual "thanks," used with friends and family. Adding <span class="jp">ございます</span> makes it <span class="jp">ありがとうございます</span>, the polite form you'll use with teachers, strangers, and in most public situations. When in doubt, use the polite form.</div>
   <h3>Practice — Meeting Your Teacher</h3>
   <div class="card">${MEET_TEACHER.map(l=>`<p class="jp" style="font-size:1.2em; margin:6px 0">${l}</p>`).join('')}${spkBtn(MEET_TEACHER.join(' '),'🔊 Play greeting')}</div>
   <div class="callout"><span class="callout-label">Practice</span>Say this three times, imagining you're actually meeting your teacher for the first time.</div>
@@ -879,17 +879,17 @@ function renderGreetings(el){
 }
 
 function renderNumbers(el){
-  chapterHeader(el, 'Session 4 · 02:05–02:40', 'Numbers 1–20', 'Say them aloud — don\'t just memorize by writing');
+  chapterHeader(el, 'Session 4 · 02:05–02:40', 'Numbers 1–20', 'Say them aloud, don\'t just memorize by writing');
   el.insertAdjacentHTML('beforeend', `<h3>1 – 10</h3>`);
   el.insertAdjacentHTML('beforeend', tileGrid(NUMBERS.slice(0,10).map(x=>({ch:x.jp, rom:String(x.n)}))));
   el.insertAdjacentHTML('beforeend', `
-  <div class="callout warn"><span class="callout-label">Alternate readings</span>Three numbers have a second common reading: 4 is usually <span class="jp">よん</span> but sometimes <span class="jp">し</span>; 7 is usually <span class="jp">なな</span> but sometimes <span class="jp">しち</span>; 9 is usually <span class="jp">きゅう</span> but sometimes <span class="jp">く</span>. For now, learn <span class="jp">よん・なな・きゅう</span> as your defaults — they're the safest choice in daily speech.</div>
+  <div class="callout warn"><span class="callout-label">Alternate readings</span>Three numbers have a second common reading: 4 is usually <span class="jp">よん</span> but sometimes <span class="jp">し</span>; 7 is usually <span class="jp">なな</span> but sometimes <span class="jp">しち</span>; 9 is usually <span class="jp">きゅう</span> but sometimes <span class="jp">く</span>. For now, learn <span class="jp">よん・なな・きゅう</span> as your defaults, they're the safest choice in daily speech.</div>
   <h3>11 – 20</h3>
   `);
   el.insertAdjacentHTML('beforeend', tileGrid(NUMBERS.slice(10).map(x=>({ch:x.jp, rom:String(x.n)}))));
   el.insertAdjacentHTML('beforeend', `
-  <div class="callout fact"><span class="callout-label">Fun fact — the pattern</span>Once you know 1–10, the teens are almost free: 11 is simply <span class="jp">じゅう</span> (10) + <span class="jp">いち</span> (1) = <span class="jp">じゅういち</span>. 20 is <span class="jp">に</span> (2) + <span class="jp">じゅう</span> (10) = <span class="jp">にじゅう</span>. Japanese numbers are built like building blocks — this same pattern continues all the way to 99.</div>
-  <div class="callout tip"><span class="callout-label">Practice</span>Count out loud from 1 to 20, then back down from 20 to 1. Do this until it feels automatic — don't rely on writing alone.</div>
+  <div class="callout fact"><span class="callout-label">Fun fact - the pattern</span>Once you know 1–10, the teens are almost free: 11 is simply <span class="jp">じゅう</span> (10) + <span class="jp">いち</span> (1) = <span class="jp">じゅういち</span>. 20 is <span class="jp">に</span> (2) + <span class="jp">じゅう</span> (10) = <span class="jp">にじゅう</span>. Japanese numbers are built like building blocks, this same pattern continues all the way to 99.</div>
+  <div class="callout tip"><span class="callout-label">Practice</span>Count out loud from 1 to 20, then back down from 20 to 1. Do this until it feels automatic, don't rely on writing alone.</div>
   <h3>Flashcards</h3>
   `);
   el.appendChild(buildFlashcards(NUMBERS.map(x=>({jp:x.jp, rom:'', en:'Number '+x.n}))));
@@ -904,7 +904,7 @@ function renderNumbers(el){
 
 function renderReadingPractice(el){
   chapterHeader(el, 'Session 5 · 02:40–03:15', 'Reading Practice', 'Train your eyes to recognize whole words, not translate letter by letter');
-  el.insertAdjacentHTML('beforeend', `<p>Read these slowly. Don't translate immediately — just focus on recognizing each word as a whole shape.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Read these slowly. Don't translate immediately, just focus on recognizing each word as a whole shape.</p>`);
   READING_WORDS_D2.forEach(w=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div><div class="wc-jp">${w.jp}</div></div>${spkBtn(w.jp)}</div><div class="wc-meaning">${w.en}</div></div>`);
   });
@@ -912,7 +912,7 @@ function renderReadingPractice(el){
   <h3>Now Read These Phrases</h3>
   <p>These combine words with the grammar you already know from Day 1 (<span class="jp">の</span> and <span class="jp">は</span> + <span class="jp">です</span>). Read each phrase five times.</p>
   ${READING_PHRASES_D2.map(p=>`<div class="word-card"><div class="wc-top"><div><div class="wc-jp">${p.display}</div></div>${spkBtn(p.display)}</div><div class="wc-meaning">${p.en}</div></div>`).join('')}
-  <h3>Puzzle — Rebuild the Phrase</h3>
+  <h3>Puzzle - Rebuild the Phrase</h3>
   <p>Tap the pieces in the right order to rebuild each phrase.</p>
   `);
   el.appendChild(buildPhraseBuilder(READING_PHRASES_D2));
@@ -921,11 +921,10 @@ function renderReadingPractice(el){
 
 function renderListening(el){
   chapterHeader(el, 'Session 6 · 03:15–03:40', 'Listening', 'Recognize familiar words inside a stream of natural speech');
-  el.insertAdjacentHTML('beforeend', `<p>Listen to beginner Japanese audio. Your goal today is just to recognize these words when you hear them — pause, repeat, then continue. Avoid translating every single sentence.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Listen to beginner Japanese audio. Your goal today is just to recognize these words when you hear them, pause, repeat, then continue. Avoid translating every single sentence.</p>`);
   LISTEN_TARGETS_D2.forEach(s=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-jp">${s}</div>${spkBtn(s,'🔊 Play')}</div></div>`);
   });
-  el.insertAdjacentHTML('beforeend', `<div class="callout"><span class="callout-label">About the audio</span>🔊 buttons play an embedded clip if one has been added for that word. Until audio is added, tapping one will briefly flash <b>❌ Missing</b> — that's expected, not a bug.</div>`);
   el.insertAdjacentHTML('beforeend', noteBox('listening'));
 }
 
@@ -1003,14 +1002,14 @@ function renderErrorLog(el){
 
 function renderDayComplete(el){
   chapterHeader(el, 'Finish', 'Day 2 Complete 🎉');
-  el.insertAdjacentHTML('beforeend', `<p>Excellent work — all 46 basic hiragana are now behind you. Here's your badge progress for Day 2:</p>
+  el.insertAdjacentHTML('beforeend', `<p>Excellent work! all 46 basic hiragana are now behind you. Here's your badge progress for Day 2:</p>
   <div class="badge-grid">${BADGE_DEFS.map(b=>`<div class="badge ${State.badges[b.id]?'earned':''}"><div class="bicon">${b.icon}</div><div class="bname">${b.name}</div></div>`).join('')}</div>
-  <div class="callout"><span class="callout-label">Say This Aloud — Day 2 Ending Ritual</span>
+  <div class="callout"><span class="callout-label">Say This Aloud - Day 2 Ending Ritual</span>
   <p class="jp" style="margin:6px 0">おはようございます。はじめまして。わたしは [your name] です。がくせいです。よろしくおねがいします。ありがとうございます。</p>
   ${spkBtn('おはようございます。はじめまして。わたしはがくせいです。よろしくおねがいします。ありがとうございます。','🔊 Play greeting')}
   </div>
   <h3>Tomorrow — Day 3 Preview</h3>
-  <div class="callout tip"><span class="callout-label">Coming Up</span>Day 3 reviews all 46 hiragana, then introduces dakuten (゛) and handakuten (゜) — the small marks that turn か into が and は into ぱ — plus classroom vocabulary.</div>
+  <div class="callout tip"><span class="callout-label">Coming Up</span>Day 3 reviews all 46 hiragana, then introduces dakuten (゛) and handakuten (゜), the small marks that turn か into が and は into ぱ — plus classroom vocabulary.</div>
   <div class="btn-row"><button class="btn secondary" onclick="goTo('error-log')">Review Error Log</button> <button class="btn secondary" onclick="goTo('cover')">Back to Cover</button></div>
   `);
 }

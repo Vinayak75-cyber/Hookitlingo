@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JLPT N5 · Day 1 — Hiragana Foundations | Hookitlingo</title>
+<title>JLPT N5 · Day 1 - Hiragana Foundations | Hookitlingo</title>
 <meta name="description" content="Day 1 of the JLPT N5 84-day roadmap: learn Hiragana foundations and read your first Japanese words. Free, offline, self-contained lesson.">
 <link rel="canonical" href="https://hookit.online/courses/jlpt-n5-day-01.html">
 
 <!-- Open Graph -->
 <meta property="og:type" content="article">
-<meta property="og:title" content="JLPT N5 · Day 1 — Hiragana Foundations | Hookitlingo">
+<meta property="og:title" content="JLPT N5 · Day 1 - Hiragana Foundations | Hookitlingo">
 <meta property="og:description" content="Day 1 of the JLPT N5 84-day roadmap: learn Hiragana foundations and read your first Japanese words. Free, offline, self-contained lesson.">
 <meta property="og:url" content="https://hookit.online/courses/jlpt-n5-day-01.html">
 <meta property="og:site_name" content="Hookitlingo">
@@ -19,7 +19,7 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="JLPT N5 · Day 1 — Hiragana Foundations | Hookitlingo">
+<meta name="twitter:title" content="JLPT N5 · Day 1 - Hiragana Foundations | Hookitlingo">
 <meta name="twitter:description" content="Day 1 of the JLPT N5 84-day roadmap: learn Hiragana foundations and read your first Japanese words. Free, offline, self-contained lesson.">
 <meta name="twitter:image" content="https://hookit.online/og-image.png">
 
@@ -365,30 +365,30 @@ textarea.note-area{width:100%; min-height:80px; background:var(--surface2); bord
    0. DATA
    ============================================================ */
 const VOWELS = [
- {ch:'あ', rom:'a', sound:'like "ah" in "father"', mouth:'Jaw drops open, relaxed and wide', memory:'Looks like a person with an open mouth saying "ah" — the loop is the jaw dropping.', ex:[['あい','love'],['あか','red']]},
- {ch:'い', rom:'i', sound:'like "ee" in "see"', mouth:'Lips relaxed, corners pulled slightly back', memory:'Two simple vertical strokes — think of the double "i" in the romaji itself.', ex:[['いぬ','dog'],['いえ','house']]},
- {ch:'う', rom:'u', sound:'like "oo" in "book" but short and unrounded — do not push your lips forward', mouth:'Lips stay relaxed, barely rounded, much lighter than English "oo"', memory:'A small hook, like a comma catching a short puff of air.', ex:[['うみ','sea'],['うた','song']]},
- {ch:'え', rom:'e', sound:'like "e" in "bed"', mouth:'Mouth half-open, tongue mid-height', memory:'Picture a person leaning back — a relaxed, mid-open sound.', ex:[['えき','station'],['えほん','picture book']]},
+ {ch:'あ', rom:'a', sound:'like "ah" in "father"', mouth:'Jaw drops open, relaxed and wide', memory:'Looks like a person with an open mouth saying "ah" the loop is the jaw dropping.', ex:[['あい','love'],['あか','red']]},
+ {ch:'い', rom:'i', sound:'like "ee" in "see"', mouth:'Lips relaxed, corners pulled slightly back', memory:'Two simple vertical strokes think of the double "i" in the romaji itself.', ex:[['いぬ','dog'],['いえ','house']]},
+ {ch:'う', rom:'u', sound:'like "oo" in "book" but short and unrounded do not push your lips forward', mouth:'Lips stay relaxed, barely rounded, much lighter than English "oo"', memory:'A small hook, like a comma catching a short puff of air.', ex:[['うみ','sea'],['うた','song']]},
+ {ch:'え', rom:'e', sound:'like "e" in "bed"', mouth:'Mouth half-open, tongue mid-height', memory:'Picture a person leaning back a relaxed, mid-open sound.', ex:[['えき','station'],['えほん','picture book']]},
  {ch:'お', rom:'o', sound:'like "o" in "go" (pure, no glide)', mouth:'Lips rounded into a small circle', memory:'The loop at the bottom looks like a round, rounded mouth shape.', ex:[['おちゃ','tea'],['おと','sound']]},
 ];
 const HIRAGANA_K = [
- {ch:'か', rom:'ka', sound:'like "ca" in "car"', memory:'Starts with the か row — pair it with あ: か = k + あ.', ex:[['かお','face'],['かさ','umbrella']]},
- {ch:'き', rom:'ki', sound:'like "key"', memory:'k + い — say the vowel い after a light "k" tap.', ex:[['き','tree'],['きて','come (informal)']]},
- {ch:'く', rom:'ku', sound:'like "coo"', memory:'k + う — keep the "u" short and unrounded.', ex:[['くつ','shoes'],['くも','cloud']]},
- {ch:'け', rom:'ke', sound:'like "keh" in "kept"', memory:'k + え — mid-open vowel after the k sound.', ex:[['けさ','this morning']]},
- {ch:'こ', rom:'ko', sound:'like "co" in "cold"', memory:'k + お — round your lips for the お at the end.', ex:[['ここ','here'],['こども','child']]},
+ {ch:'か', rom:'ka', sound:'like "ca" in "car"', memory:'Starts with the か row pair it with あ: か = k + あ.', ex:[['かお','face'],['かさ','umbrella']]},
+ {ch:'き', rom:'ki', sound:'like "key"', memory:'k + い say the vowel い after a light "k" tap.', ex:[['き','tree'],['きて','come (informal)']]},
+ {ch:'く', rom:'ku', sound:'like "coo"', memory:'k + う keep the "u" short and unrounded.', ex:[['くつ','shoes'],['くも','cloud']]},
+ {ch:'け', rom:'ke', sound:'like "keh" in "kept"', memory:'k + え mid-open vowel after the k sound.', ex:[['けさ','this morning']]},
+ {ch:'こ', rom:'ko', sound:'like "co" in "cold"', memory:'k + お round your lips for the お at the end.', ex:[['ここ','here'],['こども','child']]},
 ];
 const HIRAGANA_S = [
  {ch:'さ', rom:'sa', sound:'like "sah"', memory:'s + あ.', ex:[['さけ','sake / alcohol'],['さかな','fish']]},
- {ch:'し', rom:'shi', sound:'like "she" (not "si")', memory:'The one irregular reading in this row — memorize it as "shi", not "si".', ex:[['し','poem'],['しごと','job']]},
+ {ch:'し', rom:'shi', sound:'like "she" (not "si")', memory:'The one irregular reading in this row memorize it as "shi", not "si".', ex:[['し','poem'],['しごと','job']]},
  {ch:'す', rom:'su', sound:'like "soo" (short)', memory:'s + う.', ex:[['すし','sushi'],['すき','like/fond of']]},
  {ch:'せ', rom:'se', sound:'like "seh" in "set"', memory:'s + え.', ex:[['せんせい','teacher']]},
  {ch:'そ', rom:'so', sound:'like "so"', memory:'s + お.', ex:[['そら','sky'],['そこ','there']]},
 ];
 const HIRAGANA_T = [
  {ch:'た', rom:'ta', sound:'like "tah"', memory:'t + あ.', ex:[['たこ','octopus/kite'],['たかい','tall/expensive']]},
- {ch:'ち', rom:'chi', sound:'like "chee" (not "ti")', memory:'The irregular reading of this row — memorize as "chi".', ex:[['ちいさい','small'],['ちち','my father']]},
- {ch:'つ', rom:'tsu', sound:'like "tsoo" — a single quick "ts" sound, not "too"', memory:'The other irregular reading — memorize as "tsu".', ex:[['つき','moon'],['つくえ','desk']]},
+ {ch:'ち', rom:'chi', sound:'like "chee" (not "ti")', memory:'The irregular reading of this row memorize as "chi".', ex:[['ちいさい','small'],['ちち','my father']]},
+ {ch:'つ', rom:'tsu', sound:'like "tsoo" a single quick "ts" sound, not "too"', memory:'The other irregular reading memorize as "tsu".', ex:[['つき','moon'],['つくえ','desk']]},
 ];
 const HIRAGANA_BLOCK1 = VOWELS.concat(HIRAGANA_K);
 const HIRAGANA_BLOCK2 = HIRAGANA_S.concat(HIRAGANA_T);
@@ -684,8 +684,8 @@ function renderSounds(el){
   el.insertAdjacentHTML('beforeend', `
   <p>Japanese has only five vowel sounds, and every other syllable in the language is built from them. Get these five rock-solid today and everything else becomes much easier.</p>
   ${tileGrid(VOWELS)}
-  <div class="callout tip"><span class="callout-label">Step 1 — Say them aloud</span>Spend 10 minutes saying <span class="jp">あ い う え お</span> slowly, then faster. Say them, don't just read them.</div>
-  <div class="callout"><span class="callout-label">Step 2 — Listen and repeat</span>Search YouTube for "Japanese Hiragana Pronunciation" and repeat every sound after a native speaker. Don't move on until each vowel feels automatic — you should recognize a/i/u/e/o without translating in your head.</div>
+  <div class="callout tip"><span class="callout-label">Step 1 - Say them aloud</span>Spend 10 minutes saying <span class="jp">あ い う え お</span> slowly, then faster. Say them, don't just read them.</div>
+  <div class="callout"><span class="callout-label">Step 2 - Listen and repeat</span>Search YouTube for "Japanese Hiragana Pronunciation" and repeat every sound after a native speaker. Don't move on until each vowel feels automatic, you should recognize a/i/u/e/o without translating in your head.</div>
   <h3>Vowel Details</h3>
   ${letterDetails(VOWELS)}
   `);
@@ -693,9 +693,9 @@ function renderSounds(el){
 }
 
 function renderHiragana1(el){
-  chapterHeader(el, 'Session 2 · 00:30–01:00', 'Hiragana Block 1 — あ–こ', '10 characters: the 5 vowels + か row');
+  chapterHeader(el, 'Session 2 · 00:30–01:00', 'Hiragana Block 1 - あ–こ', '10 characters: the 5 vowels + か row');
   el.insertAdjacentHTML('beforeend', `
-  <p>For each character: say it, then write it 10 times while saying the sound aloud. Never write silently — the sound and the shape need to lock together.</p>
+  <p>For each character: say it, then write it 10 times while saying the sound aloud. Never write silently, the sound and the shape need to lock together.</p>
   ${tileGrid(HIRAGANA_BLOCK1)}
   <div class="callout tip"><span class="callout-label">Recognition Drill</span>Cover the romaji below each tile. Point at a character and say its sound out loud before checking. If you hesitate more than 2 seconds, that character needs another round.</div>
   <h3>Character Details</h3>
@@ -711,14 +711,14 @@ function renderHiragana1(el){
 }
 
 function renderHiragana2(el){
-  chapterHeader(el, 'Session 2 (cont.) · 01:00–01:15', 'Hiragana Block 1 — さ–つ + Reading Practice', '8 more characters, then reading without translating');
+  chapterHeader(el, 'Session 2 (cont.) · 01:00–01:15', 'Hiragana Block 1 - さ–つ + Reading Practice', '8 more characters, then reading without translating');
   el.insertAdjacentHTML('beforeend', `
   ${tileGrid(HIRAGANA_BLOCK2)}
-  <div class="callout warn"><span class="callout-label">Watch for irregulars</span><span class="jp">し</span> is "shi" (not "si"), <span class="jp">ち</span> is "chi" (not "ti"), and <span class="jp">つ</span> is "tsu" (not "tu"). These three break the clean pattern — learn them as their own sounds.</div>
+  <div class="callout warn"><span class="callout-label">Watch for irregulars</span><span class="jp">し</span> is "shi" (not "si"), <span class="jp">ち</span> is "chi" (not "ti"), and <span class="jp">つ</span> is "tsu" (not "tu"). These three break the clean pattern, learn them as their own sounds.</div>
   <h3>Character Details</h3>
   ${letterDetails(HIRAGANA_S.concat(HIRAGANA_T))}
-  <h3>Step C — Read Simple Combinations</h3>
-  <p>Read these aloud. Do <b>not</b> translate — just read the sounds.</p>
+  <h3>Step C - Read Simple Combinations</h3>
+  <p>Read these aloud. Do <b>not</b> translate, just read the sounds.</p>
   <div class="tile-grid">${READING_COMBOS.map(c=>`<div class="letter-tile"><div class="glyph">${c.jp}</div><div class="spk">${spkBtn(c.jp)}</div></div>`).join('')}</div>
   <h3>Quick Check</h3>
   `);
@@ -759,7 +759,7 @@ function buildFlashcards(words){
     const w = words[i];
     wrap.innerHTML = `
     <div class="flashcard" id="fcCard">
-      <div class="fc-front"><div class="fc-face jp">${w.jp}</div><div class="fc-sub">${w.rom} — tap to flip</div></div>
+      <div class="fc-front"><div class="fc-face jp">${w.jp}</div><div class="fc-sub">${w.rom} - tap to flip</div></div>
       <div class="fc-back"><div class="fc-face">${w.en}</div><div class="fc-sub jp">${w.jp}</div></div>
     </div>
     <div class="flash-controls">
@@ -776,18 +776,18 @@ function buildFlashcards(words){
 }
 
 function renderGrammar(el){
-  chapterHeader(el, 'Session 4 · 01:35–02:25', 'Today\'s Grammar', 'Three points — small, but they unlock every sentence you\'ll build from here on');
+  chapterHeader(el, 'Session 4 · 01:35–02:25', 'Today\'s Grammar', 'Three points, small, but they unlock every sentence you\'ll build from here on');
   el.insertAdjacentHTML('beforeend', `
-  <p>Japanese grammar works differently from English, but these three pieces are simpler than they look once you see the pattern. Take your time here — everything later in this course leans on these three points.</p>
+  <p>Japanese grammar works differently from English, but these three pieces are simpler than they look once you see the pattern. Take your time here, everything later in this course leans on these three points.</p>
 
   <div class="gram-block">
     <span class="gnum">Grammar 1 of 3</span>
-    <h3>は (wa) — The Topic Marker, + です — "am / is / are"</h3>
+    <h3>は (wa) - The Topic Marker, + です - "am / is / are"</h3>
     <div class="gsub">How to say "X is Y" in Japanese</div>
 
-    <p>In English, sentences are built around a <b>subject</b> ("I am a student"). Japanese instead marks a <b>topic</b> — the thing you're about to talk about — using the particle <span class="jp">は</span>. Think of it as meaning <i>"as for ___, ..."</i></p>
+    <p>In English, sentences are built around a <b>subject</b> ("I am a student"). Japanese instead marks a <b>topic</b>, the thing you're about to talk about, using the particle <span class="jp">は</span>. Think of it as meaning <i>"as for ___, ..."</i></p>
 
-    <div class="callout warn"><span class="callout-label">Pronunciation trap</span>The character <span class="jp">は</span> is normally pronounced "ha" (like in <span class="jp">はい</span>). But when it's used as the topic-marking particle, it's pronounced <b>"wa"</b> instead. This is one of the very first irregular readings every learner hits — it's not a typo, it's just how the particle works.</div>
+    <div class="callout warn"><span class="callout-label">Pronunciation trap</span>The character <span class="jp">は</span> is normally pronounced "ha" (like in <span class="jp">はい</span>). But when it's used as the topic-marking particle, it's pronounced <b>"wa"</b> instead. This is one of the very first irregular readings every learner hits, it's not a typo, it's just how the particle works.</div>
 
     <p>After the topic, you add the information, then close the sentence with <span class="jp">です</span>, a polite word meaning "am / is / are". Japanese word order is the reverse of English:</p>
 
@@ -802,22 +802,22 @@ function renderGrammar(el){
       <div class="gram-chip"><div class="gc-jp">がくせい</div><div class="gc-tag">student</div></div>
       <div class="gram-chip is-particle"><div class="gc-jp">です</div><div class="gc-tag">am / is / are</div></div>
     </div>
-    <p style="color:var(--text-dim); font-size:.9em; margin-top:-6px;">Read together: <span class="jp">わたしは がくせいです。</span> — literally "as for me, (I) am a student" → naturally, "I am a student."</p>
+    <p style="color:var(--text-dim); font-size:.9em; margin-top:-6px;">Read together: <span class="jp">わたしは がくせいです</span> - literally "as for me, (I) am a student" → naturally, "I am a student."</p>
 
     <h4 style="margin-top:20px;">More examples</h4>
     <div class="gram-ex-row"><span class="jp">わたしは がくせいです。</span><span class="en">I am a student.</span>${spkBtn('わたしは がくせいです。')}</div>
     <div class="gram-ex-row"><span class="jp">わたしは せんせいです。</span><span class="en">I am a teacher.</span>${spkBtn('わたしは せんせいです。')}</div>
     <div class="gram-ex-row"><span class="jp">あなたは がくせいです。</span><span class="en">You are a student.</span>${spkBtn('あなたは がくせいです。')}</div>
 
-    <div class="callout tip"><span class="callout-label">Beginner tip</span>You don't need a separate word for "am/is/are" that changes with the subject like English (am/is/are) — <span class="jp">です</span> stays exactly the same no matter who or what the topic is. That's one less thing to memorize.</div>
+    <div class="callout tip"><span class="callout-label">Beginner tip</span>You don't need a separate word for "am/is/are" that changes with the subject like English (am/is/are) <span class="jp">です</span> stays exactly the same no matter who or what the topic is. That's one less thing to memorize.</div>
   </div>
 
   <div class="gram-block">
     <span class="gnum">Grammar 2 of 3</span>
-    <h3>か — The Question Marker</h3>
+    <h3>か - The Question Marker</h3>
     <div class="gsub">Turning any statement into a question</div>
 
-    <p>In English, asking a question usually means reordering words ("You are a student" → "Are you a student?") or adding "do/does" ("You like it" → "Do you like it?"). Japanese skips all of that. You just add <span class="jp">か</span> to the very end of a statement, and it becomes a question — the word order never changes.</p>
+    <p>In English, asking a question usually means reordering words ("You are a student" → "Are you a student?") or adding "do/does" ("You like it" → "Do you like it?"). Japanese skips all of that. You just add <span class="jp">か</span> to the very end of a statement, and it becomes a question, the word order never changes.</p>
 
     <div class="gram-formula">
       <span class="fpart">[Statement]</span><span class="fplus">+</span><span class="fpart particle">か</span><span class="fplus">+</span><span class="fpart">。</span>
@@ -830,30 +830,30 @@ function renderGrammar(el){
       <div class="gram-chip is-particle"><div class="gc-jp">です</div><div class="gc-tag">am / is / are</div></div>
       <div class="gram-chip is-particle"><div class="gc-jp">か</div><div class="gc-tag">question marker</div></div>
     </div>
-    <p style="color:var(--text-dim); font-size:.9em; margin-top:-6px;">Read together: <span class="jp">あなたは がくせいですか。</span> — "Are you a student?"</p>
+    <p style="color:var(--text-dim); font-size:.9em; margin-top:-6px;">Read together: <span class="jp">あなたは がくせいですか。</span> - "Are you a student?"</p>
 
     <h4 style="margin-top:20px;">Answering</h4>
     <div class="gram-ex-row"><span class="jp">あなたは がくせいですか。</span><span class="en">Are you a student?</span>${spkBtn('あなたは がくせいですか。')}</div>
     <div class="gram-ex-row"><span class="jp">はい。</span><span class="en">Yes.</span>${spkBtn('はい。')}</div>
     <div class="gram-ex-row"><span class="jp">いいえ。</span><span class="en">No.</span>${spkBtn('いいえ。')}</div>
 
-    <div class="callout"><span class="callout-label">Formal vs. casual</span>In formal writing, <span class="jp">か</span> alone does the job of a question mark — you technically don't need "?" at all. In everyday casual writing (texts, social media), people often still add "？" after <span class="jp">か</span>, or drop <span class="jp">か</span> entirely and just rely on rising intonation and a question mark. For now, always use <span class="jp">か</span> with a full stop — it's the safest, most correct form.</div>
+    <div class="callout"><span class="callout-label">Formal vs. casual</span>In formal writing, <span class="jp">か</span> alone does the job of a question mark, you technically don't need "?" at all. In everyday casual writing (texts, social media), people often still add "？" after <span class="jp">か</span>, or drop <span class="jp">か</span> entirely and just rely on rising intonation and a question mark. For now, always use <span class="jp">か</span> with a full stop, it's the safest, most correct form.</div>
   </div>
 
   <div class="gram-block">
     <span class="gnum">Grammar 3 of 3</span>
-    <h3>の — Connecting Two Nouns</h3>
-    <div class="gsub">Like English "'s" or "of" — but the word order flips</div>
+    <h3>の - Connecting Two Nouns</h3>
+    <div class="gsub">Like English "'s" or "of" but the word order flips</div>
 
-    <p><span class="jp">の</span> sits between two nouns and links them, roughly the way "'s" or "of" works in English. The key difference: in <span class="jp">A の B</span>, <b>A comes first</b> and describes or owns <b>B</b> — the opposite order from English "B of A".</p>
+    <p><span class="jp">の</span> sits between two nouns and links them, roughly the way "'s" or "of" works in English. The key difference: in <span class="jp">A の B</span>, <b>A comes first</b> and describes or owns <b>B</b>, the opposite order from English "B of A".</p>
 
     <div class="gram-formula">
       <span class="fpart">[Noun A]</span><span class="fpart particle">の</span><span class="fpart">[Noun B]</span>
     </div>
 
-    <p><span class="jp">の</span> does two closely related jobs — both shown below:</p>
+    <p><span class="jp">の</span> does two closely related jobs, both shown below:</p>
 
-    <h4 style="margin-top:16px;">1. Possession — "A's B"</h4>
+    <h4 style="margin-top:16px;">1. Possession - "A's B"</h4>
     <div class="gram-breakdown">
       <div class="gram-chip"><div class="gc-jp">わたし</div><div class="gc-tag">I / me</div></div>
       <div class="gram-chip is-particle"><div class="gc-jp">の</div><div class="gc-tag">'s / of</div></div>
@@ -861,7 +861,7 @@ function renderGrammar(el){
     </div>
     <div class="gram-ex-row"><span class="jp">わたしの ほん</span><span class="en">my book (literally "I's book")</span>${spkBtn('わたしの ほん')}</div>
 
-    <h4 style="margin-top:16px;">2. Description / category — "B related to A"</h4>
+    <h4 style="margin-top:16px;">2. Description / category - "B related to A"</h4>
     <div class="gram-breakdown">
       <div class="gram-chip"><div class="gc-jp">にほんご</div><div class="gc-tag">Japanese language</div></div>
       <div class="gram-chip is-particle"><div class="gc-jp">の</div><div class="gc-tag">'s / of</div></div>
@@ -872,7 +872,7 @@ function renderGrammar(el){
     <div class="callout warn"><span class="callout-label">Common mistake</span>English speakers often want to say the two nouns in English order and just translate word-for-word, which flips the meaning. Remember: whatever comes right before <span class="jp">の</span> is the "owner" or "category," and whatever comes right after is the actual thing. <span class="jp">わたしの ほん</span> = my book, <b>not</b> "book's me."</div>
   </div>
 
-  <h3>Practice — Sentence Builder</h3>
+  <h3>Practice - Sentence Builder</h3>
   <p>Tap the chips in order to build each sentence using は, です, か, and の.</p>
   `);
   el.appendChild(buildSentenceBuilder());
@@ -925,16 +925,15 @@ function buildSentenceBuilder(){
 
 function renderListening(el){
   chapterHeader(el, 'Session 5 · 02:25–02:45', 'Listening & Recognition', 'Train yourself to catch familiar words in a stream');
-  el.insertAdjacentHTML('beforeend', `<p>Search YouTube for "JLPT N5 Beginner Listening Lesson 1." Don't pause every sentence — just try to catch these words as they fly by:</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Search YouTube for "JLPT N5 Beginner Listening Lesson 1." Don't pause every sentence, just try to catch these words as they fly by:</p>`);
   LISTEN_SENTENCES.forEach(s=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-jp">${s}</div>${spkBtn(s,'🔊 Play')}</div></div>`);
   });
-  el.insertAdjacentHTML('beforeend', `<div class="callout"><span class="callout-label">About the audio</span>🔊 buttons play an embedded clip if one has been added for that word or sentence. Until audio is added, tapping one will briefly flash <b>❌ Missing</b> — that's expected, not a bug.</div>`);
   el.insertAdjacentHTML('beforeend', noteBox('listening'));
 }
 
 function renderSpeaking(el){
-  chapterHeader(el, 'Session 6 · 02:45–03:05', 'Speaking — Self Introduction', 'Slowly ×3, then naturally ×5');
+  chapterHeader(el, 'Session 6 · 02:45–03:05', 'Speaking - Self Introduction', 'Slowly ×3, then naturally ×5');
   el.insertAdjacentHTML('beforeend', `<div class="card">
   ${SELFINTRO_LINES.map(l=>`<p class="jp" style="font-size:1.3em; margin:6px 0">${l}</p>`).join('')}
   ${spkBtn(SELFINTRO_LINES.join(' '),'🔊 Play greeting')}
@@ -954,13 +953,13 @@ function renderWriting(el){
 }
 
 function renderReview(el){
-  chapterHeader(el, 'Session 8 · 03:20–03:30', 'Review — Without Looking at Your Notes');
+  chapterHeader(el, 'Session 8 · 03:20–03:30', 'Review - Without Looking at Your Notes');
   el.insertAdjacentHTML('beforeend', `
   <div class="card"><h3>Hiragana</h3><p>Can you read all 18: <span class="jp" style="font-size:1.2em">あ い う え お　か き く け こ　さ し す せ そ　た ち つ</span> without looking up sounds?</p></div>
   <div class="card"><h3>Vocabulary</h3><p>Can you remember all 15 words? Aim for at least 80% recall.</p></div>
   <div class="card"><h3>Grammar</h3><p>Can you explain, in your own words:</p><ul><li>What は does?</li><li>What です means?</li><li>How か changes a sentence?</li><li>What の connects?</li></ul>
   <p>If you can explain them without looking, you've understood them.</p></div>
-  <div class="callout tip"><span class="callout-label">Teacher's advice</span>Resist the urge to jump ahead. If Day 1 feels easy by the end, that's a success — it means you're building a solid foundation instead of rushing through it.</div>
+  <div class="callout tip"><span class="callout-label">Teacher's advice</span>Resist the urge to jump ahead. If Day 1 feels easy by the end, that's a success, it means you're building a solid foundation instead of rushing through it.</div>
   `);
   el.insertAdjacentHTML('beforeend', noteBox('review'));
 }
@@ -1021,11 +1020,11 @@ function renderDayComplete(el){
   chapterHeader(el, 'Finish', 'Day 1 Complete 🎉');
   el.insertAdjacentHTML('beforeend', `<p>Great work. Here's your badge progress for Day 1:</p>
   <div class="badge-grid">${BADGE_DEFS.map(b=>`<div class="badge ${State.badges[b.id]?'earned':''}"><div class="bicon">${b.icon}</div><div class="bname">${b.name}</div></div>`).join('')}</div>
-  <div class="callout"><span class="callout-label">Say This Aloud — Day 1 Ending Ritual</span>
+  <div class="callout"><span class="callout-label">Say This Aloud - Day 1 Ending Ritual</span>
   <p class="jp" style="margin:6px 0">こんにちは。わたしは [your name] です。わたしは がくせいです。にほんごを べんきょうします。ありがとうございます。</p>
   ${spkBtn('こんにちは。わたしは がくせいです。にほんごを べんきょうします。ありがとうございます。','🔊 Play greeting')}
   </div>
-  <h3>Tomorrow — Day 2 Preview</h3>
+  <h3>Tomorrow - Day 2 Preview</h3>
   <div class="callout tip"><span class="callout-label">Coming Up</span>Day 2 builds directly on today: hiragana な–わ, greetings, and numbers 1–20.</div>
   <div class="btn-row"><button class="btn secondary" onclick="goTo('error-log')">Review Error Log</button> <button class="btn secondary" onclick="goTo('cover')">Back to Cover</button></div>
   `);

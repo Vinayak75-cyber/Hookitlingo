@@ -704,7 +704,7 @@ function renderCover(el){
     <div class="presents">A 12-week self-study roadmap</div>
     <div class="cover-block"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="none" stroke="var(--vermilion)" stroke-width="2" opacity=".5"/><text x="50" y="63" font-size="46" text-anchor="middle" font-family="var(--jp)" fill="var(--text)">三</text></svg></div>
     <h1>JLPT N5 · Day 3</h1>
-    <div class="sub">Review all 46 basic hiragana, then unlock dakuten, handakuten, combination sounds, and the small っ — plus 20 new vocabulary words.</div>
+    <div class="sub">Review all 46 basic hiragana, then unlock dakuten, handakuten, combination sounds, and the small っ, plus 20 new vocabulary words.</div>
     <div class="cover-stats">
       <div><b>25</b><span>Dakuten/Handakuten</span></div>
       <div><b>21</b><span>Combinations</span></div>
@@ -718,9 +718,9 @@ function renderCover(el){
 function renderReview12(el){
   chapterHeader(el, 'Session 1 · 00:00–00:35', 'Review Days 1 & 2', 'Make the basics automatic before adding new sounds');
   el.insertAdjacentHTML('beforeend', `
-  <div class="callout"><span class="callout-label">Step 1 — Hiragana speed reading</span>Read the full basic hiragana chart from memory. Goal: finish in under 90 seconds with no mistakes.</div>
+  <div class="callout"><span class="callout-label">Step 1 - Hiragana speed reading</span>Read the full basic hiragana chart from memory. Goal: finish in under 90 seconds with no mistakes.</div>
   ${tileGrid(BASIC_46)}
-  <div class="callout tip"><span class="callout-label">Step 2 — Vocabulary review</span>Use active recall both directions: look at Japanese → say English, then look at English → say Japanese. Mark anything difficult for extra review.</div>
+  <div class="callout tip"><span class="callout-label">Step 2 - Vocabulary review</span>Use active recall both directions: look at Japanese → say English, then look at English → say Japanese. Mark anything difficult for extra review.</div>
   <h3>Quick Recall Check</h3>
   `);
   const quiz = sample(REVIEW_VOCAB,10).map(w=>{
@@ -729,21 +729,21 @@ function renderReview12(el){
   });
   el.appendChild(buildQuiz('review1-quiz', quiz, 'review-1-2'));
   el.insertAdjacentHTML('beforeend', `
-  <div class="callout fact"><span class="callout-label">Step 3 — Self-introduction, without notes</span>Say this five times.</div>
+  <div class="callout fact"><span class="callout-label">Step 3 - Self-introduction, without notes</span>Say this five times.</div>
   <div class="card">${DAY2_SELFINTRO.map(l=>`<p class="jp" style="font-size:1.2em; margin:6px 0">${l}</p>`).join('')}${spkBtn(DAY2_SELFINTRO.join(' '),'🔊 Play greeting')}</div>
-  <div class="callout"><span class="callout-label">Extra practice</span>Now replace <span class="jp">がくせい</span> with another noun you've learned, like <span class="jp">せんせい</span> — just to practice the sentence structure itself, not only the words.
+  <div class="callout"><span class="callout-label">Extra practice</span>Now replace <span class="jp">がくせい</span> with another noun you've learned, like <span class="jp">せんせい</span>, just to practice the sentence structure itself, not only the words.
   ${spkBtn('わたしは せんせいです。','🔊 Try it: せんせい version')}</div>
   `);
   el.insertAdjacentHTML('beforeend', noteBox('review-1-2'));
 }
 
 function renderDakuten(el){
-  chapterHeader(el, 'Session 2 · 00:35–01:05', 'Dakuten (゛) — Voiced Sounds', '20 characters formed by adding two small marks');
+  chapterHeader(el, 'Session 2 · 00:35–01:05', 'Dakuten (゛) - Voiced Sounds', '20 characters formed by adding two small marks');
   el.insertAdjacentHTML('beforeend', `
-  <p>Adding two small marks (゛) called <b>dakuten</b> to the upper-right corner of certain hiragana changes their sound from unvoiced to voiced — for example か (ka) becomes が (ga). The base shape barely changes; only the marks are new.</p>
+  <p>Adding two small marks (゛) called <b>dakuten</b> to the upper-right corner of certain hiragana changes their sound from unvoiced to voiced, for example か (ka) becomes が (ga). The base shape barely changes; only the marks are new.</p>
   ${transformGrid(DAKUTEN)}
-  <div class="callout fact"><span class="callout-label">Fun fact</span><span class="jp">ぢ</span> and <span class="jp">づ</span> are pronounced identically to <span class="jp">じ</span> and <span class="jp">ず</span> in modern Japanese. They survive mostly for historical spelling reasons and appear in a small number of specific words (like ちぢむ "to shrink" and つづく "to continue") — you'll rarely need to produce them yourself, but you should recognize them on sight.</div>
-  <div class="callout tip"><span class="callout-label">Writing practice</span>Write every new character five times while saying it aloud — for example <span class="jp">が が が が が</span> while saying "ga, ga, ga...". Repeat for all 20 sounds.</div>
+  <div class="callout fact"><span class="callout-label">Fun fact</span><span class="jp">ぢ</span> and <span class="jp">づ</span> are pronounced identically to <span class="jp">じ</span> and <span class="jp">ず</span> in modern Japanese. They survive mostly for historical spelling reasons and appear in a small number of specific words (like ちぢむ "to shrink" and つづく "to continue"), you'll rarely need to produce them yourself, but you should recognize them on sight.</div>
+  <div class="callout tip"><span class="callout-label">Writing practice</span>Write every new character five times while saying it aloud, for example <span class="jp">が が が が が</span> while saying "ga, ga, ga...". Repeat for all 20 sounds.</div>
   <h3>Quick Check</h3>
   `);
   const quiz = DAKUTEN.map(h=>{
@@ -755,13 +755,13 @@ function renderDakuten(el){
 }
 
 function renderHandakuten(el){
-  chapterHeader(el, 'Session 2 (cont.) · 01:05–01:25', 'Handakuten (゜) — The "P" Sounds', '5 characters, one small circle');
+  chapterHeader(el, 'Session 2 (cont.) · 01:05–01:25', 'Handakuten (゜) - The "P" Sounds', '5 characters, one small circle');
   el.insertAdjacentHTML('beforeend', `
   <p>A small circle (゜) called <b>handakuten</b> only ever applies to the は row, turning it into a crisp "p" sound: は becomes ぱ.</p>
   ${transformGrid(HANDAKUTEN)}
-  <div class="callout"><span class="callout-label">Dakuten vs. handakuten</span>Two small dashes (゛) generally add "voicing" — か→が, さ→ざ, た→だ, は→ば. One small circle (゜) does something different and applies only to は — turning it into a sharp "p": は→ぱ. Same base row, two completely different marks, two completely different results.</div>
+  <div class="callout"><span class="callout-label">Dakuten vs. handakuten</span>Two small dashes (゛) generally add "voicing" か→が, さ→ざ, た→だ, は→ば. One small circle (゜) does something different and applies only to は, turning it into a sharp "p": は→ぱ. Same base row, two completely different marks, two completely different results.</div>
   <h3>Recognition Drill</h3>
-  <p>Mixing dakuten and handakuten together — this is exactly how they'll appear in real text. Continue until recognition feels instant.</p>
+  <p>Mixing dakuten and handakuten together, this is exactly how they'll appear in real text. Continue until recognition feels instant.</p>
   `);
   const pool = DAKUTEN.concat(HANDAKUTEN);
   const quiz = shuffle(pool).slice(0,16).map(h=>{
@@ -773,14 +773,14 @@ function renderHandakuten(el){
 }
 
 function renderCombinations(el){
-  chapterHeader(el, 'Session 3 · 01:25–02:10', 'Combination Sounds (拗音 · ようおん)', '21 combinations, one beat each — not two');
+  chapterHeader(el, 'Session 3 · 01:25–02:10', 'Combination Sounds (拗音 · ようおん)', '21 combinations, one beat each, not two');
   el.insertAdjacentHTML('beforeend', `
-  <p>These sounds combine an い-column consonant (き, し, ち, に, ひ, み, り — or their dakuten versions) with a small ゃ, ゅ, or ょ. The result is read as a <b>single syllable beat</b>, not two — きゃ is one beat ("kya"), never "ki-ya".</p>
+  <p>These sounds combine an い-column consonant (き, し, ち, に, ひ, み, り or their dakuten versions) with a small ゃ, ゅ, or ょ. The result is read as a <b>single syllable beat</b>, not two, きゃ is one beat ("kya"), never "ki-ya".</p>
   <div class="gram-formula">
     <span class="fpart">[i-row consonant]</span><span class="fplus">+</span><span class="fpart particle">small ゃ/ゅ/ょ</span><span class="fplus">=</span><span class="fpart">one syllable</span>
   </div>
   ${tileGrid(COMBOS)}
-  <div class="callout tip"><span class="callout-label">Practice — reading real words</span>Don't worry about memorizing every word yet. Focus on smooth reading, not translating.</div>
+  <div class="callout tip"><span class="callout-label">Practice - reading real words</span>Don't worry about memorizing every word yet. Focus on smooth reading, not translating.</div>
   `);
   COMBO_WORDS.forEach(w=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-jp">${w.jp}</div>${spkBtn(w.jp)}</div><div class="wc-meaning">${w.en}</div></div>`);
@@ -801,15 +801,15 @@ function renderCombinations(el){
 function renderSokuon(el){
   chapterHeader(el, 'Session 4 · 02:10–02:30', 'The Small っ (促音 · そくおん)', 'A tiny character with a big effect on rhythm');
   el.insertAdjacentHTML('beforeend', `
-  <p>A small っ indicates a doubled consonant, or a brief silent pause before the next consonant sound. It's never pronounced on its own — it just holds the beat for a moment.</p>
-  <div class="gram-formula"><span class="fpart">がっこう</span><span class="fplus">=</span><span class="fpart">が</span><span class="fpart particle">・っ・</span><span class="fpart">こう</span><span class="fplus">— one held beat, then continue</span></div>
+  <p>A small っ indicates a doubled consonant, or a brief silent pause before the next consonant sound. It's never pronounced on its own, it just holds the beat for a moment.</p>
+  <div class="gram-formula"><span class="fpart">がっこう</span><span class="fplus">=</span><span class="fpart">が</span><span class="fpart particle">・っ・</span><span class="fpart">こう</span><span class="fplus">- one held beat, then continue</span></div>
   `);
   SOKUON_WORDS.forEach(w=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-jp">${w.jp}</div>${spkBtn(w.jp)}</div><div class="wc-meaning">${w.en}</div></div>`);
   });
   el.insertAdjacentHTML('beforeend', `
   <div class="callout tip"><span class="callout-label">Practice</span>Read slowly first, breaking it into beats: <span class="jp">が・っ・こ・う</span>. Then read it naturally: <span class="jp">がっこう</span>. Repeat each example five times.</div>
-  <div class="callout fact"><span class="callout-label">Fun fact</span>っ is called <i>sokuon</i>. It can never start or end a word by itself — it always sits between two other sounds, holding the rhythm for exactly one beat, like a tiny drum rest in music.</div>
+  <div class="callout fact"><span class="callout-label">Fun fact</span>っ is called <i>sokuon</i>. It can never start or end a word by itself, it always sits between two other sounds, holding the rhythm for exactly one beat, like a tiny drum rest in music.</div>
   <h3>Quick Check</h3>
   `);
   const distractors = VOCAB_D3.map(v=>v.en);
@@ -822,7 +822,7 @@ function renderSokuon(el){
 }
 
 function renderVocab(el){
-  chapterHeader(el, 'Session 5 · 02:30–03:00', 'New Vocabulary', '20 words — read, recall, write');
+  chapterHeader(el, 'Session 5 · 02:30–03:00', 'New Vocabulary', '20 words - read, recall, write');
   el.insertAdjacentHTML('beforeend', `<p>For each word: read it aloud, say the meaning, cover the meaning and recall it, then write it once from memory. Add these to your Anki deck.</p>`);
   VOCAB_D3.forEach(w=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-jp">${w.jp}</div>${spkBtn(w.jp)}</div><div class="wc-meaning">${w.en}</div></div>`);
@@ -839,14 +839,14 @@ function renderVocab(el){
 }
 
 function renderGrammarReview(el){
-  chapterHeader(el, 'Session 6 · 03:00–03:20', 'Grammar Reinforcement', 'No new grammar — just strengthening what you already know');
+  chapterHeader(el, 'Session 6 · 03:00–03:20', 'Grammar Reinforcement', 'No new grammar, just strengthening what you already know');
   el.insertAdjacentHTML('beforeend', `<p>Write and read each sentence below aloud, three times each.</p>`);
   GRAMMAR_REVIEW.forEach(s=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-jp">${s.display}</div>${spkBtn(s.display)}</div><div class="wc-meaning">${s.en}</div></div>`);
   });
   el.insertAdjacentHTML('beforeend', `
-  <div class="callout warn"><span class="callout-label">A quick preview</span><span class="jp">これ</span> ("this") appears in one sentence above. You'll formally learn it tomorrow alongside それ/あれ/この/その/あの — for now, it's fine to simply notice it and read it naturally.</div>
-  <h3>Puzzle — Rebuild the Sentence</h3>
+  <div class="callout warn"><span class="callout-label">A quick preview</span><span class="jp">これ</span> ("this") appears in one sentence above. You'll formally learn it tomorrow alongside それ/あれ/この/その/あの - for now, it's fine to simply notice it and read it naturally.</div>
+  <h3>Puzzle - Rebuild the Sentence</h3>
   <p>Tap the pieces in order to rebuild each sentence.</p>
   `);
   el.appendChild(buildPhraseBuilder(GRAMMAR_REVIEW));
@@ -860,8 +860,7 @@ function renderListening(el){
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-jp">${s}</div>${spkBtn(s,'🔊 Play')}</div></div>`);
   });
   el.insertAdjacentHTML('beforeend', `
-  <div class="callout tip"><span class="callout-label">The technique — shadowing</span>When you hear a familiar word: pause, repeat it exactly, and try to match the speaker's rhythm and pitch as closely as possible — not just the individual sounds. This is called <b>shadowing</b>, and it's one of the most effective tools for improving natural pronunciation.</div>
-  <div class="callout"><span class="callout-label">About the audio</span>🔊 buttons play an embedded clip if one has been added for that word. Until audio is added, tapping one will briefly flash <b>❌ Missing</b> — that's expected, not a bug.</div>
+  <div class="callout tip"><span class="callout-label">The technique - shadowing</span>When you hear a familiar word: pause, repeat it exactly, and try to match the speaker's rhythm and pitch as closely as possible, not just the individual sounds. This is called <b>shadowing</b>, and it's one of the most effective tools for improving natural pronunciation.</div>
   `);
   el.insertAdjacentHTML('beforeend', noteBox('listening'));
 }
@@ -878,10 +877,10 @@ function renderHomework(el){
   el.insertAdjacentHTML('beforeend', `
   <div class="card"><h3>1. Kana Review</h3><p>Rewrite all dakuten characters, all handakuten characters, and all combination sounds (きゃ, しゃ, ちゃ, etc.).</p></div>
   <div class="card"><h3>2. Vocabulary</h3><p>Review all 20 new words using Anki or flashcards. Aim for at least 80% recall.</p></div>
-  <div class="card"><h3>3. Reading</h3><p>Read today's word list aloud three times. Time yourself — try to read more smoothly each time without sacrificing accuracy.</p></div>
+  <div class="card"><h3>3. Reading</h3><p>Read today's word list aloud three times. Time yourself, try to read more smoothly each time without sacrificing accuracy.</p></div>
   <div class="card"><h3>4. Speaking</h3><p>Introduce yourself, then add one sentence about today:</p>
   ${SELFINTRO_TODAY.map(l=>`<p class="jp" style="font-size:1.2em; margin:6px 0">${l}</p>`).join('')}${spkBtn(SELFINTRO_TODAY.join(' '),'🔊 Play greeting')}
-  <p style="color:var(--text-faint); font-size:.88em; margin-top:8px;">Don't worry if you haven't formally studied adjectives yet — this is just exposure. Repeat the full introduction five times.</p></div>
+  <p style="color:var(--text-faint); font-size:.88em; margin-top:8px;">Don't worry if you haven't formally studied adjectives yet, this is just exposure. Repeat the full introduction five times.</p></div>
   <h3>End-of-Day Mastery Checklist</h3>
   <div class="card">
   <p>✅ Read all 46 basic hiragana confidently.<br>
@@ -892,7 +891,7 @@ function renderHomework(el){
   ✅ Recall at least 16 of today's 20 vocabulary words.<br>
   ✅ Introduce yourself naturally without looking at notes.</p>
   </div>
-  <div class="callout tip"><span class="callout-label">Teacher's advice</span>Many beginners rush through kana and jump straight into grammar. By the end of Day 3, your goal is to see Japanese text and read it directly — not through romaji. That single habit will make every grammar lesson, kanji lesson, and reading exercise over the next 81 days dramatically easier.</div>
+  <div class="callout tip"><span class="callout-label">Teacher's advice</span>Many beginners rush through kana and jump straight into grammar. By the end of Day 3, your goal is to see Japanese text and read it directly, not through romaji. That single habit will make every grammar lesson, kanji lesson, and reading exercise over the next 81 days dramatically easier.</div>
   <div class="btn-row"><button class="btn" onclick="goTo('daily-test')">Take the Day 3 Final Test →</button></div>
   `);
 }
@@ -927,14 +926,14 @@ function renderErrorLog(el){
 
 function renderDayComplete(el){
   chapterHeader(el, 'Finish', 'Day 3 Complete 🎉');
-  el.insertAdjacentHTML('beforeend', `<p>Huge milestone — you can now read hiragana directly, without leaning on romaji. Here's your badge progress for Day 3:</p>
+  el.insertAdjacentHTML('beforeend', `<p>Huge milestone, you can now read hiragana directly, without leaning on romaji. Here's your badge progress for Day 3:</p>
   <div class="badge-grid">${BADGE_DEFS.map(b=>`<div class="badge ${State.badges[b.id]?'earned':''}"><div class="bicon">${b.icon}</div><div class="bname">${b.name}</div></div>`).join('')}</div>
-  <div class="callout"><span class="callout-label">Say This Aloud — Day 3 Ending Ritual</span>
+  <div class="callout"><span class="callout-label">Say This Aloud - Day 3 Ending Ritual</span>
   <p class="jp" style="margin:6px 0">こんにちは。わたしは [your name] です。がくせいです。きょうは たのしいです。ありがとうございます。</p>
   ${spkBtn('こんにちは。わたしはがくせいです。きょうはたのしいです。ありがとうございます。','🔊 Play greeting')}
   </div>
-  <h3>Tomorrow — Day 4 Preview</h3>
-  <div class="callout tip"><span class="callout-label">Coming Up</span>Day 4 begins your first real JLPT grammar unit: demonstratives — <span class="jp">これ・それ・あれ・この・その・あの</span> — and you'll start using Japanese to describe the world directly around you.</div>
+  <h3>Tomorrow - Day 4 Preview</h3>
+  <div class="callout tip"><span class="callout-label">Coming Up</span>Day 4 begins your first real JLPT grammar unit: demonstratives "<span class="jp">これ・それ・あれ・この・その・あの</span>"  and you'll start using Japanese to describe the world directly around you.</div>
   <div class="btn-row"><button class="btn secondary" onclick="goTo('error-log')">Review Error Log</button> <button class="btn secondary" onclick="goTo('cover')">Back to Cover</button></div>
   `);
 }

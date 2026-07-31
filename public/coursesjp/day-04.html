@@ -400,12 +400,12 @@ const SOKUON_WORDS_D4 = [
  {jp:'いっしょ', en:'together'},
 ];
 const LONG_VOWEL_WORDS = [
- {jp:'きょう', reading:'kyō', en:'today', pattern:'おう', note:'Written おう, but read as one long "ō" sound — not "ki-yo-u".'},
- {jp:'おおきい', reading:'ōkii', en:'big', pattern:'おお', note:'Written おお — a doubled お gives the same long "ō" sound.'},
- {jp:'せんせい', reading:'sensē', en:'teacher', pattern:'えい', note:'Written えい, but usually pronounced as a long "ē" — closer to "sen-sē" than "sen-se-i".'},
+ {jp:'きょう', reading:'kyō', en:'today', pattern:'おう', note:'Written おう, but read as one long "ō" sound, not "ki-yo-u".'},
+ {jp:'おおきい', reading:'ōkii', en:'big', pattern:'おお', note:'Written おお, a doubled お gives the same long "ō" sound.'},
+ {jp:'せんせい', reading:'sensē', en:'teacher', pattern:'えい', note:'Written えい, but usually pronounced as a long "ē", closer to "sen-sē" than "sen-se-i".'},
  {jp:'くうき', reading:'kūki', en:'air', pattern:'うう', note:'A doubled う simply holds the "u" sound twice as long.'},
- {jp:'おかあさん', reading:'okāsan', en:'mother', pattern:'ああ', note:'A doubled あ holds the "a" sound — say it noticeably longer than a normal あ.'},
- {jp:'おとうさん', reading:'otōsan', en:'father', pattern:'おう', note:'Same おう pattern as きょう — read as one long "ō", not "o-to-u".'},
+ {jp:'おかあさん', reading:'okāsan', en:'mother', pattern:'ああ', note:'A doubled あ holds the "a" sound, say it noticeably longer than a normal あ.'},
+ {jp:'おとうさん', reading:'otōsan', en:'father', pattern:'おう', note:'Same おう pattern as きょう, read as one long "ō", not "o-to-u".'},
 ];
 const TIME_VOCAB = [
  {jp:'いま', en:'now'},
@@ -734,7 +734,7 @@ function buildRevealGrid(list){
    ============================================================ */
 const CHAPTERS = [
   {id:'cover', label:'Cover', group:null},
-  {id:'review-1-3', label:'Session 1 · Review Days 1–3', group:'Hour 1 — Warm Up'},
+  {id:'review-1-3', label:'Session 1 · Review Days 1-3', group:'Hour 1 — Warm Up'},
   {id:'combinations', label:'Session 2 · Combination Sounds', group:'Hour 2 — New Sounds'},
   {id:'sokuon', label:'Session 3 · Small っ', group:'Hour 2 — New Sounds'},
   {id:'long-vowels', label:'Session 4 · Long Vowels', group:'Hour 3 — Long Vowels & Time'},
@@ -754,7 +754,7 @@ function renderCover(el){
     <div class="presents">A 12-week self-study roadmap</div>
     <div class="cover-block"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="none" stroke="var(--vermilion)" stroke-width="2" opacity=".5"/><text x="50" y="63" font-size="46" text-anchor="middle" font-family="var(--jp)" fill="var(--text)">四</text></svg></div>
     <h1>JLPT N5 · Day 4</h1>
-    <div class="sub">Master combination sounds (ようおん), the small っ, long vowels, and learn to tell the time in Japanese — your first full sentences without romaji.</div>
+    <div class="sub">Master combination sounds (ようおん), the small っ, long vowels, and learn to tell the time in Japanese, your first full sentences without romaji.</div>
     <div class="cover-stats">
       <div><b>21</b><span>Combination Sounds</span></div>
       <div><b>5</b><span>Small っ Words</span></div>
@@ -768,12 +768,12 @@ function renderCover(el){
 function renderReview13(el){
   chapterHeader(el, 'Session 1 · 00:00–00:30', 'Review Days 1–3', 'Strengthen everything before adding new material');
   el.insertAdjacentHTML('beforeend', `
-  <div class="callout"><span class="callout-label">Step 1 — Hiragana speed read</span>Read the entire basic hiragana chart out loud without hesitating.</div>
+  <div class="callout"><span class="callout-label">Step 1 - Hiragana speed read</span>Read the entire basic hiragana chart out loud without hesitating.</div>
   ${tileGrid(BASIC_46)}
   <p>Then read the voiced sounds you learned on Day 3:</p>
   ${tileGrid(DAKUTEN)}
   ${tileGrid(HANDAKUTEN)}
-  <div class="callout tip"><span class="callout-label">Step 2 — Vocabulary review</span>Use active recall in both directions: Japanese → meaning, then meaning → Japanese.</div>
+  <div class="callout tip"><span class="callout-label">Step 2 - Vocabulary review</span>Use active recall in both directions: Japanese → meaning, then meaning → Japanese.</div>
   <h3>Quick Recall Check</h3>
   `);
   const quiz = sample(REVIEW_VOCAB_D4,10).map(w=>{
@@ -782,24 +782,24 @@ function renderReview13(el){
   });
   el.appendChild(buildQuiz('review1-quiz', quiz, 'review-1-3'));
   el.insertAdjacentHTML('beforeend', `
-  <div class="callout fact"><span class="callout-label">Step 3 — Reading review</span>Read these words aloud until they feel smooth — no sounding out each character.</div>
+  <div class="callout fact"><span class="callout-label">Step 3 - Reading review</span>Read these words aloud until they feel smooth, no sounding out each character.</div>
   <div class="tile-grid">${REVIEW_READING_D4.map(w=>`<div class="letter-tile"><div class="glyph">${w.jp}</div><div class="rom" style="font-size:.75em">${w.en}</div><div class="spk">${spkBtn(w.jp)}</div></div>`).join('')}</div>
   `);
   el.insertAdjacentHTML('beforeend', noteBox('review-1-3'));
 }
 
 function renderCombinations(el){
-  chapterHeader(el, 'Session 2 · 00:30–01:15', 'Combination Sounds (拗音 · ようおん)', "Today's biggest lesson — 21 sounds, one beat each");
+  chapterHeader(el, 'Session 2 · 00:30–01:15', 'Combination Sounds (拗音 · ようおん)', "Today's biggest lesson 21 sounds, one beat each");
   el.insertAdjacentHTML('beforeend', `
-  <p>These sounds combine an い-column consonant (き, し, ち, に, ひ, み, り) with a small ゃ, ゅ, or ょ. Even though two characters are written, the result is read as a <b>single syllable beat</b> — きゃ is one beat ("kya"), never "ki-ya".</p>
+  <p>These sounds combine an い-column consonant (き, し, ち, に, ひ, み, り) with a small ゃ, ゅ, or ょ. Even though two characters are written, the result is read as a <b>single syllable beat</b>, きゃ is one beat ("kya"), never "ki-ya".</p>
   <div class="gram-formula">
     <span class="fpart">[i-row consonant]</span><span class="fplus">+</span><span class="fpart particle">small ゃ/ゅ/ょ</span><span class="fplus">=</span><span class="fpart">one syllable</span>
   </div>
-  <div class="callout"><span class="callout-label">Reinforcing yesterday</span>You met these on Day 3 — today we drill them until they're instant, and pair them with new vocabulary you'll actually use.</div>
+  <div class="callout"><span class="callout-label">Reinforcing yesterday</span>You met these on Day 3, today we drill them until they're instant, and pair them with new vocabulary you'll actually use.</div>
   ${['k','s','c','n','h','m','r'].map(g=>`<h4 style="margin-top:18px;">${COMBO_GROUP_LABELS[g]}</h4>${tileGrid(COMBOS.filter(c=>c.group===g))}`).join('')}
-  <div class="callout tip"><span class="callout-label">Writing Practice</span>Write each combination five times while saying it aloud. Example: <span class="jp">きゃ きゃ きゃ きゃ きゃ</span> — say "kya" every time you write it.</div>
-  <div class="callout fact"><span class="callout-label">Recognition Drill</span>Randomly test yourself: can you instantly identify <span class="jp">しょ</span> → sho, <span class="jp">りゅ</span> → ryu, <span class="jp">ちゃ</span> → cha — without pausing to sound it out?</div>
-  <h3>Reading Practice — Real Words</h3>
+  <div class="callout tip"><span class="callout-label">Writing Practice</span>Write each combination five times while saying it aloud. Example: <span class="jp">きゃ きゃ きゃ きゃ きゃ</span> - say "kya" every time you write it.</div>
+  <div class="callout fact"><span class="callout-label">Recognition Drill</span>Randomly test yourself: can you instantly identify <span class="jp">しょ</span> → sho, <span class="jp">りゅ</span> → ryu, <span class="jp">ちゃ</span> → cha without pausing to sound it out?</div>
+  <h3>Reading Practice - Real Words</h3>
   <p>Don't worry about memorizing every meaning yet. Just read naturally.</p>
   `);
   COMBO_WORDS_D4.forEach(w=>{
@@ -819,11 +819,11 @@ function renderCombinations(el){
 }
 
 function renderSokuon(el){
-  chapterHeader(el, 'Session 3 · 01:15–01:50', 'Small っ (促音 · そくおん)', "Today's second major lesson — a tiny pause that changes everything");
+  chapterHeader(el, 'Session 3 · 01:15–01:50', 'Small っ (促音 · そくおん)', "Today's second major lesson, a tiny pause that changes everything");
   el.insertAdjacentHTML('beforeend', `
-  <p>The small っ creates a brief pause and doubles the consonant sound that follows it. It's never pronounced on its own — it just holds the beat for a moment before the next sound lands.</p>
-  <div class="gram-formula"><span class="fpart">がっこう</span><span class="fplus">=</span><span class="fpart">が</span><span class="fpart particle">・っ・</span><span class="fpart">こ・う</span><span class="fplus">— one held beat, then continue</span></div>
-  <h3>Reading Drill — Break It Apart First</h3>
+  <p>The small っ creates a brief pause and doubles the consonant sound that follows it. It's never pronounced on its own, it just holds the beat for a moment before the next sound lands.</p>
+  <div class="gram-formula"><span class="fpart">がっこう</span><span class="fplus">=</span><span class="fpart">が</span><span class="fpart particle">・っ・</span><span class="fpart">こ・う</span><span class="fplus"> one held beat, then continue</span></div>
+  <h3>Reading Drill - Break It Apart First</h3>
   <p>Say the word broken into beats, then say it naturally:</p>
   <div class="gram-ex-row"><span class="jp">が・っ・こ・う</span><span class="en">broken apart</span></div>
   <div class="gram-ex-row"><span class="jp">がっこう</span><span class="en">natural reading</span>${spkBtn('がっこう')}</div>
@@ -833,8 +833,8 @@ function renderSokuon(el){
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-jp">${w.jp}</div>${spkBtn(w.jp)}</div><div class="wc-meaning">${w.en}</div><div class="wc-ex">Read this word aloud five times, feeling the tiny pause before the doubled consonant.</div></div>`);
   });
   el.insertAdjacentHTML('beforeend', `
-  <div class="callout warn"><span class="callout-label">Speaking Drill</span>Don't pronounce <span class="jp">がっこう</span> as "ga-ku-kou". Instead say it as one smooth word: <b>gak-kō</b> — feel the tiny pause where っ sits, then let the next consonant land with a bit more force.</div>
-  <div class="callout fact"><span class="callout-label">Fun fact</span>The small っ is called <i>sokuon</i>. It can never start or end a word by itself — it always sits between two other sounds, holding the rhythm for exactly one beat, like a tiny drum rest in music.</div>
+  <div class="callout warn"><span class="callout-label">Speaking Drill</span>Don't pronounce <span class="jp">がっこう</span> as "ga-ku-kou". Instead say it as one smooth word: <b>gak-kō</b> feel the tiny pause where っ sits, then let the next consonant land with a bit more force.</div>
+  <div class="callout fact"><span class="callout-label">Fun fact</span>The small っ is called <i>sokuon</i>. It can never start or end a word by itself, it always sits between two other sounds, holding the rhythm for exactly one beat, like a tiny drum rest in music.</div>
   <h3>Quick Check</h3>
   `);
   const quiz = SOKUON_WORDS_D4.map(w=>{
@@ -848,15 +848,15 @@ function renderSokuon(el){
 function renderLongVowels(el){
   chapterHeader(el, 'Session 4 · 01:50–02:20', 'Long Vowels', 'Japanese changes meaning if vowel length changes');
   el.insertAdjacentHTML('beforeend', `
-  <p>In Japanese, holding a vowel sound longer isn't just a style choice — it can completely change the meaning of a word. Today you'll meet the common spelling patterns for long vowels.</p>
-  <div class="callout warn"><span class="callout-label">Why this matters</span><span class="jp">おばさん</span> (aunt) and <span class="jp">おばあさん</span> (grandmother) differ only by vowel length. Getting long vowels right isn't optional — it changes who you're talking about!</div>
+  <p>In Japanese, holding a vowel sound longer isn't just a style choice, it can completely change the meaning of a word. Today you'll meet the common spelling patterns for long vowels.</p>
+  <div class="callout warn"><span class="callout-label">Why this matters</span><span class="jp">おばさん</span> (aunt) and <span class="jp">おばあさん</span> (grandmother) differ only by vowel length. Getting long vowels right isn't optional, it changes who you're talking about!</div>
   `);
   const patterns = [
-    {title:'Long O — written おう', words:LONG_VOWEL_WORDS.filter(w=>w.pattern==='おう')},
-    {title:'Long O — written おお', words:LONG_VOWEL_WORDS.filter(w=>w.pattern==='おお')},
-    {title:'Long E — written えい', words:LONG_VOWEL_WORDS.filter(w=>w.pattern==='えい')},
-    {title:'Long U — written うう', words:LONG_VOWEL_WORDS.filter(w=>w.pattern==='うう')},
-    {title:'Long A — written ああ', words:LONG_VOWEL_WORDS.filter(w=>w.pattern==='ああ')},
+    {title:'Long O - written おう', words:LONG_VOWEL_WORDS.filter(w=>w.pattern==='おう')},
+    {title:'Long O - written おお', words:LONG_VOWEL_WORDS.filter(w=>w.pattern==='おお')},
+    {title:'Long E - written えい', words:LONG_VOWEL_WORDS.filter(w=>w.pattern==='えい')},
+    {title:'Long U - written うう', words:LONG_VOWEL_WORDS.filter(w=>w.pattern==='うう')},
+    {title:'Long A - written ああ', words:LONG_VOWEL_WORDS.filter(w=>w.pattern==='ああ')},
   ];
   patterns.forEach(p=>{
     if(!p.words.length) return;
@@ -868,7 +868,7 @@ function renderLongVowels(el){
   });
   el.insertAdjacentHTML('beforeend', `
   <h3>Reading Practice</h3>
-  <p>Say these slowly. Don't shorten the long vowels — hold them for their full length.</p>
+  <p>Say these slowly. Don't shorten the long vowels, hold them for their full length.</p>
   <div class="tile-grid">${LONG_VOWEL_WORDS.map(w=>`<div class="letter-tile"><div class="glyph">${w.jp}</div><div class="rom" style="font-size:.7em">${w.reading}</div><div class="spk">${spkBtn(w.jp)}</div></div>`).join('')}</div>
   <div class="callout fact"><span class="callout-label">Fun fact</span>In romaji, long vowels are often marked with a bar over the letter (ō, ē, ū, ā) called a <i>macron</i>. You'll see this in textbooks and dictionaries, though everyday typing often just doubles the letter instead (ou, ei, uu, aa).</div>
   <h3>Quick Check</h3>
@@ -882,7 +882,7 @@ function renderLongVowels(el){
 }
 
 function renderTimeVocab(el){
-  chapterHeader(el, 'Session 5 · 02:20–02:55', 'Time Expressions', "Today's grammar topic — telling the time");
+  chapterHeader(el, 'Session 5 · 02:20–02:55', 'Time Expressions', "Today's grammar topic, telling the time");
   el.insertAdjacentHTML('beforeend', `<h3>Core Time Vocabulary</h3>`);
   TIME_VOCAB.forEach(w=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-jp">${w.jp}</div>${spkBtn(w.jp)}</div><div class="wc-meaning">${w.en}</div></div>`);
@@ -893,15 +893,15 @@ function renderTimeVocab(el){
     <tr><th>Number</th><th>Hiragana</th><th>Note</th></tr>
     ${HOURS.map(h=>`<tr class="${h.irregular?'irregular':''}"><td>${h.n}</td><td class="jp" style="font-size:1.1em;">${h.jp} ${spkBtn(h.jp,'🔊')}</td><td>${h.irregular?'<span class="tag irregular">Irregular</span> '+h.note:''}</td></tr>`).join('')}
   </table>
-  <div class="callout warn"><span class="callout-label">Watch the irregulars</span>Three hours don't follow the expected pattern: <span class="jp">4時</span> is <span class="jp">よじ</span> (not よんじ), <span class="jp">7時</span> is <span class="jp">しちじ</span> (not ななじ), and <span class="jp">9時</span> is <span class="jp">くじ</span> (not きゅうじ). These three trip up almost every beginner — drill them extra.</div>
-  <h3>Minutes — A First Look</h3>
-  <p>You don't need to memorize every minute pattern yet — just become familiar with how the sound changes.</p>
+  <div class="callout warn"><span class="callout-label">Watch the irregulars</span>Three hours don't follow the expected pattern: <span class="jp">4時</span> is <span class="jp">よじ</span> (not よんじ), <span class="jp">7時</span> is <span class="jp">しちじ</span> (not ななじ), and <span class="jp">9時</span> is <span class="jp">くじ</span> (not きゅうじ). These three trip up almost every beginner, drill them extra.</div>
+  <h3>Minutes - A First Look</h3>
+  <p>You don't need to memorize every minute pattern yet, just become familiar with how the sound changes.</p>
   `);
   MINUTES_SAMPLE.forEach(w=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-jp">${w.jp}</div>${spkBtn(w.jp)}</div><div class="wc-meaning">${w.en}</div></div>`);
   });
   el.insertAdjacentHTML('beforeend', `
-  <div class="callout fact"><span class="callout-label">Fun fact</span>Notice that "minute" isn't always <span class="jp">ふん</span> — after some numbers it becomes <span class="jp">ぷん</span> (いっぷん, さんぷん, じゅっぷん). This sound change happens for the same reason が/ぱ differ — it's easier to say aloud. You'll master the full pattern in a later lesson.</div>
+  <div class="callout fact"><span class="callout-label">Fun fact</span>Notice that "minute" isn't always <span class="jp">ふん</span>, after some numbers it becomes <span class="jp">ぷん</span> (いっぷん, さんぷん, じゅっぷん). This sound change happens for the same reason が/ぱ differ, it's easier to say aloud. You'll master the full pattern in a later lesson.</div>
   <h3>Quick Check</h3>
   `);
   const quiz = HOURS.map(h=>{
@@ -928,9 +928,9 @@ function renderAskingTime(el){
       <div class="gram-chip is-particle"><div class="gc-jp">です</div><div class="gc-tag">am / is / are</div></div>
       <div class="gram-chip is-particle"><div class="gc-jp">か</div><div class="gc-tag">question marker</div></div>
     </div>
-    <p style="color:var(--text-dim); font-size:.9em; margin-top:-6px;">Answer with the same pattern, replacing なんじ with the actual hour: <span class="jp">いま さんじです。</span> — "It's 3 o'clock now."</p>
+    <p style="color:var(--text-dim); font-size:.9em; margin-top:-6px;">Answer with the same pattern, replacing なんじ with the actual hour: <span class="jp">いま さんじです。</span> - "It's 3 o'clock now."</p>
   </div>
-  <h3>Practice — Question &amp; Answer</h3>
+  <h3>Practice - Question &amp; Answer</h3>
   `);
   ASKING_TIME_QA.forEach(qa=>{
     el.insertAdjacentHTML('beforeend', `
@@ -940,7 +940,7 @@ function renderAskingTime(el){
   });
   el.insertAdjacentHTML('beforeend', `
   <div class="callout tip"><span class="callout-label">Practice</span>Say each hour aloud: 2:00 → <span class="jp">いま にじです。</span>, 5:00 → <span class="jp">いま ごじです。</span>, 8:00 → <span class="jp">いま はちじです。</span> Repeat until automatic.</div>
-  <h3>Puzzle — Build the Answer</h3>
+  <h3>Puzzle - Build the Answer</h3>
   <p>Tap the pieces in the right order to rebuild each sentence.</p>
   `);
   el.appendChild(buildPhraseBuilder(TIME_SENTENCES));
@@ -957,7 +957,7 @@ function renderReadingPractice(el){
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-jp">${s.display}</div>${spkBtn(s.display)}</div><div class="wc-meaning">${s.en}</div></div>`);
   });
   el.insertAdjacentHTML('beforeend', `
-  <h3>Reading Challenge — No Romaji</h3>
+  <h3>Reading Challenge - No Romaji</h3>
   <p>Try to read each word below without any hint. If you stumble, slow down and read the whole word again rather than sounding out each character. Tap "Reveal reading" only after you've made your attempt.</p>
   `);
   el.appendChild(buildRevealGrid(READING_CHALLENGE_D4));
@@ -969,7 +969,7 @@ function renderSpeaking(el){
   el.insertAdjacentHTML('beforeend', `
   <div class="card"><h3>Answer the time</h3><p>Question: <span class="jp">いま なんじですか。</span> ${spkBtn('いま なんじですか。')}</p>
   <p>Respond with the current hour (or any hour you like for practice), e.g. <span class="jp">いま ごじです。</span> ${spkBtn('いま ごじです。')}</p></div>
-  <div class="card"><h3>Talk about today</h3><p>Practice saying: <span class="jp">${TIME_PRACTICE_LINE}</span> — for example, <span class="jp">きょうは もくようびです。</span> ${spkBtn('きょうは もくようびです。')}</p>
+  <div class="card"><h3>Talk about today</h3><p>Practice saying: <span class="jp">${TIME_PRACTICE_LINE}</span> for example, <span class="jp">きょうは もくようびです。</span> ${spkBtn('きょうは もくようびです。')}</p>
   <p style="color:var(--text-faint); font-size:.88em;">You'll study weekdays formally later; this is just exposure.</p></div>
   <div class="card"><h3>Introduce yourself</h3>
   ${SELFINTRO_D4.map(l=>`<p class="jp" style="font-size:1.2em; margin:6px 0">${l}</p>`).join('')}
@@ -999,7 +999,7 @@ function renderHomework(el){
   ✅ Read common words like <span class="jp">きょう・せんせい・おかあさん・がっこう・きっぷ</span> smoothly.<br>
   ✅ Read simple hiragana sentences without relying on romaji.</p>
   </div>
-  <div class="callout tip"><span class="callout-label">Teacher's advice</span>Today marks the end of your hiragana mastery phase. After four days, you should no longer think of Japanese as individual symbols — you should recognize common words as whole units. From Day 5, you'll begin Katakana, which is much faster to learn because it shares the same sound system you've already mastered. That means your mental energy can shift from decoding characters to understanding the language itself.</div>
+  <div class="callout tip"><span class="callout-label">Teacher's advice</span>Today marks the end of your hiragana mastery phase. After four days, you should no longer think of Japanese as individual symbols, you should recognize common words as whole units. From Day 5, you'll begin Katakana, which is much faster to learn because it shares the same sound system you've already mastered. That means your mental energy can shift from decoding characters to understanding the language itself.</div>
   <div class="btn-row"><button class="btn" onclick="goTo('daily-test')">Take the Day 4 Final Test →</button></div>
   `);
 }
@@ -1034,14 +1034,14 @@ function renderErrorLog(el){
 
 function renderDayComplete(el){
   chapterHeader(el, 'Finish', 'Day 4 Complete 🎉');
-  el.insertAdjacentHTML('beforeend', `<p>Excellent work — you've now completed the entire hiragana sound system, including combinations, the small っ, and long vowels, and you can tell the time in Japanese. Here's your badge progress for Day 4:</p>
+  el.insertAdjacentHTML('beforeend', `<p>Excellent work! You've now completed the entire hiragana sound system, including combinations, the small っ, and long vowels, and you can tell the time in Japanese. Here's your badge progress for Day 4:</p>
   <div class="badge-grid">${BADGE_DEFS.map(b=>`<div class="badge ${State.badges[b.id]?'earned':''}"><div class="bicon">${b.icon}</div><div class="bname">${b.name}</div></div>`).join('')}</div>
-  <div class="callout"><span class="callout-label">Say This Aloud — Day 4 Ending Ritual</span>
+  <div class="callout"><span class="callout-label">Say This Aloud - Day 4 Ending Ritual</span>
   <p class="jp" style="margin:6px 0">こんにちは。わたしは [your name] です。がくせいです。いま なんじですか。きょうは たのしいです。ありがとうございます。</p>
   ${spkBtn('こんにちは。わたしはがくせいです。いまなんじですか。きょうはたのしいです。ありがとうございます。','🔊 Play greeting')}
   </div>
-  <h3>Tomorrow — Day 5 Preview</h3>
-  <div class="callout tip"><span class="callout-label">Coming Up</span>Day 5 begins Katakana — the script used for foreign loanwords, names, and onomatopoeia. Since Katakana shares the exact same sound system as hiragana, you'll pick it up much faster than you might expect.</div>
+  <h3>Tomorrow - Day 5 Preview</h3>
+  <div class="callout tip"><span class="callout-label">Coming Up</span>Day 5 begins Katakana, the script used for foreign loanwords, names, and onomatopoeia. Since Katakana shares the exact same sound system as hiragana, you'll pick it up much faster than you might expect.</div>
   <div class="btn-row"><button class="btn secondary" onclick="goTo('error-log')">Review Error Log</button> <button class="btn secondary" onclick="goTo('cover')">Back to Cover</button></div>
   `);
 }
