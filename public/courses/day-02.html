@@ -622,7 +622,7 @@ const CHAPTERS = [
  {id:'batchim-dictation', group:'Hour 2 · 받침', title:'받침 Dictation', render: renderBatchimDictation},
  {id:'pronunciation-contrasts', group:'Hour 3 · Pronunciation & Vocab', title:'Pronunciation Contrasts', render: renderPronContrasts},
  {id:'pronunciation-practice', group:'Hour 3 · Pronunciation & Vocab', title:'Pronunciation Practice', render: renderPronPractice},
- {id:'vocab-daily-life', group:'Hour 3 · Pronunciation & Vocab', title:'20 New Words — Daily Life', render: renderVocabDailyLife},
+ {id:'vocab-daily-life', group:'Hour 3 · Pronunciation & Vocab', title:'20 New Words - Daily Life', render: renderVocabDailyLife},
  {id:'vocab-recall', group:'Hour 3 · Pronunciation & Vocab', title:'Vocabulary Active Recall', render: renderVocabRecall},
  {id:'combined-review', group:'Hour 3 · Pronunciation & Vocab', title:'50-Word Combined Review', render: renderCombinedReview},
  {id:'review-grammar', group:'Hour 4 · Sentences & Grammar', title:'Review: 저는 / 이에요·예요', render: renderReviewGrammar},
@@ -792,9 +792,9 @@ function renderCover(el){
       </svg>
     </div>
     <div class="presents">TOPIK I · Level 1</div>
-    <div class="eyebrow">28-Day Roadmap — Day 2 of 28</div>
+    <div class="eyebrow">28-Day Roadmap - Day 2 of 28</div>
     <h1>Hangul Mastery, Pronunciation &amp; 받침</h1>
-    <p class="sub">Today you'll drill yesterday's Hangul to full speed, learn 받침 (final consonants) — the single biggest new reading concept — add 20 new daily-life words, read real sentences without romanization, and do your first serious listening + shadowing session.</p>
+    <p class="sub">Today you'll drill yesterday's Hangul to full speed, learn 받침 (final consonants), the single biggest new reading concept, add 20 new daily-life words, read real sentences without romanization, and do your first serious listening + shadowing session.</p>
     <div class="cover-stats">
       <div><b>5</b><span>Hours</span></div>
       <div><b>7</b><span>받침 Sounds</span></div>
@@ -840,7 +840,7 @@ function renderMission(el){
 
 function renderVowelSpeedDrill(el){
   chapterHeader(el,'Hour 1 · 00:10–00:25','Vowel Speed Drill');
-  el.insertAdjacentHTML('beforeend', `<p>Look at each vowel, say the sound, then reverse it (hear the sound, picture the letter). Your goal today is <b>recognition speed</b>, not perfect pronunciation — aim for under 2 seconds per letter.</p>
+  el.insertAdjacentHTML('beforeend', `<p>Look at each vowel, say the sound, then reverse it (hear the sound, picture the letter). Your goal today is <b>recognition speed</b>, not perfect pronunciation, aim for under 2 seconds per letter.</p>
   <div class="tile-grid">${shuffle(VOWELS).map(letterTileHTML).join('')}</div>`);
   const quiz = VOWELS.map(v=>{
     const wrongs = sample(VOWELS.filter(x=>x.ch!==v.ch),3).map(x=>x.rom);
@@ -873,7 +873,7 @@ function renderSyllableBlockReview(el){
     <p><span class="kr" style="font-size:1.3em">너</span> = ㄴ + ㅓ → <i>neo</i> ${spkBtn('너')}</p>
     <p><span class="kr" style="font-size:1.3em">무</span> = ㅁ + ㅜ → <i>mu</i> ${spkBtn('무')}</p>
   </div>
-  <p>Now read every syllable below. Your objective: stop thinking letter-by-letter — see each block as one visual unit.</p>
+  <p>Now read every syllable below. Your objective: stop thinking letter-by-letter, see each block as one visual unit.</p>
   `);
   SYLLABLE_ROWS.forEach(row=>{
     el.insertAdjacentHTML('beforeend', `<div class="tile-grid" style="grid-template-columns:repeat(${row.length},1fr)">${row.map(ch=>`<div class="letter-tile" style="padding:10px"><div class="glyph" style="font-size:1.8em">${ch}</div>${spkBtn(ch,'🔊')}</div>`).join('')}</div>`);
@@ -883,7 +883,7 @@ function renderSyllableBlockReview(el){
 
 function renderReadingChallenge(el){
   chapterHeader(el,'Hour 1 · 00:50–01:00','Syllable Reading Challenge');
-  el.insertAdjacentHTML('beforeend', `<p>Read these words aloud. Don't worry if you don't remember every meaning yet — today we're testing "can I read this?", not "do I know every word?" Target: 8/10 correct.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Read these words aloud. Don't worry if you don't remember every meaning yet, today we're testing "can I read this?", not "do I know every word?" Target: 8/10 correct.</p>`);
   READING_CHALLENGE.forEach(w=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${w}</div>${spkBtn(w)}</div></div>`);
   });
@@ -896,7 +896,7 @@ function renderReadingChallenge(el){
     const wrongs = sample(READING_CHALLENGE.filter(x=>x!==w),3);
     return {q:w, isKr:true, options:shuffle([w,...wrongs]), answer:w};
   });
-  el.insertAdjacentHTML('beforeend', `<h3>Quick Check — Tap the Matching Word</h3>`);
+  el.insertAdjacentHTML('beforeend', `<h3>Quick Check - Tap the Matching Word</h3>`);
   el.appendChild(buildQuiz('rc-quiz', shuffle(readQuiz).slice(0,6), 'reading-challenge'));
   el.insertAdjacentHTML('beforeend', noteBox('reading-challenge'));
 }
@@ -904,14 +904,14 @@ function renderReadingChallenge(el){
 function renderBatchimIntro(el){
   chapterHeader(el,'Hour 2 · 01:00–01:15','What Is 받침?');
   el.insertAdjacentHTML('beforeend', `
-  <p>You already know <span class="kr" style="font-size:1.2em">한</span> = ㅎ + ㅏ + ㄴ. That final consonant — <span class="kr">ㄴ</span> — is called <b class="kr">받침</b>: the consonant at the bottom/final position of a syllable block.</p>
+  <p>You already know <span class="kr" style="font-size:1.2em">한</span> = ㅎ + ㅏ + ㄴ. That final consonant "<span class="kr">ㄴ</span>" is called <b class="kr">받침</b>: the consonant at the bottom/final position of a syllable block.</p>
   <div class="card">
     <p><span class="kr" style="font-size:1.3em">가</span> — no final consonant ${spkBtn('가')}</p>
     <p><span class="kr" style="font-size:1.3em">간</span> — final consonant <span class="kr">ㄴ</span> ${spkBtn('간')}</p>
     <p><span class="kr" style="font-size:1.3em">감</span> — final consonant <span class="kr">ㅁ</span> ${spkBtn('감')}</p>
     <p><span class="kr" style="font-size:1.3em">강</span> — final consonant <span class="kr">ㅇ</span> ${spkBtn('강')}</p>
   </div>
-  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>This is the single biggest new concept today. Don't rush — take a moment to really see how the same top two letters (ㄱ+ㅏ) turn into four different syllables just by changing what sits underneath.</div>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>This is the single biggest new concept today. Don't rush, take a moment to really see how the same top two letters (ㄱ+ㅏ) turn into four different syllables just by changing what sits underneath.</div>
   <h3>Quick Check</h3>
   `);
   const quiz = [
@@ -925,7 +925,7 @@ function renderBatchimIntro(el){
 
 function renderBatchimSounds(el){
   chapterHeader(el,'Hour 2 · 01:15–01:30','The 7 Basic Final Sounds');
-  el.insertAdjacentHTML('beforeend', `<p>For Day 2, focus on these seven 받침 categories. Later you'll learn that letters like ㅋ and ㄲ can share a final sound with ㄱ — but for now, just these seven.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>For Day 2, focus on these seven 받침 categories. Later you'll learn that letters like ㅋ and ㄲ can share a final sound with ㄱ , but for now, just these seven.</p>`);
   BATCHIM_SET.forEach(b=> el.insertAdjacentHTML('beforeend', batchimCardHTML(b)));
   el.insertAdjacentHTML('beforeend', `<h3>Quick Check</h3>`);
   const quiz = BATCHIM_SET.map(b=>{
@@ -938,7 +938,7 @@ function renderBatchimSounds(el){
 
 function renderBatchimReading(el){
   chapterHeader(el,'Hour 2 · 01:30–01:45','Read Final Consonants');
-  el.insertAdjacentHTML('beforeend', `<p>Read each group slowly. Don't worry about vocabulary yet — focus on: <b>what is the final consonant?</b></p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Read each group slowly. Don't worry about vocabulary yet, focus on: <b>what is the final consonant?</b></p>`);
   BATCHIM_SET.forEach(b=>{
     el.insertAdjacentHTML('beforeend', `<h4 class="kr">${b.ch}</h4><div class="tile-grid">${b.ex.map(w=>`<div class="letter-tile"><div class="glyph">${w}</div>${spkBtn(w)}</div>`).join('')}</div>`);
   });
@@ -959,7 +959,7 @@ function renderBatchimRecognition(el){
 
 function renderBatchimDictation(el){
   chapterHeader(el,'Hour 2 · 02:00–02:10','받침 Dictation Exercise');
-  el.insertAdjacentHTML('beforeend', `<p>Listen to each word, then pick the Hangul spelling that matches what you heard. This starts connecting <b>Sound → Hangul</b> — essential for future TOPIK listening.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Listen to each word, then pick the Hangul spelling that matches what you heard. This starts connecting <b>Sound → Hangul</b>, essential for future TOPIK listening.</p>`);
   const quiz = BATCHIM_DICTATION_WORDS.map(w=>{
     const wrongs = sample(BATCHIM_DICTATION_WORDS.filter(x=>x!==w),3);
     return {q:spkBtn(w,'🔊 Play word'), isKr:false, options:shuffle([w,...wrongs]), answer:w};
@@ -970,7 +970,7 @@ function renderBatchimDictation(el){
 
 function renderPronContrasts(el){
   chapterHeader(el,'Hour 3 · 02:10–02:25','Pronunciation Contrasts');
-  el.insertAdjacentHTML('beforeend', `<p>Focus on these contrasts. Listen carefully — for ㅐ vs ㅔ, just aim for visual recognition today since modern pronunciation makes them very similar.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Focus on these contrasts. Listen carefully, for ㅐ vs ㅔ, just aim for visual recognition today since modern pronunciation makes them very similar.</p>`);
   PRON_PAIRS.forEach(p=>{
     el.insertAdjacentHTML('beforeend', `<div class="card"><p style="color:var(--text-faint);font-size:.82em;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">${p.note}</p><div class="tile-grid" style="grid-template-columns:1fr 1fr"><div class="letter-tile"><div class="glyph">${p.a}</div>${spkBtn(p.a)}</div><div class="letter-tile"><div class="glyph">${p.b}</div>${spkBtn(p.b)}</div></div></div>`);
   });
@@ -997,7 +997,7 @@ function wordCardsHTML(words){
   </div>`).join('');
 }
 function renderVocabDailyLife(el){
-  chapterHeader(el,'Hour 3 · 02:40–02:55','20 New Words — Daily Life');
+  chapterHeader(el,'Hour 3 · 02:40–02:55','20 New Words - Daily Life');
   el.insertAdjacentHTML('beforeend', `<p>Don't memorize these as isolated English translations. Think <span class="kr">아침</span> → morning → <span class="kr">아침에</span> → "in the morning." You're building a mental network, not a flashcard list.</p>
   <h3>Time Words</h3>`);
   el.insertAdjacentHTML('beforeend', wordCardsHTML(TIME_WORDS));
@@ -1027,7 +1027,7 @@ function renderVocabRecall(el){
 
 function renderCombinedReview(el){
   chapterHeader(el,'Hour 3 · 03:10–03:20','Day 1 + Day 2 = 50 Words');
-  el.insertAdjacentHTML('beforeend', `<p>30 old words + 20 new words = 50 total vocabulary items introduced. Don't expect perfect mastery yet — your goal today is <b>recognition</b>.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>30 old words + 20 new words = 50 total vocabulary items introduced. Don't expect perfect mastery yet, your goal today is <b>recognition</b>.</p>`);
   const deck = shuffle(VOCAB_50);
   let idx = 0;
   const wrap = document.createElement('div');
@@ -1058,7 +1058,7 @@ function renderReviewGrammar(el){
   chapterHeader(el,'Hour 4 · 03:20–03:50','Review: 저는 / 이에요 · 예요');
   el.insertAdjacentHTML('beforeend', `<p>Quick refresher from Day 1 before we push into new sentences.</p>
   <div class="card">
-    <p><span class="kr">저</span> + <span class="kr">는</span> = <span class="kr">저는</span> — I / as for me</p>
+    <p><span class="kr">저</span> + <span class="kr">는</span> = <span class="kr">저는</span> - I / as for me</p>
     <p>Consonant-ending noun + <span class="kr">이에요</span> → <span class="kr">학생이에요</span></p>
     <p>Vowel-ending noun + <span class="kr">예요</span> → <span class="kr">친구예요</span></p>
   </div>
@@ -1066,7 +1066,7 @@ function renderReviewGrammar(el){
   REVIEW_SENTENCES.forEach(s=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${s.kr}</div>${spkBtn(s.kr)}</div><div class="wc-meaning">${s.en}</div></div>`);
   });
-  el.insertAdjacentHTML('beforeend', `<div class="callout tip"><span class="callout-label">Teacher's Tip</span>Just recognize <span class="kr">아니에요</span> as "am not / is not" for now — we'll study negation properly on a later day.</div>
+  el.insertAdjacentHTML('beforeend', `<div class="callout tip"><span class="callout-label">Teacher's Tip</span>Just recognize <span class="kr">아니에요</span> as "am not / is not" for now, we'll study negation properly on a later day.</div>
   <h3>Quick Check</h3>`);
   const quiz = [
     {q:'학생 (ends in consonant) + "am" =', options:shuffle(['학생이에요','학생예요','학생는','학생가']), answer:'학생이에요'},
@@ -1080,10 +1080,10 @@ function renderReviewGrammar(el){
 function renderNoRomanization(el){
   chapterHeader(el,'Hour 4 · 03:50–04:05','Reading Without Romanization');
   el.insertAdjacentHTML('beforeend', `
-  <p>From today onward, stop writing things like <i>hakgyo</i> or <i>hangugeo</i> in your notes. Write <span class="kr" style="font-size:1.2em">학교</span> — not "hakgyo — school." Romanization helps for the first few hours, but it becomes a crutch. Your brain needs to connect <span class="kr">학교</span> directly to its meaning, without an English-letter middle step.</p>
-  <div class="callout warn"><span class="callout-label">The Rule</span>학교 — school. Not: hakgyo — school.</div>
+  <p>From today onward, stop writing things like <i>hakgyo</i> or <i>hangugeo</i> in your notes. Write <span class="kr" style="font-size:1.2em">학교</span> not "hakgyo - school." Romanization helps for the first few hours, but it becomes a crutch. Your brain needs to connect <span class="kr">학교</span> directly to its meaning, without an English-letter middle step.</p>
+  <div class="callout warn"><span class="callout-label">The Rule</span>학교 - school. Not: hakgyo - school.</div>
   <h3>Practice: Match Meaning Directly</h3>
-  <p>No romanization shown below — go straight from Hangul to meaning.</p>
+  <p>No romanization shown below, go straight from Hangul to meaning.</p>
   `);
   const words = sample([...VOCAB_DAY1_ALL, ...VOCAB_DAY2_ALL],10);
   const quiz = words.map(w=>{
@@ -1097,7 +1097,7 @@ function renderNoRomanization(el){
 
 function renderSentenceReadingDrill(el){
   chapterHeader(el,'Hour 4 · 04:05–04:20','Sentence Reading Drill');
-  el.insertAdjacentHTML('beforeend', `<p>Read each sentence aloud. You don't need to understand every grammar point — you're building reading fluency and vocabulary recognition. Objective: read all 10 without romanization.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Read each sentence aloud. You don't need to understand every grammar point, you're building reading fluency and vocabulary recognition. Objective: read all 10 without romanization.</p>`);
   READING_SENTENCES.forEach((s,i)=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${i+1}. ${s.kr}</div>${spkBtn(s.kr)}</div><div class="wc-meaning">${s.en}</div></div>`);
   });
@@ -1140,7 +1140,7 @@ function renderSentenceBreakdown(el){
       };
     });
   });
-  el.insertAdjacentHTML('beforeend', `<div class="callout tip"><span class="callout-label">Teacher's Tip</span>You don't need to master 를/을 yet — just recognize the structure: I + [object] + [verb].</div>`);
+  el.insertAdjacentHTML('beforeend', `<div class="callout tip"><span class="callout-label">Teacher's Tip</span>You don't need to master 를/을 yet, just recognize the structure: I + [object] + [verb].</div>`);
   el.insertAdjacentHTML('beforeend', noteBox('sentence-breakdown'));
 }
 
@@ -1173,7 +1173,7 @@ function renderListeningPractice(el){
   chapterHeader(el,'Hour 5 · 05:00–05:30','Listening: First &amp; Second Pass');
   el.insertAdjacentHTML('beforeend', `
   <h3>First Pass</h3>
-  <p>Play each clip without reading the text first. Don't pause after every word — your job right now is to train your ears on the general meaning.</p>`);
+  <p>Play each clip without reading the text first. Don't pause after every word, your job right now is to train your ears on the general meaning.</p>`);
   READING_SENTENCES.slice(0,5).forEach(s=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr" style="filter:blur(3px)" onmouseover="this.style.filter='none'" onclick="this.style.filter='none'">${s.kr}</div>${spkBtn(s.kr,'🔊 Play')}</div></div>`);
   });
@@ -1183,13 +1183,12 @@ function renderListeningPractice(el){
   READING_SENTENCES.slice(5).forEach(s=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${s.kr}</div>${spkBtn(s.kr,'🔊 Play')}</div><div class="wc-meaning">${s.en}</div></div>`);
   });
-  el.insertAdjacentHTML('beforeend', `<div class="callout"><span class="callout-label">About the audio</span>🔊 buttons play an embedded clip if one has been added for that sentence. Until audio is added, tapping one will briefly flash <b>❌ Missing</b> — that's expected, not a bug.</div>`);
   el.insertAdjacentHTML('beforeend', noteBox('listening-practice'));
 }
 
 function renderShadowing(el){
   chapterHeader(el,'Hour 5 · 05:30–05:45','Shadowing');
-  el.insertAdjacentHTML('beforeend', `<p>Method: Listen → Pause → Repeat, then Listen → Speak simultaneously. Try to copy rhythm, speed, intonation, and sentence ending — not perfect native pronunciation. Mark each sentence "Practiced" once you've shadowed it a few times.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Method: Listen → Pause → Repeat, then Listen → Speak simultaneously. Try to copy rhythm, speed, intonation, and sentence ending, not perfect native pronunciation. Mark each sentence "Practiced" once you've shadowed it a few times.</p>`);
   const five = READING_SENTENCES.slice(0,5);
   five.forEach((s,i)=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card" id="shadow-${i}">
@@ -1247,11 +1246,11 @@ function renderDayComplete(el){
   <div class="badge-grid">${BADGE_DEFS.map(b=>`<div class="badge ${State.badges[b.id]?'earned':''}"><div class="bicon">${b.icon}</div><div class="bname">${b.name}</div></div>`).join('')}</div>
   <div class="callout"><span class="callout-label">Success Criteria</span>
   <p>Basic Hangul recognition 90%+ · Simple word reading 80%+ · 받침 recognition 70%+ · Vocabulary recognition 80%+ · Basic grammar 80%+ · Listening: can identify familiar words · Shadowing: 5 sentences completed.</p>
-  <p>If you didn't reach these numbers, don't panic and don't restart Day 1. Write down your weak points in the Error Log — Day 3 opens with 15 minutes of repair time.</p>
+  <p>If you didn't reach these numbers, don't panic and don't restart Day 1. Write down your weak points in the Error Log, Day 3 opens with 15 minutes of repair time.</p>
   </div>
   <div class="callout tip"><span class="callout-label">Your Teacher's Rule</span>Never learn Korean vocabulary only through English. Don't do 학교 → school → next word. Do: 학교 → read it → hear it → say it → understand it → use it in a sentence.</div>
-  <h3>Tomorrow — Day 3 Preview</h3>
-  <div class="callout fact"><span class="callout-label">Coming Up</span>Korean Numbers Day: Native Korean Numbers + Sino-Korean Numbers + Counters + Age + Phone Numbers + Prices + Dates. A heavy TOPIK-focused day — confusing the two number systems is one of the easiest ways to lose marks, so we'll drill this hard.</div>
+  <h3>Tomorrow - Day 3 Preview</h3>
+  <div class="callout fact"><span class="callout-label">Coming Up</span>Korean Numbers Day: Native Korean Numbers + Sino-Korean Numbers + Counters + Age + Phone Numbers + Prices + Dates. A heavy TOPIK-focused day, confusing the two number systems is one of the easiest ways to lose marks, so we'll drill this hard.</div>
   <div class="btn-row"><button class="btn secondary" onclick="goTo('error-log')">Review Error Log</button> <button class="btn secondary" onclick="goTo('cover')">Back to Cover</button></div>
   `);
 }

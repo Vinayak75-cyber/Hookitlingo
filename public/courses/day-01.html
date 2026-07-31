@@ -358,14 +358,14 @@ textarea.note-area{width:100%; min-height:80px; background:var(--surface2); bord
    0. DATA
    ============================================================ */
 const VOWELS = [
- {ch:'ㅣ', rom:'i', sound:'like "ee" in "see"', mouth:'Lips relaxed and wide, tongue high and forward', memory:'A single upright human — 인(人), the vertical stroke of 천지인.', ex:[['이','this / tooth']]},
- {ch:'ㅡ', rom:'eu', sound:'like "oo" in "book" but unrounded — smile while saying "uh"', mouth:'Lips flat and wide, do not round them', memory:'A single flat line — 지(地), the earth stroke.', ex:[['그','that (thing)']]},
+ {ch:'ㅣ', rom:'i', sound:'like "ee" in "see"', mouth:'Lips relaxed and wide, tongue high and forward', memory:'A single upright human, 인(人), the vertical stroke of 천지인.', ex:[['이','this / tooth']]},
+ {ch:'ㅡ', rom:'eu', sound:'like "oo" in "book" but unrounded, smile while saying "uh"', mouth:'Lips flat and wide, do not round them', memory:'A single flat line — 지(地), the earth stroke.', ex:[['그','that (thing)']]},
  {ch:'ㅏ', rom:'a', sound:'like "a" in "father"', mouth:'Open your jaw wide and relaxed', memory:'Human line (ㅣ) with the sun (dot) rising on the right, mouth wide open.', ex:[['아이','child'],['가다','to go']]},
- {ch:'ㅓ', rom:'eo', sound:'like "u" in "cup", said with an open throat', mouth:'Jaw drops, tongue pulled slightly back — the "unhappy face" vowel', memory:'Human line (ㅣ) with the sun on the left — the mirror of ㅏ.', ex:[['어머니','mother']]},
+ {ch:'ㅓ', rom:'eo', sound:'like "u" in "cup", said with an open throat', mouth:'Jaw drops, tongue pulled slightly back, the "unhappy face" vowel', memory:'Human line (ㅣ) with the sun on the left — the mirror of ㅏ.', ex:[['어머니','mother']]},
  {ch:'ㅗ', rom:'o', sound:'like "o" in "go"', mouth:'Round your lips forward into a small circle', memory:'Earth line (ㅡ) with the sun rising above it.', ex:[['오다','to come']]},
  {ch:'ㅜ', rom:'u', sound:'like "oo" in "moon"', mouth:'Push your lips further forward than ㅗ', memory:'Earth line (ㅡ) with the sun setting below it.', ex:[['우유','milk']]},
  {ch:'ㅑ', rom:'ya', sound:'"ya" as in "yard"', mouth:'Same as ㅏ but glide into it with a y-sound', memory:'ㅏ with one extra stroke = add a Y glide.', ex:[['야구','baseball']]},
- {ch:'ㅕ', rom:'yeo', sound:'"yuh" — y + eo', mouth:'Same as ㅓ with a y-glide', memory:'ㅓ with one extra stroke.', ex:[['여자','woman']]},
+ {ch:'ㅕ', rom:'yeo', sound:'"yuh" - y + eo', mouth:'Same as ㅓ with a y-glide', memory:'ㅓ with one extra stroke.', ex:[['여자','woman']]},
  {ch:'ㅛ', rom:'yo', sound:'"yo" as in "yo-yo"', mouth:'Same as ㅗ with a y-glide', memory:'ㅗ with one extra stroke.', ex:[['교실','classroom']]},
  {ch:'ㅠ', rom:'yu', sound:'"you"', mouth:'Same as ㅜ with a y-glide', memory:'ㅜ with one extra stroke.', ex:[['우유','milk (note: 유 alone means "oil/milk" root)']]},
 ];
@@ -374,10 +374,10 @@ const CONSONANTS = [
  {ch:'ㄴ', name:'nieun', rom:'n', sound:'like English N', mouth:'Tongue tip touches just behind the upper teeth (slightly lower than English N)', memory:'The shape traces the tongue tip curling up behind the teeth.', ex:[['나','I/me'],['누나','older sister (of a male)']]},
  {ch:'ㄷ', name:'digeut', rom:'d/t', sound:'between English D and T', mouth:'Tongue touches the ridge behind the teeth then releases', memory:'ㄴ + one line on top = the softer n-sound becomes a crisper d/t.', ex:[['다리','leg/bridge']]},
  {ch:'ㄹ', name:'rieul', rom:'r/l', sound:'a light flap, between English R and L', mouth:'Tongue tip taps once against the ridge behind the teeth', memory:'A curved zig-zag shape, a bit like the number 2 or letter Z.', ex:[['라디오','radio'],['우리','we/us']]},
- {ch:'ㅁ', name:'mieum', rom:'m', sound:'like English M', mouth:'Lips pressed fully closed, sound hums through the nose', memory:'A closed square — your mouth sealed shut on all four sides.', ex:[['엄마','mom'],['마시다','to drink']]},
+ {ch:'ㅁ', name:'mieum', rom:'m', sound:'like English M', mouth:'Lips pressed fully closed, sound hums through the nose', memory:'A closed square, your mouth sealed shut on all four sides.', ex:[['엄마','mom'],['마시다','to drink']]},
  {ch:'ㅂ', name:'bieup', rom:'b/p', sound:'between English B and P', mouth:'Lips press shut then release with a small pop', memory:'ㅁ + two short lines on top = the sealed mouth releasing with force.', ex:[['바다','sea'],['비','rain']]},
- {ch:'ㅅ', name:'siot', rom:'s', sound:'a soft "s", slightly softer than English', mouth:'Tongue tip near the ridge behind the teeth, air hisses through', memory:'Two points like the eyes of a smiling face — think "smile" starts with S.', ex:[['사람','person'],['시간','time']]},
- {ch:'ㅇ', name:'ieung', rom:'silent/ng', sound:'silent at the start of a syllable; "ng" (as in "sing") at the end', mouth:'At the start: no obstruction at all, just shapes the vowel. At the end: back of tongue touches the soft palate, air through the nose', memory:'A circle — an empty, open mouth with nothing blocking it.', ex:[['아이','child (silent ㅇ)'],['사랑','love (final ㅇ = "ng")']]},
+ {ch:'ㅅ', name:'siot', rom:'s', sound:'a soft "s", slightly softer than English', mouth:'Tongue tip near the ridge behind the teeth, air hisses through', memory:'Two points like the eyes of a smiling face, think "smile" starts with S.', ex:[['사람','person'],['시간','time']]},
+ {ch:'ㅇ', name:'ieung', rom:'silent/ng', sound:'silent at the start of a syllable; "ng" (as in "sing") at the end', mouth:'At the start: no obstruction at all, just shapes the vowel. At the end: back of tongue touches the soft palate, air through the nose', memory:'A circle, an empty, open mouth with nothing blocking it.', ex:[['아이','child (silent ㅇ)'],['사랑','love (final ㅇ = "ng")']]},
  {ch:'ㅈ', name:'jieut', rom:'j', sound:'between English J and CH', mouth:'Tongue blade presses the ridge, releases with light friction', memory:'ㅅ + one line on top = more friction/force.', ex:[['자다','to sleep'],['주스','juice']]},
  {ch:'ㅊ', name:'chieut', rom:'ch', sound:'a strongly aspirated CH, with a puff of air', mouth:'Same as ㅈ, release with extra breath', memory:'ㅈ + one more line = even more air.', ex:[['차','tea/car'],['치마','skirt']]},
  {ch:'ㅋ', name:'kieuk', rom:'k', sound:'a strongly aspirated K, with a puff of air', mouth:'Same tongue position as ㄱ, release with extra breath', memory:'ㄱ + one extra stroke = more air, more force.', ex:[['커피','coffee'],['카드','card']]},
@@ -837,11 +837,11 @@ function renderMission(el){
     <tr><td>4</td><td>60 min</td><td>Grammar + sentence building</td></tr>
     <tr><td>5</td><td>60 min</td><td>TOPIK listening + reading + review</td></tr>
   </table>
-  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Study 50 minutes, then take a 10-minute break — after every hour. The breaks are part of the plan. Don't sit for five hours continuously.</div>
-  <div class="callout fact"><span class="callout-label">Fun Fact</span>Hangul was designed in 1443 under King Sejong specifically so ordinary people could learn to read in about a morning — you're about to test that 500-year-old promise for yourself.</div>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Study 50 minutes, then take a 10-minute break, after every hour. The breaks are part of the plan. Don't sit for five hours continuously.</div>
+  <div class="callout fact"><span class="callout-label">Fun Fact</span>Hangul was designed in 1443 under King Sejong specifically so ordinary people could learn to read in about a morning, you're about to test that 500-year-old promise for yourself.</div>
   <div class="callout tip">
     <span class="callout-label">📓 Before You Begin — A Note From Your Teacher</span>
-    Reading a screen will teach you to recognize Hangul, but it won't teach your hand to write it — and for Korean, muscle memory matters just as much as visual memory. I've put together a printable workbook that mirrors every drill in today's lesson: writing grids for each letter and word, memory-trick prompts, and sentence practice, so you can reinforce what you learn here with a pen in hand. Use the workbook below to practice everything you cover today — print it, or fill it in digitally as you go.
+    Reading a screen will teach you to recognize Hangul, but it won't teach your hand to write it, and for Korean, muscle memory matters just as much as visual memory. I've put together a printable workbook that mirrors every drill in today's lesson: writing grids for each letter and word, memory-trick prompts, and sentence practice, so you can reinforce what you learn here with a pen in hand. Use the workbook below to practice everything you cover today, print it, or fill it in digitally as you go.
     <div class="btn-row" style="margin:12px 0 2px">
       <a class="btn secondary" href="Workbook-Day-01.html" rel="noopener" style="text-decoration:none">📥 Open the Day 1 Workbook →</a>
     </div>
@@ -853,12 +853,12 @@ function renderMission(el){
 function renderVowels(el){
   chapterHeader(el,'Hour 1 · 00:00–00:30','Hangul Foundation: 10 Basic Vowels');
   el.insertAdjacentHTML('beforeend', `
-  <p>Korean letters are grouped into syllable blocks, not written in a straight line like English. For example, <span class="kr" style="font-size:1.3em">한국</span> is really <span class="kr">한</span> + <span class="kr">국</span> — and <span class="kr">한</span> itself is built from <span class="kr">ㅎ + ㅏ + ㄴ</span>. Your brain needs to learn to see syllable blocks, not individual letters — that is the single most important mindset for Day 1.</p>
+  <p>Korean letters are grouped into syllable blocks, not written in a straight line like English. For example, <span class="kr" style="font-size:1.3em">한국</span> is really <span class="kr">한</span> + <span class="kr">국</span> and <span class="kr">한</span> itself is built from <span class="kr">ㅎ + ㅏ + ㄴ</span>. Your brain needs to learn to see syllable blocks, not individual letters, that is the single most important mindset for Day 1.</p>
   <p>Memorize these 10 vowels first. Tap 🔊 to hear each one, then try covering the romanization and saying the sound before you check.</p>
   <div class="tile-grid">${VOWELS.map(letterTileHTML).join('')}</div>
-  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Say every sound out loud. Reading silently is not enough for Day 1 — your mouth needs to learn these shapes too.</div>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Say every sound out loud. Reading silently is not enough for Day 1, your mouth needs to learn these shapes too.</div>
   <h3>Every Vowel, Broken Down</h3>
-  <p>Tap through each one below — sound, mouth position, a memory trick, and a practice word.</p>
+  <p>Tap through each one below sound, mouth position, a memory trick, and a practice word.</p>
   `);
   VOWELS.forEach(v=> el.insertAdjacentHTML('beforeend', letterDetailHTML(v)));
   el.insertAdjacentHTML('beforeend', `<h3>Quick Check</h3>`);
@@ -873,11 +873,11 @@ function renderVowels(el){
 function renderConsonants(el){
   chapterHeader(el,'Hour 1 · 00:30–00:50','14 Basic Consonants');
   el.insertAdjacentHTML('beforeend', `
-  <p>Don't worry about mastering pronunciation differences today — your priority is visual recognition plus a rough sound.</p>
+  <p>Don't worry about mastering pronunciation differences today, your priority is visual recognition plus a rough sound.</p>
   <div class="tile-grid">${CONSONANTS.map(letterTileHTML).join('')}</div>
-  <div class="callout fact"><span class="callout-label">Fun Fact</span>Korean consonant shapes are not random — many were originally simplified diagrams of the mouth or tongue making that sound. ㄱ traces the back of the tongue blocking the throat; ㅁ traces the shape of closed lips.</div>
+  <div class="callout fact"><span class="callout-label">Fun Fact</span>Korean consonant shapes are not random, many were originally simplified diagrams of the mouth or tongue making that sound. ㄱ traces the back of the tongue blocking the throat; ㅁ traces the shape of closed lips.</div>
   <h3>Every Consonant, Broken Down</h3>
-  <p>Tap through each one below — sound, mouth position, a memory trick, and a practice word.</p>
+  <p>Tap through each one below sound, mouth position, a memory trick, and a practice word.</p>
   `);
   CONSONANTS.forEach(c=> el.insertAdjacentHTML('beforeend', letterDetailHTML(c)));
   el.insertAdjacentHTML('beforeend', `<h3>Quick Check</h3>`);
@@ -896,7 +896,7 @@ function renderFirstReading(el){
     el.insertAdjacentHTML('beforeend', `<div class="tile-grid" style="grid-template-columns:repeat(10,1fr)">${row.map(ch=>`<div class="letter-tile" style="padding:10px"><div class="glyph" style="font-size:1.8em">${ch}</div>${spkBtn(ch,'🔊')}</div>`).join('')}</div>`);
   });
   el.insertAdjacentHTML('beforeend', `
-  <div class="callout tip"><span class="callout-label">Speed Drill</span>Set a 60-second timer and read as many syllables above as you can, twice through. Your goal is not perfect speed — it's reducing hesitation.</div>
+  <div class="callout tip"><span class="callout-label">Speed Drill</span>Set a 60-second timer and read as many syllables above as you can, twice through. Your goal is not perfect speed, it's reducing hesitation.</div>
   `);
   el.insertAdjacentHTML('beforeend', noteBox('first-reading'));
 }
@@ -924,13 +924,13 @@ function renderSyllableBlocks(el){
     <div class="block-box"><div class="block-slot" style="left:16px; top:8px; font-size:1.6em">ㅎ</div><div class="block-slot" style="right:18px; top:8px; font-size:1.6em">ㅏ</div><div class="block-slot" style="left:16px; bottom:10px; font-size:1.6em">ㄴ</div></div>
     <div>
       <h4>Case 3 — adding a final consonant (받침)</h4>
-      <p>If there is a final sound closing the syllable, it drops to the <strong>bottom</strong> of the block, shrinking the other letters slightly to fit. Here: <strong class="kr">한</strong> (<em>han</em>) — the first syllable of <em>Hanguk</em>, "Korea." ${spkBtn('한')}</p>
+      <p>If there is a final sound closing the syllable, it drops to the <strong>bottom</strong> of the block, shrinking the other letters slightly to fit. Here: <strong class="kr">한</strong> (<em>han</em>), the first syllable of <em>Hanguk</em>, "Korea." ${spkBtn('한')}</p>
     </div>
   </div>
-  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Read every block in this fixed order: top-left → top-right (or straight down, for stacked vowels) → bottom. Left-to-right, top-to-bottom, exactly like English reading order — just compressed into a square.</div>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Read every block in this fixed order: top-left → top-right (or straight down, for stacked vowels) → bottom. Left-to-right, top-to-bottom, exactly like English reading order, just compressed into a square.</div>
   <h3>Understanding ㅇ</h3>
-  <p>At the <b>start</b> of a syllable, <span class="kr">ㅇ</span> is silent — <span class="kr">아</span> is simply "a". At the <b>end</b> of a syllable, <span class="kr">ㅇ</span> sounds like "ng" — <span class="kr">방</span> is roughly "bang". ${spkBtn('아 방')}</p>
-  <div class="callout warn"><span class="callout-label">Don't Panic</span>You do not need to memorize every batchim rule today. Just recognize that when spoken Korean doesn't match a word's spelling exactly, it's usually one of these regular patterns — not a random exception.</div>
+  <p>At the <b>start</b> of a syllable, <span class="kr">ㅇ</span> is silent, <span class="kr">아</span> is simply "a". At the <b>end</b> of a syllable, <span class="kr">ㅇ</span> sounds like "ng", <span class="kr">방</span> is roughly "bang". ${spkBtn('아 방')}</p>
+  <div class="callout warn"><span class="callout-label">Don't Panic</span>You do not need to memorize every batchim rule today. Just recognize that when spoken Korean doesn't match a word's spelling exactly, it's usually one of these regular patterns, not a random exception.</div>
   <h3>Quick Check</h3>
   `);
   const quiz = [
@@ -953,7 +953,7 @@ function wordCardsHTML(words){
 }
 function renderVocabChapter(el, id, title, words){
   chapterHeader(el,'Hour 3 · Vocabulary', title);
-  el.insertAdjacentHTML('beforeend', `<p>Learn these deeply — both directions. Don't worry about grammar yet; today you're training visual recognition and recall.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Learn these deeply, both directions. Don't worry about grammar yet; today you're training visual recognition and recall.</p>`);
   el.insertAdjacentHTML('beforeend', wordCardsHTML(words));
   const quiz = words.map(w=>{
     const wrongs = sample(VOCAB_ALL.filter(x=>x.kr!==w.kr),3).map(x=>x.en);
@@ -965,7 +965,7 @@ function renderVocabChapter(el, id, title, words){
 }
 
 function renderFlashcards(el){
-  chapterHeader(el,'Hour 3 · Active Recall','Flashcard Deck — All 30 Words');
+  chapterHeader(el,'Hour 3 · Active Recall','Flashcard Deck - All 30 Words');
   const deck = shuffle(VOCAB_ALL);
   let idx = 0;
   const wrap = document.createElement('div');
@@ -993,7 +993,7 @@ function renderFlashcards(el){
 }
 
 function renderVocabTest(el){
-  chapterHeader(el,'Hour 3 · Active Recall','Vocabulary Test — 15 Words');
+  chapterHeader(el,'Hour 3 · Active Recall','Vocabulary Test - 15 Words');
   el.insertAdjacentHTML('beforeend', `<p>Close your notes mentally and answer. Target: 12/15 or higher.</p>`);
   const words = sample(VOCAB_ALL,15);
   const quiz = words.map(w=>{
@@ -1013,8 +1013,8 @@ function renderWordOrder(el){
   chapterHeader(el,'Hour 4 · 03:00–03:15','Korean Word Order');
   el.insertAdjacentHTML('beforeend', `
   <p>English: <b>I + study + Korean.</b> (Subject + Verb + Object)</p>
-  <p>Korean: <b class="kr">저는 한국어를 공부해요.</b> — literally "I + Korean + study." (Subject + Object + Verb) ${spkBtn('저는 한국어를 공부해요')}</p>
-  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>The verb always comes last in a Korean sentence. Get used to listening — and reading — all the way to the end before you know what's happening.</div>
+  <p>Korean: <b class="kr">저는 한국어를 공부해요.</b> Literally "I + Korean + study." (Subject + Object + Verb) ${spkBtn('저는 한국어를 공부해요')}</p>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>The verb always comes last in a Korean sentence. Get used to listening and reading all the way to the end before you know what's happening.</div>
   <h3>Quick Check</h3>
   `);
   const quiz = [{q:'What is the basic Korean sentence order?', options:shuffle(['Subject + Object + Verb','Subject + Verb + Object','Verb + Subject + Object','Object + Verb + Subject']), answer:'Subject + Object + Verb'}];
@@ -1023,7 +1023,7 @@ function renderWordOrder(el){
 }
 
 function renderTopicMarker(el){
-  chapterHeader(el,'Hour 4 · 03:15–03:30','은 / 는 — The Topic Marker');
+  chapterHeader(el,'Hour 4 · 03:15–03:30','은 / 는 - The Topic Marker');
   el.insertAdjacentHTML('beforeend', `
   <p><span class="kr" style="font-size:1.2em">은 / 는</span> attaches to a noun to mean roughly "as for...". For now, just recognize <span class="kr">저는</span> as "as for me / I".</p>
   <div class="card">
@@ -1031,7 +1031,7 @@ function renderTopicMarker(el){
     <p><span class="kr">나는</span> — as for me (casual) ${spkBtn('나는')}</p>
     <p><span class="kr">한국은</span> — as for Korea ${spkBtn('한국은')}</p>
   </div>
-  <div class="callout fact"><span class="callout-label">Bonus — Optional</span>You don't need this yet, but if you're curious: 는 follows a word ending in a vowel (저 → 저는), and 은 follows a word ending in a consonant/받침 (한국 → 한국은, since 국 ends in ㄱ).</div>
+  <div class="callout fact"><span class="callout-label">Bonus - Optional</span>You don't need this yet, but if you're curious: 는 follows a word ending in a vowel (저 → 저는), and 은 follows a word ending in a consonant/받침 (한국 → 한국은, since 국 ends in ㄱ).</div>
   <h3>Quick Check</h3>
   `);
   const quiz = [
@@ -1043,14 +1043,14 @@ function renderTopicMarker(el){
 }
 
 function renderCopula(el){
-  chapterHeader(el,'Hour 4 · 03:30–03:45','이에요 / 예요 — "am / is / are"');
+  chapterHeader(el,'Hour 4 · 03:30–03:45','이에요 / 예요 - "am / is / are"');
   el.insertAdjacentHTML('beforeend', `
   <p>After a consonant-ending word, use <span class="kr">이에요</span>. After a vowel-ending word, use <span class="kr">예요</span>.</p>
   <div class="card">
     <p><span class="kr">학생이에요.</span> — I am a student. ${spkBtn('학생이에요')}</p>
     <p><span class="kr">친구예요.</span> — I am a friend. ${spkBtn('친구예요')}</p>
   </div>
-  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>There's also a more formal "am/is" — 입니다 — but you can leave that for later. Just recognize it if you see it.</div>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>There's also a more formal "am/is" , "입니다"  but you can leave that for later. Just recognize it if you see it.</div>
   <h3>Quick Check</h3>
   `);
   const quiz = [
@@ -1116,7 +1116,7 @@ function renderReadingStrategy(el){
   el.insertAdjacentHTML('beforeend', `
   <p>Look at: <span class="kr" style="font-size:1.2em">저는 학교에 가요.</span> Question: <span class="kr">어디에 가요?</span></p>
   <p>You don't need to translate the whole sentence. Recognize <span class="kr">어디</span> = where, then scan for the location word: <span class="kr">학교</span>. Answer: <b>학교</b>.</p>
-  <div class="callout tip"><span class="callout-label">TOPIK Strategy</span>Question word → Find the required information → Answer. Don't translate everything automatically — this becomes essential once questions get longer.</div>
+  <div class="callout tip"><span class="callout-label">TOPIK Strategy</span>Question word → Find the required information → Answer. Don't translate everything automatically, this becomes essential once questions get longer.</div>
   <h3>Reading Mini-Test</h3>
   `);
   const rc = [
@@ -1132,11 +1132,10 @@ function renderReadingStrategy(el){
 
 function renderListening(el){
   chapterHeader(el,'Hour 5 · 04:50–05:05','Listening & Shadowing');
-  el.insertAdjacentHTML('beforeend', `<p>For each sentence: (1) Listen without looking. (2) Look at the text. (3) Listen again without looking. (4) Repeat it aloud yourself — this is called Listen → Check → Listen → Shadow.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>For each sentence: (1) Listen without looking. (2) Look at the text. (3) Listen again without looking. (4) Repeat it aloud yourself, this is called Listen → Check → Listen → Shadow.</p>`);
   LISTEN_SENTENCES.forEach(s=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${s}</div>${spkBtn(s,'🔊 Play')}</div></div>`);
   });
-  el.insertAdjacentHTML('beforeend', `<div class="callout"><span class="callout-label">About the audio</span>🔊 buttons play an embedded clip if one has been added for that word or sentence. Until audio is added, tapping one will briefly flash <b>❌ Missing</b> — that's expected, not a bug.</div>`);
   el.insertAdjacentHTML('beforeend', noteBox('listening'));
 }
 
@@ -1171,11 +1170,11 @@ function renderDayComplete(el){
   chapterHeader(el,'Finish','Day 1 Complete 🎉');
   el.insertAdjacentHTML('beforeend', `<p>Great work. Here's your badge progress for Day 1:</p>
   <div class="badge-grid">${BADGE_DEFS.map(b=>`<div class="badge ${State.badges[b.id]?'earned':''}"><div class="bicon">${b.icon}</div><div class="bname">${b.name}</div></div>`).join('')}</div>
-  <div class="callout"><span class="callout-label">Say This Aloud — Day 1 Ending Ritual</span>
+  <div class="callout"><span class="callout-label">Say This Aloud - Day 1 Ending Ritual</span>
   <p class="kr" style="margin:6px 0">안녕하세요. 저는 [your name]이에요. 저는 학생이에요. 저는 한국어를 공부해요. 감사합니다.</p>
   ${spkBtn('안녕하세요. 저는 학생이에요. 저는 한국어를 공부해요. 감사합니다.','🔊 Play greeting')}
   </div>
-  <h3>Tomorrow — Day 2 Preview</h3>
+  <h3>Tomorrow - Day 2 Preview</h3>
   <div class="callout tip"><span class="callout-label">Coming Up</span>Day 2 builds directly on today: more batchim patterns, 20 new vocabulary words, the particles 이/가 and 을/를, and your second TOPIK reading passage.</div>
   <div class="btn-row"><button class="btn secondary" onclick="goTo('error-log')">Review Error Log</button> <button class="btn secondary" onclick="goTo('cover')">Back to Cover</button></div>
   `);
