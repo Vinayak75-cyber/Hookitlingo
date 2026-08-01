@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Full Korean Roadmap — Zero to Near-Fluent, Self-Paced | Hookitlingo</title>
-<meta name="description" content="Every Hookitlingo Korean course mapped out from absolute beginner to near-fluent — Hangeul, grammar, particles, verbs, numbers and more. Free, offline, self-paced.">
+<title>The Full Korean Roadmap - Zero to Near-Fluent, Self-Paced | Hookitlingo</title>
+<meta name="description" content="Every Hookitlingo Korean course mapped out from absolute beginner to near-fluent, Hangeul, grammar, particles, verbs, numbers and more. Free, offline, self-paced.">
 <link rel="canonical" href="https://hookit.online/roadmap.html">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="The Full Korean Roadmap — Zero to Near-Fluent, Self-Paced | Hookitlingo">
-<meta property="og:description" content="Every Hookitlingo Korean course mapped out from absolute beginner to near-fluent — Hangeul, grammar, particles, verbs, numbers and more. Free, offline, self-paced.">
+<meta property="og:title" content="The Full Korean Roadmap - Zero to Near-Fluent, Self-Paced | Hookitlingo">
+<meta property="og:description" content="Every Hookitlingo Korean course mapped out from absolute beginner to near-fluent, Hangeul, grammar, particles, verbs, numbers and more. Free, offline, self-paced.">
 <meta property="og:url" content="https://hookit.online/roadmap.html">
 <meta property="og:site_name" content="Hookitlingo">
 <meta property="og:image" content="https://hookit.online/og-image.png">
@@ -19,8 +19,8 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The Full Korean Roadmap — Zero to Near-Fluent, Self-Paced | Hookitlingo">
-<meta name="twitter:description" content="Every Hookitlingo Korean course mapped out from absolute beginner to near-fluent — Hangeul, grammar, particles, verbs, numbers and more. Free, offline, self-paced.">
+<meta name="twitter:title" content="The Full Korean Roadmap - Zero to Near-Fluent, Self-Paced | Hookitlingo">
+<meta name="twitter:description" content="Every Hookitlingo Korean course mapped out from absolute beginner to near-fluent, Hangeul, grammar, particles, verbs, numbers and more. Free, offline, self-paced.">
 <meta name="twitter:image" content="https://hookit.online/og-image.png">
 
 <script type="application/ld+json">
@@ -28,7 +28,7 @@
   "@context": "https://schema.org",
   "@type": "Course",
   "name": "The Full Korean Roadmap",
-  "description": "A self-paced course roadmap covering Hangeul, grammar, particles, verb conjugation, and numbers — mapped from absolute beginner to near-fluent Korean.",
+  "description": "A self-paced course roadmap covering Hangeul, grammar, particles, verb conjugation, and numbers, mapped from absolute beginner to near-fluent Korean.",
   "provider": {
     "@type": "Organization",
     "name": "Hookitlingo",
@@ -134,7 +134,7 @@ button{font-family:var(--sans); cursor:pointer;}
 .topbtn-support:hover{filter:brightness(1.07); color:#fff;}
 
 /* ============================================================
-   SUPPORT MODAL — donation flow
+   SUPPORT MODAL - donation flow
    ============================================================ */
 .hkl-overlay{
   position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
@@ -337,7 +337,7 @@ footer a{text-decoration:underline;}
 <div class="hero">
   <div class="eyebrow">The Full Curriculum</div>
   <h1>Zero to <span class="kr" style="color:var(--gold); font-style:italic;">near-fluent</span>, mapped out.</h1>
-  <p class="sub">Nineteen courses across four phases, each one building your confidence for the next — a clear path that takes you all the way from your first word to real, natural conversations.</p>
+  <p class="sub">Nineteen courses across four phases, each one building your confidence for the next, a clear path that takes you all the way from your first word to real, natural conversations.</p>
 </div>
 
 <div class="overall-progress" id="overallProgress"></div>
@@ -356,21 +356,21 @@ footer a{text-decoration:underline;}
 </div>
 
 <footer>
-  <p>New courses land in the <a href="index.html">catalog</a> as they're finished — this page always reflects what's actually built.</p>
+  <p>New courses land in the <a href="index.html">catalog</a> as they're finished, this page always reflects what's actually built.</p>
   <p>Powered by Hookitlingo</p>
 </footer>
 
 <script>
 /* ============================================================
-   ROADMAP DATA — the full 19-course curriculum plan
+   ROADMAP DATA - the full 19-course curriculum plan
    ============================================================ */
 const PHASES = [
   {
     num: 1, status: 'active', title: 'Foundations', sub: 'Absolute beginner',
     courses: [
       {kr:'한글 Hangeul', en:'Learn to Read Korean in One Hour', badge:'한', status:'live', file:'courses/hanlingo.html'},
-      {kr:'한국어 문법', en:'Grammar Part 1 — Sentence Building', badge:'문', status:'live', file:'courses/korean-grammar.html'},
-      {kr:'한국어 조사', en:'Grammar Part 2 — Particles', badge:'조', status:'live', file:'courses/korean-particlesg.html'},
+      {kr:'한국어 문법', en:'Grammar Part 1 - Sentence Building', badge:'문', status:'live', file:'courses/korean-grammar.html'},
+      {kr:'한국어 조사', en:'Grammar Part 2 - Particles', badge:'조', status:'live', file:'courses/korean-particlesg.html'},
       {kr:'숫자와 시간', en:'Numbers, Counters & Time', badge:'수', status:'live', file:'courses/korean-numbers.html'},
       {kr:'동사 활용', en:'Verb Tenses & Conjugation', badge:'동', status:'live', file:'courses/korean-verbs.html' },
     ]
@@ -456,7 +456,7 @@ function renderPhases(){
       <div class="phase-head">
         <div class="phase-num status-${p.status}">${p.num}</div>
         <div class="phase-title-wrap">
-          <h2>Phase ${p.num} — ${p.title}</h2>
+          <h2>Phase ${p.num} - ${p.title}</h2>
           <div class="phase-sub">${p.sub} · ${liveCount}/${p.courses.length} live</div>
         </div>
         <div class="phase-ribbon ${p.status==='active'?'active':'soon'}">${p.status==='active'?'Active Phase':'Coming Soon'}</div>
@@ -477,7 +477,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12});
 document.querySelectorAll('.phase').forEach(el=>io.observe(el));
 
-/* Theme toggle — shares the same key as the catalog page */
+/* Theme toggle - shares the same key as the catalog page */
 const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
 function applyTheme(){
   document.documentElement.setAttribute('data-theme', ThemeState.theme);
@@ -490,7 +490,7 @@ document.getElementById('themeBtn').onclick = () => {
 };
 applyTheme();
 
-/* Petals — same drifting system as every other page */
+/* Petals - same drifting system as every other page */
 (function spawnPetals(){
   const host = document.getElementById('petals');
   if(!host) return;
@@ -513,7 +513,7 @@ applyTheme();
 })();
 
 /* ============================================================
-   SUPPORT — links to the Supporter Wall (supporters.html)
+   SUPPORT - links to the Supporter Wall (supporters.html)
    ============================================================ */
 </script>
 </body>

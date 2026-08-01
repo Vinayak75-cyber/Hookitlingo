@@ -660,7 +660,7 @@ function spkBtn(text, label){
 const CHAPTERS = [
  {id:'cover', group:'Start', title:'Cover', render: renderCover},
  {id:'mission', group:'Start', title:"Today's Mission", render: renderMission},
- {id:'warmup-review', group:'Hour 1 · Days & Weeks', title:'Day 1–3 Rapid Review', render: renderWarmupReview},
+ {id:'warmup-review', group:'Hour 1 · Days & Weeks', title:'Day 1-3 Rapid Review', render: renderWarmupReview},
  {id:'days-of-week', group:'Hour 1 · Days & Weeks', title:'Days of the Week', render: renderDaysOfWeek},
  {id:'days-memorize', group:'Hour 1 · Days & Weeks', title:'Memorize the Seven Days', render: renderDaysMemorize},
  {id:'days-listening', group:'Hour 1 · Days & Weeks', title:'Day-of-the-Week Listening', render: renderDaysListening},
@@ -669,8 +669,8 @@ const CHAPTERS = [
  {id:'year-month-day', group:'Hour 2 · Months & Dates', title:'년 / 월 / 일', render: renderYearMonthDay},
  {id:'reading-dates', group:'Hour 2 · Months & Dates', title:'Practice Reading Dates', render: renderReadingDates},
  {id:'relative-dates', group:'Hour 2 · Months & Dates', title:'Relative Date Vocabulary', render: renderRelativeDates},
- {id:'hours-si', group:'Hour 3 · Telling Time', title:'시 — Hours', render: renderHoursSi},
- {id:'minutes-bun', group:'Hour 3 · Telling Time', title:'분 — Minutes', render: renderMinutesBun},
+ {id:'hours-si', group:'Hour 3 · Telling Time', title:'시 - Hours', render: renderHoursSi},
+ {id:'minutes-bun', group:'Hour 3 · Telling Time', title:'분 - Minutes', render: renderMinutesBun},
  {id:'am-pm', group:'Hour 3 · Telling Time', title:'오전 / 오후', render: renderAmPm},
  {id:'time-questions', group:'Hour 3 · Telling Time', title:'Time Question Patterns', render: renderTimeQuestions},
  {id:'time-practice', group:'Hour 3 · Telling Time', title:'Time Practice', render: renderTimePractice},
@@ -681,9 +681,9 @@ const CHAPTERS = [
  {id:'integrated-time', group:'Hour 4 · Age & Integration', title:'Integrated Time Practice', render: renderIntegratedTime},
  {id:'topik-extraction', group:'Hour 4 · Age & Integration', title:'TOPIK Information Extraction', render: renderTopikExtraction},
  {id:'quick-review-h4', group:'Hour 4 · Age & Integration', title:'Quick Review', render: renderQuickReviewH4},
- {id:'listening-days', group:'Hour 5 · Listening & Test', title:'Listening Drill 1 — Days', render: renderListeningDays},
- {id:'listening-dates', group:'Hour 5 · Listening & Test', title:'Listening Drill 2 — Dates', render: renderListeningDates},
- {id:'listening-time', group:'Hour 5 · Listening & Test', title:'Listening Drill 3 — Time', render: renderListeningTime},
+ {id:'listening-days', group:'Hour 5 · Listening & Test', title:'Listening Drill 1 - Days', render: renderListeningDays},
+ {id:'listening-dates', group:'Hour 5 · Listening & Test', title:'Listening Drill 2 - Dates', render: renderListeningDates},
+ {id:'listening-time', group:'Hour 5 · Listening & Test', title:'Listening Drill 3 - Time', render: renderListeningTime},
  {id:'daily-test', group:'Finish', title:'Day 4 Final Test', render: renderDailyTest},
  {id:'error-log', group:'Finish', title:'Error Log', render: renderErrorLog},
  {id:'day-complete', group:'Finish', title:'Day 4 Complete', render: renderDayComplete},
@@ -837,9 +837,9 @@ function renderCover(el){
       </svg>
     </div>
     <div class="presents">TOPIK I · Level 1</div>
-    <div class="eyebrow">28-Day Roadmap — Day 4 of 28</div>
+    <div class="eyebrow">28-Day Roadmap - Day 4 of 28</div>
     <h1>Dates, Days, Months, Time &amp; Age</h1>
-    <p class="sub">Today you'll turn yesterday's two number systems into real calendar and clock skills — days of the week, months, full dates, telling time, and age — while learning exactly which system belongs where.</p>
+    <p class="sub">Today you'll turn yesterday's two number systems into real calendar and clock skills, days of the week, months, full dates, telling time, and age while learning exactly which system belongs where.</p>
     <div class="cover-stats">
       <div><b>5</b><span>Hours</span></div>
       <div><b>7</b><span>Days of Week</span></div>
@@ -875,13 +875,13 @@ function renderMission(el){
     <tr><td>Hour 4</td><td>60 min</td><td>Age + Integrated Date/Time Practice</td></tr>
     <tr><td>Hour 5</td><td>60 min</td><td>TOPIK Listening + Dictation + Day 4 Test</td></tr>
   </table>
-  <div class="callout tip"><span class="callout-label">Teacher's Note</span>Today, Korean uses your two number systems differently depending on context: <b>hours</b> and <b>age</b> use Native Korean, while <b>minutes</b>, <b>dates</b>, <b>months</b>, and <b>years</b> use Sino-Korean. Watch for the ${sysTag('native')} and ${sysTag('sino')} tags all through today — they'll appear on every number card so the pattern sinks in through repetition, not just one summary paragraph.</div>
+  <div class="callout tip"><span class="callout-label">Teacher's Note</span>Today, Korean uses your two number systems differently depending on context: <b>hours</b> and <b>age</b> use Native Korean, while <b>minutes</b>, <b>dates</b>, <b>months</b>, and <b>years</b> use Sino-Korean. Watch for the ${sysTag('native')} and ${sysTag('sino')} tags all through today, they'll appear on every number card so the pattern sinks in through repetition, not just one summary paragraph.</div>
   <div class="btn-row"><button class="btn" onclick="goTo('warmup-review')">Begin Hour 1 →</button></div>
   `);
 }
 
 function renderWarmupReview(el){
-  chapterHeader(el,'Hour 1 · 00:00–00:10','Day 1–3 Rapid Review');
+  chapterHeader(el,'Hour 1 · 00:00–00:10','Day 1-3 Rapid Review');
   el.insertAdjacentHTML('beforeend', `<p>Quick recall test before today's new material. Don't spend more than 10 minutes here.</p><h3>Sino-Korean &amp; Native Korean Numbers</h3>`);
   const quiz1 = [...REVIEW_D1D3.sino, ...REVIEW_D1D3.native].map(v=>{
     const pool = [...REVIEW_D1D3.sino, ...REVIEW_D1D3.native];
@@ -903,7 +903,7 @@ function renderDaysOfWeek(el){
   el.insertAdjacentHTML('beforeend', `
   <p>Every day name follows the same pattern: <b>root character + <span class="kr">요일</span></b> ("day of the week"). So <span class="kr">월</span> + <span class="kr">요일</span> = <span class="kr">월요일</span> (Monday).</p>
   <div class="tile-grid">${DAYS_OF_WEEK.map(d=>`<div class="letter-tile"><div class="glyph" style="font-size:1.6em">${d.kr}</div><div class="rom">${d.en}</div><div class="spk">${spkBtn(d.kr)}</div></div>`).join('')}</div>
-  <div class="callout fact"><span class="callout-label">Memory Trick</span>Each root character is one of the classical elements plus the sun and moon — the exact same idea behind English day names (Mon-day = moon, Sun-day = sun). Once you see the pattern, the days stop being random syllables:</div>
+  <div class="callout fact"><span class="callout-label">Memory Trick</span>Each root character is one of the classical elements plus the sun and moon, the exact same idea behind English day names (Mon-day = moon, Sun-day = sun). Once you see the pattern, the days stop being random syllables:</div>
   `);
   DAYS_OF_WEEK.forEach(d=>{
     el.insertAdjacentHTML('beforeend', `<div class="root-card"><div class="root-glyph">${d.root}</div><div><b class="kr">${d.kr}</b> — ${d.en}<br><span style="color:var(--text-faint);font-size:.85em">${d.root} = ${d.meaning}</span></div></div>`);
@@ -919,7 +919,7 @@ function renderDaysOfWeek(el){
 
 function renderDaysMemorize(el){
   chapterHeader(el,'Hour 1 · 00:25–00:40','Memorize the Seven Days');
-  el.insertAdjacentHTML('beforeend', `<p>Say them forward, then backward, then in random order. Aim to go straight from <span class="kr">월요일</span> to "Monday" — no mental detour through romanization.</p>
+  el.insertAdjacentHTML('beforeend', `<p>Say them forward, then backward, then in random order. Aim to go straight from <span class="kr">월요일</span> to "Monday", no mental detour through romanization.</p>
   <h4>Forward</h4>
   <div class="tile-grid">${DAYS_OF_WEEK.map(d=>`<div class="letter-tile"><div class="glyph" style="font-size:1.4em">${d.kr}</div>${spkBtn(d.kr)}</div>`).join('')}</div>
   <h4>Backward</h4>
@@ -935,7 +935,7 @@ function renderDaysMemorize(el){
 
 function renderDaysListening(el){
   chapterHeader(el,'Hour 1 · 00:40–00:50','Day-of-the-Week Listening');
-  el.insertAdjacentHTML('beforeend', `<p>Play each clip and identify the day. Pay special attention to <span class="kr">화요일</span>, <span class="kr">수요일</span>, <span class="kr">목요일</span>, and <span class="kr">금요일</span> — these four are the ones beginners confuse most, since they all start with a single sharp consonant+vowel syllable.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Play each clip and identify the day. Pay special attention to <span class="kr">화요일</span>, <span class="kr">수요일</span>, <span class="kr">목요일</span>, and <span class="kr">금요일</span> these four are the ones beginners confuse most, since they all start with a single sharp consonant+vowel syllable.</p>`);
   const quiz = shuffle(DAYS_OF_WEEK).map(d=>{
     const wrongs = sample(DAYS_OF_WEEK.filter(x=>x.kr!==d.kr),3).map(x=>x.en);
     return {q:spkBtn(d.kr,'🔊 Play'), options:shuffle([d.en,...wrongs]), answer:d.en};
@@ -950,7 +950,7 @@ function renderWeekVocab(el){
   <div class="tile-grid">${WEEK_VOCAB.map(w=>`<div class="letter-tile"><div class="glyph" style="font-size:1.3em">${w.kr}</div><div class="rom">${w.en}</div><div class="spk">${spkBtn(w.kr)}</div></div>`).join('')}</div>
   <h4>Simple Combinations</h4>
   <div class="card">${WEEK_COMBOS.map(c=>`<p><span class="kr">${c.kr}</span> — ${c.en} ${spkBtn(c.kr)}</p>`).join('')}</div>
-  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>You don't need to master the particles behind these combinations yet — just recognize the meaning.</div>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>You don't need to master the particles behind these combinations yet, just recognize the meaning.</div>
   <h3>Quick Check</h3>`);
   const quiz = WEEK_VOCAB.map(w=>{
     const wrongs = sample(WEEK_VOCAB.filter(x=>x.kr!==w.kr),3).map(x=>x.en);
@@ -964,7 +964,7 @@ function renderMonths(el){
   chapterHeader(el,'Hour 2 · 01:00–01:15','The 12 Months');
   el.insertAdjacentHTML('beforeend', `<p>Months are extremely logical: <b>Number + <span class="kr">월</span></b>. ${sysTag('sino')}</p>
   <div class="tile-grid">${MONTHS.map((m,i)=>`<div class="num-tile"><div class="n">${m.kr}</div><div class="k" style="font-size:1em;color:var(--text-faint)">${MONTH_NAMES_EN[i]}</div><div class="spk">${spkBtn(m.reading)}</div></div>`).join('')}</div>
-  <div class="callout fact"><span class="callout-label">Native Speaker Note (bonus)</span>Two months break the neat pattern when spoken: <b>6월</b> is read <span class="kr">유월</span> (not 육월), and <b>10월</b> is read <span class="kr">시월</span> (not 십월). This is a classic beginner trap — you don't need to memorize it perfectly today, just know it exists.</div>
+  <div class="callout fact"><span class="callout-label">Native Speaker Note (bonus)</span>Two months break the neat pattern when spoken: <b>6월</b> is read <span class="kr">유월</span> (not 육월), and <b>10월</b> is read <span class="kr">시월</span> (not 십월). This is a classic beginner trap, you don't need to memorize it perfectly today, just know it exists.</div>
   <h3>Quick Check</h3>`);
   const quiz = MONTHS.map((m,i)=>{
     const wrongs = sample(MONTHS.filter(x=>x.kr!==m.kr),3).map(x=>x.kr);
@@ -983,7 +983,7 @@ function renderYearMonthDay(el){
     <p><span class="kr" style="font-size:1.2em">월</span> = month</p>
     <p><span class="kr" style="font-size:1.2em">일</span> = day / date</p>
   </div>
-  <p>A Korean date follows <b>Year + Month + Day</b> — the opposite order from common English date order.</p>
+  <p>A Korean date follows <b>Year + Month + Day</b> the opposite order from common English date order.</p>
   <div class="date-parts">
     <div class="date-part"><div class="lbl2">Year</div><div class="val">2026년</div></div>
     <div class="date-part"><div class="lbl2">Month</div><div class="val">7월</div></div>
@@ -1032,8 +1032,8 @@ function renderRelativeDates(el){
 }
 
 function renderHoursSi(el){
-  chapterHeader(el,'Hour 3 · 02:10–02:25','시 — Hours');
-  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">시</span> means "hour / o'clock." Hours use ${sysTag('native')} — and the same special forms from Day 3 (하나→한, 둘→두, 셋→세, 넷→네) apply here too.</p>
+  chapterHeader(el,'Hour 3 · 02:10–02:25','시 - Hours');
+  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">시</span> means "hour / o'clock." Hours use ${sysTag('native')} and the same special forms from Day 3 (하나→한, 둘→두, 셋→세, 넷→네) apply here too.</p>
   <div class="tile-grid">${HOURS.map(numTileHTML).join('')}</div>
   <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Notice 11 and 12 follow the same logic: <span class="kr">열하나</span> → <span class="kr">열한 시</span>, <span class="kr">열둘</span> → <span class="kr">열두 시</span>.</div>
   <h3>Quick Check</h3>`);
@@ -1046,10 +1046,10 @@ function renderHoursSi(el){
 }
 
 function renderMinutesBun(el){
-  chapterHeader(el,'Hour 3 · 02:25–02:40','분 — Minutes');
-  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">분</span> means "minute." Minutes use ${sysTag('sino')} — a different system from hours!</p>
+  chapterHeader(el,'Hour 3 · 02:25–02:40','분 - Minutes');
+  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">분</span> means "minute." Minutes use ${sysTag('sino')} a different system from hours!</p>
   <div class="tile-grid">${MINUTES.map(numTileHTML).join('')}</div>
-  <div class="callout"><span class="callout-label">The Pattern</span><b>Native Korean number + 시 + Sino-Korean number + 분.</b> So 3:15 becomes <span class="kr">세 시 십오 분</span> ${spkBtn('세 시 십오 분')} — native for the hour, sino for the minute, in the same sentence.</div>
+  <div class="callout"><span class="callout-label">The Pattern</span><b>Native Korean number + 시 + Sino-Korean number + 분.</b> So 3:15 becomes <span class="kr">세 시 십오 분</span> ${spkBtn('세 시 십오 분')} native for the hour, sino for the minute, in the same sentence.</div>
   <h3>Quick Check</h3>`);
   const quiz = MINUTES.map(m=>{
     const wrongs = sample(MINUTES.filter(x=>x.kr!==m.kr),3).map(x=>x.kr);
@@ -1061,7 +1061,7 @@ function renderMinutesBun(el){
 
 function renderAmPm(el){
   chapterHeader(el,'Hour 3 · 02:40–02:55','오전 / 오후');
-  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">오전</span> = AM, <span class="kr" style="font-size:1.2em">오후</span> = PM. For TOPIK listening, listen carefully — a single word can completely change the answer.</p>
+  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">오전</span> = AM, <span class="kr" style="font-size:1.2em">오후</span> = PM. For TOPIK listening, listen carefully, a single word can completely change the answer.</p>
   <div class="card">${AMPM_EXAMPLES.map(a=>`<p><span class="kr">${a.kr}</span> — ${a.en} ${spkBtn(a.kr)}</p>`).join('')}</div>
   <h3>Quick Check</h3>`);
   const quiz = AMPM_EXAMPLES.map(a=>{
@@ -1074,7 +1074,7 @@ function renderAmPm(el){
 
 function renderTimeQuestions(el){
   chapterHeader(el,'Hour 3 · 02:55–03:10','Time Question Patterns');
-  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">몇 시</span> means "what time" — recognize it immediately.</p>
+  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">몇 시</span> means "what time" recognize it immediately.</p>
   <div class="card">${TIME_QUESTIONS.map(t=>`<p><span class="kr">${t.kr}</span> — ${t.en} ${spkBtn(t.kr)}</p>`).join('')}</div>
   <h3>Quick Check</h3>`);
   const quiz = TIME_QUESTIONS.map(t=>{
@@ -1102,7 +1102,7 @@ function renderTimePractice(el){
 
 function renderAgeSal(el){
   chapterHeader(el,'Hour 4 · 03:20–03:35','Age with 살');
-  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">살</span> means "years old." Age uses ${sysTag('native')} — the same special forms as hours and Day 3's counters.</p>
+  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">살</span> means "years old." Age uses ${sysTag('native')} the same special forms as hours and Day 3's counters.</p>
   <div class="tile-grid">${AGE_BASIC.map(a=>`<div class="letter-tile"><div class="glyph" style="font-size:1.3em">${a.kr}</div><div class="rom" style="font-size:.85em">${a.en}</div><div class="spk">${spkBtn(a.kr)}</div></div>`).join('')}</div>
   <div class="callout"><span class="callout-label">Remember</span><span class="kr">스물</span> → <span class="kr">스무</span> before <span class="kr">살</span>. So 20 years old is <span class="kr">스무 살</span>, not <span class="kr">스물 살</span>.</div>
   <h3>Quick Check</h3>`);
@@ -1116,8 +1116,8 @@ function renderAgeSal(el){
 
 function renderAskingAge(el){
   chapterHeader(el,'Hour 4 · 03:35–03:50','Asking Someone\u2019s Age');
-  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">몇 살이에요?</span> — "How old are you?" ${spkBtn('몇 살이에요?')}</p>
-  <p>21–24 contract into special forms before 살 — just like 스물 → 스무:</p>
+  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">몇 살이에요?</span> "How old are you?" ${spkBtn('몇 살이에요?')}</p>
+  <p>21–24 contract into special forms before 살, just like 스물 → 스무:</p>
   <div class="tile-grid">${AGE_TWENTIES.map(a=>`<div class="letter-tile"><div class="glyph" style="font-size:1.2em">${a.kr}</div><div class="rom" style="font-size:.8em">${a.en}</div><div style="color:var(--text-faint);font-size:.72em;margin-top:2px">${a.note}</div><div class="spk">${spkBtn(a.kr)}</div></div>`).join('')}</div>
   <h3>Quick Check</h3>`);
   const quiz = AGE_TWENTIES.map(a=>{
@@ -1131,7 +1131,7 @@ function renderAskingAge(el){
 function renderAgePractice(el){
   chapterHeader(el,'Hour 4 · 03:50–04:05','Age Practice');
   el.insertAdjacentHTML('beforeend', `<p>Convert each age into Korean. Focus on the structure, not perfection.</p>
-  <div class="callout tip"><span class="callout-label">One More Word</span>For "30 years old," you'll need <span class="kr">서른</span> — the Native Korean word for 30 (following 열=10, 스물=20, 서른=30). ${spkBtn('서른')}</div>`);
+  <div class="callout tip"><span class="callout-label">One More Word</span>For "30 years old," you'll need <span class="kr">서른</span>, the Native Korean word for 30 (following 열=10, 스물=20, 서른=30). ${spkBtn('서른')}</div>`);
   const quiz = AGE_PRACTICE.map(a=>{
     const wrongs = sample(AGE_PRACTICE.filter(x=>x.kr!==a.kr),3).map(x=>x.kr);
     return {q:a.en, options:shuffle([a.kr,...wrongs]), answer:a.kr};
@@ -1161,7 +1161,7 @@ function renderIntegratedCalendar(el){
       }
     };
   });
-  el.insertAdjacentHTML('beforeend', `<div class="callout"><span class="callout-label">Now You Try</span>Make your own sentence with today's actual date, using the same pattern. For example: <span class="kr">${CALENDAR_SENTENCE_2.kr}</span> — ${CALENDAR_SENTENCE_2.en} ${spkBtn(CALENDAR_SENTENCE_2.kr)}</div>`);
+  el.insertAdjacentHTML('beforeend', `<div class="callout"><span class="callout-label">Now You Try</span>Make your own sentence with today's actual date, using the same pattern. For example: <span class="kr">${CALENDAR_SENTENCE_2.kr}</span> ${CALENDAR_SENTENCE_2.en} ${spkBtn(CALENDAR_SENTENCE_2.kr)}</div>`);
   el.insertAdjacentHTML('beforeend', noteBox('integrated-calendar'));
 }
 
@@ -1176,7 +1176,7 @@ function renderIntegratedTime(el){
 
 function renderTopikExtraction(el){
   chapterHeader(el,'Hour 4 · 04:35–04:50','TOPIK Information Extraction');
-  el.insertAdjacentHTML('beforeend', `<p>This is your first serious TOPIK strategy drill. Don't translate everything — extract exactly the piece of information the question asks for: Who? Where? When? What time? How many?</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>This is your first serious TOPIK strategy drill. Don't translate everything, extract exactly the piece of information the question asks for: Who? Where? When? What time? How many?</p>`);
   const quiz = TOPIK_EXTRACTION.map(item=>({q:`${item.kr}\n\n${item.q}`, options:shuffle(item.options), answer:item.answer}));
   el.appendChild(buildQuiz('te-quiz', quiz, 'topik-extraction'));
   el.insertAdjacentHTML('beforeend', noteBox('topik-extraction'));
@@ -1185,7 +1185,7 @@ function renderTopikExtraction(el){
 function renderQuickReviewH4(el){
   chapterHeader(el,'Hour 4 · 04:50–05:00','Quick Review');
   el.insertAdjacentHTML('beforeend', `
-  <p>Without looking — can you answer these?</p>
+  <p>Without looking, can you answer these?</p>
   <div class="card">
     <p>Can you say all 7 days? Can you recognize 1월–12월?</p>
     <p>What does <span class="kr">2026년 7월 28일</span> mean?</p>
@@ -1197,7 +1197,7 @@ function renderQuickReviewH4(el){
 }
 
 function renderListeningDays(el){
-  chapterHeader(el,'Hour 5 · 05:00–05:15','Listening Drill 1 — Days');
+  chapterHeader(el,'Hour 5 · 05:00–05:15','Listening Drill 1 - Days');
   el.insertAdjacentHTML('beforeend', `<p>Listen to each day and write (mentally) the English day. Target: 9/10.</p>`);
   const quiz = shuffle([...LISTENING_DAYS_SET, ...LISTENING_DAYS_SET]).slice(0,10).map(d=>{
     const wrongs = sample(LISTENING_DAYS_SET.filter(x=>x.kr!==d.kr),3).map(x=>x.en);
@@ -1208,8 +1208,8 @@ function renderListeningDays(el){
 }
 
 function renderListeningDates(el){
-  chapterHeader(el,'Hour 5 · 05:15–05:30','Listening Drill 2 — Dates');
-  el.insertAdjacentHTML('beforeend', `<p>Listen to each date and identify Year + Month + Day. Don't worry about writing perfect Korean — the key is extracting the numerical information.</p>`);
+  chapterHeader(el,'Hour 5 · 05:15–05:30','Listening Drill 2 - Dates');
+  el.insertAdjacentHTML('beforeend', `<p>Listen to each date and identify Year + Month + Day. Don't worry about writing perfect Korean, the key is extracting the numerical information.</p>`);
   const quiz = LISTENING_DATES_SET.map(d=>{
     const wrongs = sample(LISTENING_DATES_SET.filter(x=>x.answer!==d.answer),3).map(x=>x.answer);
     return {q:spkBtn(d.kr,'🔊 Play'), options:shuffle([d.answer,...wrongs]), answer:d.answer};
@@ -1219,7 +1219,7 @@ function renderListeningDates(el){
 }
 
 function renderListeningTime(el){
-  chapterHeader(el,'Hour 5 · 05:30–05:45','Listening Drill 3 — Time');
+  chapterHeader(el,'Hour 5 · 05:30–05:45','Listening Drill 3 - Time');
   el.insertAdjacentHTML('beforeend', `<p>Listen and write the numerical time. Pay special attention to 오전 vs 오후, and 시 vs 분.</p>`);
   const quiz = LISTENING_TIME_SET.map(t=>{
     const wrongs = sample(LISTENING_TIME_SET.filter(x=>x.answer!==t.answer),3).map(x=>x.answer);
@@ -1275,8 +1275,8 @@ function renderDayComplete(el){
   </div>
   <div class="callout tip"><span class="callout-label">Teacher's Note</span>Today you learned that Korean uses your two number systems differently by context: Hours → Native Korean. Minutes, Dates, Months, Years → Sino-Korean. Age (everyday) → Native Korean. This is exactly why Day 3 taught both systems before today.</div>
   <div class="callout fact"><span class="callout-label">Your Day 4 Golden Rule</span>When you hear a Korean number in TOPIK listening, don't immediately translate it into English. Train yourself to catch the information directly: 오후 → 3시 → 15분 should register as PM → 3 → 15 → 3:15 PM. That extra translation step disappears with practice.</div>
-  <h3>Tomorrow — Day 5 Preview</h3>
-  <div class="callout fact"><span class="callout-label">Coming Up</span>Particles: 은/는, 이/가, 을/를. You'll learn how to tell them apart in actual sentences, not just as abstract grammar rules — a huge step toward understanding real TOPIK questions.</div>
+  <h3>Tomorrow - Day 5 Preview</h3>
+  <div class="callout fact"><span class="callout-label">Coming Up</span>Particles: 은/는, 이/가, 을/를. You'll learn how to tell them apart in actual sentences, not just as abstract grammar rules, a huge step toward understanding real TOPIK questions.</div>
   <div class="btn-row"><button class="btn secondary" onclick="goTo('error-log')">Review Error Log</button> <button class="btn secondary" onclick="goTo('cover')">Back to Cover</button></div>
   `);
 }

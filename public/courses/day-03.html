@@ -649,8 +649,8 @@ const CHAPTERS = [
  {id:'age', group:'Hour 4 · Prices, Phone & Age', title:'Age Expressions', render: renderAge},
  {id:'mixed-challenge', group:'Hour 4 · Prices, Phone & Age', title:'Mixed Number Challenge', render: renderMixedChallenge},
  {id:'quick-review-h4', group:'Hour 4 · Prices, Phone & Age', title:'Quick Review', render: renderQuickReviewH4},
- {id:'number-listening-1', group:'Hour 5 · Listening & Test', title:'Number Listening — Round 1', render: renderNumberListening1},
- {id:'number-dictation', group:'Hour 5 · Listening & Test', title:'Number Dictation — Round 2', render: renderNumberDictation},
+ {id:'number-listening-1', group:'Hour 5 · Listening & Test', title:'Number Listening - Round 1', render: renderNumberListening1},
+ {id:'number-dictation', group:'Hour 5 · Listening & Test', title:'Number Dictation - Round 2', render: renderNumberDictation},
  {id:'counter-listening', group:'Hour 5 · Listening & Test', title:'Counter Listening', render: renderCounterListening},
  {id:'topik-mini-reading', group:'Hour 5 · Listening & Test', title:'TOPIK-Style Mini Reading', render: renderTopikMiniReading},
  {id:'daily-test', group:'Finish', title:'Day 3 Final Test', render: renderDailyTest},
@@ -852,7 +852,7 @@ function renderMission(el){
 function renderWarmupReview(el){
   chapterHeader(el,'Hour 1 · 00:00–00:10','Day 1 + Day 2 Quick Review');
   el.insertAdjacentHTML('beforeend', `<p>Before learning anything new, activate yesterday's memory. Don't spend more than 10 minutes here.</p>
-  <h3>받침 — identify the final consonant</h3>`);
+  <h3>받침 - identify the final consonant</h3>`);
   const quiz = REVIEW_D1D2.batchim.map(item=>{
     const opts = ['ㄱ','ㄴ','ㄷ','ㄹ','ㅁ','ㅂ','ㅇ'];
     const wrongs = sample(opts.filter(o=>o!==item.answer),3);
@@ -869,8 +869,8 @@ function renderWarmupReview(el){
 }
 
 function renderSino1_10(el){
-  chapterHeader(el,'Hour 1 · 00:10–00:25','Sino-Korean Numbers 1–10');
-  el.insertAdjacentHTML('beforeend', `<p>Memorize these until recognition becomes automatic in both directions — number to Korean, and Korean back to number.</p>
+  chapterHeader(el,'Hour 1 · 00:10–00:25','Sino-Korean Numbers 1-10');
+  el.insertAdjacentHTML('beforeend', `<p>Memorize these until recognition becomes automatic in both directions, number to Korean, and Korean back to number.</p>
   <div class="tile-grid">${SINO_1_10.map(numTileHTML).join('')}</div>
   <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Read them aloud, then reverse the exercise: look at 삼, say "3"; look at 팔, say "8." Speed matters more than perfect pronunciation today.</div>
   <h3>Quick Check</h3>`);
@@ -883,7 +883,7 @@ function renderSino1_10(el){
 }
 
 function renderSino11_20(el){
-  chapterHeader(el,'Hour 1 · 00:25–00:40','Sino-Korean 11–20');
+  chapterHeader(el,'Hour 1 · 00:25–00:40','Sino-Korean 11-20');
   el.insertAdjacentHTML('beforeend', `<p>The pattern is simple: 10 + 1 = 십일 (십 + 일). 10 + 5 = 십오 (십 + 오). But 20 is its own word: 이십 (2 × 10).</p>
   <div class="tile-grid">${SINO_11_20.map(numTileHTML).join('')}</div>
   <div class="callout"><span class="callout-label">Pattern</span><span class="kr">십</span> + [ones digit] for 11–19. <span class="kr">이십</span> for 20.</div>
@@ -942,8 +942,8 @@ function renderNative1_10(el){
 }
 
 function renderNative11_20(el){
-  chapterHeader(el,'Hour 2 · 01:15–01:30','Native Korean 11–20');
-  el.insertAdjacentHTML('beforeend', `<p>11–19 follow <span class="kr">열</span> + [number]. But 20 is its own word — <span class="kr">스물</span> — not 열+열, unlike the neat Sino-Korean pattern.</p>
+  chapterHeader(el,'Hour 2 · 01:15–01:30','Native Korean 11-20');
+  el.insertAdjacentHTML('beforeend', `<p>11-19 follow <span class="kr">열</span> + [number]. But 20 is its own word "<span class="kr">스물</span>" not 열+열, unlike the neat Sino-Korean pattern.</p>
   <div class="tile-grid">${NATIVE_11_20.map(numTileHTML).join('')}</div>
   <div class="callout warn"><span class="callout-label">Don't Mix Them Up</span>Sino-Korean 20 = 이십. Native Korean 20 = 스물. Two completely different words for the same number.</div>
   <h3>Quick Check</h3>`);
@@ -969,7 +969,7 @@ function renderTwoSystems(el){
     <p>Often used for: counting people, counting objects, age in everyday speech, hours, basic counting with counters.</p>
   </div>
   <div class="callout tip"><span class="callout-label">Teacher's Tip</span>There are exceptions and nuances you'll study later. For TOPIK I, your job right now is simply to recognize which system a number belongs to.</div>
-  <h3>Quick Check — Which System?</h3>`);
+  <h3>Quick Check - Which System?</h3>`);
   const quiz = [
     {q:'삼', isKr:true, options:['Sino-Korean','Native Korean'], answer:'Sino-Korean'},
     {q:'셋', isKr:true, options:['Sino-Korean','Native Korean'], answer:'Native Korean'},
@@ -992,9 +992,9 @@ function renderSpecialForms(el){
     <p><span class="kr">세 개</span> — three things ${spkBtn('세 개')}</p>
     <p><span class="kr">네 개</span> — four things ${spkBtn('네 개')}</p>
   </div>
-  <div class="callout warn"><span class="callout-label">Common Mistake</span>Don't say <span class="kr">하나 개</span> or <span class="kr">둘 개</span> ❌ — always use the special forms: <span class="kr">한 개</span>, <span class="kr">두 개</span> ✅</div>
+  <div class="callout warn"><span class="callout-label">Common Mistake</span>Don't say <span class="kr">하나 개</span> or <span class="kr">둘 개</span> ❌, always use the special forms: <span class="kr">한 개</span>, <span class="kr">두 개</span> ✅</div>
   <h3>Quick Check</h3>`);
-  const quiz = SPECIAL_FORMS.map(f=>({q:`${f.n} + counter — which form?`, options:shuffle([f.to, f.from, ...sample(SPECIAL_FORMS.filter(x=>x.n!==f.n),2).map(x=>x.to)]), answer:f.to}));
+  const quiz = SPECIAL_FORMS.map(f=>({q:`${f.n} + counter which form?`, options:shuffle([f.to, f.from, ...sample(SPECIAL_FORMS.filter(x=>x.n!==f.n),2).map(x=>x.to)]), answer:f.to}));
   el.appendChild(buildQuiz('sf-quiz', quiz, 'special-forms'));
   el.insertAdjacentHTML('beforeend', noteBox('special-forms'));
 }
@@ -1028,7 +1028,7 @@ function renderCounterGae(el){
     <p><span class="kr">사과 한 개</span> — one apple ${spkBtn('사과 한 개')}</p>
     <p><span class="kr">책 두 개</span> — two books ${spkBtn('책 두 개')}</p>
   </div>
-  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Don't worry about naturalness yet (in real Korean, books use 권, not 개) — your goal right now is the structure: Number + Counter.</div>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Don't worry about naturalness yet (in real Korean, books use 권, not 개), your goal right now is the structure: Number + Counter.</div>
   <h3>Quick Check</h3>`);
   const quiz = [
     {q:'사과 한 ___', options:shuffle(['개','명','권','병']), answer:'개'},
@@ -1049,7 +1049,7 @@ function renderCounterMyeong(el){
     <p><span class="kr">네 명</span> — four people ${spkBtn('네 명')}</p>
     <p><span class="kr">다섯 명</span> — five people ${spkBtn('다섯 명')}</p>
   </div>
-  <p>You may also encounter <span class="kr" style="font-size:1.2em">분</span> — a more respectful (honorific) counter for people. For TOPIK I, recognize both.</p>
+  <p>You may also encounter <span class="kr" style="font-size:1.2em">분</span>, a more respectful (honorific) counter for people. For TOPIK I, recognize both.</p>
   <h3>Quick Check</h3>`);
   const quiz = [
     {q:'학생 두 ___', options:shuffle(['명','개','권','병']), answer:'명'},
@@ -1062,7 +1062,7 @@ function renderCounterMyeong(el){
 
 function renderOtherCounters(el){
   chapterHeader(el,'Hour 3 · 02:40–02:50','Other Important Counters');
-  el.insertAdjacentHTML('beforeend', `<p>Today, just learn recognition — you don't need to memorize all of these perfectly yet.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Today, just learn recognition, you don't need to memorize all of these perfectly yet.</p>`);
   COUNTERS.forEach(c=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${c.ch}</div>${spkBtn(c.ch)}</div><div class="wc-meaning">${c.use}</div><div class="wc-ex">${c.ex.map(e=>`<span class="kr">${e}</span> ${spkBtn(e,'🔊')}`).join('  ·  ')}</div></div>`);
   });
@@ -1101,7 +1101,7 @@ function renderPrices(el){
   el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">원</span> is the Korean currency unit (KRW). Prices are read in Sino-Korean.</p>
   <div class="tile-grid">${PRICE_ITEMS.map(p=>`<div class="num-tile"><div class="n" style="font-size:1.2em">${p.digits}</div><div class="k">${p.kr}</div><div class="spk">${spkBtn(p.kr)}</div></div>`).join('')}</div>
   <h3>Large Number Units</h3>
-  <p>Korean groups large numbers differently from English — the key unit to know is <span class="kr">만</span> = 10,000.</p>
+  <p>Korean groups large numbers differently from English, the key unit to know is <span class="kr">만</span> = 10,000.</p>
   <div class="tile-grid">${LARGE_UNITS.map(u=>`<div class="num-tile"><div class="n" style="font-size:1.1em">${u.num}</div><div class="k">${u.kr}</div><div class="spk">${spkBtn(u.kr)}</div></div>`).join('')}</div>
   <h3>Quick Check</h3>`);
   const quiz = PRICE_ITEMS.map(p=>{
@@ -1131,7 +1131,7 @@ function renderPriceListeningDrill(el){
 
 function renderPhoneNumbers(el){
   chapterHeader(el,'Hour 4 · 03:40–03:55','Phone Numbers');
-  el.insertAdjacentHTML('beforeend', `<p>Phone numbers are read digit by digit, using Sino-Korean numbers — with <span class="kr">공</span> for zero.</p>
+  el.insertAdjacentHTML('beforeend', `<p>Phone numbers are read digit by digit, using Sino-Korean numbers, with <span class="kr">공</span> for zero.</p>
   <div class="tile-grid">${PHONE_DIGITS.map(d=>`<div class="num-tile"><div class="n">${d.d}</div><div class="k">${d.kr}</div><div class="spk">${spkBtn(d.kr)}</div></div>`).join('')}</div>
   <h3>Practice: 010-1234-5678</h3>
   <div class="phone-row">
@@ -1141,7 +1141,7 @@ function renderPhoneNumbers(el){
     <div class="phone-dash">-</div>
     ${['5','6','7','8'].map(d=>`<div class="phone-digit"><div class="d">${d}</div><div class="k">${PHONE_DIGITS.find(x=>x.d===d).kr}</div></div>`).join('')}
   </div>
-  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Think 공 일 공 / 일 이 삼 사 / 오 육 칠 팔 — not "ten million...". Exact spacing in speech may vary; your listening goal is to catch each digit.</div>
+  <div class="callout tip"><span class="callout-label">Teacher's Tip</span>Think 공 일 공 / 일 이 삼 사 / 오 육 칠 팔, not "ten million...". Exact spacing in speech may vary; your listening goal is to catch each digit.</div>
   <h3>Quick Check</h3>`);
   const quiz = PHONE_DIGITS.map(d=>{
     const wrongs = sample(PHONE_DIGITS.filter(x=>x.d!==d.d),3).map(x=>x.kr);
@@ -1153,7 +1153,7 @@ function renderPhoneNumbers(el){
 
 function renderAge(el){
   chapterHeader(el,'Hour 4 · 03:55–04:10','Age Expressions');
-  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">살</span> means "years old," and it's used with Native Korean numbers — with the same special forms you just learned.</p>
+  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">살</span> means "years old," and it's used with Native Korean numbers, with the same special forms you just learned.</p>
   <div class="tile-grid">${AGE_ITEMS.map(a=>`<div class="num-tile"><div class="k" style="font-size:1.3em">${a.kr}</div><div style="color:var(--text-faint);font-size:.8em;margin-top:4px">${a.en}</div><div class="spk">${spkBtn(a.kr)}</div></div>`).join('')}</div>
   <div class="callout"><span class="callout-label">Note the Shift</span><span class="kr">스물</span> → <span class="kr">스무</span> before <span class="kr">살</span>. So 20 years old is <span class="kr">스무 살</span>, not <span class="kr">스물 살</span>. We'll study age properly on Day 4.</div>
   <h3>Quick Check</h3>`);
@@ -1192,7 +1192,7 @@ function renderQuickReviewH4(el){
 }
 
 function renderNumberListening1(el){
-  chapterHeader(el,'Hour 5 · 04:30–04:45','Number Listening — Round 1');
+  chapterHeader(el,'Hour 5 · 04:30–04:45','Number Listening - Round 1');
   el.insertAdjacentHTML('beforeend', `<p>Listen to each item, then pick what you think you heard, before checking. Example: hearing <span class="kr">삼십오</span> should register as "35."</p>`);
   const items = [
     {kr:'삼십오', answer:'35'}, {kr:'오천 원', answer:'5,000 won'}, {kr:'세 명', answer:'3 people'},
@@ -1207,7 +1207,7 @@ function renderNumberListening1(el){
 }
 
 function renderNumberDictation(el){
-  chapterHeader(el,'Hour 5 · 04:45–05:00','Number Dictation — Round 2');
+  chapterHeader(el,'Hour 5 · 04:45–05:00','Number Dictation - Round 2');
   el.insertAdjacentHTML('beforeend', `<p>Listen to each number or price, then pick the matching value. Target: 80%+ accuracy.</p>`);
   const numItems = [
     {kr:'칠', answer:'7'}, {kr:'십이', answer:'12'}, {kr:'십구', answer:'19'}, {kr:'이십오', answer:'25'},
@@ -1245,7 +1245,7 @@ function renderCounterListening(el){
 
 function renderTopikMiniReading(el){
   chapterHeader(el,'Hour 5 · 05:15–05:30','TOPIK-Style Mini Reading');
-  el.insertAdjacentHTML('beforeend', `<p>Read each line and answer. <span class="kr">몇</span> is the key word for "how many" — extremely high priority for TOPIK.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Read each line and answer. <span class="kr">몇</span> is the key word for "how many", extremely high priority for TOPIK.</p>`);
   const quiz = TOPIK_MINI_READING.map(item=>({q:`${item.kr}\n\n${item.q}`, options:shuffle(item.options), answer:item.answer}));
   el.appendChild(buildQuiz('tmr-quiz', quiz, 'topik-mini-reading'));
   el.insertAdjacentHTML('beforeend', noteBox('topik-mini-reading'));
@@ -1257,7 +1257,7 @@ function renderDailyTest(el){
   const data = [];
   sample(SINO_ALL_FOR_QUIZ,5).forEach(v=>{ const wrongs=sample(SINO_ALL_FOR_QUIZ.filter(x=>x.kr!==v.kr),3).map(x=>x.kr); data.push({q:v.n, options:shuffle([v.kr,...wrongs]), answer:v.kr}); });
   sample(NATIVE_ALL_FOR_QUIZ,4).forEach(v=>{ const wrongs=sample(NATIVE_ALL_FOR_QUIZ.filter(x=>x.kr!==v.kr),3).map(x=>x.kr); data.push({q:v.n, options:shuffle([v.kr,...wrongs]), answer:v.kr}); });
-  SPECIAL_FORMS.forEach(f=>{ data.push({q:`${f.n} + counter — which form?`, options:shuffle([f.to,...sample(SPECIAL_FORMS.filter(x=>x.n!==f.n),2).map(x=>x.to),f.from]), answer:f.to}); });
+  SPECIAL_FORMS.forEach(f=>{ data.push({q:`${f.n} + counter which form?`, options:shuffle([f.to,...sample(SPECIAL_FORMS.filter(x=>x.n!==f.n),2).map(x=>x.to),f.from]), answer:f.to}); });
   sample(COUNTER_PRACTICE,3).forEach(item=>{
     const opts=['개','명','마리','권','병','잔','장','대'];
     const wrongs = sample(opts.filter(o=>o!==item.answer),3);
@@ -1289,8 +1289,8 @@ function renderDayComplete(el){
   <div class="callout"><span class="callout-label">Success Criteria</span>
   <p>Sino-Korean 1–100: 80%+ · Native Korean 1–20: 80%+ · 한/두/세/네: 100% · Basic counters: 80%+ · Prices: 80%+ · Phone digits: 80%+ · Number listening: 70–80%+ · TOPIK number questions: 80%+</p>
   </div>
-  <div class="callout tip"><span class="callout-label">Teacher's Note</span>Don't worry if today felt confusing — this is probably the first day Korean starts feeling more complicated, since you're learning two number systems simultaneously. Your mental model: System 1 (일, 이, 삼...) vs. System 2 (하나, 둘, 셋...). For now, just recognize both systems quickly.</div>
-  <h3>Tomorrow — Day 4 Preview</h3>
+  <div class="callout tip"><span class="callout-label">Teacher's Note</span>Don't worry if today felt confusing, this is probably the first day Korean starts feeling more complicated, since you're learning two number systems simultaneously. Your mental model: System 1 (일, 이, 삼...) vs. System 2 (하나, 둘, 셋...). For now, just recognize both systems quickly.</div>
+  <h3>Tomorrow - Day 4 Preview</h3>
   <div class="callout fact"><span class="callout-label">Coming Up</span>Dates, Days, Months, Time &amp; Age. You'll turn today's numbers into real TOPIK situations: <span class="kr">오늘은 7월 28일이에요. 지금 몇 시예요? 몇 살이에요?</span> By the end of Day 4, you'll handle one of the most important clusters of beginner TOPIK listening questions: "When?", "What time?", "What date?", "How old?", and "How many?"</div>
   <div class="btn-row"><button class="btn secondary" onclick="goTo('error-log')">Review Error Log</button> <button class="btn secondary" onclick="goTo('cover')">Back to Cover</button></div>
   `);

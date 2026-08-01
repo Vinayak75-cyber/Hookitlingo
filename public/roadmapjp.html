@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JLPT Roadmap — Five-Level Japanese Study Plan | Hookitlingo</title>
+<title>JLPT Roadmap - Five-Level Japanese Study Plan | Hookitlingo</title>
 <meta name="description" content="A free JLPT study roadmap covering five levels from absolute beginner to advanced Japanese. Structured, self-contained lessons you can study offline.">
 <link rel="canonical" href="https://hookit.online/roadmapjp.html">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="JLPT Roadmap — Five-Level Japanese Study Plan | Hookitlingo">
+<meta property="og:title" content="JLPT Roadmap - Five-Level Japanese Study Plan | Hookitlingo">
 <meta property="og:description" content="A free JLPT study roadmap covering five levels from absolute beginner to advanced Japanese. Structured, self-contained lessons you can study offline.">
 <meta property="og:url" content="https://hookit.online/roadmapjp.html">
 <meta property="og:site_name" content="Hookitlingo">
@@ -19,7 +19,7 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="JLPT Roadmap — Five-Level Japanese Study Plan | Hookitlingo">
+<meta name="twitter:title" content="JLPT Roadmap - Five-Level Japanese Study Plan | Hookitlingo">
 <meta name="twitter:description" content="A free JLPT study roadmap covering five levels from absolute beginner to advanced Japanese. Structured, self-contained lessons you can study offline.">
 <meta name="twitter:image" content="https://hookit.online/og-image.png">
 
@@ -270,7 +270,7 @@ footer a{text-decoration:underline;}
 <div class="hero">
   <div class="eyebrow jp">日本語 · JLPT</div>
   <h1>Five levels. <span style="color:var(--gold); font-style:italic;">One ladder.</span> Start at the bottom.</h1>
-  <p class="sub">The Japanese Language Proficiency Test runs from N5 (absolute beginner) to N1 (near-native) — five clearly defined rungs, each one unlocking a wider slice of real Japanese.</p>
+  <p class="sub">The Japanese Language Proficiency Test runs from N5 (absolute beginner) to N1 (near-native), five clearly defined rungs, each one unlocking a wider slice of real Japanese.</p>
 </div>
 
 <div class="overall-progress" id="overallProgress"></div>
@@ -281,22 +281,22 @@ footer a{text-decoration:underline;}
 </div>
 
 <div class="roadfoot">
-  <p>N5 has a full day-by-day roadmap ready to explore — N4 through N1 will follow the same treatment once N5's courses are built.</p>
+  <p>N5 has a full day-by-day roadmap ready to explore, N4 through N1 will follow the same treatment once N5's courses are built.</p>
 </div>
 
 <footer>
-  <p>Want to start learning today instead? Head back to the <a href="index.html">catalog</a> and pick up Korean — it's already live.</p>
+  <p>Want to start learning today instead? Head back to the <a href="index.html">catalog</a> and pick up Korean, it's already live.</p>
   <p>Powered by Hookitlingo</p>
 </footer>
 
 <script>
 /* ============================================================
-   JLPT ROADMAP DATA — 5 official levels, N5 (easiest) → N1 (hardest)
+   JLPT ROADMAP DATA - 5 official levels, N5 (easiest) → N1 (hardest)
    ============================================================ */
 const JLPT_LEVELS = [
   {
     badge:'N5', native:'五級', en:'First Steps in Japanese',
-    desc:'Hiragana, katakana, ~100 basic kanji, and simple everyday sentences. ~800 words — enough to introduce yourself and get by with help.',
+    desc:'Hiragana, katakana, ~100 basic kanji, and simple everyday sentences. ~800 words, enough to introduce yourself and get by with help.',
     status:'next', file:'jlptn5roadmap.html',
   },
   {
@@ -305,7 +305,7 @@ const JLPT_LEVELS = [
   },
   {
     badge:'N3', native:'三級', en:'The Bridge Level',
-    desc:'~3,750 words, ~650 kanji — the level that connects survival Japanese to genuine independence. Widely considered the biggest jump.',
+    desc:'~3,750 words, ~650 kanji, the level that connects survival Japanese to genuine independence. Widely considered the biggest jump.',
   },
   {
     badge:'N2', native:'二級', en:'Reading Between the Lines',
@@ -313,7 +313,7 @@ const JLPT_LEVELS = [
   },
   {
     badge:'N1', native:'一級', en:'Near-Native Command',
-    desc:'~10,000+ words, ~2,000 kanji. Abstract arguments, specialized topics, and nuanced writing — the final rung before native fluency.',
+    desc:'~10,000+ words, ~2,000 kanji. Abstract arguments, specialized topics, and nuanced writing, the final rung before native fluency.',
   },
 ];
 
@@ -368,7 +368,7 @@ function renderPhases(){
         <div class="phase-num">日</div>
         <div class="phase-title-wrap">
           <h2>The JLPT Ladder</h2>
-          <div class="phase-sub">Beginner (N5) to near-native (N1) — five official levels</div>
+          <div class="phase-sub">Beginner (N5) to near-native (N1) - five official levels</div>
         </div>
         <div class="phase-ribbon">Planned</div>
       </div>
@@ -387,7 +387,7 @@ const io = new IntersectionObserver((entries)=>{
 }, {threshold:.12});
 document.querySelectorAll('.phase').forEach(el=>io.observe(el));
 
-/* Theme toggle — shares the same key as the rest of the site */
+/* Theme toggle - shares the same key as the rest of the site */
 const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
 function applyTheme(){
   document.documentElement.setAttribute('data-theme', ThemeState.theme);
@@ -400,7 +400,7 @@ document.getElementById('themeBtn').onclick = () => {
 };
 applyTheme();
 
-/* Petals — same drifting system as every other page */
+/* Petals - same drifting system as every other page */
 (function spawnPetals(){
   const host = document.getElementById('petals');
   if(!host) return;

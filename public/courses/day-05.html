@@ -793,9 +793,9 @@ function renderCover(el){
       </svg>
     </div>
     <div class="presents">TOPIK I · Level 1</div>
-    <div class="eyebrow">28-Day Roadmap — Day 5 of 28</div>
+    <div class="eyebrow">28-Day Roadmap - Day 5 of 28</div>
     <h1>Essential Particles</h1>
-    <p class="sub">Today you'll learn the three particles that hold every Korean sentence together: 은/는 (topic), 이/가 (subject), and 을/를 (object) — and start reading whole sentences instead of translating word by word.</p>
+    <p class="sub">Today you'll learn the three particles that hold every Korean sentence together: 은/는 (topic), 이/가 (subject), and 을/를 (object) and start reading whole sentences instead of translating word by word.</p>
     <div class="cover-stats">
       <div><b>5</b><span>Hours</span></div>
       <div><b>3</b><span>Particle Pairs</span></div>
@@ -831,14 +831,14 @@ function renderMission(el){
     <tr><td>Hour 4</td><td>60 min</td><td>을/를 — Object Particle</td></tr>
     <tr><td>Hour 5</td><td>60 min</td><td>Particle Integration + TOPIK Practice + Test</td></tr>
   </table>
-  <div class="callout warn"><span class="callout-label">Teacher's Note</span>Don't just memorize "은/는 = topic, 이/가 = subject, 을/를 = object" and stop there — that's only the first layer. The real goal is to start seeing <span class="kr">저는 한국어를 공부해요</span> and directly understanding "I study Korean," without mentally translating each piece.</div>
+  <div class="callout warn"><span class="callout-label">Teacher's Note</span>Don't just memorize "은/는 = topic, 이/가 = subject, 을/를 = object" and stop there, that's only the first layer. The real goal is to start seeing <span class="kr">저는 한국어를 공부해요</span> and directly understanding "I study Korean," without mentally translating each piece.</div>
   <div class="btn-row"><button class="btn" onclick="goTo('warmup-review')">Begin Hour 1 →</button></div>
   `);
 }
 
 function renderWarmupReview(el){
-  chapterHeader(el,'Hour 1 · 00:00–00:10','Day 1–4 Activation Review');
-  el.insertAdjacentHTML('beforeend', `<p>Quick warm-up — not a test. Just activating what you already know before today's grammar.</p>`);
+  chapterHeader(el,'Hour 1 · 00:00–00:10','Day 1-4 Activation Review');
+  el.insertAdjacentHTML('beforeend', `<p>Quick warm-up, not a test. Just activating what you already know before today's grammar.</p>`);
   const quiz = [
     {q:'3', options:shuffle(['삼','셋','오','칠']), answer:'삼'},
     {q:'3 (Native Korean)', options:shuffle(['셋','삼','다섯','넷']), answer:'셋'},
@@ -873,7 +873,7 @@ function renderWhatIsAParticle(el){
       }
     };
   });
-  el.insertAdjacentHTML('beforeend', `<div class="callout"><span class="callout-label">The Idea</span>The particle tells you something about the noun's role in the sentence — like a tiny grammatical label stuck to the end of it: <span class="kr">저는</span>, <span class="kr">학생은</span>, <span class="kr">학교에</span>, <span class="kr">한국어를</span>.</div>`);
+  el.insertAdjacentHTML('beforeend', `<div class="callout"><span class="callout-label">The Idea</span>The particle tells you something about the noun's role in the sentence, like a tiny grammatical label stuck to the end of it: <span class="kr">저는</span>, <span class="kr">학생은</span>, <span class="kr">학교에</span>, <span class="kr">한국어를</span>.</div>`);
   el.insertAdjacentHTML('beforeend', noteBox('what-is-a-particle'));
 }
 
@@ -887,7 +887,7 @@ function renderWordOrder(el){
     <p class="okr">저는 한국어를 <span class="overb">공부해요</span>. ${spkBtn('저는 한국어를 공부해요')}</p>
     <p style="color:var(--text-faint);font-size:.85em">Literally: I + Korean + study</p>
   </div>
-  <p>The basic Korean structure is usually <b>Subject/Topic + Object + Verb</b> — the verb comes at the end.</p>
+  <p>The basic Korean structure is usually <b>Subject/Topic + Object + Verb</b>, the verb comes at the end.</p>
   <h3>Quick Check</h3>`);
   const quiz = [
     {q:'Where does the verb usually go in a Korean sentence?', options:['At the end','At the beginning','In the middle','Right after the subject'], answer:'At the end'},
@@ -899,7 +899,7 @@ function renderWordOrder(el){
 
 function renderFindTheVerb(el){
   chapterHeader(el,'Hour 1 · 00:35–00:50','Find the Verb');
-  el.insertAdjacentHTML('beforeend', `<p>Today's first rule: <b>when reading Korean, look at the end first.</b> The final word is often the verb or adjective telling you what's happening — a very useful TOPIK reading habit.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Today's first rule: <b>when reading Korean, look at the end first.</b> The final word is often the verb or adjective telling you what's happening, a very useful TOPIK reading habit.</p>`);
   VERB_LAST_EXAMPLES.forEach(v=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${v.kr}</div>${spkBtn(v.kr)}</div><div class="wc-meaning">Verb: <span class="kr">${v.verb}</span> — ${v.meaning}</div></div>`);
   });
@@ -920,7 +920,7 @@ function renderThreeParticlesIntro(el){
     <p><b>Subject</b> — <span class="kr" style="font-size:1.2em">이 / 가</span> — Who/what is doing or being something?</p>
     <p><b>Object</b> — <span class="kr" style="font-size:1.2em">을 / 를</span> — What is being acted upon?</p>
   </div>
-  <p>For today, we'll learn these concepts through simple examples — one hour each.</p>
+  <p>For today, we'll learn these concepts through simple examples, one hour each.</p>
   <h3>Quick Check</h3>`);
   const quiz = [
     {q:'은/는 marks the:', options:['Topic','Subject','Object','Verb'], answer:'Topic'},
@@ -932,7 +932,7 @@ function renderThreeParticlesIntro(el){
 }
 
 function renderTopicBasic(el){
-  chapterHeader(el,'Hour 2 · 01:00–01:15','은/는 — Basic Concept');
+  chapterHeader(el,'Hour 2 · 01:00–01:15','은/는 - Basic Concept');
   el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">은/는</span> marks the topic. Think: <b>"As for..."</b></p>`);
   TOPIC_EXAMPLES.forEach(t=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${t.kr}</div>${spkBtn(t.kr)}</div><div class="wc-meaning">${t.en}</div></div>`);
@@ -940,7 +940,7 @@ function renderTopicBasic(el){
   el.insertAdjacentHTML('beforeend', `<h3>Quick Check</h3>`);
   const quiz = [
     {q:'은/는 roughly means:', options:['"As for..."','"I am..."','"Where is..."','"How many..."'], answer:'"As for..."'},
-    {q:'한국어는 어려워요. — What is the topic?', isKr:true, options:shuffle(['한국어','어려워요','는','저']), answer:'한국어'},
+    {q:'한국어는 어려워요. - What is the topic?', isKr:true, options:shuffle(['한국어','어려워요','는','저']), answer:'한국어'},
   ];
   el.appendChild(buildQuiz('tb-quiz', quiz, 'topic-basic'));
   el.insertAdjacentHTML('beforeend', noteBox('topic-basic'));
@@ -963,7 +963,7 @@ function renderTopicEndingRule(el){
 
 function renderTopicPractice(el){
   chapterHeader(el,'Hour 2 · 01:30–01:45','Practice 은/는');
-  el.insertAdjacentHTML('beforeend', `<p>Fill in the correct particle. Goal: stop thinking about the rule every time — <span class="kr">학교 → 는</span> should start becoming automatic.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Fill in the correct particle. Goal: stop thinking about the rule every time, <span class="kr">학교 → 는</span> should start becoming automatic.</p>`);
   const quiz = TOPIC_PRACTICE.map(item=>({q:item.blank, isKr:true, options:shuffle(['은','는']), answer:item.answer}));
   el.appendChild(buildQuiz('tpr-quiz', quiz, 'topic-practice'));
   el.insertAdjacentHTML('beforeend', noteBox('topic-practice'));
@@ -975,7 +975,7 @@ function renderTopicSentences(el){
   TOPIC_SENTENCES.forEach(s=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${s.kr}</div>${spkBtn(s.kr)}</div><div class="wc-meaning">${s.en}</div></div>`);
   });
-  el.insertAdjacentHTML('beforeend', `<div class="callout"><span class="callout-label">Identify</span><span class="kr">오늘은 월요일이에요.</span> — Topic: <span class="kr">오늘</span>. Particle: <span class="kr">은</span>. Main information: <span class="kr">월요일</span>.</div>`);
+  el.insertAdjacentHTML('beforeend', `<div class="callout"><span class="callout-label">Identify</span><span class="kr">오늘은 월요일이에요.</span> Topic: <span class="kr">오늘</span>. Particle: <span class="kr">은</span>. Main information: <span class="kr">월요일</span>.</div>`);
   el.insertAdjacentHTML('beforeend', noteBox('topic-sentences'));
 }
 
@@ -992,12 +992,12 @@ function renderTopicMiniTest(el){
 }
 
 function renderSubjectBasic(el){
-  chapterHeader(el,'Hour 3 · 02:10–02:25','이/가 — Basic Concept');
+  chapterHeader(el,'Hour 3 · 02:10–02:25','이/가 - Basic Concept');
   el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">이/가</span> marks the subject.</p>`);
   SUBJECT_EXAMPLES.forEach(s=>{
-    el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${s.kr}</div>${spkBtn(s.kr)}</div><div class="wc-meaning">${s.en} — subject: <span class="kr">${s.noun}</span>, particle: <span class="kr">${s.particle}</span>, verb: <span class="kr">${s.verb}</span></div></div>`);
+    el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${s.kr}</div>${spkBtn(s.kr)}</div><div class="wc-meaning">${s.en} subject: <span class="kr">${s.noun}</span>, particle: <span class="kr">${s.particle}</span>, verb: <span class="kr">${s.verb}</span></div></div>`);
   });
-  el.insertAdjacentHTML('beforeend', `<div class="callout warn"><span class="callout-label">Slow Down Here</span>The biggest beginner mistake is thinking 은/는 and 이/가 are interchangeable subject markers. They're not. Today, just learn the basic distinction — nuance comes with time.</div>
+  el.insertAdjacentHTML('beforeend', `<div class="callout warn"><span class="callout-label">Slow Down Here</span>The biggest beginner mistake is thinking 은/는 and 이/가 are interchangeable subject markers. They're not. Today, just learn the basic distinction, nuance comes with time.</div>
   <h3>Quick Check</h3>`);
   const quiz = SUBJECT_EXAMPLES.map(s=>{
     const wrongs = sample(SUBJECT_EXAMPLES.filter(x=>x.verb!==s.verb),1).map(x=>x.verb);
@@ -1013,7 +1013,7 @@ function renderSubjectEndingRule(el){
   SUBJECT_ENDING_RULE.forEach(r=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${r.word} + ${r.particle} = <span class="pchip subj">${r.result}</span></div>${spkBtn(r.result)}</div>${r.note?`<div class="wc-meaning">${r.note}</div>`:''}</div>`);
   });
-  el.insertAdjacentHTML('beforeend', `<div class="callout tip"><span class="callout-label">Teacher's Tip</span><span class="kr">제가</span> (I, subject/emphasis) is a special form of <span class="kr">저 + 가</span>. Don't worry about the full nuance yet — you'll compare it directly with <span class="kr">저는</span> in the next chapter.</div>
+  el.insertAdjacentHTML('beforeend', `<div class="callout tip"><span class="callout-label">Teacher's Tip</span><span class="kr">제가</span> (I, subject/emphasis) is a special form of <span class="kr">저 + 가</span>. Don't worry about the full nuance yet, you'll compare it directly with <span class="kr">저는</span> in the next chapter.</div>
   <h3>Quick Check</h3>`);
   const quiz = SUBJECT_ENDING_RULE.map(r=>{
     const wrongs = ['이','가'].filter(p=>p!==r.particle);
@@ -1024,25 +1024,25 @@ function renderSubjectEndingRule(el){
 }
 
 function renderTopicVsSubject(el){
-  chapterHeader(el,'Hour 3 · 02:40–02:55','은/는 vs. 이/가 — Basic Comparison');
-  el.insertAdjacentHTML('beforeend', `<p>Two nearly identical sentences, side by side — this is the comparison that actually makes the distinction click.</p>
+  chapterHeader(el,'Hour 3 · 02:40–02:55','은/는 vs. 이/가 - Basic Comparison');
+  el.insertAdjacentHTML('beforeend', `<p>Two nearly identical sentences, side by side, this is the comparison that actually makes the distinction click.</p>
   <div class="pair-grid">
     <div class="pair-card">
-      <h4>은/는 — frames the topic</h4>
+      <h4>은/는 - frames the topic</h4>
       <div class="pkr kr">저는 학생이에요. ${spkBtn('저는 학생이에요')}</div>
       <p>"As for me, I am a student." → naturally: <b>I am a student.</b></p>
     </div>
     <div class="pair-card">
-      <h4>이/가 — identifies/emphasizes the subject</h4>
+      <h4>이/가 - identifies/emphasizes the subject</h4>
       <div class="pkr kr">제가 학생이에요. ${spkBtn('제가 학생이에요')}</div>
       <p>Closer to: <b>I am the student</b> / I am the one who is the student.</p>
     </div>
   </div>
-  <div class="callout"><span class="callout-label">For TOPIK I</span>You mainly need to recognize the difference in context — the full nuance becomes more important as your Korean improves.</div>
+  <div class="callout"><span class="callout-label">For TOPIK I</span>You mainly need to recognize the difference in context, the full nuance becomes more important as your Korean improves.</div>
   <h3>Quick Check</h3>`);
   const quiz = [
-    {q:'저는 학생이에요. — which particle role is 는 playing?', options:['Topic (introduces/frames)','Subject (identifies/emphasizes)','Object','Location'], answer:'Topic (introduces/frames)'},
-    {q:'제가 학생이에요. — which particle role is 가 playing?', options:['Subject (identifies/emphasizes)','Topic (introduces/frames)','Object','Location'], answer:'Subject (identifies/emphasizes)'},
+    {q:'저는 학생이에요. - which particle role is 는 playing?', options:['Topic (introduces/frames)','Subject (identifies/emphasizes)','Object','Location'], answer:'Topic (introduces/frames)'},
+    {q:'제가 학생이에요. - which particle role is 가 playing?', options:['Subject (identifies/emphasizes)','Topic (introduces/frames)','Object','Location'], answer:'Subject (identifies/emphasizes)'},
   ];
   el.appendChild(buildQuiz('tvs-quiz', quiz, 'topic-vs-subject'));
   el.insertAdjacentHTML('beforeend', noteBox('topic-vs-subject'));
@@ -1053,13 +1053,13 @@ function renderSubjectPractice(el){
   el.insertAdjacentHTML('beforeend', `<p>Fill in the correct particle.</p>`);
   const quiz = SUBJECT_PRACTICE.map(item=>({q:item.blank, isKr:true, options:shuffle(['이','가']), answer:item.answer}));
   el.appendChild(buildQuiz('spr-quiz', quiz, 'subject-practice'));
-  el.insertAdjacentHTML('beforeend', `<div class="callout"><span class="callout-label">Identify</span><span class="kr">학생이 공부해요.</span> — Subject: <span class="kr">학생</span>. Particle: <span class="kr">이</span>. Verb: <span class="kr">공부해요</span>.</div>`);
+  el.insertAdjacentHTML('beforeend', `<div class="callout"><span class="callout-label">Identify</span><span class="kr">학생이 공부해요.</span> Subject: <span class="kr">학생</span>. Particle: <span class="kr">이</span>. Verb: <span class="kr">공부해요</span>.</div>`);
   el.insertAdjacentHTML('beforeend', noteBox('subject-practice'));
 }
 
 function renderExistPatterns(el){
   chapterHeader(el,'Hour 3 · 03:10–03:20','있어요 / 없어요');
-  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">있어요</span> = exists / there is / have. <span class="kr" style="font-size:1.2em">없어요</span> = does not exist / there isn't / don't have. <span class="kr">이/가</span> is commonly used with both — an important pattern for TOPIK.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p><span class="kr" style="font-size:1.2em">있어요</span> = exists / there is / have. <span class="kr" style="font-size:1.2em">없어요</span> = does not exist / there isn't / don't have. <span class="kr">이/가</span> is commonly used with both, an important pattern for TOPIK.</p>`);
   EXIST_PATTERNS.forEach(e=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${e.kr}</div>${spkBtn(e.kr)}</div><div class="wc-meaning">${e.en}</div></div>`);
   });
@@ -1074,10 +1074,10 @@ function renderExistPatterns(el){
 
 function renderWhatIsObject(el){
   chapterHeader(el,'Hour 4 · 03:20–03:35','What Is an Object?');
-  el.insertAdjacentHTML('beforeend', `<p>Look at: <span class="kr" style="font-size:1.2em">저는 한국어를 공부해요.</span> ${spkBtn(OBJECT_INTRO.kr)} The action is <span class="kr">${OBJECT_INTRO.verb}</span> (study). What are you studying? <span class="kr">${OBJECT_INTRO.object}</span> (Korean). So <span class="pchip obj">${OBJECT_INTRO.object}${OBJECT_INTRO.particle}</span> is the object — marked by <span class="kr">${OBJECT_INTRO.particle}</span>.</p>
+  el.insertAdjacentHTML('beforeend', `<p>Look at: <span class="kr" style="font-size:1.2em">저는 한국어를 공부해요.</span> ${spkBtn(OBJECT_INTRO.kr)} The action is <span class="kr">${OBJECT_INTRO.verb}</span> (study). What are you studying? <span class="kr">${OBJECT_INTRO.object}</span> (Korean). So <span class="pchip obj">${OBJECT_INTRO.object}${OBJECT_INTRO.particle}</span> is the object, marked by <span class="kr">${OBJECT_INTRO.particle}</span>.</p>
   <h3>Quick Check</h3>`);
   const quiz = [
-    {q:'저는 한국어를 공부해요. — what is the object?', isKr:true, options:shuffle(['한국어를','저는','공부해요','를']), answer:'한국어를'},
+    {q:'저는 한국어를 공부해요. - what is the object?', isKr:true, options:shuffle(['한국어를','저는','공부해요','를']), answer:'한국어를'},
     {q:'을/를 marks the:', options:['Object','Topic','Subject','Location'], answer:'Object'},
   ];
   el.appendChild(buildQuiz('wio-quiz', quiz, 'what-is-object'));
@@ -1090,7 +1090,7 @@ function renderObjectEndingRule(el){
   OBJECT_ENDING_RULE.forEach(r=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${r.word} + ${r.particle} = <span class="pchip obj">${r.result}</span></div>${spkBtn(r.result)}</div></div>`);
   });
-  el.insertAdjacentHTML('beforeend', `<div class="callout tip"><span class="callout-label">Watch For</span><span class="kr">한국어</span> ends in a vowel sound, so it takes <span class="kr">를</span> — <span class="kr">한국어를</span>, not 한국어을.</div>
+  el.insertAdjacentHTML('beforeend', `<div class="callout tip"><span class="callout-label">Watch For</span><span class="kr">한국어</span> ends in a vowel sound, so it takes <span class="kr">를</span> - <span class="kr">한국어를</span>, not 한국어을.</div>
   <h3>Quick Check</h3>`);
   const quiz = OBJECT_ENDING_RULE.map(r=>{
     const wrongs = ['을','를'].filter(p=>p!==r.particle);
@@ -1102,11 +1102,11 @@ function renderObjectEndingRule(el){
 
 function renderSentenceFormula(el){
   chapterHeader(el,'Hour 4 · 03:50–04:05','The Basic Sentence Formula');
-  el.insertAdjacentHTML('beforeend', `<p><b>Topic + Object + Verb</b>: <span class="kr" style="font-size:1.2em">저는 + 무엇을 + 동사</span> (I + what + verb). Notice each verb below comes bundled with its own example sentence — the habit worth building from today onward.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p><b>Topic + Object + Verb</b>: <span class="kr" style="font-size:1.2em">저는 + 무엇을 + 동사</span> (I + what + verb). Notice each verb below comes bundled with its own example sentence, the habit worth building from today onward.</p>`);
   OBJECT_FORMULA_SENTENCES.forEach(s=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${s.kr}</div>${spkBtn(s.kr)}</div><div class="wc-meaning">${s.en}</div><div class="wc-ex"><span class="kr">${s.verb}</span> — ${s.meaning}</div></div>`);
   });
-  el.insertAdjacentHTML('beforeend', `<div class="callout tip"><span class="callout-label">Your Day 5 Golden Rule</span>From today onward, whenever you learn a new verb, always learn it inside an example sentence — not just <span class="kr">먹다</span> = to eat, but <span class="kr">밥을 먹어요</span>. This makes vocabulary and grammar reinforce each other.</div>`);
+  el.insertAdjacentHTML('beforeend', `<div class="callout tip"><span class="callout-label">Your Day 5 Golden Rule</span>From today onward, whenever you learn a new verb, always learn it inside an example sentence, not just <span class="kr">먹다</span> = to eat, but <span class="kr">밥을 먹어요</span>. This makes vocabulary and grammar reinforce each other.</div>`);
   el.insertAdjacentHTML('beforeend', noteBox('sentence-formula'));
 }
 
@@ -1124,13 +1124,13 @@ function renderBuildYourOwn(el){
   OBJECT_FORMULA_SENTENCES.forEach((s,i)=>{
     el.insertAdjacentHTML('beforeend', `<div class="word-card"><div class="wc-top"><div class="wc-kr">${i+1}. ${s.kr}</div>${spkBtn(s.kr)}</div><div class="wc-meaning">${s.en}</div></div>`);
   });
-  el.insertAdjacentHTML('beforeend', `<div class="callout"><span class="callout-label">Now Try</span>Create 5 original sentences using vocabulary you already know from Days 1–5. Don't use a translator — use the formula and what you've already learned.</div>`);
+  el.insertAdjacentHTML('beforeend', `<div class="callout"><span class="callout-label">Now Try</span>Create 5 original sentences using vocabulary you already know from Days 1–5. Don't use a translator, use the formula and what you've already learned.</div>`);
   el.insertAdjacentHTML('beforeend', noteBox('build-your-own'));
 }
 
 function renderThreeParticleId(el){
   chapterHeader(el,'Hour 4 · 04:35–04:50','Three-Particle Identification');
-  el.insertAdjacentHTML('beforeend', `<p>Tap each part of each sentence to reveal its role. You don't need to master 에 yet — just recognize it's another particle (location/destination).</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Tap each part of each sentence to reveal its role. You don't need to master 에 yet, just recognize it's another particle (location/destination).</p>`);
   THREE_PARTICLE_SENTENCES.forEach((item,i)=>{
     const box = document.createElement('div');
     box.className='breakdown-box';
@@ -1156,11 +1156,11 @@ function renderThreeParticleId(el){
 
 function renderGrammarRecall(el){
   chapterHeader(el,'Hour 4 · 04:50–05:00','Quick Grammar Recall');
-  el.insertAdjacentHTML('beforeend', `<p>Without notes, explain in your own words (not a textbook definition — what you actually understand):</p>
+  el.insertAdjacentHTML('beforeend', `<p>Without notes, explain in your own words (not a textbook definition, what you actually understand):</p>
   <div class="card">
-    <p><span class="kr" style="font-size:1.2em">은/는</span> — ?</p>
-    <p><span class="kr" style="font-size:1.2em">이/가</span> — ?</p>
-    <p><span class="kr" style="font-size:1.2em">을/를</span> — ?</p>
+    <p><span class="kr" style="font-size:1.2em">은/는</span> - ?</p>
+    <p><span class="kr" style="font-size:1.2em">이/가</span> - ?</p>
+    <p><span class="kr" style="font-size:1.2em">을/를</span> - ?</p>
   </div>`);
   el.insertAdjacentHTML('beforeend', noteBox('grammar-recall'));
 }
@@ -1184,7 +1184,7 @@ function renderReadingDrill2(el){
 
 function renderParticleListening(el){
   chapterHeader(el,'Hour 5 · 05:30–05:45','Particle Listening Drill');
-  el.insertAdjacentHTML('beforeend', `<p>Particles are often pronounced quickly and can be hard to hear. Listen to each sentence and identify which particle it contains. Your goal isn't 100% recognition — it's training your ear to notice these tiny sounds.</p>`);
+  el.insertAdjacentHTML('beforeend', `<p>Particles are often pronounced quickly and can be hard to hear. Listen to each sentence and identify which particle it contains. Your goal isn't 100% recognition, it's training your ear to notice these tiny sounds.</p>`);
   const quiz = LISTENING_PARTICLE_SET.map(s=>{
     const wrongs = sample(LISTENING_PARTICLE_SET.filter(x=>x.answer!==s.answer),3).map(x=>x.answer);
     return {q:spkBtn(s.kr,'🔊 Play'), options:shuffle([s.answer,...wrongs]), answer:s.answer};
@@ -1243,10 +1243,10 @@ function renderDayComplete(el){
   <div class="callout"><span class="callout-label">Success Criteria</span>
   <p>Recognize 은/는: 90%+ · Recognize 이/가: 80%+ · Recognize 을/를: 90%+ · Choose correct particle: 80%+ · Identify topic/subject/object: 80%+ each · Read simple Korean sentences: 90%+</p>
   </div>
-  <div class="callout warn"><span class="callout-label">Teacher's Note</span>Don't stop at memorizing "은/는=topic, 이/가=subject, 을/를=object." Instead, train your brain to read <span class="kr">저는 한국어를 공부해요</span> and go straight to "I study Korean" — 저는 as "as for me," 한국어를 as the object, 공부해요 as the verb — without translating word by word.</div>
+  <div class="callout warn"><span class="callout-label">Teacher's Note</span>Don't stop at memorizing "은/는=topic, 이/가=subject, 을/를=object." Instead, train your brain to read <span class="kr">저는 한국어를 공부해요</span> and go straight to "I study Korean" 저는 as "as for me," 한국어를 as the object, 공부해요 as the verb, without translating word by word.</div>
   <div class="callout tip"><span class="callout-label">Your Day 5 Golden Rule</span>From today onward, always learn a new verb together with an example sentence. Not <span class="kr">먹다</span> = to eat, but <span class="kr">밥을 먹어요</span>. This makes vocabulary and grammar reinforce each other.</div>
-  <h3>Tomorrow — Day 6 Preview</h3>
-  <div class="callout fact"><span class="callout-label">Coming Up</span>Present Tense + Daily Activities. You'll learn how dictionary-form verbs like <span class="kr">먹다, 가다, 공부하다</span> become everyday conversational forms — <span class="kr">먹어요, 가요, 공부해요</span> — and build a complete Korean daily routine using everything from Days 1–5.</div>
+  <h3>Tomorrow - Day 6 Preview</h3>
+  <div class="callout fact"><span class="callout-label">Coming Up</span>Present Tense + Daily Activities. You'll learn how dictionary-form verbs like <span class="kr">먹다, 가다, 공부하다</span> become everyday conversational forms "<span class="kr">먹어요, 가요, 공부해요</span>" and build a complete Korean daily routine using everything from Days 1–5.</div>
   <div class="btn-row"><button class="btn secondary" onclick="goTo('error-log')">Review Error Log</button> <button class="btn secondary" onclick="goTo('cover')">Back to Cover</button></div>
   `);
 }

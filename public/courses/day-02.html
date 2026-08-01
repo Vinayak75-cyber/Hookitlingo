@@ -1161,9 +1161,9 @@ function renderMiniGrammarRecall(el){
   const quiz = [
     {q:'저는 학생____.', options:shuffle(['이에요','예요','는','가']), answer:'이에요'},
     {q:'저는 친구____.', options:shuffle(['예요','이에요','는가','하다']), answer:'예요'},
-    {q:'저는 한국어를 공부해요. — What is the topic marker?', options:shuffle(['저는','한국어를','공부해요','를']), answer:'저는'},
-    {q:'저는 한국어를 공부해요. — What is the object?', options:shuffle(['한국어를','저는','공부해요','를']), answer:'한국어를'},
-    {q:'저는 한국어를 공부해요. — What is the verb?', options:shuffle(['공부해요','저는','한국어를','를']), answer:'공부해요'},
+    {q:'저는 한국어를 공부해요. - What is the topic marker?', options:shuffle(['저는','한국어를','공부해요','를']), answer:'저는'},
+    {q:'저는 한국어를 공부해요. - What is the object?', options:shuffle(['한국어를','저는','공부해요','를']), answer:'한국어를'},
+    {q:'저는 한국어를 공부해요. - What is the verb?', options:shuffle(['공부해요','저는','한국어를','를']), answer:'공부해요'},
   ];
   el.appendChild(buildQuiz('mgr-quiz', quiz, 'mini-grammar-recall'));
   el.insertAdjacentHTML('beforeend', noteBox('mini-grammar-recall'));
@@ -1223,7 +1223,7 @@ function renderDailyTest(el){
   });
   sample(VOCAB_DAY2_ALL,6).forEach(w=>{ const wrongs=sample(VOCAB_DAY2_ALL.filter(x=>x.kr!==w.kr),3).map(x=>x.en); data.push({q:w.kr, isKr:true, options:shuffle([w.en,...wrongs]), answer:w.en}); });
   data.push({q:'학생 (ends in a consonant) + "am" =', options:shuffle(['학생이에요','학생예요','학생는','학생가']), answer:'학생이에요'});
-  data.push({q:'저는 한국어를 공부해요. — What is the verb?', options:shuffle(['공부해요','저는','한국어를','를']), answer:'공부해요'});
+  data.push({q:'저는 한국어를 공부해요. - What is the verb?', options:shuffle(['공부해요','저는','한국어를','를']), answer:'공부해요'});
   el.appendChild(buildQuiz('daily-test-quiz', shuffle(data), 'daily-test', true));
 }
 
