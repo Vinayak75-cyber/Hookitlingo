@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Read Hangeul in Under an Hour (Really) | Hookitlingo Blog</title>
+<meta name="description" content="Hangeul was designed to be learned in a single sitting. Here's the exact method to go from zero to reading real Korean words in under an hour.">
+<link rel="canonical" href="https://hookit.online/blog/hangeul-in-one-hour.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Read Hangeul in Under an Hour (Really)">
+<meta property="og:description" content="Hangeul was designed to be learned in a single sitting. Here's the exact method to go from zero to reading real Korean words in under an hour.">
+<meta property="og:url" content="https://hookit.online/blog/hangeul-in-one-hour.html">
+<meta property="og:site_name" content="Hookitlingo">
+<meta property="og:image" content="https://hookit.online/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Read Hangeul in Under an Hour (Really)">
+<meta name="twitter:description" content="The fastest legitimate path to reading Korean script, no rote memorization needed.">
+<meta name="twitter:image" content="https://hookit.online/og-image.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Read Hangeul in Under an Hour (Really)",
+  "description": "Hangeul was designed to be learned in a single sitting. Here's the exact method to go from zero to reading real Korean words in under an hour.",
+  "image": "https://hookit.online/og-image.png",
+  "author": {"@type": "Organization", "name": "Hookitlingo"},
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hookitlingo",
+    "logo": {"@type": "ImageObject", "url": "https://hookit.online/og-image.png"}
+  },
+  "mainEntityOfPage": "https://hookit.online/blog/hangeul-in-one-hour.html",
+  "inLanguage": "en"
+}
+</script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLEMFRK6XH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WLEMFRK6XH');
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941;
+  --border:#4a3550;
+  --text:#f6ecec; --text-dim:#c7b2c4; --text-faint:#8f7a91;
+  --vermilion:#e58aa2; --vermilion-dim:#5a2c3a;
+  --celadon:#5fa688; --celadon-dim:#2a4a3d;
+  --gold:#d9ab5c; --gold-dim:#5c471e;
+  --inkblue:#a084c9; --inkblue-dim:#3a2c50;
+  --petal:#f3b6c6;
+  --radius:16px; --radius-sm:10px;
+  --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --kr:"Noto Serif KR","Apple SD Gothic Neo","Malgun Gothic","Nanum Gothic",sans-serif;
+  --maxw:720px;
+}
+html[data-theme="light"]{
+  --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6;
+  --border:#eccabb;
+  --text:#3a2530; --text-dim:#79576a; --text-faint:#a98a9c;
+  --vermilion:#c8546f; --vermilion-dim:#f6dae2;
+  --celadon:#3f7d63; --celadon-dim:#d9ece2;
+  --gold:#a4762b; --gold-dim:#f2e2c2;
+  --inkblue:#75509f; --inkblue-dim:#e7ddf2;
+  --petal:#e59fb2;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--text); font-family:var(--sans);
+  font-size:17px; line-height:1.75; transition:background .3s,color .3s;
+  background:
+    radial-gradient(1100px 620px at 12% -8%, color-mix(in srgb, var(--vermilion) 16%, transparent), transparent 58%),
+    radial-gradient(900px 520px at 104% 6%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 55%),
+    var(--ink);
+  background-attachment:fixed; min-height:100vh;
+}
+::selection{background:var(--vermilion); color:#fff;}
+h1,h2,h3{font-family:var(--serif); font-weight:600; letter-spacing:.2px; margin:0 0 .5em;}
+p{margin:0 0 1.1em;}
+a{color:var(--celadon);}
+.kr{font-family:var(--kr);}
+button{font-family:var(--sans); cursor:pointer;}
+
+.petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.petal{position:absolute; top:-8%; will-change:transform; animation:petal-fall linear infinite;}
+.petal svg{display:block; filter:drop-shadow(0 1px 1px rgba(0,0,0,.08));}
+@keyframes petal-fall{0%{transform:translate(0,-10vh) rotate(0deg);} 100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}}
+@media (prefers-reduced-motion: reduce){ .petals{display:none;} }
+
+/* Reading progress bar */
+#readbar{position:fixed; top:0; left:0; height:3px; width:100%; z-index:50; background:transparent;}
+#readbarFill{height:100%; width:0%; background:linear-gradient(90deg,var(--vermilion),var(--gold)); transition:width .1s;}
+
+#topbar{
+  position:sticky; top:3px; z-index:30; display:flex; align-items:center; justify-content:space-between;
+  gap:14px; padding:14px 5vw; max-width:900px; margin:0 auto;
+  background:color-mix(in srgb, var(--ink) 85%, transparent); backdrop-filter:blur(10px);
+}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
+.brand-block{
+  width:36px;height:36px;border-radius:50%; flex:none; position:relative;
+  background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--vermilion) 88%, #fff 12%), var(--vermilion) 72%);
+  display:flex;align-items:center;justify-content:center; font-family:var(--kr); font-weight:700; font-size:15px; color:#fff9f7;
+  transform:rotate(-7deg);
+}
+.brand-txt{font-family:var(--serif); font-size:1.05em; color:var(--text);}
+.topbtn{
+  background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); border-radius:8px;
+  padding:6px 12px; font-size:.82em;
+}
+.topbtn:hover{color:var(--text); border-color:var(--celadon);}
+
+article{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:30px 6vw 20px;}
+.post-tag{display:inline-block; font-size:.7em; letter-spacing:.1em; text-transform:uppercase; font-weight:700; padding:4px 12px; border-radius:999px; background:var(--vermilion-dim); color:var(--vermilion); margin-bottom:16px;}
+article h1{font-size:2.1em; margin-bottom:.3em;}
+.byline{color:var(--text-faint); font-size:.85em; margin-bottom:2em;}
+article h2{font-size:1.4em; margin-top:1.6em;}
+article p{color:var(--text-dim);}
+article strong{color:var(--text);}
+.callout{background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--celadon); border-radius:var(--radius-sm); padding:16px 18px; margin:1.5em 0; color:var(--text-dim); font-size:.95em;}
+.callout-label{display:block; font-weight:700; color:var(--celadon); font-size:.8em; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;}
+.kr-big{font-family:var(--kr); font-size:1.4em; color:var(--vermilion);}
+
+/* CTA into product */
+.cta-card{
+  background:linear-gradient(135deg, var(--surface2), var(--surface)); border:1px solid var(--border);
+  border-radius:var(--radius); padding:24px; text-align:center; margin:2.5em 0;
+}
+.cta-card h3{margin-bottom:6px;}
+.cta-card p{color:var(--text-dim); font-size:.92em;}
+.cta-btn{
+  display:inline-block; margin-top:8px; padding:10px 22px; border-radius:8px; font-weight:600; font-size:.92em;
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%)); color:#fff; text-decoration:none;
+}
+
+/* Related posts */
+.related{max-width:var(--maxw); margin:0 auto; padding:0 6vw 50px;}
+.related h3{font-size:1.1em; color:var(--text-faint); text-transform:uppercase; letter-spacing:.08em; font-size:.75em; margin-bottom:14px;}
+.related-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+.related-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; text-decoration:none; color:var(--text);}
+.related-card:hover{border-color:var(--celadon);}
+.related-card span{display:block; font-size:.9em; font-weight:600;}
+
+footer{position:relative; z-index:2; text-align:center; padding:20px 5vw 50px; color:var(--text-faint); font-size:.82em;}
+footer a{color:var(--text-faint); text-decoration:underline;}
+
+@media(max-width:640px){
+  article h1{font-size:1.6em;}
+  .related-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="petals" id="petals" aria-hidden="true"></div>
+<div id="readbar"><div id="readbarFill"></div></div>
+
+<div id="topbar">
+  <a class="brand" href="index.html">
+    <div class="brand-block kr">虎</div>
+    <span class="brand-txt">Hookitlingo</span>
+  </a>
+  <a class="topbtn" href="../index.html">🏠 Courses</a>
+</div>
+
+<article>
+  <span class="post-tag">Korean · 6 min read</span>
+  <h1>How to Read Hangeul in Under an Hour (Really)</h1>
+  <p class="byline">By Hookitlingo · Free &amp; offline Korean courses</p>
+
+  <p>Hangeul isn't like most writing systems. It wasn't cobbled together over centuries. It was <strong>designed</strong>, in 1443, under King Sejong, specifically so ordinary people could learn it in a day. That's not marketing. It's the actual documented intent behind the alphabet.</p>
+
+  <p>Here's the method that gets that promise to actually hold up for you, today, in under an hour.</p>
+
+  <h2>1. Forget "memorizing" - learn the shapes as logic</h2>
+  <p>Every consonant in Hangeul is a small picture of your mouth making that sound. <span class="kr-big">ㄱ</span> is the back of your tongue lifting toward your throat for a "g/k" sound. Once you see the letters as diagrams instead of arbitrary squiggles, recall gets dramatically easier.</p>
+
+  <div class="callout">
+    <span class="callout-label">Why this matters</span>
+    Most learners try to brute-force memorize 24 symbols like a Latin alphabet. Hangeul rewards a different approach: understand the shape's logic once, and you rarely forget it again.
+  </div>
+
+  <h2>2. Learn vowels as one repeatable pattern</h2>
+  <p>Korean vowels are built from three elements: a horizontal line (the earth), a vertical line (a person standing), and a dot (the sun). Combinations of these three pieces build every vowel sound. Once that clicks, you're not learning ten new symbols. You're learning one small system.</p>
+
+  <h2>3. Build syllable blocks, don't read letter by letter</h2>
+  <p>Hangeul letters stack into syllable blocks, always consonant + vowel (+ consonant). This is the step most learners skip, and it's the one that turns "I recognize some letters" into "I can actually read words." Practice stacking with real, simple words from day one instead of isolated flashcards.</p>
+
+  <h2>4. Read real words immediately</h2>
+  <p>Don't wait until you've "finished" the alphabet. As soon as you know 5-6 letters, start sounding out real Korean words that use only those letters. This is what makes the hour feel real instead of theoretical.</p>
+
+  <div class="callout">
+    <span class="callout-label">Try it now</span>
+    <span class="kr-big">안녕</span> - an-nyeong, "hello." If you've followed along, you likely just read your first real Korean word.
+  </div>
+
+  <h2>The one-hour breakdown</h2>
+  <p><strong>0–15 min:</strong> Basic consonants as mouth-shape logic.<br>
+  <strong>15–30 min:</strong> Vowels as the three-piece system.<br>
+  <strong>30–45 min:</strong> Stack blocks, sound out 10 real words.<br>
+  <strong>45–60 min:</strong> Read a full simple sentence out loud.</p>
+
+  <div class="cta-card">
+    <h3>Want the full interactive version?</h3>
+    <p>Our free Hangeul Writing Workbook builds on exactly this method, with audio, quizzes, and stroke-order practice, all in one offline file.</p>
+    <a class="cta-btn" href="../hanguel-writing-workbook.html">Start the Free Workbook →</a>
+  </div>
+</article>
+
+<div class="related">
+  <h3>Keep reading</h3>
+  <div class="related-grid">
+    <a class="related-card" href="hiragana-vs-katakana.html"><span>Hiragana vs. Katakana: What's the Actual Difference?</span>5 min read</a>
+    <a class="related-card" href="korean-vs-japanese-easier.html"><span>Is Korean or Japanese Easier to Learn First?</span>7 min read</a>
+  </div>
+</div>
+
+<footer>
+  <p>Powered by <a href="../index.html">Hookitlingo</a> - free, offline Korean &amp; Japanese courses.</p>
+</footer>
+
+<script>
+const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
+document.documentElement.setAttribute('data-theme', ThemeState.theme);
+
+window.addEventListener('scroll', ()=>{
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = h>0 ? (window.scrollY/h)*100 : 0;
+  document.getElementById('readbarFill').style.width = Math.min(100,pct)+'%';
+});
+
+(function spawnPetals(){
+  const host = document.getElementById('petals');
+  if(!host) return;
+  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
+  const count = window.innerWidth < 700 ? 8 : 14;
+  for(let i=0;i<count;i++){
+    const size = 10 + Math.random()*12;
+    const left = Math.random()*100;
+    const dur = 10 + Math.random()*12;
+    const delay = -(Math.random()*dur);
+    const drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)];
+    const rotStart = Math.round(Math.random()*360);
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
+    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
+    host.appendChild(p);
+  }
+})();
+</script>
+</body>
+</html>

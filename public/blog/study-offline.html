@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why We Built Hookitlingo to Work Completely Offline | Hookitlingo Blog</title>
+<meta name="description" content="No accounts, no subscriptions, no internet needed after download. The reasoning behind Hookitlingo's offline-first, single-file course design.">
+<link rel="canonical" href="https://hookit.online/blog/study-offline.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why We Built Hookitlingo to Work Completely Offline">
+<meta property="og:description" content="No accounts, no subscriptions, no internet needed after download. Here's the thinking behind that decision.">
+<meta property="og:url" content="https://hookit.online/blog/study-offline.html">
+<meta property="og:site_name" content="Hookitlingo">
+<meta property="og:image" content="https://hookit.online/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Why We Built Hookitlingo to Work Completely Offline">
+<meta name="twitter:description" content="No accounts, no subscriptions, no internet needed after download.">
+<meta name="twitter:image" content="https://hookit.online/og-image.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Why We Built Hookitlingo to Work Completely Offline",
+  "description": "No accounts, no subscriptions, no internet needed after download. The reasoning behind Hookitlingo's offline-first, single-file course design.",
+  "image": "https://hookit.online/og-image.png",
+  "author": {"@type": "Organization", "name": "Hookitlingo"},
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hookitlingo",
+    "logo": {"@type": "ImageObject", "url": "https://hookit.online/og-image.png"}
+  },
+  "mainEntityOfPage": "https://hookit.online/blog/study-offline.html",
+  "inLanguage": "en"
+}
+</script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLEMFRK6XH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WLEMFRK6XH');
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941;
+  --border:#4a3550;
+  --text:#f6ecec; --text-dim:#c7b2c4; --text-faint:#8f7a91;
+  --vermilion:#e58aa2; --vermilion-dim:#5a2c3a;
+  --celadon:#5fa688; --celadon-dim:#2a4a3d;
+  --gold:#d9ab5c; --gold-dim:#5c471e;
+  --petal:#f3b6c6;
+  --radius:16px; --radius-sm:10px;
+  --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --maxw:720px;
+}
+html[data-theme="light"]{
+  --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6;
+  --border:#eccabb;
+  --text:#3a2530; --text-dim:#79576a; --text-faint:#a98a9c;
+  --vermilion:#c8546f; --vermilion-dim:#f6dae2;
+  --celadon:#3f7d63; --celadon-dim:#d9ece2;
+  --gold:#a4762b; --gold-dim:#f2e2c2;
+  --petal:#e59fb2;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--text); font-family:var(--sans);
+  font-size:17px; line-height:1.75; transition:background .3s,color .3s;
+  background:
+    radial-gradient(1100px 620px at 12% -8%, color-mix(in srgb, var(--celadon) 16%, transparent), transparent 58%),
+    radial-gradient(900px 520px at 104% 6%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 55%),
+    var(--ink);
+  background-attachment:fixed; min-height:100vh;
+}
+::selection{background:var(--vermilion); color:#fff;}
+h1,h2,h3{font-family:var(--serif); font-weight:600; letter-spacing:.2px; margin:0 0 .5em;}
+p{margin:0 0 1.1em;}
+a{color:var(--celadon);}
+button{font-family:var(--sans); cursor:pointer;}
+
+.petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.petal{position:absolute; top:-8%; will-change:transform; animation:petal-fall linear infinite;}
+.petal svg{display:block; filter:drop-shadow(0 1px 1px rgba(0,0,0,.08));}
+@keyframes petal-fall{0%{transform:translate(0,-10vh) rotate(0deg);} 100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}}
+@media (prefers-reduced-motion: reduce){ .petals{display:none;} }
+
+#readbar{position:fixed; top:0; left:0; height:3px; width:100%; z-index:50; background:transparent;}
+#readbarFill{height:100%; width:0%; background:linear-gradient(90deg,var(--celadon),var(--gold)); transition:width .1s;}
+
+#topbar{
+  position:sticky; top:3px; z-index:30; display:flex; align-items:center; justify-content:space-between;
+  gap:14px; padding:14px 5vw; max-width:900px; margin:0 auto;
+  background:color-mix(in srgb, var(--ink) 85%, transparent); backdrop-filter:blur(10px);
+}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
+.brand-block{
+  width:36px;height:36px;border-radius:50%; flex:none; position:relative;
+  background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--vermilion) 88%, #fff 12%), var(--vermilion) 72%);
+  display:flex;align-items:center;justify-content:center; font-weight:700; font-size:15px; color:#fff9f7;
+  transform:rotate(-7deg);
+}
+.brand-txt{font-family:var(--serif); font-size:1.05em; color:var(--text);}
+.topbtn{
+  background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); border-radius:8px;
+  padding:6px 12px; font-size:.82em;
+}
+.topbtn:hover{color:var(--text); border-color:var(--celadon);}
+
+article{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:30px 6vw 20px;}
+.post-tag{display:inline-block; font-size:.7em; letter-spacing:.1em; text-transform:uppercase; font-weight:700; padding:4px 12px; border-radius:999px; background:var(--celadon-dim); color:var(--celadon); margin-bottom:16px;}
+article h1{font-size:2.1em; margin-bottom:.3em;}
+.byline{color:var(--text-faint); font-size:.85em; margin-bottom:2em;}
+article h2{font-size:1.4em; margin-top:1.6em;}
+article p{color:var(--text-dim);}
+article strong{color:var(--text);}
+.callout{background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--celadon); border-radius:var(--radius-sm); padding:16px 18px; margin:1.5em 0; color:var(--text-dim); font-size:.95em;}
+.callout-label{display:block; font-weight:700; color:var(--celadon); font-size:.8em; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;}
+
+.cta-card{
+  background:linear-gradient(135deg, var(--surface2), var(--surface)); border:1px solid var(--border);
+  border-radius:var(--radius); padding:24px; text-align:center; margin:2.5em 0;
+}
+.cta-card h3{margin-bottom:6px;}
+.cta-card p{color:var(--text-dim); font-size:.92em;}
+.cta-btn{
+  display:inline-block; margin-top:8px; padding:10px 22px; border-radius:8px; font-weight:600; font-size:.92em;
+  background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%)); color:#fff; text-decoration:none;
+}
+
+.related{max-width:var(--maxw); margin:0 auto; padding:0 6vw 50px;}
+.related h3{color:var(--text-faint); text-transform:uppercase; letter-spacing:.08em; font-size:.75em; margin-bottom:14px;}
+.related-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+.related-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; text-decoration:none; color:var(--text);}
+.related-card:hover{border-color:var(--celadon);}
+.related-card span{display:block; font-size:.9em; font-weight:600;}
+
+footer{position:relative; z-index:2; text-align:center; padding:20px 5vw 50px; color:var(--text-faint); font-size:.82em;}
+footer a{color:var(--text-faint); text-decoration:underline;}
+
+@media(max-width:640px){
+  article h1{font-size:1.6em;}
+  .related-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="petals" id="petals" aria-hidden="true"></div>
+<div id="readbar"><div id="readbarFill"></div></div>
+
+<div id="topbar">
+  <a class="brand" href="index.html">
+    <div class="brand-block">虎</div>
+    <span class="brand-txt">Hookitlingo</span>
+  </a>
+  <a class="topbtn" href="../index.html">🏠 Courses</a>
+</div>
+
+<article>
+  <span class="post-tag">Study Tips · 4 min read</span>
+  <h1>Why We Built Hookitlingo to Work Completely Offline</h1>
+  <p class="byline">By Hookitlingo · Free &amp; offline Korean &amp; Japanese courses</p>
+
+  <p>Every Hookitlingo course is a single downloadable file. No account, no login, no subscription, no internet connection required after you've downloaded it once. That's not an accident or a limitation we're working around. It's the actual design goal.</p>
+
+  <h2>The problem with most language apps</h2>
+  <p>Most language-learning platforms are built around continuous engagement: streaks, notifications, subscriptions that lapse if you miss a payment, servers that go down, companies that shut down and take your progress with them. None of that serves the actual goal of learning a language. It serves the business model.</p>
+
+  <div class="callout">
+    <span class="callout-label">What "offline-first" actually means here</span>
+    Once you download a Hookitlingo course file, it runs entirely in your browser from that file. No server calls, no account check, no internet needed. Your progress, XP, and badges save locally on your device. You could lose internet access for six months and keep learning uninterrupted.
+  </div>
+
+  <h2>Why this matters practically</h2>
+  <p>Commuting on a train with no signal, studying on a flight, living somewhere with unreliable internet, or simply not wanting to hand over an email address to start learning. These are all real, common situations that "cloud-only" platforms quietly fail. A single self-contained file just works, every time, everywhere.</p>
+
+  <h2>Why we keep it free</h2>
+  <p>Every course stays free and ad-free by design. The courses aren't the product being sold to advertisers, and they're not gated behind a subscription. We fund development through optional support and paid certificates for people who want formal proof of completion, not through pressure tactics or locked content.</p>
+
+  <div class="cta-card">
+    <h3>See it for yourself</h3>
+    <p>Download any course, disconnect from the internet, and it still works. That's the whole pitch.</p>
+    <a class="cta-btn" href="../index.html">Browse Free Courses →</a>
+  </div>
+</article>
+
+<div class="related">
+  <h3>Keep reading</h3>
+  <div class="related-grid">
+    <a class="related-card" href="hangeul-in-one-hour.html"><span>How to Read Hangeul in Under an Hour</span>6 min read</a>
+    <a class="related-card" href="korean-vs-japanese-easier.html"><span>Is Korean or Japanese Easier to Learn First?</span>7 min read</a>
+  </div>
+</div>
+
+<footer>
+  <p>Powered by <a href="../index.html">Hookitlingo</a> - free, offline Korean &amp; Japanese courses.</p>
+</footer>
+
+<script>
+const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
+document.documentElement.setAttribute('data-theme', ThemeState.theme);
+
+window.addEventListener('scroll', ()=>{
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = h>0 ? (window.scrollY/h)*100 : 0;
+  document.getElementById('readbarFill').style.width = Math.min(100,pct)+'%';
+});
+
+(function spawnPetals(){
+  const host = document.getElementById('petals');
+  if(!host) return;
+  const colors = ['var(--petal)','var(--celadon)','var(--gold)'];
+  const count = window.innerWidth < 700 ? 8 : 14;
+  for(let i=0;i<count;i++){
+    const size = 10 + Math.random()*12;
+    const left = Math.random()*100;
+    const dur = 10 + Math.random()*12;
+    const delay = -(Math.random()*dur);
+    const drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)];
+    const rotStart = Math.round(Math.random()*360);
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
+    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
+    host.appendChild(p);
+  }
+})();
+</script>
+</body>
+</html>
