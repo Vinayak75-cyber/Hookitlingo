@@ -157,6 +157,7 @@ button{font-family:var(--sans); cursor:pointer;}
 .post-card{
   display:flex; flex-direction:column; background:var(--surface); border:1px solid var(--border);
   border-radius:var(--radius); padding:22px 22px 20px; transition:transform .2s, border-color .2s;
+  text-decoration:none; color:inherit;
 }
 .post-card:hover{transform:translateY(-3px); border-color:var(--celadon);}
 .post-tag{
@@ -166,9 +167,8 @@ button{font-family:var(--sans); cursor:pointer;}
 .post-tag.korean{background:var(--vermilion-dim); color:var(--vermilion);}
 .post-tag.japanese{background:var(--inkblue-dim); color:var(--inkblue);}
 .post-tag.study{background:var(--celadon-dim); color:var(--celadon);}
-.post-card h2{font-size:1.28em; margin-bottom:8px;}
-.post-card h2 a{color:var(--text);}
-.post-card h2 a:hover{color:var(--vermilion);}
+.post-card h2{font-size:1.28em; margin-bottom:8px; color:var(--text);}
+.post-card:hover h2{color:var(--vermilion);}
 .post-excerpt{color:var(--text-dim); font-size:.92em; flex:1; margin-bottom:14px;}
 .post-meta{display:flex; justify-content:space-between; align-items:center; font-size:.78em; color:var(--text-faint); border-top:1px solid var(--border); padding-top:12px;}
 .post-read{color:var(--celadon); font-weight:600;}
@@ -245,47 +245,47 @@ footer a{color:var(--text-faint); text-decoration:underline;}
 
 <div class="blog-grid" id="postGrid">
 
-  <div class="post-card" data-cat="korean">
+  <a class="post-card" data-cat="korean" href="hangeul-in-one-hour.html">
     <span class="post-tag korean">Korean</span>
-    <h2><a href="hangeul-in-one-hour.html">How to Read Hangeul in Under an Hour</a></h2>
+    <h2>How to Read Hangeul in Under an Hour</h2>
     <p class="post-excerpt">The fastest legitimate path to reading Korean script, no rote memorization, no apps required.</p>
     <div class="post-meta"><span>6 min read</span><span class="post-read">Read →</span></div>
-  </div>
+  </a>
 
-  <div class="post-card" data-cat="japanese">
+  <a class="post-card" data-cat="japanese" href="hiragana-vs-katakana.html">
     <span class="post-tag japanese">Japanese</span>
-    <h2><a href="hiragana-vs-katakana.html">Hiragana vs. Katakana: What's the Actual Difference?</a></h2>
+    <h2>Hiragana vs. Katakana: What's the Actual Difference?</h2>
     <p class="post-excerpt">Two scripts, one weekend. Here's when Japanese uses each one and why it matters for reading real sentences.</p>
     <div class="post-meta"><span>5 min read</span><span class="post-read">Read →</span></div>
-  </div>
+  </a>
 
-  <div class="post-card" data-cat="study">
+  <a class="post-card" data-cat="study" href="korean-vs-japanese-easier.html">
     <span class="post-tag study">Study Tips</span>
-    <h2><a href="korean-vs-japanese-easier.html">Is Korean or Japanese Easier to Learn First?</a></h2>
+    <h2>Is Korean or Japanese Easier to Learn First?</h2>
     <p class="post-excerpt">An honest breakdown of grammar, writing systems, and pronunciation, for English speakers choosing between the two.</p>
     <div class="post-meta"><span>7 min read</span><span class="post-read">Read →</span></div>
-  </div>
+  </a>
 
-  <div class="post-card" data-cat="korean">
+  <a class="post-card" data-cat="korean" href="topik-study-plan.html">
     <span class="post-tag korean">Korean</span>
-    <h2><a href="topik-study-plan.html">A No-Nonsense TOPIK I Study Plan</a></h2>
+    <h2>A No-Nonsense TOPIK I Study Plan</h2>
     <p class="post-excerpt">Six levels, one exam, zero fluff. The roadmap we use to structure Hookitlingo's own TOPIK prep courses.</p>
     <div class="post-meta"><span>8 min read</span><span class="post-read">Read →</span></div>
-  </div>
+  </a>
 
-  <div class="post-card" data-cat="japanese">
+  <a class="post-card" data-cat="japanese" href="jlpt-n5-roadmap.html">
     <span class="post-tag japanese">Japanese</span>
-    <h2><a href="jlpt-n5-roadmap.html">JLPT N5 in 84 Days: The Full Roadmap</a></h2>
+    <h2>JLPT N5 in 84 Days: The Full Roadmap</h2>
     <p class="post-excerpt">Day-by-day, this is exactly how we structure the free 84-day path to N5-ready Japanese.</p>
     <div class="post-meta"><span>9 min read</span><span class="post-read">Read →</span></div>
-  </div>
+  </a>
 
-  <div class="post-card" data-cat="study">
+  <a class="post-card" data-cat="study" href="study-offline.html">
     <span class="post-tag study">Study Tips</span>
-    <h2><a href="study-offline.html">Why We Built Hookitlingo to Work Completely Offline</a></h2>
+    <h2>Why We Built Hookitlingo to Work Completely Offline</h2>
     <p class="post-excerpt">No accounts, no subscriptions, no internet needed after download. Here's the thinking behind that decision.</p>
     <div class="post-meta"><span>4 min read</span><span class="post-read">Read →</span></div>
-  </div>
+  </a>
 
 </div>
 

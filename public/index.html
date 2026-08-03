@@ -50,7 +50,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ===== TOKENS ===== */
 :root{
@@ -223,6 +223,22 @@ button{font-family:var(--sans); cursor:pointer;}
 .hero .sub2{color:var(--text-faint); font-size:.92em; max-width:560px; margin:0 auto;}
 
 /* Culture cards */
+.founder-note{
+  max-width:640px; margin:10px auto 36px; padding:26px 30px;
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  text-align:center;
+}
+.founder-note .eyebrow{font-size:.75em; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:12px;}
+.founder-note p{
+  font-family:"Caveat",cursive; font-size:1.55em; line-height:1.4; color:var(--text-dim); margin:0 0 6px;
+}
+.founder-btn{
+  display:inline-block; margin-top:12px; padding:9px 20px; border-radius:8px; font-weight:600; font-size:.88em;
+  font-family:var(--sans);
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%)); color:#fff; text-decoration:none;
+}
+.founder-btn:hover{filter:brightness(1.06);}
+
 .culture-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px; max-width:var(--maxw); margin:36px auto 10px; padding:0 5vw;}
 .cul-card{
   position:relative; overflow:hidden; display:block; text-decoration:none; color:var(--text);
@@ -290,6 +306,13 @@ footer a{color:var(--text-faint); text-decoration:underline;}
   <h1>Which culture do you wanna <span class="accent">dive into</span>?</h1>
   <p class="sub">Every course is a single downloadable file chapters, quizzes, flashcards, and audio all embedded inside it.</p>
   <p class="sub2">No installs, no accounts, no internet required once it's on your device.</p>
+</div>
+
+<div class="founder-note">
+  <div class="eyebrow">A Note from the Founder</div>
+  <p>Hey, thanks for being here.</p>
+  <p>I built this alone, so I don't always know what's confusing or missing. If you have a minute, I'd really appreciate your honest feedback.</p>
+  <a class="founder-btn" href="feedback.html">Share Your Feedback →</a>
 </div>
 
 <div class="culture-grid">
