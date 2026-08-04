@@ -444,6 +444,214 @@ app.post('/api/feedback', async (req, res) => {
   }
 });
 
+// ============================================================
+// EARLY ACCESS — tiered waitlist, same Airtable-as-source-of-truth
+// pattern as Feedback/Supporters above. This is the pre-launch
+// demand-validation mechanic: four price tiers ($50/$65/$80/$100),
+// 500 spots each. Once a tier fills, new registrants are
+// auto-bumped into the next open tier rather than rejected — the
+// scarcity is real (spots genuinely run out) but nobody hits a
+// dead end.
+//
+//   AIRTABLE_EARLY_ACCESS_TABLE_NAME — e.g. "EarlyAccess" (optional,
+//   defaults to "EarlyAccess"). Same base/API key as Feedback.
+//
+// Table needs three fields: Email (text), Tier (text, one of the
+// values in EARLY_ACCESS_TIERS below), Created (date/text).
+// ============================================================
+const AIRTABLE_EARLY_ACCESS_TABLE_NAME = process.env.AIRTABLE_EARLY_ACCESS_TABLE_NAME || 'EarlyAccess';
+const AIRTABLE_EARLY_ACCESS_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_EARLY_ACCESS_TABLE_NAME)}`;
+
+// Ordered low-to-high — this order is also the bump order: if a
+// registrant's chosen tier is full, they move to the next entry
+// in this array, and so on until an open tier is found.
+const EARLY_ACCESS_TIERS = ['50', '65', '80', '100'];
+const EARLY_ACCESS_CAP = 500;
+
+// Fetches every record from an Airtable table/view, following
+// pagination automatically. Used for both the public counts
+// endpoint and the duplicate-email check below. Capped at 50
+// pages (5000 records) as a hard safety stop — well beyond
+// anything this waitlist will ever hold (4 tiers x 500 cap).
+async function airtableListAll(baseUrl, filterByFormula) {
+  const records = [];
+  let offset;
+  let pages = 0;
+  do {
+    const params = new URLSearchParams({ pageSize: '100' });
+    if (filterByFormula) params.set('filterByFormula', filterByFormula);
+    if (offset) params.set('offset', offset);
+    const res = await fetch(`${baseUrl}?${params.toString()}`, {
+      headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` }
+    });
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(`Airtable list failed: ${errText}`);
+    }
+    const data = await res.json();
+    records.push(...(data.records || []));
+    offset = data.offset;
+    pages++;
+  } while (offset && pages < 50);
+  return records;
+}
+
+// Short-lived in-memory cache for tier counts — best-effort only
+// (resets on restart, same tradeoff already accepted elsewhere in
+// this file), just here to stop the fill bars from re-fetching the
+// whole table on every single page load.
+let earlyAccessCountsCache = { data: null, fetchedAt: 0 };
+const EARLY_ACCESS_COUNTS_TTL_MS = 15 * 1000;
+
+async function getEarlyAccessCounts(forceRefresh) {
+  const now = Date.now();
+  if (!forceRefresh && earlyAccessCountsCache.data && (now - earlyAccessCountsCache.fetchedAt) < EARLY_ACCESS_COUNTS_TTL_MS) {
+    return earlyAccessCountsCache.data;
+  }
+  const records = await airtableListAll(AIRTABLE_EARLY_ACCESS_URL);
+  const counts = {};
+  EARLY_ACCESS_TIERS.forEach(t => { counts[t] = 0; });
+  for (const r of records) {
+    const tier = r.fields && r.fields.Tier;
+    if (tier && Object.prototype.hasOwnProperty.call(counts, tier)) {
+      counts[tier]++;
+    }
+  }
+  earlyAccessCountsCache = { data: counts, fetchedAt: now };
+  return counts;
+}
+
+app.get('/api/early-access/counts', async (req, res) => {
+  if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
+    return res.status(500).json({ error: 'Early access storage is not configured yet.' });
+  }
+  try {
+    const counts = await getEarlyAccessCounts(false);
+    res.json({ counts, cap: EARLY_ACCESS_CAP, tiers: EARLY_ACCESS_TIERS });
+  } catch (err) {
+    console.error('Early access counts error:', err);
+    res.status(500).json({ error: 'Failed to load early access counts' });
+  }
+});
+
+// Very small in-memory rate limiter — same best-effort spirit as
+// the feedback one above.
+const earlyAccessRateLimit = new Map();
+const EARLY_ACCESS_MAX_PER_HOUR = 5;
+function isEarlyAccessRateLimited(ip) {
+  const now = Date.now();
+  const hourAgo = now - 60 * 60 * 1000;
+  const hits = (earlyAccessRateLimit.get(ip) || []).filter(t => t > hourAgo);
+  hits.push(now);
+  earlyAccessRateLimit.set(ip, hits);
+  return hits.length > EARLY_ACCESS_MAX_PER_HOUR;
+}
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+app.post('/api/early-access', async (req, res) => {
+  if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
+    return res.status(500).json({ error: 'Early access storage is not configured yet.' });
+  }
+
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+  if (isEarlyAccessRateLimited(ip)) {
+    return res.status(429).json({ error: 'Too many attempts — please try again later.' });
+  }
+
+  const { email, tier, hp } = req.body || {};
+
+  // Honeypot, same pattern as feedback.
+  if (hp) {
+    return res.json({ ok: true });
+  }
+
+  const safeEmail = String(email || '').trim().slice(0, 200).toLowerCase();
+  if (!EMAIL_RE.test(safeEmail)) {
+    return res.status(400).json({ error: 'Please enter a valid email address.' });
+  }
+  if (!tier || !EARLY_ACCESS_TIERS.includes(String(tier))) {
+    return res.status(400).json({ error: 'Please select a valid tier.' });
+  }
+  const requestedTier = String(tier);
+
+  try {
+    // Duplicate check — one registration per email, regardless of
+    // tier, so someone can't game the fill bars by re-registering.
+    const escapedEmail = safeEmail.replace(/'/g, "\\'");
+    const existing = await airtableListAll(
+      AIRTABLE_EARLY_ACCESS_URL,
+      `LOWER({Email})='${escapedEmail}'`
+    );
+    if (existing.length > 0) {
+      const existingTier = existing[0].fields && existing[0].fields.Tier;
+      return res.status(409).json({
+        error: `This email is already registered${existingTier ? ` in the $${existingTier} tier` : ''}.`
+      });
+    }
+
+    // Bump logic: walk the tier order starting at the requested
+    // tier; take the first one that isn't full yet.
+    const counts = await getEarlyAccessCounts(true); // fresh read — this decision needs to be current
+    const startIndex = EARLY_ACCESS_TIERS.indexOf(requestedTier);
+    let assignedTier = null;
+    for (let i = startIndex; i < EARLY_ACCESS_TIERS.length; i++) {
+      const t = EARLY_ACCESS_TIERS[i];
+      if ((counts[t] || 0) < EARLY_ACCESS_CAP) {
+        assignedTier = t;
+        break;
+      }
+    }
+
+    if (!assignedTier) {
+      return res.status(409).json({ error: 'All tiers are currently full. Please check back soon.' });
+    }
+
+    const airtableRes = await fetch(AIRTABLE_EARLY_ACCESS_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        // typecast lets Airtable convert our string ("50") into
+        // whatever type the Tier column actually is — Number,
+        // Single Select, etc — instead of rejecting it outright.
+        // Safe here because assignedTier only ever comes from the
+        // EARLY_ACCESS_TIERS whitelist, never from user input directly.
+        typecast: true,
+        records: [{
+          fields: {
+            Email: safeEmail,
+            Tier: assignedTier,
+            Created: new Date().toISOString()
+          }
+        }]
+      })
+    });
+
+    if (!airtableRes.ok) {
+      const errText = await airtableRes.text();
+      console.error('Airtable early-access create failed:', errText);
+      return res.status(502).json({ error: 'Failed to save your registration' });
+    }
+
+    // Invalidate the cache so the very next counts fetch reflects
+    // this registration immediately rather than waiting out the TTL.
+    earlyAccessCountsCache = { data: null, fetchedAt: 0 };
+
+    res.json({
+      ok: true,
+      tier: assignedTier,
+      bumped: assignedTier !== requestedTier,
+      requestedTier
+    });
+  } catch (err) {
+    console.error('Early access register error:', err);
+    res.status(500).json({ error: 'Failed to save your registration' });
+  }
+});
+
 // Catch-all: serve index.html for any unknown route (SPA behavior)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));

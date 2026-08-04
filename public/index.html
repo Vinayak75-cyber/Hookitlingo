@@ -222,9 +222,68 @@ button{font-family:var(--sans); cursor:pointer;}
 .hero .sub{color:var(--text-dim); font-size:1.15em; max-width:620px; margin:0 auto 8px;}
 .hero .sub2{color:var(--text-faint); font-size:.92em; max-width:560px; margin:0 auto;}
 
+/* Early Access — tiered waitlist */
+.ea-section{max-width:var(--maxw); margin:38px auto 10px; padding:0 5vw;}
+.ea-card{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:30px 28px 26px; text-align:center;
+}
+.ea-eyebrow{font-size:.75em; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:10px;}
+.ea-card h2{font-size:1.7em; margin-bottom:8px;}
+.ea-sub{color:var(--text-dim); font-size:.95em; max-width:520px; margin:0 auto 26px;}
+.ea-tiers{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:22px; text-align:left;}
+@media(max-width:820px){ .ea-tiers{grid-template-columns:repeat(2,1fr);} }
+@media(max-width:480px){ .ea-tiers{grid-template-columns:1fr;} }
+.ea-tier{
+  position:relative; background:var(--surface2); border:1.5px solid var(--border); border-radius:var(--radius-sm);
+  padding:16px 14px; transition:border-color .2s, transform .15s, background .2s;
+}
+.ea-tier:not(.ea-tier--full){cursor:pointer;}
+.ea-tier:not(.ea-tier--full):hover{border-color:var(--vermilion); transform:translateY(-2px);}
+.ea-tier.selected{border-color:var(--vermilion); background:var(--vermilion-dim);}
+.ea-tier--full{opacity:.55; cursor:default;}
+.ea-tier-price{font-family:var(--serif); font-size:1.5em; font-weight:700; color:var(--text);}
+.ea-tier.selected .ea-tier-price{color:var(--vermilion);}
+.ea-tier-label{font-size:.72em; color:var(--text-faint); text-transform:uppercase; letter-spacing:.05em; margin-bottom:10px;}
+.ea-bar-track{height:6px; border-radius:99px; background:var(--surface3); overflow:hidden; margin-bottom:6px;}
+.ea-bar-fill{height:100%; border-radius:99px; background:linear-gradient(90deg,var(--gold),var(--vermilion)); transition:width .4s ease;}
+.ea-tier-count{font-size:.74em; color:var(--text-faint);}
+.ea-tier-badge{
+  position:absolute; top:-9px; right:10px; background:var(--vermilion); color:#fff; font-size:.65em; font-weight:700;
+  padding:3px 8px; border-radius:99px; letter-spacing:.04em; text-transform:uppercase;
+}
+.ea-tier--full .ea-tier-badge{background:var(--text-faint);}
+.ea-form-row{display:flex; gap:10px; max-width:440px; margin:0 auto; flex-wrap:wrap; justify-content:center;}
+.ea-email{
+  flex:1 1 220px; min-width:0; background:var(--surface2); border:1px solid var(--border); border-radius:999px;
+  padding:12px 18px; color:var(--text); font-family:var(--sans); font-size:.95em; outline:none;
+}
+.ea-email:focus{border-color:var(--vermilion);}
+.ea-submit{
+  flex:0 0 auto; background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+  color:#fff; border:none; border-radius:999px; padding:12px 24px; font-weight:700; font-size:.92em;
+}
+.ea-submit:disabled{opacity:.5; cursor:default;}
+.ea-msg{margin-top:16px; font-size:.88em; min-height:1.4em;}
+.ea-msg.ea-msg--error{color:var(--vermilion);}
+.ea-msg.ea-msg--success{color:var(--celadon);}
+.ea-honeypot{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}
+
+/* Toast */
+.ea-toast-host{position:fixed; bottom:22px; left:50%; transform:translateX(-50%); z-index:200; display:flex; flex-direction:column; gap:8px; align-items:center; pointer-events:none;}
+.ea-toast{
+  background:var(--surface); border:1px solid var(--border); color:var(--text); border-radius:999px;
+  padding:12px 20px; font-size:.88em; box-shadow:0 14px 34px rgba(0,0,0,.3);
+  display:flex; align-items:center; gap:8px; max-width:88vw;
+  opacity:0; transform:translateY(10px); transition:opacity .25s ease, transform .25s ease;
+}
+.ea-toast.show{opacity:1; transform:translateY(0);}
+.ea-toast--warn{border-color:var(--gold);}
+.ea-toast--warn .ea-toast-icon{color:var(--gold);}
+
 /* Culture cards */
 .founder-note{
-  max-width:640px; margin:10px auto 36px; padding:26px 30px;
+  max-width:640px; margin:44px auto 10px; padding:26px 30px;
   background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
   text-align:center;
 }
@@ -308,11 +367,46 @@ footer a{color:var(--text-faint); text-decoration:underline;}
   <p class="sub2">No installs, no accounts, no internet required once it's on your device.</p>
 </div>
 
-<div class="founder-note">
-  <div class="eyebrow">A Note from the Founder</div>
-  <p>Hey, thanks for being here.</p>
-  <p>I built this alone, so I don't always know what's confusing or missing. If you have a minute, I'd really appreciate your honest feedback.</p>
-  <a class="founder-btn" href="feedback.html">Share Your Feedback →</a>
+<div class="ea-section">
+  <div class="ea-card">
+    <div class="ea-eyebrow">Early Access</div>
+    <h2>Lock in your price before launch</h2>
+    <p class="ea-sub">We're opening 500 early-access spots per tier for the full all-access key (every locked week, every workbook, every future language). Register your email now to lock in today's price — you won't be charged until launch.</p>
+
+    <div class="ea-tiers" id="eaTiers">
+      <div class="ea-tier" data-tier="50">
+        <div class="ea-tier-price">$50</div>
+        <div class="ea-tier-label">Tier 1</div>
+        <div class="ea-bar-track"><div class="ea-bar-fill" style="width:0%"></div></div>
+        <div class="ea-tier-count">Loading…</div>
+      </div>
+      <div class="ea-tier" data-tier="65">
+        <div class="ea-tier-price">$65</div>
+        <div class="ea-tier-label">Tier 2</div>
+        <div class="ea-bar-track"><div class="ea-bar-fill" style="width:0%"></div></div>
+        <div class="ea-tier-count">Loading…</div>
+      </div>
+      <div class="ea-tier" data-tier="80">
+        <div class="ea-tier-price">$80</div>
+        <div class="ea-tier-label">Tier 3</div>
+        <div class="ea-bar-track"><div class="ea-bar-fill" style="width:0%"></div></div>
+        <div class="ea-tier-count">Loading…</div>
+      </div>
+      <div class="ea-tier" data-tier="100">
+        <div class="ea-tier-price">$100</div>
+        <div class="ea-tier-label">Tier 4</div>
+        <div class="ea-bar-track"><div class="ea-bar-fill" style="width:0%"></div></div>
+        <div class="ea-tier-count">Loading…</div>
+      </div>
+    </div>
+
+    <div class="ea-form-row">
+      <input type="text" class="ea-honeypot" id="eaHp" tabindex="-1" autocomplete="off">
+      <input type="email" class="ea-email" id="eaEmail" placeholder="you@email.com" autocomplete="email">
+      <button class="ea-submit" id="eaSubmit" disabled>Register for this tier</button>
+    </div>
+    <p class="ea-msg" id="eaMsg"></p>
+  </div>
 </div>
 
 <div class="culture-grid">
@@ -344,6 +438,13 @@ footer a{color:var(--text-faint); text-decoration:underline;}
   </a>
 </div>
 
+<div class="founder-note">
+  <div class="eyebrow">A Note from the Founder</div>
+  <p>Hey, thanks for being here.</p>
+  <p>I built this alone, so I don't always know what's confusing or missing. If you have a minute, I'd really appreciate your honest feedback.</p>
+  <a class="founder-btn" href="feedback.html">Share Your Feedback →</a>
+</div>
+
 <!-- Support / Donation Modal -->
 <div class="hkl-overlay" id="hklOverlay">
   <div class="hkl-card">
@@ -366,6 +467,8 @@ footer a{color:var(--text-faint); text-decoration:underline;}
     </div>
   </div>
 </div>
+
+<div class="ea-toast-host" id="eaToastHost" aria-live="polite"></div>
 
 <footer>
   <p class="fnote">Each file works completely offline once downloaded. Progress, XP, and badges save locally in your browser, if a course doesn't seem to save your progress, check that your browser allows local storage for files opened from disk.</p>
@@ -415,6 +518,143 @@ applyTheme();
 /* ============================================================
    SUPPORT — links to the Supporter Wall (supporters.html)
    ============================================================ */
+
+/* ============================================================
+   EARLY ACCESS — tiered waitlist
+   ============================================================ */
+(function(){
+  const CAP = 500;
+  const TIERS = ['50','65','80','100'];
+  let selectedTier = null;
+  let latestCounts = {};
+
+  const tierEls = document.getElementById('eaTiers');
+  const emailInput = document.getElementById('eaEmail');
+  const submitBtn = document.getElementById('eaSubmit');
+  const hpInput = document.getElementById('eaHp');
+  const msgEl = document.getElementById('eaMsg');
+  const toastHost = document.getElementById('eaToastHost');
+  if (!tierEls) return;
+
+  function showToast(text, kind){
+    if (!toastHost) return;
+    const toast = document.createElement('div');
+    toast.className = 'ea-toast' + (kind ? ` ea-toast--${kind}` : '');
+    toast.innerHTML = `<span class="ea-toast-icon">⏳</span><span>${text}</span>`;
+    toastHost.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add('show'));
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    }, 4500);
+  }
+
+  function setMsg(text, kind){
+    msgEl.textContent = text || '';
+    msgEl.className = 'ea-msg' + (kind ? ` ea-msg--${kind}` : '');
+  }
+
+  function renderCounts(counts){
+    latestCounts = counts || {};
+    TIERS.forEach(tier => {
+      const card = tierEls.querySelector(`.ea-tier[data-tier="${tier}"]`);
+      if (!card) return;
+      const count = Math.min(latestCounts[tier] || 0, CAP);
+      const pct = Math.round((count / CAP) * 100);
+      card.querySelector('.ea-bar-fill').style.width = pct + '%';
+
+      // Clear any previous "full" badge before re-evaluating.
+      const oldBadge = card.querySelector('.ea-tier-badge');
+      if (oldBadge) oldBadge.remove();
+
+      if (count >= CAP) {
+        card.classList.add('ea-tier--full');
+        card.querySelector('.ea-tier-count').textContent = 'Full — new signups move to the next tier';
+        const badge = document.createElement('div');
+        badge.className = 'ea-tier-badge';
+        badge.textContent = 'Full';
+        card.appendChild(badge);
+        if (selectedTier === tier) {
+          selectedTier = null;
+          card.classList.remove('selected');
+          const nextTier = TIERS[TIERS.indexOf(tier) + 1];
+          showToast(nextTier
+            ? `The $${tier} tier just filled up — the $${nextTier} tier is still open.`
+            : `The $${tier} tier just filled up.`, 'warn');
+        }
+      } else {
+        card.classList.remove('ea-tier--full');
+        card.querySelector('.ea-tier-count').textContent = `${count} of ${CAP} registered`;
+      }
+    });
+    updateSubmitState();
+  }
+
+  function updateSubmitState(){
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim());
+    submitBtn.disabled = !(selectedTier && emailOk);
+  }
+
+  async function loadCounts(){
+    try {
+      const res = await fetch('/api/early-access/counts');
+      const data = await res.json();
+      if (res.ok) renderCounts(data.counts);
+    } catch (err) {
+      console.error('Failed to load early access counts', err);
+    }
+  }
+
+  tierEls.addEventListener('click', (e) => {
+    const card = e.target.closest('.ea-tier');
+    if (!card || card.classList.contains('ea-tier--full')) return;
+    tierEls.querySelectorAll('.ea-tier').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    selectedTier = card.dataset.tier;
+    setMsg('', null);
+    updateSubmitState();
+  });
+
+  emailInput.addEventListener('input', () => { setMsg('', null); updateSubmitState(); });
+
+  submitBtn.addEventListener('click', async () => {
+    if (!selectedTier) return;
+    submitBtn.disabled = true;
+    setMsg('Registering…', null);
+    try {
+      const res = await fetch('/api/early-access', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: emailInput.value.trim(),
+          tier: selectedTier,
+          hp: hpInput.value
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setMsg(data.error || 'Something went wrong — please try again.', 'error');
+        submitBtn.disabled = false;
+        return;
+      }
+      if (data.bumped) {
+        setMsg(`The $${data.requestedTier} tier just filled up — you've been locked in at $${data.tier} instead. You're in!`, 'success');
+      } else {
+        setMsg(`You're in — locked in at $${data.tier}. We'll email you at launch.`, 'success');
+      }
+      emailInput.value = '';
+      emailInput.disabled = true;
+      loadCounts();
+    } catch (err) {
+      console.error('Early access submit failed', err);
+      setMsg('Something went wrong — please try again.', 'error');
+      submitBtn.disabled = false;
+    }
+  });
+
+  loadCounts();
+  setInterval(loadCounts, 20000); // keep fill bars live without a refresh
+})();
 
 /* ============================================================
    CONTACT MODAL
