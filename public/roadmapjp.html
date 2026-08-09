@@ -210,6 +210,20 @@ button{font-family:var(--sans); cursor:pointer;}
 .rcard-body .rc-tag{color:var(--text-faint); font-size:.78em; margin-top:6px; display:flex; gap:10px; flex-wrap:wrap;}
 .rc-soon-tag{font-size:.62em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--surface2); color:var(--text-faint); border:1px solid var(--border); display:inline-flex; align-items:center; gap:4px;}
 
+.rcard.upcoming{opacity:1; border-color:color-mix(in srgb, var(--inkblue) 38%, var(--border));}
+.rcard.upcoming::before{border-color:var(--inkblue); background:var(--inkblue);}
+.rcard.upcoming:hover{transform:translateX(4px); border-color:var(--inkblue);}
+.rcard.upcoming .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--inkblue) 85%, #fff 10%), var(--inkblue) 72%); color:#fff;}
+.rc-upcoming-tag{font-size:.62em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--inkblue-dim); color:var(--inkblue); display:inline-flex; align-items:center; gap:4px; white-space:nowrap;}
+
+.rc-eta{
+  width:56px; height:56px; border-radius:50%; flex:none; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; background:var(--inkblue-dim);
+  border:1px solid color-mix(in srgb, var(--inkblue) 45%, var(--border));
+}
+.rc-eta-num{font-family:var(--serif); font-size:1.15em; font-weight:700; line-height:1; color:var(--inkblue);}
+.rc-eta-lbl{font-size:.56em; text-transform:uppercase; letter-spacing:.05em; color:var(--text-faint); margin-top:2px;}
+
 .rcard-actions{flex:none; display:flex; gap:8px;}
 .rc-lock{color:var(--text-faint); font-size:1.1em;}
 
@@ -241,6 +255,9 @@ footer a{text-decoration:underline;}
   .rcard{padding:14px 16px; gap:12px;}
   .rcard::before{left:-52px !important; width:10px; height:10px;}
   .rcard-badge{width:36px;height:36px;font-size:14px;}
+  .rc-eta{width:44px;height:44px;}
+  .rc-eta-num{font-size:1em;}
+  .rc-eta-lbl{font-size:.5em;}
   .rcard-body .rc-title{font-size:.95em;}
   .rcard-body .rc-en{font-size:.78em;}
 }
@@ -261,8 +278,6 @@ footer a{text-decoration:underline;}
   </div>
   <div class="top-actions">
     <a class="topbtn" href="index.html">← Culture Catalog</a>
-    <a class="topbtn" href="feedback.html">💬 Feedback</a>
-    <a class="topbtn topbtn-support" href="supporters.html">💛 Support</a>
     <button class="topbtn" id="themeBtn">☾ Dark</button>
   </div>
 </div>
@@ -281,7 +296,7 @@ footer a{text-decoration:underline;}
 </div>
 
 <div class="roadfoot">
-  <p>N5 has a full day-by-day roadmap ready to explore, N4 through N1 will follow the same treatment once N5's courses are built.</p>
+  <p>N5 has a full day-by-day roadmap ready to explore. N4 launches September 15, N3 follows October 15, N2 arrives November 15, and N1 rounds out the ladder December 15, 2026.</p>
 </div>
 
 <footer>
@@ -302,18 +317,22 @@ const JLPT_LEVELS = [
   {
     badge:'N4', native:'四級', en:'Everyday Conversations',
     desc:'~1,500 words, ~300 kanji, and the grammar to follow slow, everyday conversation without translating in your head.',
+    launch:'2026-09-15',
   },
   {
     badge:'N3', native:'三級', en:'The Bridge Level',
     desc:'~3,750 words, ~650 kanji, the level that connects survival Japanese to genuine independence. Widely considered the biggest jump.',
+    launch:'2026-10-15',
   },
   {
     badge:'N2', native:'二級', en:'Reading Between the Lines',
     desc:'~6,000 words, ~1,000 kanji. Follow the news, read general-purpose writing, and handle a broad range of everyday and work situations.',
+    launch:'2026-11-15',
   },
   {
     badge:'N1', native:'一級', en:'Near-Native Command',
     desc:'~10,000+ words, ~2,000 kanji. Abstract arguments, specialized topics, and nuanced writing, the final rung before native fluency.',
+    launch:'2026-12-15',
   },
 ];
 
@@ -323,14 +342,33 @@ const JLPT_LEVELS = [
 function renderOverall(){
   const total = JLPT_LEVELS.length;
   const ready = JLPT_LEVELS.filter(l=>l.status==='next').length;
+  const scheduled = JLPT_LEVELS.filter(l=>l.launch).length;
   document.getElementById('overallProgress').innerHTML = `
     <div class="op-row"><span>Levels with a roadmap</span><b>${ready} / ${total}</b></div>
     <div class="op-track"><div class="op-fill" style="width:${Math.max(8, ready/total*100)}%"></div></div>
     <div class="op-legend">
       <span><span class="op-dot" style="background:var(--gold)"></span> Roadmap ready</span>
-      <span><span class="op-dot" style="background:var(--border)"></span> Coming soon</span>
+      <span><span class="op-dot" style="background:var(--inkblue)"></span> Launch date set (${scheduled})</span>
     </div>
   `;
+}
+
+function formatLaunchDate(iso){
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
+}
+
+function daysUntil(iso){
+  const target = new Date(iso + 'T00:00:00');
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  return Math.ceil((target - today) / 86400000);
+}
+
+function etaMarkup(days){
+  if(days > 1) return `<span class="rc-eta-num">${days}</span><span class="rc-eta-lbl">days</span>`;
+  if(days === 1) return `<span class="rc-eta-num">1</span><span class="rc-eta-lbl">day</span>`;
+  return `<span class="rc-eta-num">🎉</span><span class="rc-eta-lbl">Live</span>`;
 }
 
 function levelCard(c){
@@ -344,6 +382,22 @@ function levelCard(c){
       </div>
       <div class="rcard-actions">
         <a class="rc-btn primary" href="${c.file}">Open Roadmap →</a>
+      </div>
+    </div>`;
+  }
+  if(c.launch){
+    const dateLabel = formatLaunchDate(c.launch);
+    const days = daysUntil(c.launch);
+    const eta = etaMarkup(days);
+    return `
+    <div class="rcard upcoming">
+      <div class="rcard-badge">${c.badge}</div>
+      <div class="rcard-body">
+        <div class="rc-title">${c.en} <span class="native jp">${c.native}</span> <span class="rc-upcoming-tag">🗓️ Launching ${dateLabel}</span></div>
+        <div class="rc-en">${c.desc}</div>
+      </div>
+      <div class="rcard-actions">
+        <div class="rc-eta" data-launch="${c.launch}" title="Launches ${dateLabel}">${eta}</div>
       </div>
     </div>`;
   }
@@ -370,7 +424,7 @@ function renderPhases(){
           <h2>The JLPT Ladder</h2>
           <div class="phase-sub">Beginner (N5) to near-native (N1) - five official levels</div>
         </div>
-        <div class="phase-ribbon">Planned</div>
+        <div class="phase-ribbon">Rolling out Sep – Dec 2026</div>
       </div>
       <div class="course-list">
         ${JLPT_LEVELS.map(levelCard).join('')}
@@ -380,6 +434,29 @@ function renderPhases(){
 
 renderOverall();
 renderPhases();
+
+/* ============================================================
+   COUNTDOWN AUTO-REFRESH — keeps "days left" accurate for
+   anyone who leaves this tab open across a day boundary.
+   Fires once at the next local midnight, then every 24h after.
+   ============================================================ */
+function refreshCountdowns(){
+  document.querySelectorAll('.rc-eta[data-launch]').forEach(el=>{
+    const launch = el.dataset.launch;
+    if(!launch) return;
+    el.innerHTML = etaMarkup(daysUntil(launch));
+    el.title = `Launches ${formatLaunchDate(launch)}`;
+  });
+}
+(function scheduleCountdownRefresh(){
+  const now = new Date();
+  const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 5);
+  const msUntilMidnight = nextMidnight - now;
+  setTimeout(function(){
+    refreshCountdowns();
+    setInterval(refreshCountdowns, 24 * 60 * 60 * 1000);
+  }, msUntilMidnight);
+})();
 
 /* Scroll-reveal */
 const io = new IntersectionObserver((entries)=>{

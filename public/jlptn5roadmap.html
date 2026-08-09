@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JLPT N5 Study Plan - 84-Day Japanese Roadmap | Hookitlingo</title>
-<meta name="description" content="A free, structured JLPT N5 study roadmap: 84 days from zero Japanese to exam-ready. Hiragana, katakana, core grammar, and vocabulary, offline, self-paced.">
+<title>JLPT N5 Study Plan - Topic-by-Topic Japanese Roadmap | Hookitlingo</title>
+<meta name="description" content="A free, structured JLPT N5 study roadmap: 13 topic sections, 20 self-contained lesson files, from zero Japanese to exam-ready. Grammar, kanji, vocabulary, reading and listening bundled into every lesson, offline, self-paced.">
 <link rel="canonical" href="https://hookit.online/jlptn5roadmap.html">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="JLPT N5 Study Plan - 84-Day Japanese Roadmap | Hookitlingo">
-<meta property="og:description" content="A free, structured JLPT N5 study roadmap: 84 days from zero Japanese to exam-ready. Hiragana, katakana, core grammar, and vocabulary, offline, self-paced.">
+<meta property="og:title" content="JLPT N5 Study Plan - Topic-by-Topic Japanese Roadmap | Hookitlingo">
+<meta property="og:description" content="A free, structured JLPT N5 study roadmap: 13 topic sections, 20 self-contained lesson files, from zero Japanese to exam-ready. Grammar, kanji, vocabulary, reading and listening bundled into every lesson, offline, self-paced.">
 <meta property="og:url" content="https://hookit.online/jlptn5roadmap.html">
 <meta property="og:site_name" content="Hookitlingo">
 <meta property="og:image" content="https://hookit.online/og-image.png">
@@ -19,8 +19,8 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="JLPT N5 Study Plan - 84-Day Japanese Roadmap | Hookitlingo">
-<meta name="twitter:description" content="A free, structured JLPT N5 study roadmap: 84 days from zero Japanese to exam-ready. Hiragana, katakana, core grammar, and vocabulary, offline, self-paced.">
+<meta name="twitter:title" content="JLPT N5 Study Plan - Topic-by-Topic Japanese Roadmap | Hookitlingo">
+<meta name="twitter:description" content="A free, structured JLPT N5 study roadmap: 13 topic sections, 20 self-contained lesson files, from zero Japanese to exam-ready. Grammar, kanji, vocabulary, reading and listening bundled into every lesson, offline, self-paced.">
 <meta name="twitter:image" content="https://hookit.online/og-image.png">
 
 <script type="application/ld+json">
@@ -28,7 +28,7 @@
   "@context": "https://schema.org",
   "@type": "Course",
   "name": "JLPT N5 Roadmap",
-  "description": "An 84-day structured study roadmap taking a complete beginner to JLPT N5 exam readiness, built from Hookitlingo's free offline Japanese courses.",
+  "description": "A topic-based structured study roadmap taking a complete beginner to JLPT N5 exam readiness: 13 sections, 20 self-contained lesson files, built from Hookitlingo's free offline Japanese courses.",
   "provider": {
     "@type": "Organization",
     "name": "Hookitlingo",
@@ -40,8 +40,7 @@
   "isAccessibleForFree": true,
   "hasCourseInstance": {
     "@type": "CourseInstance",
-    "courseMode": "online",
-    "courseWorkload": "P84D"
+    "courseMode": "online"
   },
   "teaches": "JLPT N5 exam preparation"
 }
@@ -225,9 +224,17 @@ button{font-family:var(--sans); cursor:pointer;}
 .rcard.soon::before{border-color:var(--border);}
 .rcard.soon:hover{opacity:.92;}
 
+.rcard.locked{cursor:pointer; border-color:color-mix(in srgb, var(--gold) 40%, var(--border));}
+.rcard.locked::before{border-color:var(--gold);}
+.rcard.locked:hover{transform:translateX(4px); border-color:var(--gold); box-shadow:0 8px 22px color-mix(in srgb, var(--gold) 18%, transparent);}
+.rcard.locked:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+.rcard-badge.locked-badge{background:linear-gradient(135deg, var(--gold), color-mix(in srgb, var(--gold) 55%, var(--ember) 45%)); color:#fff;}
+.rc-locked-tag{font-size:.58em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 8px; border-radius:10px; background:var(--gold-dim); color:var(--gold); display:inline-flex; align-items:center; gap:4px;}
+.rc-btn.locked-btn{background:linear-gradient(135deg,var(--gold), color-mix(in srgb, var(--gold) 55%, var(--ember) 45%)); color:#fff;}
+
 .rcard-badge{
-  width:38px;height:38px;border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
-  font-family:var(--serif); font-weight:700; font-size:13px; color:#fff; text-align:center; line-height:1.1;
+  min-width:34px; height:28px; padding:0 9px; border-radius:14px; flex:none; display:flex; align-items:center; justify-content:center;
+  font-family:var(--serif); font-weight:700; font-size:12px; color:#fff; text-align:center; line-height:1.1; letter-spacing:.01em; white-space:nowrap;
 }
 .rcard.next .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--gold) 88%, #fff 12%), var(--gold) 72%);}
 .rcard.milestone .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--vermilion) 88%, #fff 12%), var(--vermilion) 72%);}
@@ -245,21 +252,110 @@ button{font-family:var(--sans); cursor:pointer;}
 .rc-btn.primary:hover{filter:brightness(1.06);}
 .rc-lock{color:var(--text-faint); font-size:1em;}
 
+/* Lesson track chips */
+.track-row{display:flex; flex-wrap:wrap; gap:5px; margin-top:7px;}
+.tchip{font-size:.66em; font-weight:600; padding:2px 9px; border-radius:20px; letter-spacing:.02em; white-space:nowrap; border:1px solid transparent;}
+.tchip.t-grammar{background:var(--inkblue-dim); color:var(--inkblue);}
+.tchip.t-kanji{background:var(--ember-dim); color:var(--ember);}
+.tchip.t-vocab{background:var(--gold-dim); color:var(--gold);}
+.tchip.t-reading{background:var(--celadon-dim); color:var(--celadon);}
+.tchip.t-listening{background:var(--vermilion-dim); color:var(--vermilion);}
+
+/* Coverage stat row inside overall progress */
+.cov-row{display:flex; flex-wrap:wrap; gap:16px; margin-top:16px; padding-top:14px; border-top:1px solid var(--border);}
+.cov-item{flex:1 1 auto; min-width:110px;}
+.cov-item b{display:block; font-family:var(--serif); font-size:1.15em; color:var(--text);}
+.cov-item span{font-size:.72em; color:var(--text-faint); text-transform:uppercase; letter-spacing:.06em;}
+
 footer{position:relative; z-index:2; text-align:center; padding:10px 5vw 60px; color:var(--text-faint); font-size:.85em;}
 footer a{text-decoration:underline;}
 
+/* ===== UNLOCK MODAL ===== */
+.unlock-overlay{
+  position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
+  padding:20px; background:rgba(10,6,10,.62); backdrop-filter:blur(6px);
+  opacity:0; pointer-events:none; transition:opacity .22s ease;
+}
+.unlock-overlay.open{opacity:1; pointer-events:auto;}
+.unlock-modal{
+  position:relative; width:100%; max-width:440px; max-height:88vh; overflow-y:auto;
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  box-shadow:0 30px 80px rgba(0,0,0,.45); padding:34px 30px 28px;
+  transform:translateY(14px) scale(.98); transition:transform .22s ease;
+}
+.unlock-overlay.open .unlock-modal{transform:translateY(0) scale(1);}
+.unlock-close{
+  position:absolute; top:14px; right:14px; width:30px; height:30px; border-radius:50%;
+  background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); font-size:16px;
+  line-height:1; display:flex; align-items:center; justify-content:center;
+}
+.unlock-close:hover{color:var(--text); border-color:var(--vermilion);}
+.unlock-view{text-align:center;}
+.unlock-icon{font-size:2em; margin-bottom:6px;}
+.unlock-eyebrow{font-size:.72em; letter-spacing:.14em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:8px;}
+.unlock-view h3{font-size:1.5em; margin-bottom:10px;}
+.unlock-copy{color:var(--text-dim); font-size:.88em; text-align:left; margin-bottom:18px;}
+.unlock-price-options{display:flex; gap:10px; margin-bottom:18px;}
+.unlock-price-card{
+  flex:1; position:relative; background:var(--surface2); border:1px solid var(--border);
+  border-radius:var(--radius-sm); padding:16px 13px 14px; text-align:left; display:flex; flex-direction:column;
+}
+.unlock-price-card.featured{border-color:var(--gold); box-shadow:0 0 0 1px color-mix(in srgb, var(--gold) 60%, transparent) inset;}
+.unlock-price-card-badge{
+  position:absolute; top:-10px; right:10px; background:linear-gradient(135deg,var(--gold),var(--ember));
+  color:#fff; font-size:.58em; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:3px 9px; border-radius:20px;
+}
+.unlock-price-card-label{font-size:.7em; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); margin-bottom:5px;}
+.unlock-price-card-amount{font-family:var(--serif); font-size:1.7em; font-weight:600; color:var(--text); line-height:1;}
+.unlock-price-card-note{font-size:.66em; color:var(--text-faint); margin:3px 0 9px;}
+.unlock-price-card-desc{font-size:.75em; color:var(--text-dim); margin-bottom:12px; flex:1; line-height:1.45;}
+.unlock-price-card .unlock-buy-btn{padding:10px 10px; font-size:.8em; box-shadow:none;}
+.unlock-fine-print{font-size:.72em; color:var(--text-faint); margin:-10px 0 16px; text-align:center;}
+@media(max-width:480px){
+  .unlock-price-options{flex-direction:column;}
+}
+.unlock-points{list-style:none; margin:0 0 22px; padding:0; text-align:left; font-size:.86em; color:var(--text-dim);}
+.unlock-points li{margin-bottom:6px;}
+.unlock-buy-btn{
+  display:block; width:100%; text-align:center; padding:13px 18px; border-radius:999px; border:none;
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+  color:#fff; font-weight:700; font-size:.94em; box-shadow:0 10px 26px color-mix(in srgb, var(--vermilion) 35%, transparent);
+}
+.unlock-buy-btn:hover{filter:brightness(1.06); color:#fff;}
+.unlock-buy-btn:disabled{opacity:.6; cursor:default; filter:none;}
+.unlock-key-link{
+  display:block; width:100%; margin-top:14px; background:none; border:none; color:var(--text-faint);
+  font-size:.8em; text-decoration:underline; text-underline-offset:3px;
+}
+.unlock-key-link:hover{color:var(--celadon);}
+.unlock-form{display:flex; flex-direction:column; gap:10px; margin-bottom:6px;}
+.unlock-form input{
+  width:100%; padding:11px 14px; border-radius:var(--radius-sm); border:1px solid var(--border);
+  background:var(--surface2); color:var(--text); font-family:var(--sans); font-size:.9em;
+}
+.unlock-form input:focus{outline:none; border-color:var(--celadon);}
+.unlock-msg{min-height:1.4em; font-size:.82em; margin:10px 0 4px;}
+.unlock-msg.ok{color:var(--celadon);}
+.unlock-msg.err{color:var(--vermilion);}
+@media(max-width:480px){
+  .unlock-modal{padding:28px 20px 22px;}
+  .unlock-view h3{font-size:1.28em;}
+}
+
 /* ===== MOBILE RESPONSIVENESS ===== */
+body{overflow-x:hidden;}
 @media(max-width:640px){
   #topbar{flex-direction:column; align-items:flex-start; gap:10px; padding:14px 5vw 16px;}
-  .top-actions{flex-wrap:wrap;}
+  .top-actions{flex-wrap:wrap; width:100%;}
+  .topbtn{font-size:.8em; padding:6px 12px;}
   .hero{padding:16px 5vw 8px;}
-  .hero h1{font-size:1.7em;}
+  .hero h1{font-size:1.7em; line-height:1.25;}
   .hero .sub{font-size:.92em;}
   .commit-strip{font-size:.74em; padding:8px 14px;}
   .overall-progress{padding:16px 18px; margin-bottom:30px;}
   .overall-progress .op-row b{font-size:1.3em;}
   .op-legend{gap:10px; font-size:.72em;}
-  .weeknav{margin-bottom:28px;}
+  .weeknav{margin-bottom:28px; gap:6px;}
   .weeknav a{font-size:.7em; padding:4px 9px;}
 
   .journey-line{left:22px !important;}
@@ -268,18 +364,45 @@ footer a{text-decoration:underline;}
   .phase-num{width:40px;height:40px;font-size:1em; border-width:2px;}
   .phase-title-wrap h2{font-size:1.15em;}
   .phase-title-wrap .phase-sub{font-size:.74em;}
-  .phase-ribbon{margin-left:0; margin-top:6px; font-size:.58em; padding:3px 9px;}
+  .phase-ribbon{margin-left:0; margin-top:2px; font-size:.6em; padding:4px 10px; white-space:normal; text-align:center;}
 
-  .course-list{padding-left:46px !important; gap:8px;}
-  .rcard{padding:10px 12px; gap:10px;}
-  .rcard::before{left:-46px !important; width:9px; height:9px;}
-  .rcard-badge{width:32px;height:32px;font-size:11px;}
-  .rcard-body .rc-title{font-size:.85em;}
-  .rc-btn{padding:5px 10px; font-size:.72em;}
+  .course-list{padding-left:38px !important; gap:8px;}
+  .rcard{padding:11px 13px; gap:10px; flex-wrap:wrap;}
+  .rcard::before{left:-38px !important; width:9px; height:9px;}
+  .rcard-badge{min-width:30px; height:24px; padding:0 7px; font-size:10.5px;}
+  .rcard-body{flex-basis:100%;}
+  .rcard-body .rc-title{font-size:.9em; line-height:1.3;}
+  .rc-en{font-size:.86em !important; line-height:1.5;}
+  .rc-btn{padding:6px 13px; font-size:.75em;}
+  .rcard-actions{width:100%; justify-content:flex-end; margin-top:4px;}
+
+  .tchip{font-size:.65em; padding:3px 9px;}
+  .track-row{gap:6px; margin-top:8px;}
+  .cov-row{gap:10px 16px;}
+  .cov-item{min-width:86px;}
+  .cov-item b{font-size:1em;}
 }
-@media(max-width:560px){
-  .rcard{flex-wrap:wrap;}
-  .rcard-actions{width:100%; justify-content:flex-end;}
+@media(max-width:420px){
+  .hero h1{font-size:1.42em;}
+  .hero .sub{font-size:.86em;}
+  .eyebrow{font-size:.7em;}
+  .brand-txt strong{font-size:1em;}
+  .brand-txt span{font-size:.6em;}
+  .brand-block{width:36px; height:36px; font-size:15px;}
+  .commit-strip{font-size:.7em; padding:8px 12px; border-radius:16px;}
+  .weeknav a{font-size:.65em; padding:4px 8px;}
+  .journey{padding:0 4vw 80px;}
+  .journey-line{left:18px !important;}
+  .course-list{padding-left:32px !important;}
+  .rcard::before{left:-32px !important; width:8px; height:8px;}
+  .phase-num{width:34px;height:34px;font-size:.9em;}
+  .phase-title-wrap h2{font-size:1.02em;}
+  .rcard-badge{min-width:26px; height:22px; padding:0 6px; font-size:9.5px;}
+  .rc-title{gap:6px !important;}
+  .tchip{font-size:.6em; padding:2px 7px;}
+  .cov-item{min-width:74px;}
+  .cov-item b{font-size:.92em;}
+  .cov-item span{font-size:.62em;}
 }
 </style>
 </head>
@@ -294,19 +417,18 @@ footer a{text-decoration:underline;}
   </div>
   <div class="top-actions">
     <a class="topbtn" href="roadmapjp.html">← JLPT Roadmap</a>
-    <a class="topbtn" href="feedback.html">💬 Feedback</a>
-    <a class="topbtn topbtn-support" href="supporters.html">💛 Support</a>
+    <button class="topbtn" id="unlockNavBtn">🔑 Have a key?</button>
     <button class="topbtn" id="themeBtn">☾ Dark</button>
   </div>
 </div>
 
 <div class="hero">
-  <div class="eyebrow jp">JLPT · N5 · 84-Day Plan</div>
-  <h1>Zero Japanese to <span style="color:var(--gold); font-style:italic;">JLPT N5</span> in 84 days.</h1>
-  <p class="sub">Twelve weeks, one day at a time. Kana first, then grammar brick by brick, then a full quarter of exam mode drilling before the real thing.</p>
+  <div class="eyebrow jp">JLPT · N5 · Topic-Based Roadmap</div>
+  <h1>Zero Japanese to <span style="color:var(--gold); font-style:italic;">JLPT N5</span>, one topic at a time.</h1>
+  <p class="sub">13 sections, 20 self-contained lesson files. Every lesson bundles Grammar, Kanji, Vocabulary, Reading and Listening, so there's nothing left for you to source elsewhere. It all wraps up with a full Exam Bootcamp at real exam difficulty and timing.</p>
 </div>
 
-<div class="commit-strip">📖 <span>Twelve weeks is a marathon, not a sprint, <b>consistency beats intensity</b> here. Missing a day is fine, skipping a weekly review isn't.</span></div>
+<div class="commit-strip">📖 <span>Every lesson is a complete offline HTML file, so <b>work through Sections in order</b>, since the kanji and grammar build cumulatively from here on.</span></div>
 
 <div class="overall-progress" id="overallProgress"></div>
 
@@ -318,124 +440,145 @@ footer a{text-decoration:underline;}
 </div>
 
 <footer>
-  <p>Not ready for a 12-week commitment? Head back to the <a href="roadmapjp.html">JLPT Roadmap</a> and browse the other levels.</p>
+  <p>Not sure N5 is the right starting point? Head back to the <a href="roadmapjp.html">JLPT Roadmap</a> and browse the other levels.</p>
   <p>Powered by Hookitlingo</p>
 </footer>
 
+<div class="unlock-overlay" id="unlockOverlay" aria-hidden="true">
+  <div class="unlock-modal" role="dialog" aria-modal="true" aria-labelledby="unlockTitle">
+    <button class="unlock-close" id="unlockClose" aria-label="Close">×</button>
+
+    <!-- OFFER VIEW -->
+    <div id="unlockOfferView" class="unlock-view">
+      <div class="unlock-icon">🔒</div>
+      <div class="unlock-eyebrow jp">Unlock More of Hookitlingo</div>
+      <h3 id="unlockTitle">Choose Your Plan</h3>
+      <p class="unlock-copy">Sections 1 and 2 of N5 are free forever. Everything after that is a one-time purchase, no subscription, no login, and it works offline once you're in.</p>
+
+      <div class="unlock-price-options">
+        <div class="unlock-price-card">
+          <div class="unlock-price-card-label">N5 Only</div>
+          <div class="unlock-price-card-amount">$49</div>
+          <div class="unlock-price-card-note">launch price</div>
+          <div class="unlock-price-card-desc">Sections 3 through 13. Every remaining grammar point, all 103 kanji, ~800 vocab words, plus the full Exam Bootcamp.</div>
+          <a id="unlockBuyN5" class="unlock-buy-btn" href="" data-plan="n5" target="_blank" rel="noopener noreferrer">Buy N5 for $49</a>
+        </div>
+        <div class="unlock-price-card featured">
+          <div class="unlock-price-card-badge">Best Value</div>
+          <div class="unlock-price-card-label">All Access</div>
+          <div class="unlock-price-card-amount">$99</div>
+          <div class="unlock-price-card-note">launch price</div>
+          <div class="unlock-price-card-desc">Every JLPT level, N5 through N1. Unlocks each one the moment it's released.</div>
+          <a id="unlockBuyAll" class="unlock-buy-btn" href="" data-plan="all-access" target="_blank" rel="noopener noreferrer">Buy All Access for $99</a>
+        </div>
+      </div>
+      <div class="unlock-fine-print">Launch pricing for the first 1,500 members. Goes up after that.</div>
+
+      <ul class="unlock-points">
+        <li>✓ Lifetime access, works offline</li>
+        <li>✓ Every future update included as it ships</li>
+        <li>✓ No login, no app install, just an email and a key</li>
+        <li>✓ Key arrives by email within 24 hours of buying</li>
+      </ul>
+
+      <button class="unlock-key-link" id="showKeyForm" type="button">Already have a key? Enter it here</button>
+    </div>
+
+    <!-- LAUNCH-DAY NOTICE VIEW (pre-launch only) -->
+    <div id="unlockLaunchView" class="unlock-view" style="display:none;">
+      <div class="unlock-icon">🌸</div>
+      <h3>Thanks for Your Interest</h3>
+      <p class="unlock-copy" style="text-align:center;">We're launching on <strong>August 15</strong>. Come back then and your plan will be ready to buy. See you soon!</p>
+      <button class="unlock-buy-btn" id="unlockLaunchBackBtn" type="button">Got it</button>
+    </div>
+
+    <!-- VERIFY VIEW -->
+    <div id="unlockVerifyView" class="unlock-view" style="display:none;">
+      <div class="unlock-icon">🔑</div>
+      <h3>Enter Your License Key</h3>
+      <p class="unlock-copy">Use the email and key you received after checkout. It's sent manually within 24 hours of your Payhip purchase.</p>
+
+      <form id="unlockForm" class="unlock-form" autocomplete="off">
+        <input type="email" id="unlockEmail" placeholder="Email used at checkout" required />
+        <input type="text" id="unlockKey" placeholder="License key" required />
+        <button type="submit" class="unlock-buy-btn" id="unlockSubmitBtn">Unlock Course</button>
+      </form>
+      <div id="unlockMsg" class="unlock-msg" aria-live="polite"></div>
+      <button class="unlock-key-link" id="showOfferForm" type="button">← Back</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ============================================================
-   84-DAY PLAN DATA - JLPT N5
+   JLPT N5 SECTION / LESSON DATA
+   Mirrors jlpt-n5-master-roadmap.md.
+   To publish a lesson, change its status to 'done' and the card
+   goes live automatically, linking to its file.
    ============================================================ */
 const COLORS = ['c-celadon','c-inkblue','c-gold','c-ember'];
 
-const WEEKS = [
-  { num:1, title:'Japanese Writing System &amp; Survival Japanese', sub:'Every kana, plus enough to introduce yourself', days:[
-    {d:1,en:'Hiragana (あ–た), Self Introduction (です・は・か・の), 15 Vocabulary',desc:'First hiragana row, your very first self-intro pattern, and 15 starter words.',kind:'done', file:'coursesjp/day-01.html'},
-    {d:2,en:'Hiragana (な–わ), Greetings, Numbers 1–20',desc:'Finish the base hiragana chart, everyday greetings, counting to 20.', kind:'done', file:'coursesjp/day-02.html'},
-    {d:3,en:'Hiragana Review, Dakuten &amp; Handakuten, Classroom Vocabulary',desc:'が/ば/ぱ-style sound changes, plus words you\u2019ll see in every lesson.', kind:'done', file:'coursesjp/day-03.html' },
-    {d:4,en:'Small やゆよ・っ・Long Vowels, Time Expressions',desc:'Contracted sounds, the small っ pause, long vowels, and telling time.', kind:'done', file:'coursesjp/day-04.html'},
-    {d:5,en:'Katakana (ア–タ)',desc:'First half of katakana, the script used for foreign words and names.', kind:'done', file:'coursesjp/day-05.html'},
-    {d:6,en:'Katakana (ナ–ン), Loanwords',desc:'Finish katakana, then read real loanwords like コーヒー and テレビ.', kind:'done', file:'coursesjp/day-06.html'},
-    {d:7,en:'Full Kana Review + Mini Test',desc:'Timed check-in on all hiragana and katakana before grammar begins.',kind:'done', file:'coursesjp/day-07.html'},
+/* ============================================================
+   ACCESS STATE
+   The token here is only a UI convenience flag. It decides
+   whether a card LOOKS unlocked. It grants nothing by itself.
+   Every actual lesson fetch below sends this token to the
+   server and the server is the only thing that can hand back
+   real lesson HTML, so editing this in devtools does not
+   expose any paid content.
+   ============================================================ */
+const ACCESS_KEY = 'hkl_n5_access_token';
+const AccessState = { token: localStorage.getItem(ACCESS_KEY) || null };
+function hasAccess(){ return !!AccessState.token; }
+function setAccess(token){ AccessState.token = token; localStorage.setItem(ACCESS_KEY, token); }
+function clearAccess(){ AccessState.token = null; localStorage.removeItem(ACCESS_KEY); }
+
+const SECTIONS = [
+  { num:1, title:'Foundation: Hiragana &amp; Katakana', sub:'Not a grammar section, more of a prerequisite unit. Split in two because a full kana chart and drills is already a day\u2019s worth of content on its own.', lessons:[
+    { slug:'s01-l01', file:'coursesjp/jlpt-n5-s01-l01.html', title:'Hiragana', desc:'Full hiragana chart (46 base plus dakuten, handakuten, and combination sounds), with reading and listening kana drills and a no-romaji exit test.', kanji:0, kanjiNote:'kana', vocab:0, grammar:0, reading:true, listening:true, status:'done'},
+    { slug:'s01-l02', file:'coursesjp/jlpt-n5-s01-l02.html', title:'Katakana', desc:'Full katakana chart for loanwords and foreign names, with reading/listening drills distinguishing katakana from hiragana, plus a no-romaji exit test.', kanji:0, kanjiNote:'kana', vocab:0, grammar:0, reading:true, listening:true, status:'done' },
   ]},
-  { num:2, title:'First Grammar &amp; First Kanji', sub:'The first 10 kanji and your first real sentence patterns', days:[
-    {d:8,en:'Kanji 1–5, Demonstratives (これ・それ・あれ)',desc:'First five kanji, plus this/that/that-over-there for objects.'},
-    {d:9,en:'Kanji 6–10, この・その・あの',desc:'Five more kanji, plus this/that/that-over-there for nouns.'},
-    {d:10,en:'Shopping Vocabulary, Price Expressions',desc:'Store vocabulary and asking/understanding prices.'},
-    {d:11,en:'Particles を・に・で',desc:'The three particles that mark objects, targets, and locations of action.'},
-    {d:12,en:'Verb Introduction (ます Form)',desc:'The polite present-tense verb form used constantly at this level.'},
-    {d:13,en:'Daily Routine Vocabulary',desc:'Words for waking up, working, eating, sleeping & daily-life sentences.'},
-    {d:14,en:'Week 2 Review + Listening Test',desc:'Consolidate kanji, particles, and ます form with a short listening check.',kind:'milestone'},
+  { num:2, title:'New Friends (Self-Introduction)', sub:'Your first real sentence patterns (です／は／か), self-intro vocabulary, and a party-conversation dialogue.', lessons:[
+    { slug:'s02-l01', file:'coursesjp/jlpt-n5-s02-l01.html', title:'New Friends', desc:'Xは Yです and its negative/question forms, も and の, plus personal pronouns, taught through self-introduction, nationality, and occupation vocabulary.', kanji:9, vocab:65, grammar:5, reading:true, listening:true, status:'done' },
   ]},
-  { num:3, title:'Verbs', sub:'Present, past, and their negatives, the engine of every sentence', days:[
-    {d:15,en:'Present Affirmative',desc:'Building and using ます-form present tense sentences.'},
-    {d:16,en:'Present Negative',desc:'ません and how to say what isn\u2019t happening.'},
-    {d:17,en:'Past Affirmative',desc:'ました talking about completed actions.'},
-    {d:18,en:'Past Negative',desc:'ませんでした - what didn\u2019t happen.'},
-    {d:19,en:'Time Particles',desc:'に and other particles that anchor actions to specific times.'},
-    {d:20,en:'Transportation Vocabulary',desc:'Trains, buses, taxis, and the verbs that go with them.'},
-    {d:21,en:'Review + Reading Practice',desc:'Short reading passages using everything from Weeks 1–3.',kind:'milestone'},
+  { num:3, title:'Shopping &amp; School Life', sub:'Reference words for objects and places, like これ／それ／あれ, and asking "what is this" in a shop or classroom.', lessons:[
+    { slug:'s03-l01', file:'coursesjp/jlpt-n5-s03-l01.html', title:'Shopping &amp; School Life', desc:'これ／それ／あれ, どれ／どの, ここ／そこ／あそこ, and なに／なん, built on classroom objects, stationery, shops, and communication verbs.', kanji:9, vocab:65, grammar:5, reading:true, listening:true, status:'done' },
   ]},
-  { num:4, title:'Adjectives', sub:'い and な adjectives, comparison, and describing people', days:[
-    {d:22,en:'い-Adjectives',desc:'Conjugating and using the い-adjective family.'},
-    {d:23,en:'な-Adjectives',desc:'Conjugating and using the な-adjective family.'},
-    {d:24,en:'Comparing Objects',desc:'～より and comparison patterns between two things.'},
-    {d:25,en:'Likes &amp; Dislikes (好き・嫌い)',desc:'Expressing preference using 好き and 嫌い naturally.'},
-    {d:26,en:'Family Vocabulary',desc:'Words for family members, including the your-family/my-family distinction.'},
-    {d:27,en:'Describing People',desc:'Combining adjectives and vocabulary to describe appearance and personality.'},
-    {d:28,en:'Month Review + Mock Quiz',desc:'One full month in, a broader quiz across grammar and vocabulary so far.',kind:'milestone'},
+  { num:4, title:'Existence &amp; Location', sub:'Numbers, counters, and spatial words, split across two files just like the original draft\u2019s Part A and Part B.', lessons:[
+    { slug:'s04-l01', file:'coursesjp/jlpt-n5-s04-l01.html', title:'Numbers &amp; Counting', desc:'〜があります／〜がいます, the core counters (つ／人／枚／本／個), and numbers 1–10,000, taught through animals, pets, and prices.', kanji:14, vocab:35, grammar:3, reading:true, listening:true, status:'done' },
+    { slug:'s04-l02', file:'coursesjp/jlpt-n5-s04-l02.html', title:'Location &amp; Direction', desc:'に vs で, spatial nouns like 上／下／中／前／後ろ, and へ, taught through furniture, rooms, directions, and landmarks.', kanji:12, vocab:35, grammar:3, reading:true, listening:true, status:'done' },
   ]},
-  { num:5, title:'Existence &amp; Location', sub:'What exists, where it is, and how to describe a place', days:[
-    {d:29,en:'あります・います',desc:'The two "there is/are" verbs, for objects vs. living things.'},
-    {d:30,en:'Location Words',desc:'上/下/中/前/後ろ and other words for describing where something is.'},
-    {d:31,en:'Position Particles',desc:'に and で as they apply specifically to location and existence.'},
-    {d:32,en:'House Vocabulary',desc:'Rooms, furniture, and household items.'},
-    {d:33,en:'Country &amp; Nationality',desc:'Naming countries, languages, and nationalities.'},
-    {d:34,en:'Counters Introduction',desc:'The counter system, different words for counting different types of things.'},
-    {d:35,en:'Review + Listening',desc:'Location and existence grammar, tested through audio.',kind:'milestone'},
+  { num:5, title:'Verbs I (ます-form, Daily Actions)', sub:'The polite present/past verb form you\u2019ll use in almost every sentence from here on.', lessons:[
+    { slug:'s05-l01', file:'coursesjp/jlpt-n5-s05-l01.html', title:'Verbs I', desc:'ます-form across present/past, affirmative/negative, plus を・に・で and an intro to 〜ませんか／〜ましょう, taught through daily verbs, food, and transportation.', kanji:8, vocab:65, grammar:5, reading:true, listening:true, status:'done' },
   ]},
-  { num:6, title:'て Form', sub:'The single most useful verb form in beginner Japanese', days:[
-    {d:36,en:'Introduction to て Form',desc:'How to build the て form and why it unlocks so much grammar.'},
-    {d:37,en:'Requests (〜てください)',desc:'Politely asking someone to do something.'},
-    {d:38,en:'Permission (〜てもいいです)',desc:'Asking for and giving permission.'},
-    {d:39,en:'Prohibition (〜てはいけません)',desc:'Saying something is not allowed.'},
-    {d:40,en:'Daily Actions',desc:'Using て form to describe ongoing daily actions (〜ています).'},
-    {d:41,en:'Sequencing Actions',desc:'Linking multiple actions in order using て form.'},
-    {d:42,en:'Weekly Review',desc:'Consolidating every て-form pattern from this week.',kind:'milestone'},
+  { num:6, title:'Adjectives &amp; Preferences', sub:'Describing things: い-adjectives, な-adjectives, and saying what you like.', lessons:[
+    { slug:'s06-l01', file:'coursesjp/jlpt-n5-s06-l01.html', title:'Adjectives &amp; Preferences', desc:'い- and な-adjective conjugation, 〜が好きです／〜が嫌いです, and the 〜くて／〜で connecting form, taught through descriptive adjectives, colors, and shopping vocabulary.', kanji:8, vocab:65, grammar:4, reading:true, listening:true, status:'done' },
   ]},
-  { num:7, title:'Preferences &amp; Ability', sub:'What you want, what you can do, and how you spend free time', days:[
-    {d:43,en:'Want Form (〜たい)',desc:'Expressing what you want to do.'},
-    {d:44,en:'Can Do (できます)',desc:'Expressing ability, what you\u2019re capable of doing.'},
-    {d:45,en:'Hobbies',desc:'Vocabulary and sentence patterns for talking about hobbies.'},
-    {d:46,en:'Invitations',desc:'Inviting someone to do something with you (〜ませんか).'},
-    {d:47,en:'Frequency Expressions',desc:'よく／たまに／全然 and other words for how often something happens.'},
-    {d:48,en:'Weekend Activities',desc:'Describing what you did or plan to do on the weekend.'},
-    {d:49,en:'Reading Practice',desc:'A short passage combining preference, ability, and frequency grammar.',kind:'milestone'},
+  { num:7, title:'Verbs II (て-form, Requests &amp; Permission)', sub:'The single most useful verb form in beginner Japanese, covering requests, permission, and prohibition.', lessons:[
+    { slug:'s07-l01', file:'coursesjp/jlpt-n5-s07-l01.html', title:'Verbs II', desc:'て-form formation for all three verb groups, 〜てください, 〜てもいいですか, 〜てはいけません, and an intro to 〜ています, taught through body parts and classroom instructions.', kanji:8, vocab:65, grammar:5, reading:true, listening:true, status:'done' },
   ]},
-  { num:8, title:'Short Forms', sub:'Casual speech, how Japanese actually sounds between friends', days:[
-    {d:50,en:'Dictionary Form',desc:'The plain/dictionary form underlying every conjugation so far.'},
-    {d:51,en:'Short Negative',desc:'The plain negative form, used in casual speech and many grammar patterns.'},
-    {d:52,en:'Casual Speech',desc:'How polite ます-form sentences shift into everyday casual conversation.'},
-    {d:53,en:'Reason (から)',desc:'Giving reasons and explanations using から.'},
-    {d:54,en:'Connecting Sentences',desc:'Linking two sentences together smoothly.'},
-    {d:55,en:'Weather',desc:'Talking about weather and the seasons.'},
-    {d:56,en:'Review + Listening',desc:'Casual/plain forms tested through natural-speed audio.',kind:'milestone'},
+  { num:8, title:'Time, Calendar &amp; Routine', sub:'Dates and clock time, split across two files following the same pattern as Section 4.', lessons:[
+    { slug:'s08-l01', file:'coursesjp/jlpt-n5-s08-l01.html', title:'Calendar', desc:'Days, months, and dates with irregular counters, 〜曜日, and 先週／今週／来週 etc., taught through weekly and monthly routine vocabulary.', kanji:8, vocab:35, grammar:3, reading:true, listening:true, status:'done' },
+    { slug:'s08-l02', file:'jlpt-n5-s08-l02.html', title:'Clock Time', desc:'Telling time (〜時〜分), から〜まで, and frequency adverbs, taught through time expressions and schedule vocabulary.', kanji:6, vocab:35, grammar:3, reading:true, listening:true, status:'done' },
   ]},
-  { num:9, title:'Expanding Vocabulary', sub:'The real-world topics N5 listening and reading lean on most', days:[
-    {d:57,en:'Food Vocabulary',desc:'Common foods, drinks, and meal-related words.'},
-    {d:58,en:'Restaurant Expressions',desc:'Ordering, asking for the check, and restaurant small talk.'},
-    {d:59,en:'Directions',desc:'Asking for and giving directions.'},
-    {d:60,en:'Body Parts',desc:'Vocabulary for the body, used constantly in health contexts.'},
-    {d:61,en:'Health Vocabulary',desc:'Describing symptoms and talking to a doctor or pharmacist.'},
-    {d:62,en:'Travel Vocabulary',desc:'Airports, hotels, and travel-related situations.'},
-    {d:63,en:'Reading Practice',desc:'A longer passage weaving together this week\u2019s vocabulary themes.',kind:'milestone'},
+  { num:9, title:'Verbs III (Plain Form) &amp; Family', sub:'Casual speech and talking about family, the register shift away from です／ます.', lessons:[
+    { slug:'s09-l01', file:'coursesjp/jlpt-n5-s09-l01.html', title:'Verbs III &amp; Family', desc:'Plain/dictionary form across all three verb groups, 〜ないでください, plain form + と思います, and casual vs. formal register, taught through family terms and weather.', kanji:8, vocab:65, grammar:4, reading:true, listening:true, status:'done' },
   ]},
-  { num:10, title:'JLPT Mode Begins', sub:'Shifting from learning to reviewing, exam mode starts here', days:[
-    {d:64,en:'Grammar Review 1',desc:'First full pass reviewing every grammar point from Weeks 1–5.'},
-    {d:65,en:'Grammar Review 2',desc:'Second pass reviewing every grammar point from Weeks 6–9.'},
-    {d:66,en:'Kanji Review 1',desc:'Reviewing all kanji learned so far, read-and-recognize style.'},
-    {d:67,en:'Vocabulary Review 1',desc:'A full sweep of vocabulary across every topic covered so far.'},
-    {d:68,en:'Listening Drill 1',desc:'Timed listening questions in official N5 format.'},
-    {d:69,en:'Reading Drill 1',desc:'Timed reading questions in official N5 format.'},
-    {d:70,en:'Mini Mock Test',desc:'A shorter mock test bridging into full-length practice next week.',kind:'milestone'},
+  { num:10, title:'Comparisons &amp; Preferences', sub:'Comparing two things, picking a favorite, and saying what you want to do.', lessons:[
+    { slug:'s10-l01', file:'coursesjp/jlpt-n5-s10-l01.html', title:'Comparisons &amp; Preferences', desc:'AはBより〜, 〜の方が〜, 〜で一番〜, and 〜たいです／〜たくないです, taught through nature vocabulary, seasons, and hobbies.', kanji:6, vocab:55, grammar:5, reading:true, listening:true, status:'done' },
   ]},
-  { num:11, title:'Practice Tests', sub:'Two full mock exams, with a real diagnostic process between them', days:[
-    {d:71,en:'Mock Test 1 + Review',desc:'First full-length mock exam, then a careful pass through every mistake.',kind:'milestone'},
-    {d:72,en:'Weak Grammar Review',desc:'Targeted review of only the grammar points Mock Test 1 exposed.'},
-    {d:73,en:'Weak Kanji Review',desc:'Targeted review of only the kanji still causing hesitation.'},
-    {d:74,en:'Weak Vocabulary Review',desc:'Targeted review of only the vocabulary still causing hesitation.'},
-    {d:75,en:'Listening Intensive',desc:'Heavy, focused listening drilling on the weakest question types.'},
-    {d:76,en:'Reading Intensive',desc:'Heavy, focused reading drilling on the weakest question types.'},
-    {d:77,en:'Mock Test 2',desc:'Second full-length mock exam, a direct measure of progress since Day 71.',kind:'milestone'},
+  { num:11, title:'Connecting Ideas &amp; Invitations', sub:'Giving reasons, linking sentences, and inviting someone somewhere.', lessons:[
+    { slug:'s11-l01', file:'coursesjp/jlpt-n5-s11-l01.html', title:'Connecting Ideas &amp; Invitations', desc:'〜から, 〜とき, 〜ましょう／〜ましょうか, the full 〜ませんか invitation, and sentence connectors そして／それから, taught through health and invitation vocabulary.', kanji:3, vocab:50, grammar:5, reading:true, listening:true, status:'done' },
   ]},
-  { num:12, title:'Final Preparation', sub:'The last two weeks, consolidate, drill, and walk in ready', days:[
-    {d:78,en:'Complete Grammar Revision',desc:'One final complete pass through every grammar point in the plan.'},
-    {d:79,en:'Complete Vocabulary Revision',desc:'One final complete pass through every vocabulary set in the plan.'},
-    {d:80,en:'Complete Kanji Revision',desc:'One final complete pass through every kanji in the plan.'},
-    {d:81,en:'Listening Marathon',desc:'An extended, mixed-format listening session under time pressure.'},
-    {d:82,en:'Full Mock Test',desc:'The final full-length mock exam before the real thing.',kind:'milestone'},
-    {d:83,en:'Mistake Correction Day',desc:'A last, focused pass through Day 82\u2019s mistakes only.'},
-    {d:84,en:'Light Review, Confidence Building &amp; Exam Strategy',desc:'Light review, pacing strategy, logistics check, and a calm finish before exam day.',kind:'milestone'},
+  { num:12, title:'Ability, Experience &amp; Hobbies', sub:'What you can do and what you\u2019ve done, plus a full past-tense review, since little new kanji or vocab remains at this stage.', lessons:[
+    { slug:'s12-l01', file:'coursesjp/jlpt-n5-s12-l01.html', title:'Ability, Experience &amp; Hobbies', desc:'〜ことができます, 〜ことがあります, nominalizing verbs with 辞書形＋こと, and a full past-tense review, taught through hobbies, sports, and travel vocabulary.', kanji:4, vocab:50, grammar:4, reading:true, listening:true, status:'done' },
+  ]},
+  { num:13, title:'Exam Bootcamp', sub:'No new grammar, kanji, or vocabulary anywhere in this section. Everything from Sections 1 through 12 gets consolidated into exam-ready form, across six purpose-built files: three recap chapters, then reading, listening, and the mock exams.', bootcamp:true, lessons:[
+    { slug:'s13-l01', file:'coursesjp/jlpt-n5-s13-l01.html', title:'Recap Ch.1: Full Grammar Recap', desc:'All ~60 grammar points grouped by function rather than by section, so related patterns sit next to each other for quick lookup, each with its pattern chip, an example sentence, and a link back to where it was first taught.', kanji:0, vocab:0, grammar:60, grammarNote:'recap', reading:false, listening:false, status:'done' },
+    { slug:'s13-l02', file:'coursesjp/jlpt-n5-s13-l02.html', title:'Recap Ch.2: Full Kanji Deck', desc:'All 103 N5 kanji as one searchable, filterable flashcard set. Filter by section taught, reading type, or stroke count, with on/kun readings, meaning, and the original memory hook on the back of each card.', kanji:103, kanjiNote:'recap', vocab:0, grammar:0, reading:false, listening:false, status:'done' },
+    { slug:'s13-l03', file:'coursesjp/jlpt-n5-s13-l03.html', title:'Recap Ch.3: Full Vocabulary Deck', desc:'All ~800 vocabulary words as one searchable, filterable flashcard set, filterable by theme and by which section and lesson first introduced them.', kanji:0, vocab:800, vocabNote:'recap', grammar:0, reading:false, listening:false, status:'done' },
+    { slug:'s13-l04', file:'coursesjp/jlpt-n5-s13-l04.html', title:'Reading & Listening Mastery', desc:'A Reading track (4 to 6 full-length N5-style passages with exam-style comprehension questions) and a Listening track (picture-based, quick-response, and dialogue questions with play-once/play-unlimited modes and transcript reveal) in one lesson, built only from taught material, with a combined accuracy breakdown across both.', kanji:0, vocab:0, grammar:0, reading:true, listening:true, status:'done' },
+    { slug:'s13-l05', file:'coursesjp/jlpt-n5-s13-l05.html', title:'Mock Exams', desc:'2 to 3 complete timed mock exams across all three JLPT sections, scored against the real pass logic (80/180 overall, 19+ per section) with weak-section flagging.', kanji:0, vocab:0, grammar:0, reading:true, listening:true, status:'done' },
   ]},
 ];
 
@@ -443,85 +586,105 @@ const WEEKS = [
    RENDER
    ============================================================ */
 function renderOverall(){
-  const all = WEEKS.flatMap(w=>w.days);
-  const total = all.length;
+  const lessons = SECTIONS.flatMap(s=>s.lessons);
+  const total = lessons.length;
+  const live = lessons.filter(l=>l.status==='done').length;
+  const pct = Math.round((live/total)*100);
   document.getElementById('overallProgress').innerHTML = `
-    <div class="op-row"><span>Days mapped</span><b>${total} / ${total}</b></div>
-    <div class="op-track"><div class="op-fill" style="width:100%"></div></div>
+    <div class="op-row"><span>Lessons live</span><b>${live} / ${total}</b></div>
+    <div class="op-track"><div class="op-fill" style="width:${pct}%"></div></div>
     <div class="op-legend">
-      <span><span class="op-dot" style="background:var(--celadon)"></span> Done</span>
-      <span><span class="op-dot" style="background:var(--gold)"></span> Up next to build</span>
-      <span><span class="op-dot" style="background:var(--vermilion)"></span> Weekly milestone / test</span>
+      <span><span class="op-dot" style="background:var(--celadon)"></span> Live now</span>
       <span><span class="op-dot" style="background:var(--border)"></span> Coming soon</span>
+    </div>
+    <div class="cov-row">
+      <div class="cov-item"><b>13</b><span>Sections</span></div>
+      <div class="cov-item"><b>${total}</b><span>Lesson files</span></div>
+      <div class="cov-item"><b>~60</b><span>Grammar points</span></div>
+      <div class="cov-item"><b>103</b><span>Kanji, zero gaps</span></div>
+      <div class="cov-item"><b>~800</b><span>Vocabulary words</span></div>
+      <div class="cov-item"><b>2–3</b><span>Full mock exams</span></div>
     </div>
   `;
 }
 
 function renderWeekNav(){
-  document.getElementById('weekNav').innerHTML = WEEKS.map(w=>`<a href="#week${w.num}">Wk ${w.num}</a>`).join('');
+  document.getElementById('weekNav').innerHTML = SECTIONS.map(s=>`<a href="#section${s.num}">S${s.num}</a>`).join('');
 }
 
-function dayCard(c){
-  const kind = c.kind || 'soon';
-  if(kind==='done'){
+function trackChips(l){
+  const chips = [];
+  if(l.grammar>0) chips.push(`<span class="tchip t-grammar">Grammar ${l.grammarNote ? '('+l.grammarNote+')' : '×'+l.grammar}</span>`);
+  if(l.kanji>0) chips.push(`<span class="tchip t-kanji">Kanji ${l.kanjiNote ? '('+l.kanjiNote+')' : '×'+l.kanji}</span>`);
+  else if(l.kanjiNote) chips.push(`<span class="tchip t-kanji">Kanji (${l.kanjiNote})</span>`);
+  if(l.vocab>0) chips.push(`<span class="tchip t-vocab">Vocab ${l.vocabNote ? '('+l.vocabNote+')' : '~'+l.vocab}</span>`);
+  if(l.reading) chips.push(`<span class="tchip t-reading">Reading</span>`);
+  if(l.listening) chips.push(`<span class="tchip t-listening">Listening</span>`);
+  return chips.length ? `<div class="track-row">${chips.join('')}</div>` : '';
+}
+
+function lessonCard(l, sectionNum){
+  const badge = l.slug.replace('s','S').replace('-l','·L').toUpperCase();
+  const isPaidSection = sectionNum >= 3;
+  const gated = isPaidSection && l.status==='done' && !hasAccess();
+
+  if(gated){
+    return `
+    <div class="rcard locked" data-slug="${l.slug}" role="button" tabindex="0" aria-label="${l.title}, locked, click to unlock">
+      <div class="rcard-badge locked-badge">${badge}</div>
+      <div class="rcard-body">
+        <div class="rc-title">${l.title} <span class="rc-locked-tag">🔒 Locked</span></div>
+        <div class="rc-en" style="color:var(--text-dim); font-size:.82em; margin-top:3px;">${l.desc}</div>
+        ${trackChips(l)}
+      </div>
+      <div class="rcard-actions"><span class="rc-btn locked-btn">Unlock</span></div>
+    </div>`;
+  }
+
+  if(l.status==='done'){
+    const openAttrs = isPaidSection
+      ? `href="#" data-slug="${l.slug}" data-file="${l.file || ''}" class="rc-btn done-btn js-open-lesson"`
+      : `href="${l.file || '#'}" class="rc-btn done-btn"`;
     return `
     <div class="rcard done">
-      <div class="rcard-badge">D${c.d}</div>
+      <div class="rcard-badge">${badge}</div>
       <div class="rcard-body">
-        <div class="rc-title">Day ${c.d} - ${c.en} <span class="rc-done-tag">✅ Done</span></div>
-        <div class="rc-en" style="color:var(--text-dim); font-size:.82em; margin-top:3px;">${c.desc}</div>
+        <div class="rc-title">${l.title} <span class="rc-done-tag">✅ Live</span></div>
+        <div class="rc-en" style="color:var(--text-dim); font-size:.82em; margin-top:3px;">${l.desc}</div>
+        ${trackChips(l)}
       </div>
-      <div class="rcard-actions"><a class="rc-btn done-btn" href="${c.file || '#'}">Open ✓</a></div>
-    </div>`;
-  }
-  if(kind==='next'){
-    return `
-    <div class="rcard next">
-      <div class="rcard-badge">D${c.d}</div>
-      <div class="rcard-body">
-        <div class="rc-title">Day ${c.d} - ${c.en} <span class="rc-next-tag">Building next</span></div>
-        <div class="rc-en" style="color:var(--text-dim); font-size:.82em; margin-top:3px;">${c.desc}</div>
-      </div>
-      <div class="rcard-actions"><a class="rc-btn primary" href="jlpt-n5-day-01.html">Preview</a></div>
-    </div>`;
-  }
-  if(kind==='milestone'){
-    return `
-    <div class="rcard milestone">
-      <div class="rcard-badge">D${c.d}</div>
-      <div class="rcard-body">
-        <div class="rc-title">Day ${c.d} - ${c.en} <span class="rc-milestone-tag">🎯 Milestone</span></div>
-        <div class="rc-en" style="color:var(--text-dim); font-size:.82em; margin-top:3px;">${c.desc}</div>
-      </div>
-      <div class="rcard-actions"><span class="rc-lock">🔒</span></div>
+      <div class="rcard-actions"><a ${openAttrs}>Open ✓</a></div>
     </div>`;
   }
   return `
     <div class="rcard soon">
-      <div class="rcard-badge">D${c.d}</div>
+      <div class="rcard-badge">${badge}</div>
       <div class="rcard-body">
-        <div class="rc-title">Day ${c.d} - ${c.en} <span class="rc-soon-tag">🔒 Coming soon</span></div>
-        <div class="rc-en" style="color:var(--text-dim); font-size:.82em; margin-top:3px;">${c.desc}</div>
+        <div class="rc-title">${l.title} <span class="rc-soon-tag">🔒 Coming soon</span></div>
+        <div class="rc-en" style="color:var(--text-dim); font-size:.82em; margin-top:3px;">${l.desc}</div>
+        ${trackChips(l)}
       </div>
     </div>`;
 }
 
 function renderWeeks(){
   const host = document.getElementById('phases');
-  host.innerHTML = WEEKS.map((w,i)=>{
+  host.innerHTML = SECTIONS.map((s,i)=>{
     const color = COLORS[i % COLORS.length];
+    const range = s.lessons.length>1 ? `L01–L${String(s.lessons.length).padStart(2,'0')}` : 'L01';
+    const ribbonLabel = s.bootcamp ? `Bootcamp · ${range}` : range;
     return `
-    <div class="phase" id="week${w.num}" data-week="${w.num}">
+    <div class="phase" id="section${s.num}" data-section="${s.num}">
       <div class="phase-head">
-        <div class="phase-num ${color}">${w.num}</div>
+        <div class="phase-num ${color}">${s.num}</div>
         <div class="phase-title-wrap">
-          <h2>Week ${w.num} - ${w.title}</h2>
-          <div class="phase-sub">${w.sub}</div>
+          <h2>Section ${s.num}: ${s.title}</h2>
+          <div class="phase-sub">${s.sub}</div>
         </div>
-        <div class="phase-ribbon ${color}">Days ${w.days[0].d}–${w.days[w.days.length-1].d}</div>
+        <div class="phase-ribbon ${color}">${ribbonLabel}</div>
       </div>
       <div class="course-list">
-        ${w.days.map(dayCard).join('')}
+        ${s.lessons.map(l=>lessonCard(l, s.num)).join('')}
       </div>
     </div>`;
   }).join('');
@@ -530,6 +693,172 @@ function renderWeeks(){
 renderOverall();
 renderWeekNav();
 renderWeeks();
+
+/* ============================================================
+   LOCKED CARD CLICKS + SECURE LESSON OPENING
+   Delegated on #phases since cards are re-rendered dynamically.
+   ============================================================ */
+document.getElementById('phases').addEventListener('click', (e)=>{
+  const lockedCard = e.target.closest('.rcard.locked');
+  if(lockedCard){
+    openUnlockModal(lockedCard.dataset.slug);
+    return;
+  }
+  const openLink = e.target.closest('.js-open-lesson');
+  if(openLink){
+    e.preventDefault();
+    openLesson(openLink.dataset.slug, openLink.dataset.file);
+  }
+});
+document.getElementById('phases').addEventListener('keydown', (e)=>{
+  if(e.key !== 'Enter' && e.key !== ' ') return;
+  const lockedCard = e.target.closest('.rcard.locked');
+  if(lockedCard){
+    e.preventDefault();
+    openUnlockModal(lockedCard.dataset.slug);
+  }
+});
+
+/* Fetches a paid lesson through the authenticated API route rather
+   than a static file. A tampered "unlocked" DOM state or a faked
+   localStorage token still gets rejected here, because the server
+   is the one that decides whether to return real lesson HTML.
+   This call is what actually gates the content, not the CSS class. */
+async function openLesson(slug, file){
+  if(!hasAccess()){ openUnlockModal(slug); return; }
+  try{
+    const res = await fetch(`/api/lesson/jlpt-n5/${encodeURIComponent(slug)}`, {
+      headers: { 'Authorization': `Bearer ${AccessState.token}` }
+    });
+    if(res.status === 401 || res.status === 403){
+      clearAccess();
+      renderWeeks();
+      openUnlockModal(slug);
+      return;
+    }
+    if(!res.ok) throw new Error('Lesson fetch failed');
+    const html = await res.text();
+    const blobUrl = URL.createObjectURL(new Blob([html], { type:'text/html' }));
+    window.open(blobUrl, '_blank', 'noopener');
+  }catch(err){
+    alert('Could not load this lesson right now. Please try again in a moment.');
+  }
+}
+
+/* ============================================================
+   UNLOCK MODAL
+   ============================================================ */
+const unlockOverlay = document.getElementById('unlockOverlay');
+const unlockOfferView = document.getElementById('unlockOfferView');
+const unlockVerifyView = document.getElementById('unlockVerifyView');
+const unlockLaunchView = document.getElementById('unlockLaunchView');
+const unlockMsg = document.getElementById('unlockMsg');
+
+function openUnlockModal(){
+  showOfferView();
+  unlockOverlay.classList.add('open');
+  unlockOverlay.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+}
+function closeUnlockModal(){
+  unlockOverlay.classList.remove('open');
+  unlockOverlay.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+}
+function showOfferView(){
+  unlockOfferView.style.display = 'block';
+  unlockVerifyView.style.display = 'none';
+  unlockLaunchView.style.display = 'none';
+  unlockMsg.textContent = '';
+  unlockMsg.className = 'unlock-msg';
+}
+function showVerifyView(){
+  unlockOfferView.style.display = 'none';
+  unlockVerifyView.style.display = 'block';
+  unlockLaunchView.style.display = 'none';
+  unlockMsg.textContent = '';
+  unlockMsg.className = 'unlock-msg';
+}
+function showLaunchView(){
+  unlockOfferView.style.display = 'none';
+  unlockVerifyView.style.display = 'none';
+  unlockLaunchView.style.display = 'block';
+}
+
+document.getElementById('unlockClose').onclick = closeUnlockModal;
+unlockOverlay.addEventListener('click', (e)=>{ if(e.target === unlockOverlay) closeUnlockModal(); });
+document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && unlockOverlay.classList.contains('open')) closeUnlockModal(); });
+document.getElementById('showKeyForm').onclick = showVerifyView;
+document.getElementById('showOfferForm').onclick = showOfferView;
+document.getElementById('unlockNavBtn').onclick = openUnlockModal;
+document.getElementById('unlockLaunchBackBtn').onclick = showOfferView;
+
+/* TODO: drop in the real Payhip checkout links once they exist */
+document.getElementById('unlockBuyN5').href = '';
+document.getElementById('unlockBuyAll').href = '';
+
+/* ============================================================
+   PRE-LAUNCH ONLY. DELETE THIS WHOLE BLOCK ON AUGUST 15.
+   Right now the two Buy Now buttons above are just empty links,
+   so this stops the click, shows the "we're launching soon"
+   view instead, and gets out of the way. Once you delete this
+   block (and have real Payhip URLs in the hrefs above), the
+   buttons go back to being plain links and open Payhip directly,
+   no other changes needed anywhere else in the file.
+   ============================================================ */
+document.getElementById('unlockBuyN5').addEventListener('click', function(e){
+  e.preventDefault();
+  showLaunchView();
+});
+document.getElementById('unlockBuyAll').addEventListener('click', function(e){
+  e.preventDefault();
+  showLaunchView();
+});
+/* ============================================================
+   END PRE-LAUNCH ONLY BLOCK
+   ============================================================ */
+
+/* Verification always goes through the server, never resolved
+   client-side, so there's no valid-key pattern to reverse-engineer
+   from this file. */
+document.getElementById('unlockForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const email = document.getElementById('unlockEmail').value.trim();
+  const licenseKey = document.getElementById('unlockKey').value.trim();
+  const btn = document.getElementById('unlockSubmitBtn');
+
+  unlockMsg.textContent = '';
+  unlockMsg.className = 'unlock-msg';
+  btn.disabled = true;
+  const originalLabel = btn.textContent;
+  btn.textContent = 'Verifying…';
+
+  try{
+    const res = await fetch('/api/license/unlock', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, licenseKey })
+    });
+    const data = await res.json().catch(()=>({}));
+
+    if(res.ok && data.token){
+      setAccess(data.token);
+      unlockMsg.textContent = '✓ Unlocked! Reloading…';
+      unlockMsg.classList.add('ok');
+      setTimeout(()=>window.location.reload(), 900);
+    } else {
+      unlockMsg.textContent = data.error || 'Invalid email or license key.';
+      unlockMsg.classList.add('err');
+      btn.disabled = false;
+      btn.textContent = originalLabel;
+    }
+  }catch(err){
+    unlockMsg.textContent = 'Network error. Please try again.';
+    unlockMsg.classList.add('err');
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  }
+});
 
 /* Scroll-reveal for each week */
 const io = new IntersectionObserver((entries)=>{
