@@ -293,7 +293,7 @@ footer a{color:var(--text-faint); text-decoration:underline;}
 </div>
 
 <div class="culture-grid">
-  <a class="cul-card cul-korean" href="koreanvision.html" data-status="soon">
+  <div class="cul-card cul-korean" data-status="soon" role="link" aria-disabled="true" tabindex="0">
     <div class="cul-emblem" aria-hidden="true"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <path d="M50 2 A48 48 0 0 1 50 98 A24 24 0 0 1 50 50 A24 24 0 0 0 50 2Z" fill="var(--vermilion)"/>
       <path d="M50 2 A48 48 0 0 0 50 98 A24 24 0 0 0 50 50 A24 24 0 0 1 50 2Z" fill="var(--inkblue)"/>
@@ -306,7 +306,7 @@ footer a{color:var(--text-faint); text-decoration:underline;}
     <p class="cul-tip"><strong>Tip -</strong> Master Hangeul first. Once you can read it fluently, every course after it moves noticeably faster.</p>
     <div class="cul-stats"><span>3 courses live</span><span>19 planned</span></div>
     <div class="cul-cta">Explore the Korean Roadmap →</div>
-  </a>
+  </div>
 
   <a class="cul-card cul-japanese" href="roadmapjp.html">
     <div class="cul-emblem" aria-hidden="true"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -396,7 +396,11 @@ applyTheme();
 (function(){
   document.querySelectorAll('.cul-card[data-status="soon"]').forEach(function(card){
     card.classList.add('cul-locked');
+    // Defensive: block navigation even if this card is ever given a real href/link child later.
     card.addEventListener('click', function(e){ e.preventDefault(); });
+    card.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') e.preventDefault();
+    });
 
     var stats = card.querySelector('.cul-stats');
     if (stats) stats.innerHTML = '<span>🌸 Something new is blooming</span>';
