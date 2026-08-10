@@ -116,6 +116,19 @@ button{font-family:var(--sans); cursor:pointer;}
   position:sticky; top:0; z-index:30; display:flex; align-items:center; justify-content:space-between;
   gap:14px; padding:16px 5vw 20px; max-width:1080px; margin:0 auto;
 }
+#topbar::before{
+  content:""; position:absolute; left:0; right:0; top:0;
+  height:100%; padding-bottom:36px; margin-bottom:-36px;
+  background-color:color-mix(in srgb, var(--ink) 72%, transparent);
+  -webkit-backdrop-filter:blur(14px) saturate(140%); backdrop-filter:blur(14px) saturate(140%);
+  -webkit-mask-image:linear-gradient(to bottom, #000 58%, transparent 100%);
+  mask-image:linear-gradient(to bottom, #000 58%, transparent 100%);
+  opacity:0; pointer-events:none; z-index:-1;
+  transition:opacity .35s ease;
+}
+#topbar.is-scrolled::before{ opacity:1; }
+#topbar.is-scrolled{ padding-top:10px; padding-bottom:20px; }
+#topbar .brand, #topbar .top-actions{ position:relative; z-index:1; }
 .brand{display:flex; align-items:center; gap:12px;}
 .brand-block{
   width:42px;height:42px;border-radius:50%; flex:none; position:relative;
@@ -497,6 +510,27 @@ applyTheme();
     p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
     host.appendChild(p);
   }
+})();
+
+/* ============================================================
+   TOPBAR SCROLL STATE
+   Adds a blurred/solid background to the sticky topbar once the
+   page scrolls, so hero/body text doesn't show through it.
+   ============================================================ */
+(function(){
+  const topbar = document.getElementById('topbar');
+  if(!topbar) return;
+  const THRESHOLD = 12;
+  let ticking = false;
+  function applyState(){
+    topbar.classList.toggle('is-scrolled', window.scrollY > THRESHOLD);
+    ticking = false;
+  }
+  function onScroll(){
+    if(!ticking){ requestAnimationFrame(applyState); ticking = true; }
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  applyState();
 })();
 </script>
 </body>

@@ -116,6 +116,19 @@ button{font-family:var(--sans); cursor:pointer;}
   position:sticky; top:0; z-index:30; display:flex; align-items:center; justify-content:space-between;
   gap:14px; padding:16px 5vw 20px; max-width:1080px; margin:0 auto;
 }
+#topbar::before{
+  content:""; position:absolute; left:0; right:0; top:0;
+  height:100%; padding-bottom:36px; margin-bottom:-36px;
+  background-color:color-mix(in srgb, var(--ink) 72%, transparent);
+  -webkit-backdrop-filter:blur(14px) saturate(140%); backdrop-filter:blur(14px) saturate(140%);
+  -webkit-mask-image:linear-gradient(to bottom, #000 58%, transparent 100%);
+  mask-image:linear-gradient(to bottom, #000 58%, transparent 100%);
+  opacity:0; pointer-events:none; z-index:-1;
+  transition:opacity .35s ease;
+}
+#topbar.is-scrolled::before{ opacity:1; }
+#topbar.is-scrolled{ padding-top:10px; padding-bottom:20px; }
+#topbar .brand, #topbar .top-actions{ position:relative; z-index:1; }
 .brand{display:flex; align-items:center; gap:12px;}
 .brand-block{
   width:42px;height:42px;border-radius:50%; flex:none; position:relative;
@@ -278,7 +291,7 @@ footer a{text-decoration:underline;}
 }
 .unlock-overlay.open{opacity:1; pointer-events:auto;}
 .unlock-modal{
-  position:relative; width:100%; max-width:440px; max-height:88vh; overflow-y:auto;
+  position:relative; width:100%; max-width:600px; max-height:88vh; overflow-y:auto;
   background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
   box-shadow:0 30px 80px rgba(0,0,0,.45); padding:34px 30px 28px;
   transform:translateY(14px) scale(.98); transition:transform .22s ease;
@@ -295,24 +308,28 @@ footer a{text-decoration:underline;}
 .unlock-eyebrow{font-size:.72em; letter-spacing:.14em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:8px;}
 .unlock-view h3{font-size:1.5em; margin-bottom:10px;}
 .unlock-copy{color:var(--text-dim); font-size:.88em; text-align:left; margin-bottom:18px;}
-.unlock-price-options{display:flex; gap:10px; margin-bottom:18px;}
+.unlock-price-options{display:flex; gap:8px; margin-bottom:18px;}
 .unlock-price-card{
-  flex:1; position:relative; background:var(--surface2); border:1px solid var(--border);
-  border-radius:var(--radius-sm); padding:16px 13px 14px; text-align:left; display:flex; flex-direction:column;
+  flex:1; min-width:0; position:relative; background:var(--surface2); border:1px solid var(--border);
+  border-radius:var(--radius-sm); padding:14px 10px 12px; text-align:left; display:flex; flex-direction:column;
 }
 .unlock-price-card.featured{border-color:var(--gold); box-shadow:0 0 0 1px color-mix(in srgb, var(--gold) 60%, transparent) inset;}
 .unlock-price-card-badge{
-  position:absolute; top:-10px; right:10px; background:linear-gradient(135deg,var(--gold),var(--ember));
-  color:#fff; font-size:.58em; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:3px 9px; border-radius:20px;
+  position:absolute; top:-10px; right:8px; background:linear-gradient(135deg,var(--gold),var(--ember));
+  color:#fff; font-size:.56em; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:3px 8px; border-radius:20px;
 }
-.unlock-price-card-label{font-size:.7em; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); margin-bottom:5px;}
-.unlock-price-card-amount{font-family:var(--serif); font-size:1.7em; font-weight:600; color:var(--text); line-height:1;}
-.unlock-price-card-note{font-size:.66em; color:var(--text-faint); margin:3px 0 9px;}
-.unlock-price-card-desc{font-size:.75em; color:var(--text-dim); margin-bottom:12px; flex:1; line-height:1.45;}
-.unlock-price-card .unlock-buy-btn{padding:10px 10px; font-size:.8em; box-shadow:none;}
+.unlock-price-card-label{font-size:.66em; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); margin-bottom:5px;}
+.unlock-price-card-amount{font-family:var(--serif); font-size:1.5em; font-weight:600; color:var(--text); line-height:1;}
+.unlock-price-card-note{font-size:.62em; color:var(--text-faint); margin:3px 0 8px;}
+.unlock-price-card-desc{font-size:.7em; color:var(--text-dim); margin-bottom:10px; flex:1; line-height:1.4;}
+.unlock-price-card .unlock-buy-btn{padding:9px 6px; font-size:.72em; box-shadow:none;}
 .unlock-fine-print{font-size:.72em; color:var(--text-faint); margin:-10px 0 16px; text-align:center;}
-@media(max-width:480px){
+@media(max-width:640px){
   .unlock-price-options{flex-direction:column;}
+  .unlock-price-card{padding:16px 14px 14px;}
+  .unlock-price-card-amount{font-size:1.7em;}
+  .unlock-price-card-desc{font-size:.75em;}
+  .unlock-price-card .unlock-buy-btn{padding:10px 10px; font-size:.8em;}
 }
 .unlock-points{list-style:none; margin:0 0 22px; padding:0; text-align:left; font-size:.86em; color:var(--text-dim);}
 .unlock-points li{margin-bottom:6px;}
@@ -458,10 +475,17 @@ body{overflow-x:hidden;}
       <div class="unlock-price-options">
         <div class="unlock-price-card">
           <div class="unlock-price-card-label">N5 Only</div>
-          <div class="unlock-price-card-amount">$49</div>
+          <div class="unlock-price-card-amount">$29</div>
           <div class="unlock-price-card-note">launch price</div>
           <div class="unlock-price-card-desc">Sections 3 through 13. Every remaining grammar point, all 103 kanji, ~800 vocab words, plus the full Exam Bootcamp.</div>
-          <a id="unlockBuyN5" class="unlock-buy-btn" href="" data-plan="n5" target="_blank" rel="noopener noreferrer">Buy N5 for $49</a>
+          <a id="unlockBuyN5" class="unlock-buy-btn" href="" data-plan="n5" target="_blank" rel="noopener noreferrer">Buy N5 for $29</a>
+        </div>
+        <div class="unlock-price-card">
+          <div class="unlock-price-card-label">N5 &ndash; N3</div>
+          <div class="unlock-price-card-amount">$49</div>
+          <div class="unlock-price-card-note">launch price</div>
+          <div class="unlock-price-card-desc">N5, N4, and N3 in full. Takes you from absolute beginner to intermediate.</div>
+          <a id="unlockBuyN3" class="unlock-buy-btn" href="" data-plan="n5-n3" target="_blank" rel="noopener noreferrer">Buy N5&ndash;N3 for $49</a>
         </div>
         <div class="unlock-price-card featured">
           <div class="unlock-price-card-badge">Best Value</div>
@@ -510,6 +534,27 @@ body{overflow-x:hidden;}
 </div>
 
 <script>
+/* ============================================================
+   TOPBAR SCROLL STATE
+   Adds a blurred/solid background to the sticky topbar once the
+   page scrolls, so hero/body text doesn't show through it.
+   ============================================================ */
+(function(){
+  const topbar = document.getElementById('topbar');
+  if(!topbar) return;
+  const THRESHOLD = 12;
+  let ticking = false;
+  function applyState(){
+    topbar.classList.toggle('is-scrolled', window.scrollY > THRESHOLD);
+    ticking = false;
+  }
+  function onScroll(){
+    if(!ticking){ requestAnimationFrame(applyState); ticking = true; }
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  applyState();
+})();
+
 /* ============================================================
    JLPT N5 SECTION / LESSON DATA
    Mirrors jlpt-n5-master-roadmap.md.
@@ -795,11 +840,12 @@ document.getElementById('unlockLaunchBackBtn').onclick = showOfferView;
 
 /* TODO: drop in the real Payhip checkout links once they exist */
 document.getElementById('unlockBuyN5').href = '';
+document.getElementById('unlockBuyN3').href = '';
 document.getElementById('unlockBuyAll').href = '';
 
 /* ============================================================
    PRE-LAUNCH ONLY. DELETE THIS WHOLE BLOCK ON AUGUST 15.
-   Right now the two Buy Now buttons above are just empty links,
+   Right now the three Buy Now buttons above are just empty links,
    so this stops the click, shows the "we're launching soon"
    view instead, and gets out of the way. Once you delete this
    block (and have real Payhip URLs in the hrefs above), the
@@ -807,6 +853,10 @@ document.getElementById('unlockBuyAll').href = '';
    no other changes needed anywhere else in the file.
    ============================================================ */
 document.getElementById('unlockBuyN5').addEventListener('click', function(e){
+  e.preventDefault();
+  showLaunchView();
+});
+document.getElementById('unlockBuyN3').addEventListener('click', function(e){
   e.preventDefault();
   showLaunchView();
 });

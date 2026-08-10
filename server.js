@@ -355,9 +355,14 @@ app.get('/api/supporters', async (req, res) => {
 // lets a client attach an email to a key. That row is the only
 // thing this endpoint ever checks.
 //
-// Two Payhip products feed into the same table:
-//   "N5 Access Key"     -> Plan = "n5"          (Section 1 course only)
-//   "N5-N1 Access Key"  -> Plan = "all-access"   (every JLPT level)
+// Seven Payhip products feed into the same table:
+//   "N5 Access Key"      -> Plan = "n5"          (N5 only)
+//   "N4 Access Key"      -> Plan = "n4"          (N4 only)
+//   "N3 Access Key"      -> Plan = "n3"          (N3 only)
+//   "N2 Access Key"      -> Plan = "n2"          (N2 only)
+//   "N1 Access Key"      -> Plan = "n1"          (N1 only)
+//   "N5-N3 Access Key"   -> Plan = "n5-n3"       (N5 through N3 bundle)
+//   "N5-N1 Access Key"   -> Plan = "all-access"  (every JLPT level)
 //
 // Requires (in addition to AIRTABLE_API_KEY / AIRTABLE_BASE_ID
 // above):
@@ -370,8 +375,8 @@ app.get('/api/supporters', async (req, res) => {
 // "Keys" table needs these fields:
 //   Key             (text)      — the license key
 //   Email           (email)     — filled in by hand per sale, blank until then
-//   Plan            (text)      — "n5" or "all-access", set when the batch of
-//                                 keys for that product is generated
+//   Plan            (text)      — one of VALID_PLANS below, set when the
+//                                 batch of keys for that product is generated
 //   RedemptionCount (number)    — how many times this key has been
 //                                 successfully verified; used as a
 //                                 soft device cap so a shared key
@@ -382,21 +387,21 @@ const AIRTABLE_LICENSE_TABLE_NAME = process.env.AIRTABLE_LICENSE_TABLE_NAME || '
 const AIRTABLE_LICENSE_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_LICENSE_TABLE_NAME)}`;
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// The only two valid values for a key's Plan field. Anything else
+// The only valid values for a key's Plan field. Anything else
 // on a record is treated as misconfigured and rejected, rather
 // than guessed at.
-const VALID_PLANS = ['n5', 'all-access'];
+const VALID_PLANS = ['n5', 'n4', 'n3', 'n2', 'n1', 'n5-n3', 'all-access'];
 
-// Which plan(s) unlock which course. "all-access" covers every
-// current and future JLPT course by design, so new levels (N4,
-// N3...) only need a line added to LESSON_FILES further down,
-// not here.
+// Which plan(s) unlock which course. "n5-n3" covers N5 through N3;
+// "all-access" covers every current and future JLPT level by
+// design, so new levels beyond N1 only need a line added here
+// (and to LESSON_FILES further down).
 const COURSE_PLAN_ACCESS = {
-  'jlpt-n5': ['n5', 'all-access'],
-  'jlpt-n4': ['all-access'],
-  'jlpt-n3': ['all-access'],
-  'jlpt-n2': ['all-access'],
-  'jlpt-n1': ['all-access'],
+  'jlpt-n5': ['n5', 'n5-n3', 'all-access'],
+  'jlpt-n4': ['n4', 'n5-n3', 'all-access'],
+  'jlpt-n3': ['n3', 'n5-n3', 'all-access'],
+  'jlpt-n2': ['n2', 'all-access'],
+  'jlpt-n1': ['n1', 'all-access'],
 };
 
 const LICENSE_MAX_REDEMPTIONS = parseInt(process.env.LICENSE_MAX_REDEMPTIONS || '3', 10); // soft device cap
