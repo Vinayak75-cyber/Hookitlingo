@@ -145,6 +145,21 @@ html[data-theme="light"] .nav-item.active{color:#8a2c4a;}
   background:linear-gradient(135deg, color-mix(in srgb, var(--vermilion) 16%, transparent), color-mix(in srgb, var(--gold) 12%, transparent));
   margin-top:4px;
 }
+.kofi-footer{max-width:var(--maxw); margin:0 auto; padding:8px 20px 40px; text-align:center;}
+.support-row{display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:10px;}
+.kofi-banner{
+  display:inline-flex; align-items:center; gap:10px; padding:12px 24px; border-radius:999px;
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+  color:#fff !important; font-weight:600; font-size:.92em; text-decoration:none; border:none;
+  box-shadow:0 10px 26px color-mix(in srgb, var(--vermilion) 35%, transparent); transition:filter .15s;
+  font-family:var(--sans);
+}
+.kofi-banner:hover{filter:brightness(1.07);}
+.share-banner{
+  background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--inkblue) 45%));
+  box-shadow:0 10px 26px color-mix(in srgb, var(--celadon) 30%, transparent);
+  min-width:290px; justify-content:center;
+}
 
 #mainWrap{flex:1; min-width:0; display:flex; flex-direction:column;}
 #topbar{
@@ -369,6 +384,12 @@ details.passage .passage-en{margin-top:10px; color:var(--text-dim); font-size:.9
       </div>
     </div>
     <main id="main"></main>
+    <div class="kofi-footer no-print">
+      <div class="support-row">
+        <a class="kofi-banner" href="https://ko-fi.com/hookitlingo" target="_blank" rel="noopener noreferrer">☕ Help me complete my goal so I can launch JLPT N4</a>
+        <button class="kofi-banner share-banner" id="shareBtn" type="button">🔗 Share with someone you want to learn with</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1259,6 +1280,35 @@ window.addEventListener('keydown', e=>{
   if(e.key==='ArrowRight' && idx<CHAPTERS.length-1) goTo(CHAPTERS[idx+1].id);
   if(e.key==='ArrowLeft' && idx>0) goTo(CHAPTERS[idx-1].id);
 });
+
+/* Share button: uses the native OS share sheet on mobile (and any
+   desktop browser that supports it); falls back to copying the
+   lesson's canonical link to the clipboard everywhere else. */
+(function initShareButton(){
+  const btn = document.getElementById('shareBtn');
+  if(!btn) return;
+  const canonicalEl = document.querySelector('link[rel="canonical"]');
+  const shareUrl = (canonicalEl && canonicalEl.href) || window.location.href;
+  const shareData = {
+    title: document.title,
+    text: 'Come learn Japanese with me — free, self-contained JLPT lessons from Hookitlingo.',
+    url: shareUrl
+  };
+  btn.addEventListener('click', async ()=>{
+    if(navigator.share){
+      try{ await navigator.share(shareData); } catch(err){ /* user cancelled, nothing to do */ }
+      return;
+    }
+    const original = btn.textContent;
+    try{
+      await navigator.clipboard.writeText(shareUrl);
+      btn.textContent = '✓ Link copied!';
+    } catch(err){
+      btn.textContent = shareUrl;
+    }
+    setTimeout(()=>{ btn.textContent = original; }, 2200);
+  });
+})();
 
 /* Drifting cherry blossom petals, purely decorative, respects prefers-reduced-motion via CSS */
 (function spawnPetals(){

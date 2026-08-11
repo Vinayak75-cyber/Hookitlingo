@@ -237,14 +237,6 @@ button{font-family:var(--sans); cursor:pointer;}
 .rcard.soon::before{border-color:var(--border);}
 .rcard.soon:hover{opacity:.92;}
 
-.rcard.locked{cursor:pointer; border-color:color-mix(in srgb, var(--gold) 40%, var(--border));}
-.rcard.locked::before{border-color:var(--gold);}
-.rcard.locked:hover{transform:translateX(4px); border-color:var(--gold); box-shadow:0 8px 22px color-mix(in srgb, var(--gold) 18%, transparent);}
-.rcard.locked:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
-.rcard-badge.locked-badge{background:linear-gradient(135deg, var(--gold), color-mix(in srgb, var(--gold) 55%, var(--ember) 45%)); color:#fff;}
-.rc-locked-tag{font-size:.58em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 8px; border-radius:10px; background:var(--gold-dim); color:var(--gold); display:inline-flex; align-items:center; gap:4px;}
-.rc-btn.locked-btn{background:linear-gradient(135deg,var(--gold), color-mix(in srgb, var(--gold) 55%, var(--ember) 45%)); color:#fff;}
-
 .rcard-badge{
   min-width:34px; height:28px; padding:0 9px; border-radius:14px; flex:none; display:flex; align-items:center; justify-content:center;
   font-family:var(--serif); font-weight:700; font-size:12px; color:#fff; text-align:center; line-height:1.1; letter-spacing:.01em; white-space:nowrap;
@@ -282,82 +274,6 @@ button{font-family:var(--sans); cursor:pointer;}
 
 footer{position:relative; z-index:2; text-align:center; padding:10px 5vw 60px; color:var(--text-faint); font-size:.85em;}
 footer a{text-decoration:underline;}
-
-/* ===== UNLOCK MODAL ===== */
-.unlock-overlay{
-  position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
-  padding:20px; background:rgba(10,6,10,.62); backdrop-filter:blur(6px);
-  opacity:0; pointer-events:none; transition:opacity .22s ease;
-}
-.unlock-overlay.open{opacity:1; pointer-events:auto;}
-.unlock-modal{
-  position:relative; width:100%; max-width:600px; max-height:88vh; overflow-y:auto;
-  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  box-shadow:0 30px 80px rgba(0,0,0,.45); padding:34px 30px 28px;
-  transform:translateY(14px) scale(.98); transition:transform .22s ease;
-}
-.unlock-overlay.open .unlock-modal{transform:translateY(0) scale(1);}
-.unlock-close{
-  position:absolute; top:14px; right:14px; width:30px; height:30px; border-radius:50%;
-  background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); font-size:16px;
-  line-height:1; display:flex; align-items:center; justify-content:center;
-}
-.unlock-close:hover{color:var(--text); border-color:var(--vermilion);}
-.unlock-view{text-align:center;}
-.unlock-icon{font-size:2em; margin-bottom:6px;}
-.unlock-eyebrow{font-size:.72em; letter-spacing:.14em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:8px;}
-.unlock-view h3{font-size:1.5em; margin-bottom:10px;}
-.unlock-copy{color:var(--text-dim); font-size:.88em; text-align:left; margin-bottom:18px;}
-.unlock-price-options{display:flex; gap:8px; margin-bottom:18px;}
-.unlock-price-card{
-  flex:1; min-width:0; position:relative; background:var(--surface2); border:1px solid var(--border);
-  border-radius:var(--radius-sm); padding:14px 10px 12px; text-align:left; display:flex; flex-direction:column;
-}
-.unlock-price-card.featured{border-color:var(--gold); box-shadow:0 0 0 1px color-mix(in srgb, var(--gold) 60%, transparent) inset;}
-.unlock-price-card-badge{
-  position:absolute; top:-10px; right:8px; background:linear-gradient(135deg,var(--gold),var(--ember));
-  color:#fff; font-size:.56em; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:3px 8px; border-radius:20px;
-}
-.unlock-price-card-label{font-size:.66em; text-transform:uppercase; letter-spacing:.06em; color:var(--text-faint); margin-bottom:5px;}
-.unlock-price-card-amount{font-family:var(--serif); font-size:1.5em; font-weight:600; color:var(--text); line-height:1;}
-.unlock-price-card-note{font-size:.62em; color:var(--text-faint); margin:3px 0 8px;}
-.unlock-price-card-desc{font-size:.7em; color:var(--text-dim); margin-bottom:10px; flex:1; line-height:1.4;}
-.unlock-price-card .unlock-buy-btn{padding:9px 6px; font-size:.72em; box-shadow:none;}
-.unlock-fine-print{font-size:.72em; color:var(--text-faint); margin:-10px 0 16px; text-align:center;}
-@media(max-width:640px){
-  .unlock-price-options{flex-direction:column;}
-  .unlock-price-card{padding:16px 14px 14px;}
-  .unlock-price-card-amount{font-size:1.7em;}
-  .unlock-price-card-desc{font-size:.75em;}
-  .unlock-price-card .unlock-buy-btn{padding:10px 10px; font-size:.8em;}
-}
-.unlock-points{list-style:none; margin:0 0 22px; padding:0; text-align:left; font-size:.86em; color:var(--text-dim);}
-.unlock-points li{margin-bottom:6px;}
-.unlock-buy-btn{
-  display:block; width:100%; text-align:center; padding:13px 18px; border-radius:999px; border:none;
-  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
-  color:#fff; font-weight:700; font-size:.94em; box-shadow:0 10px 26px color-mix(in srgb, var(--vermilion) 35%, transparent);
-}
-.unlock-buy-btn:hover{filter:brightness(1.06); color:#fff;}
-.unlock-buy-btn:disabled{opacity:.6; cursor:default; filter:none;}
-.unlock-key-link{
-  display:block; width:100%; margin-top:14px; background:none; border:none; color:var(--text-faint);
-  font-size:.8em; text-decoration:underline; text-underline-offset:3px;
-}
-.unlock-key-link:hover{color:var(--celadon);}
-.unlock-form{display:flex; flex-direction:column; gap:10px; margin-bottom:6px;}
-.unlock-form input{
-  width:100%; padding:11px 14px; border-radius:var(--radius-sm); border:1px solid var(--border);
-  background:var(--surface2); color:var(--text); font-family:var(--sans); font-size:.9em;
-}
-.unlock-form input:focus{outline:none; border-color:var(--celadon);}
-.unlock-msg{min-height:1.4em; font-size:.82em; margin:10px 0 4px;}
-.unlock-msg.ok{color:var(--celadon);}
-.unlock-msg.err{color:var(--vermilion);}
-@media(max-width:480px){
-  .unlock-modal{padding:28px 20px 22px;}
-  .unlock-view h3{font-size:1.28em;}
-}
 
 /* ===== MOBILE RESPONSIVENESS ===== */
 body{overflow-x:hidden;}
@@ -434,7 +350,6 @@ body{overflow-x:hidden;}
   </div>
   <div class="top-actions">
     <a class="topbtn" href="roadmapjp.html">← JLPT Roadmap</a>
-    <button class="topbtn" id="unlockNavBtn">🔑 Have a key?</button>
     <button class="topbtn" id="themeBtn">☾ Dark</button>
   </div>
 </div>
@@ -460,78 +375,6 @@ body{overflow-x:hidden;}
   <p>Not sure N5 is the right starting point? Head back to the <a href="roadmapjp.html">JLPT Roadmap</a> and browse the other levels.</p>
   <p>Powered by Hookitlingo</p>
 </footer>
-
-<div class="unlock-overlay" id="unlockOverlay" aria-hidden="true">
-  <div class="unlock-modal" role="dialog" aria-modal="true" aria-labelledby="unlockTitle">
-    <button class="unlock-close" id="unlockClose" aria-label="Close">×</button>
-
-    <!-- OFFER VIEW -->
-    <div id="unlockOfferView" class="unlock-view">
-      <div class="unlock-icon">🔒</div>
-      <div class="unlock-eyebrow jp">Unlock More of Hookitlingo</div>
-      <h3 id="unlockTitle">Choose Your Plan</h3>
-      <p class="unlock-copy">Sections 1 and 2 of N5 are free forever. Everything after that is a one-time purchase, no subscription, no login, and it works offline once you're in.</p>
-
-      <div class="unlock-price-options">
-        <div class="unlock-price-card">
-          <div class="unlock-price-card-label">N5 Only</div>
-          <div class="unlock-price-card-amount">$29</div>
-          <div class="unlock-price-card-note">launch price</div>
-          <div class="unlock-price-card-desc">Sections 3 through 13. Every remaining grammar point, all 103 kanji, ~800 vocab words, plus the full Exam Bootcamp.</div>
-          <a id="unlockBuyN5" class="unlock-buy-btn" href="" data-plan="n5" target="_blank" rel="noopener noreferrer">Buy N5 for $29</a>
-        </div>
-        <div class="unlock-price-card">
-          <div class="unlock-price-card-label">N5 &ndash; N3</div>
-          <div class="unlock-price-card-amount">$49</div>
-          <div class="unlock-price-card-note">launch price</div>
-          <div class="unlock-price-card-desc">N5, N4, and N3 in full. Takes you from absolute beginner to intermediate.</div>
-          <a id="unlockBuyN3" class="unlock-buy-btn" href="" data-plan="n5-n3" target="_blank" rel="noopener noreferrer">Buy N5&ndash;N3 for $49</a>
-        </div>
-        <div class="unlock-price-card featured">
-          <div class="unlock-price-card-badge">Best Value</div>
-          <div class="unlock-price-card-label">All Access</div>
-          <div class="unlock-price-card-amount">$99</div>
-          <div class="unlock-price-card-note">launch price</div>
-          <div class="unlock-price-card-desc">Every JLPT level, N5 through N1. Unlocks each one the moment it's released.</div>
-          <a id="unlockBuyAll" class="unlock-buy-btn" href="" data-plan="all-access" target="_blank" rel="noopener noreferrer">Buy All Access for $99</a>
-        </div>
-      </div>
-      <div class="unlock-fine-print">Launch pricing for the first 1,500 members. Goes up after that.</div>
-
-      <ul class="unlock-points">
-        <li>✓ Lifetime access, works offline</li>
-        <li>✓ Every future update included as it ships</li>
-        <li>✓ No login, no app install, just an email and a key</li>
-        <li>✓ Key arrives by email within 24 hours of buying</li>
-      </ul>
-
-      <button class="unlock-key-link" id="showKeyForm" type="button">Already have a key? Enter it here</button>
-    </div>
-
-    <!-- LAUNCH-DAY NOTICE VIEW (pre-launch only) -->
-    <div id="unlockLaunchView" class="unlock-view" style="display:none;">
-      <div class="unlock-icon">🌸</div>
-      <h3>Thanks for Your Interest</h3>
-      <p class="unlock-copy" style="text-align:center;">We're launching on <strong>August 15</strong>. Come back then and your plan will be ready to buy. See you soon!</p>
-      <button class="unlock-buy-btn" id="unlockLaunchBackBtn" type="button">Got it</button>
-    </div>
-
-    <!-- VERIFY VIEW -->
-    <div id="unlockVerifyView" class="unlock-view" style="display:none;">
-      <div class="unlock-icon">🔑</div>
-      <h3>Enter Your License Key</h3>
-      <p class="unlock-copy">Use the email and key you received after checkout. It's sent manually within 24 hours of your Payhip purchase.</p>
-
-      <form id="unlockForm" class="unlock-form" autocomplete="off">
-        <input type="email" id="unlockEmail" placeholder="Email used at checkout" required />
-        <input type="text" id="unlockKey" placeholder="License key" required />
-        <button type="submit" class="unlock-buy-btn" id="unlockSubmitBtn">Unlock Course</button>
-      </form>
-      <div id="unlockMsg" class="unlock-msg" aria-live="polite"></div>
-      <button class="unlock-key-link" id="showOfferForm" type="button">← Back</button>
-    </div>
-  </div>
-</div>
 
 <script>
 /* ============================================================
@@ -562,21 +405,6 @@ body{overflow-x:hidden;}
    goes live automatically, linking to its file.
    ============================================================ */
 const COLORS = ['c-celadon','c-inkblue','c-gold','c-ember'];
-
-/* ============================================================
-   ACCESS STATE
-   The token here is only a UI convenience flag. It decides
-   whether a card LOOKS unlocked. It grants nothing by itself.
-   Every actual lesson fetch below sends this token to the
-   server and the server is the only thing that can hand back
-   real lesson HTML, so editing this in devtools does not
-   expose any paid content.
-   ============================================================ */
-const ACCESS_KEY = 'hkl_n5_access_token';
-const AccessState = { token: localStorage.getItem(ACCESS_KEY) || null };
-function hasAccess(){ return !!AccessState.token; }
-function setAccess(token){ AccessState.token = token; localStorage.setItem(ACCESS_KEY, token); }
-function clearAccess(){ AccessState.token = null; localStorage.removeItem(ACCESS_KEY); }
 
 const SECTIONS = [
   { num:1, title:'Foundation: Hiragana &amp; Katakana', sub:'Not a grammar section, more of a prerequisite unit. Split in two because a full kana chart and drills is already a day\u2019s worth of content on its own.', lessons:[
@@ -616,14 +444,14 @@ const SECTIONS = [
     { slug:'s11-l01', file:'coursesjp/jlpt-n5-s11-l01.html', title:'Connecting Ideas &amp; Invitations', desc:'〜から, 〜とき, 〜ましょう／〜ましょうか, the full 〜ませんか invitation, and sentence connectors そして／それから, taught through health and invitation vocabulary.', kanji:3, vocab:50, grammar:5, reading:true, listening:true, status:'done' },
   ]},
   { num:12, title:'Ability, Experience &amp; Hobbies', sub:'What you can do and what you\u2019ve done, plus a full past-tense review, since little new kanji or vocab remains at this stage.', lessons:[
-    { slug:'s12-l01', file:'coursesjp/jlpt-n5-s12-l01.html', title:'Ability, Experience &amp; Hobbies', desc:'〜ことができます, 〜ことがあります, nominalizing verbs with 辞書形＋こと, and a full past-tense review, taught through hobbies, sports, and travel vocabulary.', kanji:4, vocab:50, grammar:4, reading:true, listening:true, status:'done' },
+    { slug:'s12-l01', file:'coursesjp/jlpt-n5-s12-l01.html', title:'Ability, Experience &amp; Hobbies', desc:'〜ことができます, 〜ことがあります, nominalizing verbs with 辞書形＋こと, and a full past-tense review, taught through hobbies, sports, and travel vocabulary.', kanji:4, vocab:50, grammar:4, reading:true, listening:true, status:'soon' },
   ]},
   { num:13, title:'Exam Bootcamp', sub:'No new grammar, kanji, or vocabulary anywhere in this section. Everything from Sections 1 through 12 gets consolidated into exam-ready form, across six purpose-built files: three recap chapters, then reading, listening, and the mock exams.', bootcamp:true, lessons:[
-    { slug:'s13-l01', file:'coursesjp/jlpt-n5-s13-l01.html', title:'Recap Ch.1: Full Grammar Recap', desc:'All ~60 grammar points grouped by function rather than by section, so related patterns sit next to each other for quick lookup, each with its pattern chip, an example sentence, and a link back to where it was first taught.', kanji:0, vocab:0, grammar:60, grammarNote:'recap', reading:false, listening:false, status:'done' },
-    { slug:'s13-l02', file:'coursesjp/jlpt-n5-s13-l02.html', title:'Recap Ch.2: Full Kanji Deck', desc:'All 103 N5 kanji as one searchable, filterable flashcard set. Filter by section taught, reading type, or stroke count, with on/kun readings, meaning, and the original memory hook on the back of each card.', kanji:103, kanjiNote:'recap', vocab:0, grammar:0, reading:false, listening:false, status:'done' },
-    { slug:'s13-l03', file:'coursesjp/jlpt-n5-s13-l03.html', title:'Recap Ch.3: Full Vocabulary Deck', desc:'All ~800 vocabulary words as one searchable, filterable flashcard set, filterable by theme and by which section and lesson first introduced them.', kanji:0, vocab:800, vocabNote:'recap', grammar:0, reading:false, listening:false, status:'done' },
-    { slug:'s13-l04', file:'coursesjp/jlpt-n5-s13-l04.html', title:'Reading & Listening Mastery', desc:'A Reading track (4 to 6 full-length N5-style passages with exam-style comprehension questions) and a Listening track (picture-based, quick-response, and dialogue questions with play-once/play-unlimited modes and transcript reveal) in one lesson, built only from taught material, with a combined accuracy breakdown across both.', kanji:0, vocab:0, grammar:0, reading:true, listening:true, status:'done' },
-    { slug:'s13-l05', file:'coursesjp/jlpt-n5-s13-l05.html', title:'Mock Exams', desc:'2 to 3 complete timed mock exams across all three JLPT sections, scored against the real pass logic (80/180 overall, 19+ per section) with weak-section flagging.', kanji:0, vocab:0, grammar:0, reading:true, listening:true, status:'done' },
+    { slug:'s13-l01', file:'coursesjp/jlpt-n5-s13-l01.html', title:'Recap Ch.1: Full Grammar Recap', desc:'All ~60 grammar points grouped by function rather than by section, so related patterns sit next to each other for quick lookup, each with its pattern chip, an example sentence, and a link back to where it was first taught.', kanji:0, vocab:0, grammar:60, grammarNote:'recap', reading:false, listening:false, status:'soon' },
+    { slug:'s13-l02', file:'coursesjp/jlpt-n5-s13-l02.html', title:'Recap Ch.2: Full Kanji Deck', desc:'All 103 N5 kanji as one searchable, filterable flashcard set. Filter by section taught, reading type, or stroke count, with on/kun readings, meaning, and the original memory hook on the back of each card.', kanji:103, kanjiNote:'recap', vocab:0, grammar:0, reading:false, listening:false, status:'soon' },
+    { slug:'s13-l03', file:'coursesjp/jlpt-n5-s13-l03.html', title:'Recap Ch.3: Full Vocabulary Deck', desc:'All ~800 vocabulary words as one searchable, filterable flashcard set, filterable by theme and by which section and lesson first introduced them.', kanji:0, vocab:800, vocabNote:'recap', grammar:0, reading:false, listening:false, status:'soon' },
+    { slug:'s13-l04', file:'coursesjp/jlpt-n5-s13-l04.html', title:'Reading & Listening Mastery', desc:'A Reading track (4 to 6 full-length N5-style passages with exam-style comprehension questions) and a Listening track (picture-based, quick-response, and dialogue questions with play-once/play-unlimited modes and transcript reveal) in one lesson, built only from taught material, with a combined accuracy breakdown across both.', kanji:0, vocab:0, grammar:0, reading:true, listening:true, status:'soon' },
+    { slug:'s13-l05', file:'coursesjp/jlpt-n5-s13-l05.html', title:'Mock Exams', desc:'2 to 3 complete timed mock exams across all three JLPT sections, scored against the real pass logic (80/180 overall, 19+ per section) with weak-section flagging.', kanji:0, vocab:0, grammar:0, reading:true, listening:true, status:'soon' },
   ]},
 ];
 
@@ -670,26 +498,8 @@ function trackChips(l){
 
 function lessonCard(l, sectionNum){
   const badge = l.slug.replace('s','S').replace('-l','·L').toUpperCase();
-  const isPaidSection = sectionNum >= 3;
-  const gated = isPaidSection && l.status==='done' && !hasAccess();
-
-  if(gated){
-    return `
-    <div class="rcard locked" data-slug="${l.slug}" role="button" tabindex="0" aria-label="${l.title}, locked, click to unlock">
-      <div class="rcard-badge locked-badge">${badge}</div>
-      <div class="rcard-body">
-        <div class="rc-title">${l.title} <span class="rc-locked-tag">🔒 Locked</span></div>
-        <div class="rc-en" style="color:var(--text-dim); font-size:.82em; margin-top:3px;">${l.desc}</div>
-        ${trackChips(l)}
-      </div>
-      <div class="rcard-actions"><span class="rc-btn locked-btn">Unlock</span></div>
-    </div>`;
-  }
 
   if(l.status==='done'){
-    const openAttrs = isPaidSection
-      ? `href="#" data-slug="${l.slug}" data-file="${l.file || ''}" class="rc-btn done-btn js-open-lesson"`
-      : `href="${l.file || '#'}" class="rc-btn done-btn"`;
     return `
     <div class="rcard done">
       <div class="rcard-badge">${badge}</div>
@@ -698,7 +508,7 @@ function lessonCard(l, sectionNum){
         <div class="rc-en" style="color:var(--text-dim); font-size:.82em; margin-top:3px;">${l.desc}</div>
         ${trackChips(l)}
       </div>
-      <div class="rcard-actions"><a ${openAttrs}>Open ✓</a></div>
+      <div class="rcard-actions"><a href="${l.file || '#'}" class="rc-btn done-btn">Open ✓</a></div>
     </div>`;
   }
   return `
@@ -738,177 +548,6 @@ function renderWeeks(){
 renderOverall();
 renderWeekNav();
 renderWeeks();
-
-/* ============================================================
-   LOCKED CARD CLICKS + SECURE LESSON OPENING
-   Delegated on #phases since cards are re-rendered dynamically.
-   ============================================================ */
-document.getElementById('phases').addEventListener('click', (e)=>{
-  const lockedCard = e.target.closest('.rcard.locked');
-  if(lockedCard){
-    openUnlockModal(lockedCard.dataset.slug);
-    return;
-  }
-  const openLink = e.target.closest('.js-open-lesson');
-  if(openLink){
-    e.preventDefault();
-    openLesson(openLink.dataset.slug, openLink.dataset.file);
-  }
-});
-document.getElementById('phases').addEventListener('keydown', (e)=>{
-  if(e.key !== 'Enter' && e.key !== ' ') return;
-  const lockedCard = e.target.closest('.rcard.locked');
-  if(lockedCard){
-    e.preventDefault();
-    openUnlockModal(lockedCard.dataset.slug);
-  }
-});
-
-/* Fetches a paid lesson through the authenticated API route rather
-   than a static file. A tampered "unlocked" DOM state or a faked
-   localStorage token still gets rejected here, because the server
-   is the one that decides whether to return real lesson HTML.
-   This call is what actually gates the content, not the CSS class. */
-async function openLesson(slug, file){
-  if(!hasAccess()){ openUnlockModal(slug); return; }
-  try{
-    const res = await fetch(`/api/lesson/jlpt-n5/${encodeURIComponent(slug)}`, {
-      headers: { 'Authorization': `Bearer ${AccessState.token}` }
-    });
-    if(res.status === 401 || res.status === 403){
-      clearAccess();
-      renderWeeks();
-      openUnlockModal(slug);
-      return;
-    }
-    if(!res.ok) throw new Error('Lesson fetch failed');
-    const html = await res.text();
-    const blobUrl = URL.createObjectURL(new Blob([html], { type:'text/html' }));
-    window.open(blobUrl, '_blank', 'noopener');
-  }catch(err){
-    alert('Could not load this lesson right now. Please try again in a moment.');
-  }
-}
-
-/* ============================================================
-   UNLOCK MODAL
-   ============================================================ */
-const unlockOverlay = document.getElementById('unlockOverlay');
-const unlockOfferView = document.getElementById('unlockOfferView');
-const unlockVerifyView = document.getElementById('unlockVerifyView');
-const unlockLaunchView = document.getElementById('unlockLaunchView');
-const unlockMsg = document.getElementById('unlockMsg');
-
-function openUnlockModal(){
-  showOfferView();
-  unlockOverlay.classList.add('open');
-  unlockOverlay.setAttribute('aria-hidden','false');
-  document.body.style.overflow = 'hidden';
-}
-function closeUnlockModal(){
-  unlockOverlay.classList.remove('open');
-  unlockOverlay.setAttribute('aria-hidden','true');
-  document.body.style.overflow = '';
-}
-function showOfferView(){
-  unlockOfferView.style.display = 'block';
-  unlockVerifyView.style.display = 'none';
-  unlockLaunchView.style.display = 'none';
-  unlockMsg.textContent = '';
-  unlockMsg.className = 'unlock-msg';
-}
-function showVerifyView(){
-  unlockOfferView.style.display = 'none';
-  unlockVerifyView.style.display = 'block';
-  unlockLaunchView.style.display = 'none';
-  unlockMsg.textContent = '';
-  unlockMsg.className = 'unlock-msg';
-}
-function showLaunchView(){
-  unlockOfferView.style.display = 'none';
-  unlockVerifyView.style.display = 'none';
-  unlockLaunchView.style.display = 'block';
-}
-
-document.getElementById('unlockClose').onclick = closeUnlockModal;
-unlockOverlay.addEventListener('click', (e)=>{ if(e.target === unlockOverlay) closeUnlockModal(); });
-document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && unlockOverlay.classList.contains('open')) closeUnlockModal(); });
-document.getElementById('showKeyForm').onclick = showVerifyView;
-document.getElementById('showOfferForm').onclick = showOfferView;
-document.getElementById('unlockNavBtn').onclick = openUnlockModal;
-document.getElementById('unlockLaunchBackBtn').onclick = showOfferView;
-
-/* TODO: drop in the real Payhip checkout links once they exist */
-document.getElementById('unlockBuyN5').href = '';
-document.getElementById('unlockBuyN3').href = '';
-document.getElementById('unlockBuyAll').href = '';
-
-/* ============================================================
-   PRE-LAUNCH ONLY. DELETE THIS WHOLE BLOCK ON AUGUST 15.
-   Right now the three Buy Now buttons above are just empty links,
-   so this stops the click, shows the "we're launching soon"
-   view instead, and gets out of the way. Once you delete this
-   block (and have real Payhip URLs in the hrefs above), the
-   buttons go back to being plain links and open Payhip directly,
-   no other changes needed anywhere else in the file.
-   ============================================================ */
-document.getElementById('unlockBuyN5').addEventListener('click', function(e){
-  e.preventDefault();
-  showLaunchView();
-});
-document.getElementById('unlockBuyN3').addEventListener('click', function(e){
-  e.preventDefault();
-  showLaunchView();
-});
-document.getElementById('unlockBuyAll').addEventListener('click', function(e){
-  e.preventDefault();
-  showLaunchView();
-});
-/* ============================================================
-   END PRE-LAUNCH ONLY BLOCK
-   ============================================================ */
-
-/* Verification always goes through the server, never resolved
-   client-side, so there's no valid-key pattern to reverse-engineer
-   from this file. */
-document.getElementById('unlockForm').addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const email = document.getElementById('unlockEmail').value.trim();
-  const licenseKey = document.getElementById('unlockKey').value.trim();
-  const btn = document.getElementById('unlockSubmitBtn');
-
-  unlockMsg.textContent = '';
-  unlockMsg.className = 'unlock-msg';
-  btn.disabled = true;
-  const originalLabel = btn.textContent;
-  btn.textContent = 'Verifying…';
-
-  try{
-    const res = await fetch('/api/license/unlock', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, licenseKey })
-    });
-    const data = await res.json().catch(()=>({}));
-
-    if(res.ok && data.token){
-      setAccess(data.token);
-      unlockMsg.textContent = '✓ Unlocked! Reloading…';
-      unlockMsg.classList.add('ok');
-      setTimeout(()=>window.location.reload(), 900);
-    } else {
-      unlockMsg.textContent = data.error || 'Invalid email or license key.';
-      unlockMsg.classList.add('err');
-      btn.disabled = false;
-      btn.textContent = originalLabel;
-    }
-  }catch(err){
-    unlockMsg.textContent = 'Network error. Please try again.';
-    unlockMsg.classList.add('err');
-    btn.disabled = false;
-    btn.textContent = originalLabel;
-  }
-});
 
 /* Scroll-reveal for each week */
 const io = new IntersectionObserver((entries)=>{
