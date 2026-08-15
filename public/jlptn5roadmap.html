@@ -444,7 +444,7 @@ const SECTIONS = [
     { slug:'s11-l01', file:'coursesjp/jlpt-n5-s11-l01.html', title:'Connecting Ideas &amp; Invitations', desc:'〜から, 〜とき, 〜ましょう／〜ましょうか, the full 〜ませんか invitation, and sentence connectors そして／それから, taught through health and invitation vocabulary.', kanji:3, vocab:50, grammar:5, reading:true, listening:true, status:'done' },
   ]},
   { num:12, title:'Ability, Experience &amp; Hobbies', sub:'What you can do and what you\u2019ve done, plus a full past-tense review, since little new kanji or vocab remains at this stage.', lessons:[
-    { slug:'s12-l01', file:'coursesjp/jlpt-n5-s12-l01.html', title:'Ability, Experience &amp; Hobbies', desc:'〜ことができます, 〜ことがあります, nominalizing verbs with 辞書形＋こと, and a full past-tense review, taught through hobbies, sports, and travel vocabulary.', kanji:4, vocab:50, grammar:4, reading:true, listening:true, status:'soon' },
+    { slug:'s12-l01', file:'coursesjp/jlpt-n5-s12-l01.html', title:'Ability, Experience &amp; Hobbies', desc:'〜ことができます, 〜ことがあります, nominalizing verbs with 辞書形＋こと, and a full past-tense review, taught through hobbies, sports, and travel vocabulary.', kanji:4, vocab:50, grammar:4, reading:true, listening:true, status:'done' },
   ]},
   { num:13, title:'Exam Bootcamp', sub:'No new grammar, kanji, or vocabulary anywhere in this section. Everything from Sections 1 through 12 gets consolidated into exam-ready form, across six purpose-built files: three recap chapters, then reading, listening, and the mock exams.', bootcamp:true, lessons:[
     { slug:'s13-l01', file:'coursesjp/jlpt-n5-s13-l01.html', title:'Recap Ch.1: Full Grammar Recap', desc:'All ~60 grammar points grouped by function rather than by section, so related patterns sit next to each other for quick lookup, each with its pattern chip, an example sentence, and a link back to where it was first taught.', kanji:0, vocab:0, grammar:60, grammarNote:'recap', reading:false, listening:false, status:'soon' },
@@ -508,7 +508,7 @@ function lessonCard(l, sectionNum){
         <div class="rc-en" style="color:var(--text-dim); font-size:.82em; margin-top:3px;">${l.desc}</div>
         ${trackChips(l)}
       </div>
-      <div class="rcard-actions"><a href="${l.file || '#'}" class="rc-btn done-btn">Open ✓</a></div>
+      <div class="rcard-actions"><a href="https://ko-fi.com/hookitlingo/shop" target="_blank" rel="noopener" class="rc-btn done-btn">Download</a></div>
     </div>`;
   }
   return `
