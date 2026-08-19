@@ -390,10 +390,6 @@ body{overflow-x:hidden;}
   <p class="sub">13 sections, 20 self-contained lesson files. Every lesson bundles Grammar, Kanji, Vocabulary, Reading and Listening, so there's nothing left for you to source elsewhere. It all wraps up with a full Exam Bootcamp at real exam difficulty and timing.</p>
 </div>
 
-<div class="commit-strip">📖 <span>Every lesson is a complete offline HTML file, so <b>work through Sections in order</b>, since the kanji and grammar build cumulatively from here on.</span></div>
-
-<div class="overall-progress" id="overallProgress"></div>
-
 <div class="weeknav" id="weekNav"></div>
 
 <div class="journey">
@@ -538,50 +534,50 @@ async function submitUnlockCode(){
 
 const SECTIONS = [
   { num:1, title:'Foundation: Hiragana &amp; Katakana', sub:'Not a grammar section, more of a prerequisite unit. Split in two because a full kana chart and drills is already a day\u2019s worth of content on its own.', lessons:[
-    { slug:'s01-l01', file:'coursesjp/jlpt-n5-s01-l01.html', title:'01 - Hiragana', desc:'Full hiragana chart (46 base plus dakuten, handakuten, and combination sounds), with reading and listening kana drills and a no-romaji exit test.', kanji:0, kanjiNote:'kana', vocab:0, grammar:0, reading:true, listening:true, status:'done'},
-    { slug:'s01-l02', file:'coursesjp/jlpt-n5-s01-l02.html', title:'02 - Katakana', desc:'Full katakana chart for loanwords and foreign names, with reading/listening drills distinguishing katakana from hiragana, plus a no-romaji exit test.', kanji:0, kanjiNote:'kana', vocab:0, grammar:0, reading:true, listening:true, status:'done' },
+    { slug:'s01-l01', file:'coursesjp/jlpt-n5-s01-l01.html', title:'01 - Hiragana', desc:'Full hiragana chart (46 base plus dakuten, handakuten, and combination sounds), with reading and listening kana drills and a no-romaji exit test.', status:'done'},
+    { slug:'s01-l02', file:'coursesjp/jlpt-n5-s01-l02.html', title:'02 - Katakana', desc:'Full katakana chart for loanwords and foreign names, with reading/listening drills distinguishing katakana from hiragana, plus a no-romaji exit test.', status:'done' },
   ]},
   { num:2, title:'New Friends (Self-Introduction)', sub:'Your first real sentence patterns (です／は／か), self-intro vocabulary, and a party-conversation dialogue.', lessons:[
-    { slug:'s02-l01', file:'coursesjp/jlpt-n5-s02-l01.html', title:' 03 - New Friends', desc:'Xは Yです and its negative/question forms, も and の, plus personal pronouns, taught through self-introduction, nationality, and occupation vocabulary.', kanji:9, vocab:65, grammar:5, reading:true, listening:true, status:'done' },
+    { slug:'s02-l01', file:'coursesjp/jlpt-n5-s02-l01.html', title:' 03 - New Friends', desc:'Xは Yです and its negative/question forms, も and の, plus personal pronouns, taught through self-introduction, nationality, and occupation vocabulary.', status:'done' },
   ]},
   { num:3, title:'Shopping &amp; School Life', sub:'Reference words for objects and places, like これ／それ／あれ, and asking "what is this" in a shop or classroom.', lessons:[
-    { slug:'s03-l01', file:'coursesjp/jlpt-n5-s03-l01.html', title:'04 - Shopping &amp; School Life', desc:'これ／それ／あれ, どれ／どの, ここ／そこ／あそこ, and なに／なん, built on classroom objects, stationery, shops, and communication verbs.', kanji:9, vocab:65, grammar:5, reading:true, listening:true, status:'done' },
+    { slug:'s03-l01', file:'coursesjp/jlpt-n5-s03-l01.html', title:'04 - Shopping &amp; School Life', desc:'これ／それ／あれ, どれ／どの, ここ／そこ／あそこ, and なに／なん, built on classroom objects, stationery, shops, and communication verbs.', status:'done' },
   ]},
   { num:4, title:'Existence &amp; Location', sub:'Numbers, counters, and spatial words, split across two files just like the original draft\u2019s Part A and Part B.', lessons:[
-    { slug:'s04-l01', file:'coursesjp/jlpt-n5-s04-l01.html', title:'05 - Numbers &amp; Counting', desc:'〜があります／〜がいます, the core counters (つ／人／枚／本／個), and numbers 1–10,000, taught through animals, pets, and prices.', kanji:14, vocab:35, grammar:3, reading:true, listening:true, status:'done' },
-    { slug:'s04-l02', file:'coursesjp/jlpt-n5-s04-l02.html', title:'06 - Location &amp; Direction', desc:'に vs で, spatial nouns like 上／下／中／前／後ろ, and へ, taught through furniture, rooms, directions, and landmarks.', kanji:12, vocab:35, grammar:3, reading:true, listening:true, status:'done' },
+    { slug:'s04-l01', file:'coursesjp/jlpt-n5-s04-l01.html', title:'05 - Numbers &amp; Counting', desc:'〜があります／〜がいます, the core counters (つ／人／枚／本／個), and numbers 1–10,000, taught through animals, pets, and prices.', status:'done' },
+    { slug:'s04-l02', file:'coursesjp/jlpt-n5-s04-l02.html', title:'06 - Location &amp; Direction', desc:'に vs で, spatial nouns like 上／下／中／前／後ろ, and へ, taught through furniture, rooms, directions, and landmarks.', status:'done' },
   ]},
   { num:5, title:'Verbs I (ます-form, Daily Actions)', sub:'The polite present/past verb form you\u2019ll use in almost every sentence from here on.', lessons:[
-    { slug:'s05-l01', file:'coursesjp/jlpt-n5-s05-l01.html', title:'07 - Verbs I', desc:'ます-form across present/past, affirmative/negative, plus を・に・で and an intro to 〜ませんか／〜ましょう, taught through daily verbs, food, and transportation.', kanji:8, vocab:65, grammar:5, reading:true, listening:true, status:'done' },
+    { slug:'s05-l01', file:'coursesjp/jlpt-n5-s05-l01.html', title:'07 - Verbs I', desc:'ます-form across present/past, affirmative/negative, plus を・に・で and an intro to 〜ませんか／〜ましょう, taught through daily verbs, food, and transportation.', status:'done' },
   ]},
   { num:6, title:'Adjectives &amp; Preferences', sub:'Describing things: い-adjectives, な-adjectives, and saying what you like.', lessons:[
-    { slug:'s06-l01', file:'coursesjp/jlpt-n5-s06-l01.html', title:'08 - Adjectives &amp; Preferences', desc:'い- and な-adjective conjugation, 〜が好きです／〜が嫌いです, and the 〜くて／〜で connecting form, taught through descriptive adjectives, colors, and shopping vocabulary.', kanji:8, vocab:65, grammar:4, reading:true, listening:true, status:'done' },
+    { slug:'s06-l01', file:'coursesjp/jlpt-n5-s06-l01.html', title:'08 - Adjectives &amp; Preferences', desc:'い- and な-adjective conjugation, 〜が好きです／〜が嫌いです, and the 〜くて／〜で connecting form, taught through descriptive adjectives, colors, and shopping vocabulary.', status:'done' },
   ]},
   { num:7, title:'Verbs II (て-form, Requests &amp; Permission)', sub:'The single most useful verb form in beginner Japanese, covering requests, permission, and prohibition.', lessons:[
-    { slug:'s07-l01', file:'coursesjp/jlpt-n5-s07-l01.html', title:'09 - Verbs II', desc:'て-form formation for all three verb groups, 〜てください, 〜てもいいですか, 〜てはいけません, and an intro to 〜ています, taught through body parts and classroom instructions.', kanji:8, vocab:65, grammar:5, reading:true, listening:true, status:'done' },
+    { slug:'s07-l01', file:'coursesjp/jlpt-n5-s07-l01.html', title:'09 - Verbs II', desc:'て-form formation for all three verb groups, 〜てください, 〜てもいいですか, 〜てはいけません, and an intro to 〜ています, taught through body parts and classroom instructions.', status:'done' },
   ]},
   { num:8, title:'Time, Calendar &amp; Routine', sub:'Dates and clock time, split across two files following the same pattern as Section 4.', lessons:[
-    { slug:'s08-l01', file:'coursesjp/jlpt-n5-s08-l01.html', title:'10 - Calendar', desc:'Days, months, and dates with irregular counters, 〜曜日, and 先週／今週／来週 etc., taught through weekly and monthly routine vocabulary.', kanji:8, vocab:35, grammar:3, reading:true, listening:true, status:'done' },
-    { slug:'s08-l02', file:'jlpt-n5-s08-l02.html', title:'11 - Clock Time', desc:'Telling time (〜時〜分), から〜まで, and frequency adverbs, taught through time expressions and schedule vocabulary.', kanji:6, vocab:35, grammar:3, reading:true, listening:true, status:'done' },
+    { slug:'s08-l01', file:'coursesjp/jlpt-n5-s08-l01.html', title:'10 - Calendar', desc:'Days, months, and dates with irregular counters, 〜曜日, and 先週／今週／来週 etc., taught through weekly and monthly routine vocabulary.', status:'done' },
+    { slug:'s08-l02', file:'jlpt-n5-s08-l02.html', title:'11 - Clock Time', desc:'Telling time (〜時〜分), から〜まで, and frequency adverbs, taught through time expressions and schedule vocabulary.', status:'done' },
   ]},
   { num:9, title:'Verbs III (Plain Form) &amp; Family', sub:'Casual speech and talking about family, the register shift away from です／ます.', lessons:[
-    { slug:'s09-l01', file:'coursesjp/jlpt-n5-s09-l01.html', title:'12 - Verbs III &amp; Family', desc:'Plain/dictionary form across all three verb groups, 〜ないでください, plain form + と思います, and casual vs. formal register, taught through family terms and weather.', kanji:8, vocab:65, grammar:4, reading:true, listening:true, status:'done' },
+    { slug:'s09-l01', file:'coursesjp/jlpt-n5-s09-l01.html', title:'12 - Verbs III &amp; Family', desc:'Plain/dictionary form across all three verb groups, 〜ないでください, plain form + と思います, and casual vs. formal register, taught through family terms and weather.', status:'done' },
   ]},
   { num:10, title:'Comparisons &amp; Preferences', sub:'Comparing two things, picking a favorite, and saying what you want to do.', lessons:[
-    { slug:'s10-l01', file:'coursesjp/jlpt-n5-s10-l01.html', title:'13 - Comparisons &amp; Preferences', desc:'AはBより〜, 〜の方が〜, 〜で一番〜, and 〜たいです／〜たくないです, taught through nature vocabulary, seasons, and hobbies.', kanji:6, vocab:55, grammar:5, reading:true, listening:true, status:'done' },
+    { slug:'s10-l01', file:'coursesjp/jlpt-n5-s10-l01.html', title:'13 - Comparisons &amp; Preferences', desc:'AはBより〜, 〜の方が〜, 〜で一番〜, and 〜たいです／〜たくないです, taught through nature vocabulary, seasons, and hobbies.', status:'done' },
   ]},
   { num:11, title:'Connecting Ideas &amp; Invitations', sub:'Giving reasons, linking sentences, and inviting someone somewhere.', lessons:[
-    { slug:'s11-l01', file:'coursesjp/jlpt-n5-s11-l01.html', title:'14 - Connecting Ideas &amp; Invitations', desc:'〜から, 〜とき, 〜ましょう／〜ましょうか, the full 〜ませんか invitation, and sentence connectors そして／それから, taught through health and invitation vocabulary.', kanji:3, vocab:50, grammar:5, reading:true, listening:true, status:'done' },
+    { slug:'s11-l01', file:'coursesjp/jlpt-n5-s11-l01.html', title:'14 - Connecting Ideas &amp; Invitations', desc:'〜から, 〜とき, 〜ましょう／〜ましょうか, the full 〜ませんか invitation, and sentence connectors そして／それから, taught through health and invitation vocabulary.', status:'done' },
   ]},
   { num:12, title:'Ability, Experience &amp; Hobbies', sub:'What you can do and what you\u2019ve done, plus a full past-tense review, since little new kanji or vocab remains at this stage.', lessons:[
-    { slug:'s12-l01', file:'coursesjp/jlpt-n5-s12-l01.html', title:'15 - Ability, Experience &amp; Hobbies', desc:'〜ことができます, 〜ことがあります, nominalizing verbs with 辞書形＋こと, and a full past-tense review, taught through hobbies, sports, and travel vocabulary.', kanji:4, vocab:50, grammar:4, reading:true, listening:true, status:'done' },
+    { slug:'s12-l01', file:'coursesjp/jlpt-n5-s12-l01.html', title:'15 - Ability, Experience &amp; Hobbies', desc:'〜ことができます, 〜ことがあります, nominalizing verbs with 辞書形＋こと, and a full past-tense review, taught through hobbies, sports, and travel vocabulary.', status:'done' },
   ]},
   { num:13, title:'Exam Bootcamp', sub:'No new grammar, kanji, or vocabulary anywhere in this section. Everything from Sections 1 through 12 gets consolidated into exam-ready form, across six purpose-built files: three recap chapters, then reading, listening, and the mock exams.', bootcamp:true, lessons:[
-    { slug:'s13-l01', file:'coursesjp/jlpt-n5-s13-l01.html', title:'16 - Recap Ch.1: Full Grammar Recap', desc:'All ~60 grammar points grouped by function rather than by section, so related patterns sit next to each other for quick lookup, each with its pattern chip, an example sentence, and a link back to where it was first taught.', kanji:0, vocab:0, grammar:60, grammarNote:'recap', reading:false, listening:false, status:'soon' },
-    { slug:'s13-l02', file:'coursesjp/jlpt-n5-s13-l02.html', title:'17 - Recap Ch.2: Full Kanji Deck', desc:'All 103 N5 kanji as one searchable, filterable flashcard set. Filter by section taught, reading type, or stroke count, with on/kun readings, meaning, and the original memory hook on the back of each card.', kanji:103, kanjiNote:'recap', vocab:0, grammar:0, reading:false, listening:false, status:'soon' },
-    { slug:'s13-l03', file:'coursesjp/jlpt-n5-s13-l03.html', title:'18 - Recap Ch.3: Full Vocabulary Deck', desc:'All ~800 vocabulary words as one searchable, filterable flashcard set, filterable by theme and by which section and lesson first introduced them.', kanji:0, vocab:800, vocabNote:'recap', grammar:0, reading:false, listening:false, status:'soon' },
-    { slug:'s13-l04', file:'coursesjp/jlpt-n5-s13-l04.html', title:'19 - Reading & Listening Mastery', desc:'A Reading track (4 to 6 full-length N5-style passages with exam-style comprehension questions) and a Listening track (picture-based, quick-response, and dialogue questions with play-once/play-unlimited modes and transcript reveal) in one lesson, built only from taught material, with a combined accuracy breakdown across both.', kanji:0, vocab:0, grammar:0, reading:true, listening:true, status:'soon' },
-    { slug:'s13-l05', file:'coursesjp/jlpt-n5-s13-l05.html', title:'20 - Mock Exams', desc:'2 to 3 complete timed mock exams across all three JLPT sections, scored against the real pass logic (80/180 overall, 19+ per section) with weak-section flagging.', kanji:0, vocab:0, grammar:0, reading:true, listening:true, status:'soon' },
+    { slug:'s13-l01', file:'coursesjp/jlpt-n5-s13-l01.html', title:'16 - Recap Ch.1: Full Grammar Recap', desc:'All ~60 grammar points grouped by function rather than by section, so related patterns sit next to each other for quick lookup, each with its pattern chip, an example sentence, and a link back to where it was first taught.', status:'soon' },
+    { slug:'s13-l02', file:'coursesjp/jlpt-n5-s13-l02.html', title:'17 - Recap Ch.2: Full Kanji Deck', desc:'All 103 N5 kanji as one searchable, filterable flashcard set. Filter by section taught, reading type, or stroke count, with on/kun readings, meaning, and the original memory hook on the back of each card.', status:'soon' },
+    { slug:'s13-l03', file:'coursesjp/jlpt-n5-s13-l03.html', title:'18 - Recap Ch.3: Full Vocabulary Deck', desc:'All ~800 vocabulary words as one searchable, filterable flashcard set, filterable by theme and by which section and lesson first introduced them.', status:'soon' },
+    { slug:'s13-l04', file:'coursesjp/jlpt-n5-s13-l04.html', title:'19 - Reading & Listening Mastery', desc:'A Reading track (4 to 6 full-length N5-style passages with exam-style comprehension questions) and a Listening track (picture-based, quick-response, and dialogue questions with play-once/play-unlimited modes and transcript reveal) in one lesson, built only from taught material, with a combined accuracy breakdown across both.', status:'soon' },
+    { slug:'s13-l05', file:'coursesjp/jlpt-n5-s13-l05.html', title:'20 - Mock Exams', desc:'2 to 3 complete timed mock exams across all three JLPT sections, scored against the real pass logic (80/180 overall, 19+ per section) with weak-section flagging.', status:'soon' },
   ]},
 ];
 
@@ -593,26 +589,9 @@ function renderOverall(){
   const total = lessons.length;
   const live = lessons.filter(l=>l.status==='done').length;
   const pct = Math.round((live/total)*100);
-  document.getElementById('overallProgress').innerHTML = `
-    <div class="op-row"><span>Lessons live</span><b>${live} / ${total}</b></div>
-    <div class="op-track"><div class="op-fill" style="width:${pct}%"></div></div>
-    <div class="op-legend">
-      <span><span class="op-dot" style="background:var(--celadon)"></span> Live now</span>
-      <span><span class="op-dot" style="background:var(--border)"></span> Coming soon</span>
-    </div>
-    <div class="cov-row">
-      <div class="cov-item"><b>13</b><span>Sections</span></div>
-      <div class="cov-item"><b>${total}</b><span>Lesson files</span></div>
-      <div class="cov-item"><b>~60</b><span>Grammar points</span></div>
-      <div class="cov-item"><b>103</b><span>Kanji, zero gaps</span></div>
-      <div class="cov-item"><b>~800</b><span>Vocabulary words</span></div>
-      <div class="cov-item"><b>2–3</b><span>Full mock exams</span></div>
-    </div>
-  `;
 }
 
 function renderWeekNav(){
-  document.getElementById('weekNav').innerHTML = SECTIONS.map(s=>`<a href="#section${s.num}">S${s.num}</a>`).join('');
 }
 
 function trackChips(l){
