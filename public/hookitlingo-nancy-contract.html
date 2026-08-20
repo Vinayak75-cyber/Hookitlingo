@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<!--
+  © Hookitlingo / Kaidan. Internal business document.
+  Affiliate Partnership Test Agreement — not for redistribution.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Affiliate Partnership Agreement — Hookitlingo</title>
+<style>
+  :root{
+    --cream:#fdf3ee;
+    --blush:#f9e2da;
+    --ink:#3a2620;
+    --ink-soft:#6b5248;
+    --brown:#8a4a3a;
+    --brown-deep:#6e392c;
+    --gold:#c99a5b;
+    --rose:#c4536b;
+    --rose-deep:#a63f56;
+    --line:#e8cfc2;
+    --paper:#fffaf7;
+    --ok:#5c7a5e;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0; padding:0;
+    background:linear-gradient(180deg,var(--blush) 0%, var(--cream) 320px, #f6ece6 100%);
+    color:var(--ink);
+    font-family: Georgia, 'Iowan Old Style', 'Palatino Linotype', serif;
+    line-height:1.6;
+  }
+
+  /* ---------- decorative sakura petals (screen only) ---------- */
+  .petals{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0; }
+  .petal{
+    position:absolute; top:-40px; opacity:.55;
+    animation: fall linear infinite;
+  }
+  @keyframes fall{
+    0%{ transform: translateY(-5vh) translateX(0) rotate(0deg); }
+    100%{ transform: translateY(105vh) translateX(30px) rotate(220deg); }
+  }
+
+  /* ---------- shell ---------- */
+  .sheet{
+    position:relative; z-index:1;
+    max-width:860px;
+    margin:40px auto 80px;
+    background:var(--paper);
+    border-radius:18px;
+    box-shadow: 0 18px 50px -20px rgba(110,57,44,.35), 0 2px 0 var(--line);
+    padding:0 0 40px;
+    overflow:hidden;
+  }
+
+  /* ---------- header ---------- */
+  .letterhead{
+    padding:38px 48px 26px;
+    background:
+      radial-gradient(circle at 92% 12%, rgba(196,83,107,.10), transparent 45%),
+      linear-gradient(180deg, var(--blush), var(--cream));
+    border-bottom:1px solid var(--line);
+    display:flex; align-items:center; gap:18px;
+  }
+  .emblem{
+    flex:none; width:58px; height:58px; border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, #c4677f, var(--rose-deep) 70%);
+    display:flex; align-items:center; justify-content:center;
+    color:#fdf3ee; font-size:28px; font-weight:700;
+    box-shadow: inset 0 -3px 6px rgba(0,0,0,.25), 0 3px 8px rgba(166,63,86,.35);
+    border:2px solid rgba(255,255,255,.35);
+  }
+  .brandwrap .brand{
+    font-size:1.5em; font-weight:700; letter-spacing:.02em;
+    color:var(--brown-deep);
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  }
+  .brandwrap .brand-sub{
+    font-size:.78em; color:var(--ink-soft); letter-spacing:.08em; text-transform:uppercase;
+  }
+  .doctitle{
+    margin:22px 0 0; font-size:1.65em; color:var(--brown-deep); font-weight:700;
+  }
+  .doctitle .jp{ font-size:.55em; color:var(--rose-deep); margin-left:10px; font-weight:400; }
+  .docsub{ margin:6px 0 0; color:var(--ink-soft); font-size:.92em; }
+
+  /* ---------- body ---------- */
+  .content{ padding:6px 48px 0; }
+
+  .partyblock{
+    display:grid; grid-template-columns:1fr 1fr; gap:18px;
+    margin:22px 0 30px;
+  }
+  .party{
+    background:linear-gradient(180deg,#fff, #fdf3ee);
+    border:1px solid var(--line); border-radius:12px; padding:16px 18px;
+  }
+  .party .label{
+    font-size:.68em; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rose-deep); font-weight:700; margin-bottom:6px;
+  }
+  .party .name{ font-size:1.08em; color:var(--ink); font-weight:700; }
+  .party .handle{ font-size:.88em; color:var(--ink-soft); margin-top:2px; }
+
+  .datestrip{
+    text-align:center; font-size:.85em; color:var(--ink-soft);
+    margin:-10px 0 30px;
+  }
+  .datestrip b{ color:var(--brown-deep); }
+
+  section.clause{ margin:0 0 28px; }
+  section.clause h2{
+    font-size:1.05em; color:var(--brown-deep);
+    margin:0 0 10px; padding-bottom:8px;
+    border-bottom:2px solid var(--line);
+    display:flex; align-items:baseline; gap:10px;
+  }
+  section.clause h2 .num{
+    font-family: Georgia, serif; font-style:italic; color:var(--rose-deep);
+    font-size:.9em;
+  }
+  section.clause p, section.clause li{ font-size:.96em; color:var(--ink); }
+  section.clause ul{ margin:6px 0; padding-left:22px; }
+  section.clause li{ margin:4px 0; }
+  section.clause .note{
+    font-size:.85em; color:var(--ink-soft); font-style:italic; margin-top:6px;
+  }
+
+  .cta-box{
+    background:#fff7f2; border:1px dashed var(--gold); border-radius:10px;
+    padding:14px 16px; margin:10px 0; font-style:italic; color:var(--brown-deep);
+    font-size:.94em;
+  }
+
+  .figure-row{
+    display:flex; gap:14px; flex-wrap:wrap; margin:10px 0;
+  }
+  .figure{
+    background:var(--cream); border:1px solid var(--line); border-radius:10px;
+    padding:10px 16px; text-align:center; min-width:120px;
+  }
+  .figure .n{ font-size:1.3em; color:var(--rose-deep); font-weight:700; }
+  .figure .l{ font-size:.7em; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); }
+
+  table.clean{ width:100%; border-collapse:collapse; margin:10px 0; font-size:.92em; }
+  table.clean th, table.clean td{
+    border:1px solid var(--line); padding:8px 10px; text-align:left;
+  }
+  table.clean th{ background:var(--blush); color:var(--brown-deep); }
+
+  hr.div{
+    border:none; height:1px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin:36px 0;
+  }
+
+  /* ---------- signature section ---------- */
+  .sig-section h2{
+    font-size:1.15em; color:var(--brown-deep); text-align:center; margin-bottom:4px;
+  }
+  .sig-section .sig-sub{ text-align:center; color:var(--ink-soft); font-size:.88em; margin-bottom:26px; }
+
+  .sig-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .sig-card{
+    background:linear-gradient(180deg,#fff,#fdf3ee);
+    border:1px solid var(--line); border-radius:14px; padding:18px;
+  }
+  .sig-card .who{ font-weight:700; color:var(--brown-deep); font-size:.95em; margin-bottom:2px; }
+  .sig-card .role{ font-size:.75em; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.08em; margin-bottom:12px; }
+
+  canvas.padcanvas{
+    width:100%; height:130px; display:block;
+    background:#fff;
+    border:1.5px dashed var(--gold);
+    border-radius:8px;
+    cursor:crosshair; touch-action:none;
+  }
+  .padcanvas.locked{ cursor:default; border-style:solid; border-color:var(--ok); }
+
+  .sig-controls{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+  .btn{
+    font-family:inherit; font-size:.82em; cursor:pointer;
+    border-radius:20px; padding:7px 16px; border:1px solid var(--line);
+    background:#fff; color:var(--brown-deep); transition:.15s;
+  }
+  .btn:hover{ background:var(--blush); }
+  .btn.primary{
+    background:var(--rose-deep); color:#fff; border-color:var(--rose-deep);
+  }
+  .btn.primary:hover{ background:var(--brown-deep); }
+  .btn.primary:disabled{ opacity:.45; cursor:not-allowed; }
+  .btn:disabled{ opacity:.45; cursor:not-allowed; }
+
+  .typed-name{
+    width:100%; margin-top:10px; padding:9px 12px;
+    border:1px solid var(--line); border-radius:8px;
+    font-family:inherit; font-size:.9em; background:#fff; color:var(--ink);
+  }
+  .typed-name::placeholder{ color:#b79a8d; }
+
+  .sig-meta{
+    margin-top:12px; font-size:.78em; color:var(--ink-soft);
+    min-height:1.2em;
+  }
+  .sig-meta .ok{ color:var(--ok); font-weight:700; }
+
+  .sig-status-badge{
+    display:none; font-size:.72em; font-weight:700; letter-spacing:.05em;
+    color:var(--ok); text-transform:uppercase; margin-top:8px;
+  }
+  .sig-status-badge.show{ display:inline-block; }
+
+  /* ---------- footer / actions (screen only) ---------- */
+  .actions{
+    max-width:860px; margin:0 auto 60px; padding:0 20px;
+    display:flex; justify-content:center; gap:14px; position:relative; z-index:1;
+  }
+  .actions .btn{ font-size:.95em; padding:11px 26px; }
+
+  .footnote{
+    text-align:center; color:var(--ink-soft); font-size:.78em; margin-top:18px;
+    padding:0 40px 30px;
+  }
+  .footnote a{ color:var(--rose-deep); }
+
+  /* ---------- print ---------- */
+  @media print{
+    .petals, .actions{ display:none !important; }
+    html,body{ background:#fff !important; }
+    .sheet{
+      box-shadow:none; border-radius:0; margin:0; padding:0;
+      max-width:100%;
+    }
+    .content{ padding:0 6mm; }
+    .letterhead{ padding:14mm 8mm 10mm; }
+    section.clause{ break-inside: avoid; }
+    .sig-grid{ break-inside: avoid; }
+    canvas.padcanvas{ border-style:solid; }
+    a[href]:after{ content:""; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  @media (max-width:640px){
+    .letterhead{ padding:26px 22px 20px; }
+    .content{ padding:0 22px; }
+    .partyblock, .sig-grid{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="petals" id="petals" aria-hidden="true"></div>
+
+<div class="sheet">
+
+  <div class="letterhead">
+    <div class="emblem">虎</div>
+    <div class="brandwrap">
+      <div class="brand">Hookitlingo</div>
+      <div class="brand-sub">Kaidan · かいだん</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <h1 class="doctitle">Affiliate Partnership <span class="jp">かいだん</span></h1>
+    <p class="docsub">Performance Contract — JLPT N5 Complete Bundle promotion</p>
+
+    <div class="partyblock">
+      <div class="party">
+        <div class="label">Platform</div>
+        <div class="name">Hookitlingo</div>
+        <div class="handle">Instagram: @hookitlingo.japanese</div>
+      </div>
+      <div class="party">
+        <div class="label">Creator</div>
+        <div class="name">Nancy</div>
+        <div class="handle">Instagram: @nihongo_with_nancy</div>
+      </div>
+    </div>
+
+    <div class="datestrip">
+      Agreement entered into as of <b>21st August 2026</b> &nbsp;·&nbsp; Contract term <b>3 months, from 21/08/2026 to 21/11/2026</b>
+    </div>
+
+    <section class="clause">
+      <h2><span class="num">1.</span> Term &amp; Purpose</h2>
+      <p>This is a <b>3-MONTH PERFORMANCE CONTRACT</b> from <b>21/08/2026</b> to <b>21/11/2026</b>.</p>
+      <p>Purpose: promotion of the JLPT N5 Complete Bundle to Creator's audience, with a performance-based commission structure tied to a defined sales target.</p>
+    </section>
+
+    <section class="clause">
+      <h2><span class="num">2.</span> Promotion Requirements</h2>
+      <p>Creator will promote the JLPT N5 Complete Bundle to their audience using whichever content format and approach they judge best suited to drive sales, using discount code <b>NANCY83</b>.</p>
+    </section>
+
+    <section class="clause">
+      <h2><span class="num">3.</span> Compensation</h2>
+      <ul>
+        <li>Base rate: <b>30% commission</b> on all sales, paid monthly throughout the contract</li>
+        <li>If Creator reaches the Sales Target defined in Clause 8, an additional <b>15% commission</b> is paid on top of the base rate — bringing the effective rate to <b>45%</b> — as a single bonus payment at the end of the contract</li>
+        <li>Payment method: Online payment or bank transfer, as recorded on the Payhip affiliate dashboard</li>
+      </ul>
+    </section>
+
+    <section class="clause">
+      <h2><span class="num">4.</span> Sales Tracking &amp; Verification</h2>
+      <p>As proof of transparency, Creator will receive access to the <b>Payhip affiliate dashboard</b>, where Creator can track sales attributed to their code/link and their accruing commission in real time.</p>
+      <p>Creator acknowledges the Payhip affiliate dashboard constitutes the official sales record for this agreement.</p>
+    </section>
+
+    <section class="clause">
+      <h2><span class="num">5.</span> Confidentiality</h2>
+      <p>Both parties agree not to disclose:</p>
+      <ul>
+        <li>Commission rates</li>
+        <li>Sales figures</li>
+        <li>This partnership agreement</li>
+        <li>Proprietary lesson content</li>
+      </ul>
+    </section>
+
+    <section class="clause">
+      <h2><span class="num">6.</span> Intellectual Property</h2>
+      <ul>
+        <li>Creator does <b>not</b> own the JLPT N5 Bundle lessons</li>
+        <li>Creator may not redistribute, resell, or share lesson files</li>
+        <li>Creator agrees to use only the official Kaidan Payhip affiliate link</li>
+        <li>Creator agrees not to create competing products using Kaidan lesson concepts</li>
+      </ul>
+    </section>
+
+    <section class="clause">
+      <h2><span class="num">7.</span> Performance Expectations</h2>
+      <p>During this 3-month contract, Creator commits to:</p>
+      <ul>
+        <li>Good-faith promotional effort to achieve the sales target, using their best judgment on format and cadence</li>
+        <li>Authentic content (no misleading claims about the bundle)</li>
+        <li>Timely communication if issues arise</li>
+        <li>Honest feedback on conversion response</li>
+      </ul>
+      <p>Platform commits to:</p>
+      <ul>
+        <li>Timely payment of commissions</li>
+        <li>Transparent sales tracking</li>
+        <li>Professional communication</li>
+        <li>Support if technical issues occur</li>
+      </ul>
+    </section>
+
+    <section class="clause">
+      <h2><span class="num">8.</span> Sales Target &amp; Bonus Structure</h2>
+      <p>The Sales Target for this contract is set at 10% of Creator's Instagram follower count, calculated as follows:</p>
+      <div class="figure-row">
+        <div class="figure"><div class="n">4,730</div><div class="l">unit target / 3 months</div></div>
+        <div class="figure"><div class="n">$10.20</div><div class="l">price per unit</div></div>
+        <div class="figure"><div class="n">30% → 45%</div><div class="l">commission if target hit</div></div>
+      </div>
+      <p>If Creator sells 4,730 units or more within the 3-month contract term:</p>
+      <ul>
+        <li>The additional 15% bonus commission (Clause 3) is unlocked and paid at the end of the contract</li>
+        <li>Creator will be considered for Hookitlingo's N4 Affiliate Program</li>
+      </ul>
+      <p class="note">Being "considered" for the N4 Affiliate Program is not a guarantee of acceptance; it reflects that Creator becomes eligible for evaluation once the target is met.</p>
+    </section>
+
+    <section class="clause">
+      <h2><span class="num">9.</span> Payment Terms</h2>
+      <table class="clean">
+        <tr><th>Base commission</th><td>30% of unit sale price ($10.20 × 30% = $3.06 per sale)</td></tr>
+        <tr><th>Base payment schedule</th><td>Paid monthly, on the <b>10th of every month</b>, for the previous month's sales</td></tr>
+        <tr><th>Target bonus</th><td>If the 4,730-unit target is achieved, an additional 15% commission on total sales is paid as a lump sum at the <b>end of the 3-month contract</b></td></tr>
+        <tr><th>Payment method</th><td>Online payment or bank transfer, as recorded on the Payhip affiliate dashboard</td></tr>
+      </table>
+      <p>Platform will provide an itemized receipt each payment cycle showing: number of sales, total revenue, commission rate applied, commission amount owed, and payment details — also visible on the Payhip affiliate dashboard.</p>
+    </section>
+
+    <section class="clause">
+      <h2><span class="num">10.</span> Termination</h2>
+      <p>Either party may terminate this agreement by providing <b>7 days' written notice</b>. Upon termination:</p>
+      <ul>
+        <li>Creator stops promoting immediately</li>
+        <li>Platform calculates final commission within 3 days</li>
+        <li>Final payment is made within 5 business days</li>
+        <li>Both parties return / delete confidential materials</li>
+      </ul>
+    </section>
+
+    <section class="clause">
+      <h2><span class="num">11.</span> Dispute Resolution</h2>
+      <p>If there is disagreement about sales figures or commissions:</p>
+      <ul>
+        <li>Both parties review the CSV export + screenshots together</li>
+        <li>If a discrepancy exists, Platform will manually recount the Payhip affiliate dashboard and provide an updated screenshot</li>
+        <li>Commission is recalculated if an error is found, and payment adjusted accordingly</li>
+        <li>If parties cannot agree, the dispute goes to email documentation review (last resort)</li>
+      </ul>
+    </section>
+
+    <section class="clause">
+      <h2><span class="num">12.</span> Legal &amp; Taxes</h2>
+      <ul>
+        <li>Creator is an independent contractor, not an employee</li>
+        <li>Creator is responsible for all taxes on commission earnings</li>
+        <li>Creator agrees this agreement complies with all applicable laws</li>
+      </ul>
+    </section>
+
+    <hr class="div">
+
+    <section class="clause sig-section">
+      <h2>13. Signatures</h2>
+      <p class="sig-sub">By signing below, both parties agree to the terms above.</p>
+
+      <div class="sig-grid">
+
+        <div class="sig-card">
+          <div class="who">Hookitlingo</div>
+          <div class="role">Platform</div>
+          <canvas class="padcanvas" id="pad-platform"></canvas>
+          <input type="text" class="typed-name" id="typed-platform" placeholder="Or type full name to sign">
+          <div class="sig-controls">
+            <button class="btn" type="button" onclick="clearPad('platform')">Clear</button>
+            <button class="btn primary" type="button" id="confirm-platform" onclick="confirmSig('platform')">Confirm Signature</button>
+          </div>
+          <div class="sig-meta" id="meta-platform"></div>
+        </div>
+
+        <div class="sig-card">
+          <div class="who">Nancy</div>
+          <div class="role">Creator</div>
+          <canvas class="padcanvas" id="pad-creator"></canvas>
+          <input type="text" class="typed-name" id="typed-creator" placeholder="Or type full name to sign">
+          <div class="sig-controls">
+            <button class="btn" type="button" onclick="clearPad('creator')">Clear</button>
+            <button class="btn primary" type="button" id="confirm-creator" onclick="confirmSig('creator')">Confirm Signature</button>
+          </div>
+          <div class="sig-meta" id="meta-creator"></div>
+        </div>
+
+      </div>
+
+      <p class="footnote" style="padding:0; margin-top:22px;">
+        Email confirmation alternative: if signing here isn't possible, the Creator may reply via email
+        "I agree to this 3-month Performance Contract as written" — this counts as a binding agreement.
+      </p>
+    </section>
+
+    <hr class="div">
+
+    <section class="clause">
+      <h2><span class="num">A.</span> Appendix — Discount Code Details</h2>
+      <table class="clean">
+        <tr><th>Code</th><td>NANCY83</td></tr>
+        <tr><th>Regular price</th><td>$60</td></tr>
+        <tr><th>Discounted price</th><td>$10.20 (83% off)</td></tr>
+        <tr><th>Valid dates</th><td>21/08/2026 – 21/11/2026</td></tr>
+        <tr><th>Products</th><td>JLPT N5 Complete Bundle only</td></tr>
+        <tr><th>Usage</th><td>Unlimited</td></tr>
+      </table>
+    </section>
+
+    <section class="clause">
+      <h2><span class="num">B.</span> Appendix — Payment &amp; Dashboard Documentation</h2>
+      <p>Creator will receive:</p>
+      <ul>
+        <li>Access to the Payhip affiliate dashboard, showing real-time sales and commission tracking</li>
+        <li>Monthly commission calculation sheet (itemized)</li>
+        <li>Payment confirmation (online payment or bank transfer) for each payout</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <p class="footnote">Hookitlingo / Kaidan &nbsp;·&nbsp; This document is confidential and intended solely for the named parties.</p>
+</div>
+
+<div class="actions">
+  <button class="btn primary" type="button" onclick="window.print()">🖨️ Save as PDF</button>
+</div>
+
+<script>
+  // ---------- decorative petals ----------
+  (function(){
+    const host = document.getElementById('petals');
+    const n = 14;
+    for(let i=0;i<n;i++){
+      const p = document.createElement('div');
+      p.className = 'petal';
+      const size = 10 + Math.random()*10;
+      const left = Math.random()*100;
+      const dur = 9 + Math.random()*8;
+      const delay = Math.random()*10;
+      p.style.left = left+'vw';
+      p.style.width = size+'px';
+      p.style.height = size+'px';
+      p.style.animationDuration = dur+'s';
+      p.style.animationDelay = delay+'s';
+      p.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="#c4536b" opacity="0.55"/></svg>';
+      host.appendChild(p);
+    }
+  })();
+
+  // ---------- signature pads ----------
+  const pads = {};
+
+  function setupPad(key){
+    const canvas = document.getElementById('pad-'+key);
+    const ctx = canvas.getContext('2d');
+    function resize(){
+      const rect = canvas.getBoundingClientRect();
+      const ratio = window.devicePixelRatio || 1;
+      canvas.width = rect.width * ratio;
+      canvas.height = rect.height * ratio;
+      ctx.scale(ratio, ratio);
+      ctx.lineWidth = 2.2;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#3a2620';
+    }
+    resize();
+
+    let drawing = false, hasDrawn = false;
+    let last = null;
+
+    function pos(e){
+      const rect = canvas.getBoundingClientRect();
+      const point = e.touches ? e.touches[0] : e;
+      return { x: point.clientX - rect.left, y: point.clientY - rect.top };
+    }
+    function start(e){
+      if(canvas.classList.contains('locked')) return;
+      drawing = true; hasDrawn = true;
+      last = pos(e);
+      e.preventDefault();
+    }
+    function move(e){
+      if(!drawing) return;
+      const p = pos(e);
+      ctx.beginPath();
+      ctx.moveTo(last.x, last.y);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+      last = p;
+      e.preventDefault();
+    }
+    function end(){ drawing = false; }
+
+    canvas.addEventListener('mousedown', start);
+    canvas.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', end);
+    canvas.addEventListener('touchstart', start, {passive:false});
+    canvas.addEventListener('touchmove', move, {passive:false});
+    canvas.addEventListener('touchend', end);
+
+    pads[key] = { canvas, ctx, resize, isDrawn: () => hasDrawn };
+  }
+
+  function clearPad(key){
+    const p = pads[key];
+    if(p.canvas.classList.contains('locked')) return;
+    const rect = p.canvas.getBoundingClientRect();
+    p.ctx.clearRect(0,0,rect.width,rect.height);
+    document.getElementById('typed-'+key).value = '';
+    document.getElementById('meta-'+key).innerHTML = '';
+  }
+
+  function confirmSig(key){
+    const typed = document.getElementById('typed-'+key).value.trim();
+    const canvas = document.getElementById('pad-'+key);
+    const drawn = pads[key].isDrawn();
+
+    if(!typed && !drawn){
+      document.getElementById('meta-'+key).innerHTML =
+        '<span style="color:#a63f56;">Please draw a signature or type your name first.</span>';
+      return;
+    }
+
+    // if typed only, render the typed name onto the canvas in a cursive style
+    if(typed && !drawn){
+      const ctx = pads[key].ctx;
+      const rect = canvas.getBoundingClientRect();
+      ctx.clearRect(0,0,rect.width,rect.height);
+      ctx.font = "italic 32px 'Brush Script MT', cursive, Georgia, serif";
+      ctx.fillStyle = '#3a2620';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(typed, 16, rect.height/2);
+    }
+
+    canvas.classList.add('locked');
+    document.getElementById('typed-'+key).disabled = true;
+    document.getElementById('confirm-'+key).disabled = true;
+
+    const now = new Date();
+    const stamp = now.toLocaleString('en-US', {
+      year:'numeric', month:'short', day:'numeric',
+      hour:'2-digit', minute:'2-digit'
+    });
+    document.getElementById('meta-'+key).innerHTML =
+      '<span class="ok">✓ Signed</span> &nbsp;·&nbsp; ' + stamp;
+  }
+
+  setupPad('platform');
+  setupPad('creator');
+  window.addEventListener('resize', () => {
+    // note: resizing after signing will not distort locked signatures' visual scale meaningfully for this use case
+  });
+</script>
+
+</body>
+</html>
