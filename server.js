@@ -56,29 +56,66 @@ app.get('/api/health', (req, res) => {
 //   AIRTABLE_BASE_ID          — the base's ID (starts with "app...")
 //   AIRTABLE_ACCESS_TABLE_NAME — defaults to "CourseAccess"
 //
-// Table needs two fields: Code (text), Scope (text — either a single
-// lesson slug like "s01-l01", a comma-separated list of slugs for a
-// future partial bundle, or "ALL" for the master code).
+// Table needs three fields: Code (text), Scope (text — either a
+// single lesson slug like "s01-l01" / "hanlingo", a comma-separated
+// list of slugs for a bundle, or "ALL" for that course's master
+// code), and Course (text — "jp" or "kr", see COURSES below). Older
+// rows saved before the Course field existed are treated as "jp" so
+// every code issued before this change keeps working unchanged.
 // ============================================================
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 const AIRTABLE_ACCESS_TABLE_NAME = process.env.AIRTABLE_ACCESS_TABLE_NAME || 'CourseAccess';
 const AIRTABLE_ACCESS_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_ACCESS_TABLE_NAME)}`;
 
-const COOKIE_NAME = 'hkl_n5_access';
 const COOKIE_MAX_AGE_MS = 10 * 365 * 24 * 60 * 60 * 1000; // ~10 years — one-time purchase, no expiry pressure
 
-// Only lowercase letters, digits, and hyphens — matches the sNN-lNN
-// slug pattern used throughout. Guards both the cookie contents and
-// the :slug route param before either touches the filesystem.
+// Only lowercase letters, digits, and hyphens. Guards both the
+// cookie contents and the :slug route param before either touches
+// the filesystem. Covers both slug styles in use: Japanese "sNN-lNN"
+// and Korean filename-derived slugs like "korean-grammar".
 const SLUG_RE = /^[a-z0-9-]+$/;
 
-// Reads and verifies the signed cookie, returning the learner's
-// current unlock state. Anything missing, tampered with, or
-// malformed is treated as "nothing unlocked" rather than an error —
-// a bad cookie should never crash the request.
-function getUnlocked(req) {
-  const raw = req.signedCookies && req.signedCookies[COOKIE_NAME];
+// ============================================================
+// COURSES — one entry per product line. Each gets its own signed
+// cookie and its own protected-files directory, so unlocking Korean
+// lessons never grants access to Japanese ones (or vice versa).
+// "jp" is kept as the default/legacy course so the existing JLPT N5
+// roadmap and any codes already issued for it keep working exactly
+// as before, with no query-string or request-body changes required
+// on that page.
+// ============================================================
+const COURSES = {
+  jp: {
+    cookieName: 'hkl_n5_access',
+    protectedDir: path.join(__dirname, 'protected-lessons'),
+    toFilename: (slug) => `jlpt-n5-${slug}.html`,
+    roadmapRedirect: process.env.ROADMAP_REDIRECT_PATH || '/jlptn5roadmap.html'
+  },
+  kr: {
+    cookieName: 'hkl_kr_access',
+    protectedDir: path.join(__dirname, 'protected-lessons-kr'),
+    // Korean lesson pages link to their own companion workbook with a
+    // plain relative href (e.g. "korean-numbers-workbook.html"), so
+    // slugs are kept as the bare filename stem — that way those
+    // in-page relative links resolve straight to this same /lesson/kr/
+    // route without any rewriting.
+    toFilename: (slug) => `${slug}.html`,
+    roadmapRedirect: process.env.KR_ROADMAP_REDIRECT_PATH || '/roadmap.html'
+  }
+};
+
+function normalizeCourseId(raw) {
+  const id = String(raw || '').trim().toLowerCase();
+  return Object.prototype.hasOwnProperty.call(COURSES, id) ? id : 'jp';
+}
+
+// Reads and verifies the signed cookie for a given course, returning
+// the learner's current unlock state for it. Anything missing,
+// tampered with, or malformed is treated as "nothing unlocked" rather
+// than an error — a bad cookie should never crash the request.
+function getUnlocked(req, course) {
+  const raw = req.signedCookies && req.signedCookies[course.cookieName];
   if (!raw) return { all: false, slugs: [] };
   try {
     const parsed = JSON.parse(raw);
@@ -95,8 +132,8 @@ function isUnlocked(unlocked, slug) {
   return unlocked.all || unlocked.slugs.includes(slug);
 }
 
-function setUnlockedCookie(res, unlocked) {
-  res.cookie(COOKIE_NAME, JSON.stringify(unlocked), {
+function setUnlockedCookie(res, course, unlocked) {
+  res.cookie(course.cookieName, JSON.stringify(unlocked), {
     signed: true,
     httpOnly: true, // JS can't read this directly — that's what /api/my-access is for
     sameSite: 'lax',
@@ -120,21 +157,30 @@ function isUnlockRateLimited(ip) {
   return hits.length > UNLOCK_MAX_PER_HOUR;
 }
 
-// GET /api/my-access — tells the frontend what's already unlocked via
-// the existing cookie, so the roadmap page can render already-bought
-// lessons as directly openable on load without prompting for a code.
+// GET /api/my-access?course=kr|jp — tells the frontend what's already
+// unlocked for that course via the existing cookie, so the roadmap
+// page can render already-bought lessons as directly openable on
+// load without prompting for a code. course defaults to "jp" when
+// omitted, so the existing JLPT N5 roadmap needs no changes.
 app.get('/api/my-access', (req, res) => {
-  const unlocked = getUnlocked(req);
-  res.json({ all: unlocked.all, slugs: unlocked.slugs });
+  const courseId = normalizeCourseId(req.query.course);
+  const course = COURSES[courseId];
+  const unlocked = getUnlocked(req, course);
+  res.json({ course: courseId, all: unlocked.all, slugs: unlocked.slugs });
 });
 
-// POST /api/unlock — takes {code}, looks it up in Airtable, and on a
-// match adds its scope to whatever the learner already has unlocked
-// (redeeming a second code stacks rather than replaces).
+// POST /api/unlock — takes {code, course}, looks the code up in
+// Airtable, and on a match adds its scope to whatever the learner
+// already has unlocked for that course (redeeming a second code
+// stacks rather than replaces). course defaults to "jp" when
+// omitted, matching the previous single-course behavior.
 app.post('/api/unlock', async (req, res) => {
   if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
     return res.status(500).json({ error: 'Access storage is not configured yet.' });
   }
+
+  const courseId = normalizeCourseId(req.body && req.body.course);
+  const course = COURSES[courseId];
 
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
   if (isUnlockRateLimited(ip)) {
@@ -169,8 +215,18 @@ app.post('/api/unlock', async (req, res) => {
       return res.status(404).json({ error: 'That code was not recognized.' });
     }
 
+    // A code belongs to exactly one course. Rows saved before the
+    // Course field existed default to "jp" so every code issued
+    // before this change keeps working unchanged. A code redeemed
+    // against the wrong course (e.g. a Korean code typed into the
+    // Japanese roadmap) is treated the same as an unrecognized code.
+    const recCourseId = normalizeCourseId(rec.fields.Course);
+    if (recCourseId !== courseId) {
+      return res.status(404).json({ error: 'That code was not recognized.' });
+    }
+
     const scopeRaw = String(rec.fields.Scope).trim();
-    const existing = getUnlocked(req);
+    const existing = getUnlocked(req, course);
 
     let newUnlocked;
     if (existing.all || scopeRaw.toUpperCase() === 'ALL') {
@@ -183,9 +239,10 @@ app.post('/api/unlock', async (req, res) => {
       newUnlocked = { all: false, slugs: Array.from(new Set([...existing.slugs, ...newSlugs])) };
     }
 
-    setUnlockedCookie(res, newUnlocked);
+    setUnlockedCookie(res, course, newUnlocked);
     res.json({
       ok: true,
+      course: courseId,
       unlocked: newUnlocked.all ? 'ALL' : scopeRaw, // what THIS code unlocked
       all: newUnlocked.all,
       slugs: newUnlocked.slugs
@@ -198,33 +255,45 @@ app.post('/api/unlock', async (req, res) => {
 
 // ============================================================
 // PROTECTED LESSON FILES
-// Lesson HTML lives outside /public (in /protected) so it can only
-// ever be reached through this route, which checks the unlock cookie
-// first. Filenames follow jlpt-n5-<slug>.html throughout.
+// Lesson HTML lives outside /public (in each course's own directory
+// — see COURSES above) so it can only ever be reached through this
+// route, which checks that course's unlock cookie first.
 // ============================================================
-const PROTECTED_DIR = path.join(__dirname, 'protected-lessons');
-const ROADMAP_REDIRECT_PATH = process.env.ROADMAP_REDIRECT_PATH || '/jlptn5roadmap.html';
-
-app.get('/lesson/:slug', (req, res) => {
-  const slug = req.params.slug.toLowerCase();
+function serveLesson(courseId, rawSlug, req, res) {
+  const course = COURSES[courseId];
+  const slug = String(rawSlug || '').toLowerCase();
   if (!SLUG_RE.test(slug)) {
-    return res.redirect(ROADMAP_REDIRECT_PATH);
+    return res.redirect(course.roadmapRedirect);
   }
 
-  const unlocked = getUnlocked(req);
+  const unlocked = getUnlocked(req, course);
   if (!isUnlocked(unlocked, slug)) {
-    return res.redirect(ROADMAP_REDIRECT_PATH);
+    return res.redirect(course.roadmapRedirect);
   }
 
-  const filePath = path.join(PROTECTED_DIR, `jlpt-n5-${slug}.html`);
+  const filePath = path.join(course.protectedDir, course.toFilename(slug));
   // Belt-and-suspenders: confirm the resolved path is still inside
-  // PROTECTED_DIR before serving, even though SLUG_RE already blocks
-  // path traversal characters like . and /.
-  if (!filePath.startsWith(PROTECTED_DIR + path.sep) || !fs.existsSync(filePath)) {
-    return res.redirect(ROADMAP_REDIRECT_PATH);
+  // the course's protected directory before serving, even though
+  // SLUG_RE already blocks path traversal characters like . and /.
+  if (!filePath.startsWith(course.protectedDir + path.sep) || !fs.existsSync(filePath)) {
+    return res.redirect(course.roadmapRedirect);
   }
 
   res.sendFile(filePath);
+}
+
+// New, explicit form: /lesson/kr/<slug>, /lesson/jp/<slug>, etc.
+app.get('/lesson/:course/:slug', (req, res) => {
+  const courseId = normalizeCourseId(req.params.course);
+  serveLesson(courseId, req.params.slug, req, res);
+});
+
+// Legacy form kept for backward compatibility: any existing links
+// or bookmarks to /lesson/<slug> (from before Korean support was
+// added) keep resolving against the Japanese course, exactly as
+// before.
+app.get('/lesson/:slug', (req, res) => {
+  serveLesson('jp', req.params.slug, req, res);
 });
 
 // Catch-all: serve index.html for any unknown route (SPA behavior).
