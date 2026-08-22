@@ -283,8 +283,21 @@ button{font-family:var(--sans); cursor:pointer;}
 .unlock-actions .rc-btn.ghost{background:var(--surface2); color:var(--text-dim); border:1px solid var(--border);}
 .unlock-actions .rc-btn.ghost:hover{color:var(--text); border-color:var(--text-faint);}
 .unlock-actions .rc-btn.primary:disabled{opacity:.6; filter:none; cursor:default;}
-.unlock-note{color:var(--text-faint); font-size:.72em; margin-top:14px; line-height:1.5;}
-.unlock-note a{color:var(--celadon);}
+.unlock-note{
+  margin-top:18px; padding:14px 16px; border-radius:var(--radius-sm);
+  background:linear-gradient(135deg, color-mix(in srgb, var(--vermilion) 16%, var(--surface2)), color-mix(in srgb, var(--gold) 14%, var(--surface2)));
+  border:1px solid color-mix(in srgb, var(--vermilion) 35%, var(--border));
+  color:var(--text-dim); font-size:.82em; line-height:1.5; text-align:center;
+}
+.unlock-note p{margin:0 0 10px; color:var(--text-dim);}
+.unlock-note a.unlock-note-cta{
+  display:inline-block; width:100%; padding:11px 14px; border-radius:999px;
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+  color:#fff; font-weight:700; font-size:1em; letter-spacing:.01em;
+  box-shadow:0 6px 16px color-mix(in srgb, var(--vermilion) 45%, transparent);
+  transition:filter .15s ease, transform .15s ease;
+}
+.unlock-note a.unlock-note-cta:hover{filter:brightness(1.08); transform:translateY(-1px); color:#fff;}
 .rc-lock{color:var(--text-faint); font-size:1em;}
 
 /* Lesson track chips */
@@ -412,7 +425,10 @@ body{overflow-x:hidden;}
       <button type="button" class="rc-btn ghost" id="unlockCancelBtn">Cancel</button>
       <button type="button" class="rc-btn primary" id="unlockSubmitBtn">Unlock</button>
     </div>
-    <div class="unlock-note">Don't have a code yet? Grab this lesson (or the full N5 bundle) on <a href="https://ko-fi.com/hookitlingo/shop" target="_blank" rel="noopener">Ko-fi</a> — your code arrives by message shortly after.</div>
+    <div class="unlock-note">
+      <p>Don't have a code yet? Get this lesson (or the full N5 bundle) — your code arrives by message shortly after.</p>
+      <a class="unlock-note-cta" href="https://ko-fi.com/hookitlingo/shop" target="_blank" rel="noopener">Get your code on Ko-fi →</a>
+    </div>
   </div>
 </div>
 
