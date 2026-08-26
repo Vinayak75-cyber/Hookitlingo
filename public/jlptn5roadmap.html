@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JLPT N5 Study Plan - Topic-by-Topic Japanese Roadmap | Hookitlingo</title>
-<meta name="description" content="A free, structured JLPT N5 study roadmap. 12 topic sections and 15 self-contained lesson files, from zero Japanese to exam ready. Grammar, kanji, vocabulary, reading and listening bundled into every lesson, offline, self-paced.">
+<title>JLPT N5 Roadmap - 15 Lessons, Zero to Exam Ready | Hookitlingo</title>
+<meta name="description" content="A free, structured JLPT N5 study roadmap. 15 self-contained lesson files, from zero Japanese to exam ready. Try Lesson 1 free, then the rest unlocks for everyone once the community goal is reached.">
 <link rel="canonical" href="https://hookit.online/jlptn5roadmap.html">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="JLPT N5 Study Plan - Topic-by-Topic Japanese Roadmap | Hookitlingo">
-<meta property="og:description" content="A free, structured JLPT N5 study roadmap. 12 topic sections and 15 self-contained lesson files, from zero Japanese to exam ready. Grammar, kanji, vocabulary, reading and listening bundled into every lesson, offline, self-paced.">
+<meta property="og:title" content="JLPT N5 Roadmap - 15 Lessons, Zero to Exam Ready | Hookitlingo">
+<meta property="og:description" content="A free, structured JLPT N5 study roadmap. 15 self-contained lesson files, from zero Japanese to exam ready. Try Lesson 1 free, then the rest unlocks for everyone once the community goal is reached.">
 <meta property="og:url" content="https://hookit.online/jlptn5roadmap.html">
 <meta property="og:site_name" content="Hookitlingo">
 <meta property="og:image" content="https://hookit.online/og-image.png">
@@ -19,8 +19,8 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="JLPT N5 Study Plan - Topic-by-Topic Japanese Roadmap | Hookitlingo">
-<meta name="twitter:description" content="A free, structured JLPT N5 study roadmap. 12 topic sections and 15 self-contained lesson files, from zero Japanese to exam ready. Grammar, kanji, vocabulary, reading and listening bundled into every lesson, offline, self-paced.">
+<meta name="twitter:title" content="JLPT N5 Roadmap - 15 Lessons, Zero to Exam Ready | Hookitlingo">
+<meta name="twitter:description" content="A free, structured JLPT N5 study roadmap. 15 self-contained lesson files, from zero Japanese to exam ready. Try Lesson 1 free, then the rest unlocks for everyone once the community goal is reached.">
 <meta name="twitter:image" content="https://hookit.online/og-image.png">
 
 <script type="application/ld+json">
@@ -28,7 +28,7 @@
   "@context": "https://schema.org",
   "@type": "Course",
   "name": "JLPT N5 Roadmap",
-  "description": "A topic-based structured study roadmap taking a complete beginner to JLPT N5 exam readiness. 12 sections and 15 self-contained lesson files, built from Hookitlingo's free offline Japanese courses.",
+  "description": "A 15-lesson structured roadmap taking a complete beginner to JLPT N5 exam readiness, built from Hookitlingo's offline Japanese courses.",
   "provider": {
     "@type": "Organization",
     "name": "Hookitlingo",
@@ -66,14 +66,12 @@
   --vermilion:#e58aa2; --vermilion-dim:#5a2c3a;
   --celadon:#5fa688; --celadon-dim:#2a4a3d;
   --gold:#d9ab5c; --gold-dim:#5c471e;
-  --inkblue:#a084c9; --inkblue-dim:#3a2c50;
-  --ember:#e0713f; --ember-dim:#5a2f1c;
   --petal:#f3b6c6;
   --radius:16px; --radius-sm:10px;
   --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
   --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --jp:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  --maxw:820px;
+  --maxw:720px;
 }
 html[data-theme="light"]{
   --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6;
@@ -82,8 +80,6 @@ html[data-theme="light"]{
   --vermilion:#c8546f; --vermilion-dim:#f6dae2;
   --celadon:#3f7d63; --celadon-dim:#d9ece2;
   --gold:#a4762b; --gold-dim:#f2e2c2;
-  --inkblue:#75509f; --inkblue-dim:#e7ddf2;
-  --ember:#b5501f; --ember-dim:#f7e2d5;
   --petal:#e59fb2;
 }
 *{box-sizing:border-box;}
@@ -151,19 +147,17 @@ button{font-family:var(--sans); cursor:pointer;}
 .hero{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:20px 5vw 10px; text-align:center;}
 .eyebrow{font-size:.78em; letter-spacing:.16em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:14px;}
 .hero h1{font-size:clamp(1.9em,5vw,3em); margin-bottom:14px;}
-.hero .sub{color:var(--text-dim); font-size:1.08em; max-width:620px; margin:0 auto 14px;}
-
-/* Commitment reminder strip */
-.commit-strip{
-  display:flex; gap:10px; align-items:center; justify-content:center; max-width:600px; margin:0 auto 30px;
-  background:var(--vermilion-dim); border:1px solid color-mix(in srgb, var(--vermilion) 45%, var(--border));
-  border-radius:999px; padding:9px 20px; font-size:.82em; color:var(--text-dim); flex-wrap:wrap; text-align:center;
+.hero .sub{color:var(--text-dim); font-size:1.08em; max-width:560px; margin:0 auto 22px;}
+.hero-cta{
+  display:inline-block; padding:12px 26px; border-radius:999px; font-weight:700; font-size:.92em;
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+  color:#fff; box-shadow:0 10px 26px color-mix(in srgb, var(--vermilion) 40%, transparent);
 }
-.commit-strip b{color:var(--vermilion); font-family:var(--serif); font-style:italic;}
+.hero-cta:hover{filter:brightness(1.06); color:#fff;}
 
 /* Overall progress strip */
 .overall-progress{
-  position:relative; z-index:2; max-width:640px; margin:0 auto 50px; padding:22px 26px;
+  position:relative; z-index:2; max-width:560px; margin:34px auto 44px; padding:22px 26px;
   background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
   box-shadow:0 20px 50px rgba(0,0,0,.25);
 }
@@ -172,498 +166,167 @@ button{font-family:var(--sans); cursor:pointer;}
 .overall-progress .op-row span{color:var(--text-faint); font-size:.82em;}
 .op-track{height:10px; background:var(--surface2); border-radius:6px; overflow:hidden;}
 .op-fill{height:100%; border-radius:6px; background:linear-gradient(90deg,var(--vermilion),var(--gold)); transition:width 1.2s cubic-bezier(.2,.9,.2,1);}
-.op-legend{display:flex; gap:18px; margin-top:14px; font-size:.8em; color:var(--text-faint); flex-wrap:wrap;}
-.op-legend span{display:flex; align-items:center; gap:6px;}
-.op-dot{width:9px;height:9px;border-radius:50%; display:inline-block;}
+.op-note{margin-top:14px; font-size:.8em; color:var(--text-faint); text-align:center;}
+.op-note a{color:var(--gold); font-weight:600;}
 
-/* Journey timeline */
-.journey{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:0 5vw 100px;}
-.journey-line{position:absolute; left:calc(5vw + 27px); top:0; bottom:60px; width:3px; background:linear-gradient(var(--celadon), var(--inkblue) 25%, var(--gold) 50%, var(--ember) 75%, var(--border)); opacity:.5; border-radius:3px;}
-@media(max-width:820px){.journey-line{left:calc(5vw + 18px);}}
-
-.phase{position:relative; margin-bottom:50px; opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; scroll-margin-top:90px;}
-.phase.in-view{opacity:1; transform:translateY(0);}
-.phase-head{display:flex; align-items:center; gap:18px; margin-bottom:20px; padding-left:0;}
-.phase-num{
-  width:52px;height:52px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
-  font-family:var(--serif); font-size:1.3em; font-weight:600; color:#fff; position:relative; z-index:2;
-  border:3px solid var(--ink);
-}
-.phase-num.c-celadon{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--celadon) 85%, #fff 15%), var(--celadon) 75%); box-shadow:0 0 0 4px color-mix(in srgb, var(--celadon) 25%, transparent), 0 8px 24px color-mix(in srgb, var(--celadon) 40%, transparent);}
-.phase-num.c-inkblue{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--inkblue) 85%, #fff 15%), var(--inkblue) 75%); box-shadow:0 0 0 4px color-mix(in srgb, var(--inkblue) 25%, transparent), 0 8px 24px color-mix(in srgb, var(--inkblue) 40%, transparent);}
-.phase-num.c-gold{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--gold) 85%, #fff 15%), var(--gold) 75%); box-shadow:0 0 0 4px color-mix(in srgb, var(--gold) 25%, transparent), 0 8px 24px color-mix(in srgb, var(--gold) 40%, transparent);}
-.phase-num.c-ember{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--ember) 85%, #fff 15%), var(--ember) 75%); box-shadow:0 0 0 4px color-mix(in srgb, var(--ember) 25%, transparent), 0 8px 24px color-mix(in srgb, var(--ember) 40%, transparent);}
-.phase-title-wrap h2{margin-bottom:2px; font-size:1.4em;}
-.phase-title-wrap .phase-sub{color:var(--text-faint); font-size:.84em;}
-.phase-ribbon{
-  margin-left:auto; font-size:.68em; text-transform:uppercase; letter-spacing:.1em; font-weight:700;
-  padding:5px 13px; border-radius:20px; white-space:nowrap;
-}
-.phase-ribbon.c-celadon{background:var(--celadon-dim); color:var(--celadon);}
-.phase-ribbon.c-inkblue{background:var(--inkblue-dim); color:var(--inkblue);}
-.phase-ribbon.c-gold{background:var(--gold-dim); color:var(--gold);}
-.phase-ribbon.c-ember{background:var(--ember-dim); color:var(--ember);}
-
-.course-list{display:flex; flex-direction:column; gap:10px; padding-left:72px;}
-@media(max-width:820px){.course-list{padding-left:48px;}}
+/* Lesson list */
+.lessons{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:0 5vw 100px; display:flex; flex-direction:column; gap:12px;}
 
 .rcard{
-  position:relative; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm);
-  padding:13px 18px; display:flex; align-items:center; gap:14px; transition:border-color .2s, transform .2s;
+  position:relative; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:16px 18px; display:flex; align-items:center; gap:16px; transition:border-color .2s, transform .2s;
+  opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease, border-color .2s;
 }
-.rcard::before{
-  content:''; position:absolute; left:-72px; top:50%; transform:translateY(-50%); width:12px; height:12px; border-radius:50%;
-  background:var(--surface); border:3px solid var(--border); z-index:2;
-}
-@media(max-width:820px){.rcard::before{left:-48px; width:10px; height:10px; border-width:2px;}}
-.rcard.next{border-color:color-mix(in srgb, var(--gold) 50%, var(--border));}
-.rcard.next::before{border-color:var(--gold); background:var(--gold);}
-.rcard.next:hover{transform:translateX(4px); border-color:var(--gold);}
-.rcard.milestone{border-color:color-mix(in srgb, var(--vermilion) 45%, var(--border));}
-.rcard.milestone::before{border-color:var(--vermilion); background:var(--vermilion);}
-.rcard.done{opacity:1; border-color:color-mix(in srgb, var(--celadon) 50%, var(--border));}
-.rcard.done::before{border-color:var(--celadon); background:var(--celadon);}
-.rcard.done:hover{border-color:var(--celadon);}
-.rcard.done .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--celadon) 88%, #fff 12%), var(--celadon) 72%);}
-.rc-done-tag{font-size:.58em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 8px; border-radius:10px; background:var(--celadon-dim); color:var(--celadon);}
-.rc-btn.done-btn{background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%)); color:#fff;}
-.rc-btn.done-btn:hover{filter:brightness(1.06);}
-.rcard.soon{opacity:.72;}
-.rcard.soon::before{border-color:var(--border);}
-.rcard.soon:hover{opacity:.92;}
+.rcard.in-view{opacity:1; transform:translateY(0);}
+.rcard.open{border-color:color-mix(in srgb, var(--celadon) 50%, var(--border));}
+.rcard.open:hover{border-color:var(--celadon); transform:translateX(4px) translateY(0);}
+.rcard.locked{opacity:.85;}
 
 .rcard-badge{
-  min-width:34px; height:28px; padding:0 9px; border-radius:14px; flex:none; display:flex; align-items:center; justify-content:center;
-  font-family:var(--serif); font-weight:700; font-size:12px; color:#fff; text-align:center; line-height:1.1; letter-spacing:.01em; white-space:nowrap;
+  width:44px; height:44px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
+  font-family:var(--serif); font-weight:700; font-size:1.15em; color:#fff;
 }
-.rcard.next .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--gold) 88%, #fff 12%), var(--gold) 72%);}
-.rcard.milestone .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--vermilion) 88%, #fff 12%), var(--vermilion) 72%);}
-.rcard.soon .rcard-badge{background:var(--surface3); color:var(--text-faint);}
+.rcard.open .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--celadon) 88%, #fff 12%), var(--celadon) 72%);}
+.rcard.locked .rcard-badge{background:var(--surface3); color:var(--text-faint);}
 
 .rcard-body{flex:1; min-width:0;}
-.rcard-body .rc-title{font-size:.94em; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
-.rc-next-tag{font-size:.58em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 8px; border-radius:10px; background:var(--gold-dim); color:var(--gold);}
-.rc-milestone-tag{font-size:.58em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 8px; border-radius:10px; background:var(--vermilion-dim); color:var(--vermilion);}
-.rc-soon-tag{font-size:.58em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 8px; border-radius:10px; background:var(--surface2); color:var(--text-faint); border:1px solid var(--border); display:inline-flex; align-items:center; gap:4px;}
+.rc-title{font-size:1.02em; font-weight:600; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+.rc-desc{color:var(--text-dim); font-size:.84em; margin-top:3px;}
+.rc-free-tag{font-size:.6em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--celadon-dim); color:var(--celadon);}
+.rc-locked-tag{font-size:.6em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--surface2); color:var(--text-faint); border:1px solid var(--border); display:inline-flex; align-items:center; gap:4px;}
 
-.rcard-actions{flex:none; display:flex; gap:8px;}
-.rc-btn{font-size:.76em; font-weight:600; padding:6px 12px; border-radius:999px; white-space:nowrap; border:none;}
-.rc-btn.primary{background:linear-gradient(135deg,var(--gold), color-mix(in srgb, var(--gold) 55%, var(--ember) 45%)); color:#fff;}
-.rc-btn.primary:hover{filter:brightness(1.06);}
+.rcard-actions{flex:none;}
+.rc-btn{font-size:.8em; font-weight:600; padding:9px 16px; border-radius:999px; white-space:nowrap; border:none; display:inline-block;}
+.rc-btn.open-btn{background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%)); color:#fff;}
+.rc-btn.open-btn:hover{filter:brightness(1.06); color:#fff;}
+.rc-btn.support-btn{background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%)); color:#fff;}
+.rc-btn.support-btn:hover{filter:brightness(1.06); color:#fff;}
 
-/* ============================================================
-   UNLOCK MODAL
-   ============================================================ */
-.unlock-overlay{
-  position:fixed; inset:0; z-index:100; display:none; align-items:center; justify-content:center;
-  background:color-mix(in srgb, var(--ink) 70%, transparent); backdrop-filter:blur(3px); padding:20px;
-}
-.unlock-overlay.open{display:flex;}
-.unlock-box{
-  width:100%; max-width:360px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  padding:26px 24px 22px; box-shadow:0 20px 60px color-mix(in srgb, var(--ink) 45%, transparent);
-  animation:unlockIn .18s cubic-bezier(.2,.9,.2,1);
-}
-@keyframes unlockIn{from{opacity:0; transform:translateY(8px) scale(.98);} to{opacity:1; transform:none;}}
-.unlock-box h3{font-size:1.15em; margin-bottom:4px;}
-.unlock-box .unlock-sub{color:var(--text-dim); font-size:.85em; margin-bottom:16px;}
-.unlock-box input[type="text"]{
-  width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:10px; color:var(--text);
-  font-family:var(--sans); font-size:.95em; padding:11px 13px; outline:none; letter-spacing:.02em;
-}
-.unlock-box input[type="text"]:focus{border-color:var(--celadon);}
-.unlock-error{min-height:1.2em; color:var(--ember); font-size:.78em; margin-top:8px;}
-.unlock-actions{display:flex; gap:10px; margin-top:16px;}
-.unlock-actions .rc-btn{flex:1; padding:10px 12px; font-size:.85em; text-align:center;}
-.unlock-actions .rc-btn.ghost{background:var(--surface2); color:var(--text-dim); border:1px solid var(--border);}
-.unlock-actions .rc-btn.ghost:hover{color:var(--text); border-color:var(--text-faint);}
-.unlock-actions .rc-btn.primary:disabled{opacity:.6; filter:none; cursor:default;}
-.unlock-note{
-  margin-top:18px; padding:14px 16px; border-radius:var(--radius-sm);
-  background:linear-gradient(135deg, color-mix(in srgb, var(--vermilion) 16%, var(--surface2)), color-mix(in srgb, var(--gold) 14%, var(--surface2)));
-  border:1px solid color-mix(in srgb, var(--vermilion) 35%, var(--border));
-  color:var(--text-dim); font-size:.82em; line-height:1.5; text-align:center;
-}
-.unlock-note p{margin:0 0 10px; color:var(--text-dim);}
-.unlock-note a.unlock-note-cta{
-  display:inline-block; width:100%; padding:11px 14px; border-radius:999px;
-  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
-  color:#fff; font-weight:700; font-size:1em; letter-spacing:.01em;
-  box-shadow:0 6px 16px color-mix(in srgb, var(--vermilion) 45%, transparent);
-  transition:filter .15s ease, transform .15s ease;
-}
-.unlock-note a.unlock-note-cta:hover{filter:brightness(1.08); transform:translateY(-1px); color:#fff;}
-.rc-lock{color:var(--text-faint); font-size:1em;}
-
-footer{position:relative; z-index:2; text-align:center; padding:10px 5vw 60px; color:var(--text-faint); font-size:.85em;}
-footer a{text-decoration:underline;}
-
-/* ===== MOBILE RESPONSIVENESS ===== */
-body{overflow-x:hidden;}
-@media(max-width:640px){
-  #topbar{flex-direction:column; align-items:flex-start; gap:10px; padding:14px 5vw 16px;}
-  .top-actions{flex-wrap:wrap; width:100%;}
-  .topbtn{font-size:.8em; padding:6px 12px;}
-  .hero{padding:16px 5vw 8px;}
-  .hero h1{font-size:1.7em; line-height:1.25;}
-  .hero .sub{font-size:.92em;}
-  .commit-strip{font-size:.74em; padding:8px 14px;}
-  .overall-progress{padding:16px 18px; margin-bottom:30px;}
-  .overall-progress .op-row b{font-size:1.3em;}
-  .op-legend{gap:10px; font-size:.72em;}
-
-  .journey-line{left:22px !important;}
-  .phase{margin-bottom:34px;}
-  .phase-head{gap:10px; flex-wrap:wrap;}
-  .phase-num{width:40px;height:40px;font-size:1em; border-width:2px;}
-  .phase-title-wrap h2{font-size:1.15em;}
-  .phase-title-wrap .phase-sub{font-size:.74em;}
-  .phase-ribbon{margin-left:0; margin-top:2px; font-size:.6em; padding:4px 10px; white-space:normal; text-align:center;}
-
-  .course-list{padding-left:38px !important; gap:8px;}
-  .rcard{padding:11px 13px; gap:10px; flex-wrap:wrap;}
-  .rcard::before{left:-38px !important; width:9px; height:9px;}
-  .rcard-badge{min-width:30px; height:24px; padding:0 7px; font-size:10.5px;}
-  .rcard-body{flex-basis:100%;}
-  .rcard-body .rc-title{font-size:.9em; line-height:1.3;}
-  .rc-btn{padding:6px 13px; font-size:.75em;}
-  .rcard-actions{width:100%; justify-content:flex-end; margin-top:4px;}
-}
-@media(max-width:420px){
-  .hero h1{font-size:1.42em;}
-  .hero .sub{font-size:.86em;}
-  .eyebrow{font-size:.7em;}
-  .brand-txt strong{font-size:1em;}
-  .brand-txt span{font-size:.6em;}
-  .brand-block{width:36px; height:36px; font-size:15px;}
-  .commit-strip{font-size:.7em; padding:8px 12px; border-radius:16px;}
-  .journey{padding:0 4vw 80px;}
-  .journey-line{left:18px !important;}
-  .course-list{padding-left:32px !important;}
-  .rcard::before{left:-32px !important; width:8px; height:8px;}
-  .phase-num{width:34px;height:34px;font-size:.9em;}
-  .phase-title-wrap h2{font-size:1.02em;}
-  .rcard-badge{min-width:26px; height:22px; padding:0 6px; font-size:9.5px;}
-  .rc-title{gap:6px !important;}
+@media(max-width:520px){
+  .rcard{flex-wrap:wrap;}
+  .rcard-actions{width:100%;}
+  .rc-btn{width:100%; text-align:center;}
 }
 </style>
 </head>
 <body>
 
-<div class="petals" id="petals" aria-hidden="true"></div>
+<div class="petals" id="petals"></div>
 
 <div id="topbar">
   <div class="brand">
-    <div class="brand-block jp">虎</div>
-    <div class="brand-txt"><strong>Hookitlingo</strong><span>Korean &amp; Japanese, one file at a time</span></div>
+    <div class="brand-block jp">日</div>
+    <div class="brand-txt"><strong>Hookitlingo</strong><span>JLPT N5 Roadmap</span></div>
   </div>
   <div class="top-actions">
-    <a class="topbtn" href="roadmapjp.html">← JLPT Roadmap</a>
+    <!-- Replace this href with your Ko-fi goal page URL -->
+    <a class="topbtn topbtn-support" href="https://ko-fi.com/hookitlingo/goal?g=26" target="_blank" rel="noopener">Support the Goal</a>
     <button class="topbtn" id="themeBtn">☾ Dark</button>
   </div>
 </div>
 
 <div class="hero">
-  <div class="eyebrow jp">JLPT · N5 · Topic-Based Roadmap</div>
-  <h1>Zero Japanese to <span style="color:var(--gold); font-style:italic;">JLPT N5</span>, one topic at a time.</h1>
-  <p class="sub">12 sections and 15 self-contained lesson files. Every lesson bundles grammar, kanji, vocabulary, reading and listening, so there's nothing left for you to source elsewhere.</p>
+  <div class="eyebrow">Free to Start</div>
+  <h1>15 lessons. Zero to <span class="jp" style="color:var(--gold); font-style:italic;">N5</span>-ready.</h1>
+  <p class="sub">Try Lesson 1 free right now. Every other lesson unlocks for everyone, no matter how much you gave, once we hit the funding goal together.</p>
+  <!-- Replace this href with your Ko-fi goal page URL -->
+  <a class="hero-cta" href="https://ko-fi.com/hookitlingo/goal?g=26" target="_blank" rel="noopener">Support the Goal →</a>
 </div>
 
 <div class="overall-progress" id="overallProgress"></div>
 
-<div class="journey">
-  <div class="journey-line"></div>
-  <div id="phases"></div>
-</div>
-
-<footer>
-  <p>Not sure N5 is the right starting point? Head back to the <a href="roadmapjp.html">JLPT Roadmap</a> and browse the other levels.</p>
-  <p>Powered by Hookitlingo</p>
-</footer>
-
-<div class="unlock-overlay" id="unlockOverlay" role="dialog" aria-modal="true" aria-labelledby="unlockTitle">
-  <div class="unlock-box">
-    <h3 id="unlockTitle">Enter your access code</h3>
-    <p class="unlock-sub">You'll find this in the PDF you received after purchase.</p>
-    <input type="text" id="unlockCode" placeholder="e.g. N5S01L01-XXXX" autocomplete="off" autocapitalize="off" spellcheck="false">
-    <div class="unlock-error" id="unlockError"></div>
-    <div class="unlock-actions">
-      <button type="button" class="rc-btn ghost" id="unlockCancelBtn">Cancel</button>
-      <button type="button" class="rc-btn primary" id="unlockSubmitBtn">Unlock</button>
-    </div>
-    <div class="unlock-note">
-      <p>Don't have a code yet? Get this lesson (or the full N5 bundle), and your code will arrive by message shortly after.</p>
-      <a class="unlock-note-cta" href="https://hookitlingo.gumroad.com/l/oufabf?layout=profile" target="_blank" rel="noopener">Get your code on Gumroad →</a>
-    </div>
-  </div>
-</div>
+<div class="lessons" id="lessons"></div>
 
 <script>
 /* ============================================================
-   TOPBAR SCROLL STATE
-   Adds a blurred/solid background to the sticky topbar once the
-   page scrolls, so hero/body text doesn't show through it.
+   LESSON DATA
+   status: 'open'   -> free, links straight to the file in
+                       /coursesjp on this same site.
+           'locked' -> not uploaded yet; button links straight to
+                       Ko-fi. No cookies, no unlock codes, no API
+                       calls on this page at all.
+   Update `file` values to match whatever you actually name the
+   files once you upload them to /coursesjp.
    ============================================================ */
-(function(){
-  const topbar = document.getElementById('topbar');
-  if(!topbar) return;
-  const THRESHOLD = 12;
-  let ticking = false;
-  function applyState(){
-    topbar.classList.toggle('is-scrolled', window.scrollY > THRESHOLD);
-    ticking = false;
-  }
-  function onScroll(){
-    if(!ticking){ requestAnimationFrame(applyState); ticking = true; }
-  }
-  window.addEventListener('scroll', onScroll, { passive:true });
-  applyState();
-})();
 
-/* ============================================================
-   JLPT N5 SECTION / LESSON DATA
-   Mirrors jlpt-n5-master-roadmap.md.
-   To publish a lesson, change its status to 'done' and the card
-   goes live automatically, linking to its file.
-   ============================================================ */
-const COLORS = ['c-celadon','c-inkblue','c-gold','c-ember'];
+// Replace with your real Ko-fi goal page URL. This is used by every locked lesson's button.
+const KOFI_URL = 'https://ko-fi.com/hookitlingo/goal?g=26';
 
-/* ============================================================
-   LESSON ACCESS
-   Backed by /api/my-access + /api/unlock on the Hookit server.
-   Set API_BASE if the backend is hosted on a different domain
-   than this page (e.g. 'https://api.hookit.online'); leave it as
-   '' if the API is served from the same origin as this page.
-   ============================================================ */
-const API_BASE = '';
-
-let ACCESS = { all:false, slugs:[] };
-let pendingUnlockSlug = null;
-
-function isLessonUnlocked(slug){
-  return ACCESS.all || ACCESS.slugs.includes(slug);
-}
-
-async function loadAccess(){
-  try{
-    const res = await fetch(`${API_BASE}/api/my-access`, { credentials:'include' });
-    if(res.ok){
-      const data = await res.json();
-      ACCESS = { all: !!data.all, slugs: Array.isArray(data.slugs) ? data.slugs : [] };
-    }
-  }catch(err){
-    console.warn('Could not load lesson access state', err);
-  }
-}
-
-function openUnlockModal(slug){
-  pendingUnlockSlug = slug;
-  const overlay = document.getElementById('unlockOverlay');
-  const input = document.getElementById('unlockCode');
-  document.getElementById('unlockError').textContent = '';
-  input.value = '';
-  overlay.classList.add('open');
-  setTimeout(()=>input.focus(), 30);
-}
-
-function closeUnlockModal(){
-  document.getElementById('unlockOverlay').classList.remove('open');
-  pendingUnlockSlug = null;
-}
-
-async function submitUnlockCode(){
-  const input = document.getElementById('unlockCode');
-  const errEl = document.getElementById('unlockError');
-  const submitBtn = document.getElementById('unlockSubmitBtn');
-  const code = input.value.trim();
-
-  if(!code){
-    errEl.textContent = 'Please enter your access code.';
-    return;
-  }
-
-  submitBtn.disabled = true;
-  const originalLabel = submitBtn.textContent;
-  submitBtn.textContent = 'Checking…';
-  errEl.textContent = '';
-
-  try{
-    const res = await fetch(`${API_BASE}/api/unlock`, {
-      method:'POST',
-      credentials:'include',
-      headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify({ code })
-    });
-    const data = await res.json().catch(()=>({}));
-
-    if(!res.ok || !data.ok){
-      errEl.textContent = data.error || 'That code was not recognized.';
-      return;
-    }
-
-    ACCESS = { all: !!data.all, slugs: Array.isArray(data.slugs) ? data.slugs : [] };
-    const slugToOpen = pendingUnlockSlug;
-    closeUnlockModal();
-    refreshLessonActions();
-    if(slugToOpen) window.open(`${API_BASE}/lesson/${slugToOpen}`, '_blank', 'noopener');
-  }catch(err){
-    errEl.textContent = 'Something went wrong. Please try again.';
-  }finally{
-    submitBtn.disabled = false;
-    submitBtn.textContent = originalLabel;
-  }
-}
-
-const SECTIONS = [
-  { num:1, title:'Foundation: Hiragana &amp; Katakana', sub:'Not a grammar section, more of a prerequisite unit. Split in two because a full kana chart and drills is already a day\u2019s worth of content on its own.', lessons:[
-    { slug:'s01-l01', file:'coursesjp/jlpt-n5-s01-l01.html', title:'01 - Hiragana', desc:'Full hiragana chart (46 base plus dakuten, handakuten, and combination sounds), with reading and listening kana drills and a no-romaji exit test.', status:'done'},
-    { slug:'s01-l02', file:'coursesjp/jlpt-n5-s01-l02.html', title:'02 - Katakana', desc:'Full katakana chart for loanwords and foreign names, with reading/listening drills distinguishing katakana from hiragana, plus a no-romaji exit test.', status:'done' },
-  ]},
-  { num:2, title:'New Friends', sub:'Your first real sentence patterns (です／は／か), self-intro vocabulary, and a party-conversation dialogue.', lessons:[
-    { slug:'s02-l01', file:'coursesjp/jlpt-n5-s02-l01.html', title:'03 - New Friends', desc:'Xは Yです and its negative/question forms, も and の, plus personal pronouns, taught through self-introduction, nationality, and occupation vocabulary.', status:'done' },
-  ]},
-  { num:3, title:'Shopping &amp; School Life', sub:'Reference words for objects and places, like これ／それ／あれ, and asking "what is this" in a shop or classroom.', lessons:[
-    { slug:'s03-l01', file:'coursesjp/jlpt-n5-s03-l01.html', title:'04 - Shopping &amp; School Life', desc:'これ／それ／あれ, どれ／どの, ここ／そこ／あそこ, and なに／なん, built on classroom objects, stationery, shops, and communication verbs.', status:'done' },
-  ]},
-  { num:4, title:'Existence &amp; Location', sub:'Numbers, counters, and spatial words, split across two files just like the original draft\u2019s Part A and Part B.', lessons:[
-    { slug:'s04-l01', file:'coursesjp/jlpt-n5-s04-l01.html', title:'05 - Numbers &amp; Counting', desc:'〜があります／〜がいます, the core counters (つ／人／枚／本／個), and numbers 1–10,000, taught through animals, pets, and prices.', status:'done' },
-    { slug:'s04-l02', file:'coursesjp/jlpt-n5-s04-l02.html', title:'06 - Location &amp; Direction', desc:'に vs で, spatial nouns like 上／下／中／前／後ろ, and へ, taught through furniture, rooms, directions, and landmarks.', status:'done' },
-  ]},
-  { num:5, title:'Verbs I', sub:'The polite present/past verb form you\u2019ll use in almost every sentence from here on.', lessons:[
-    { slug:'s05-l01', file:'coursesjp/jlpt-n5-s05-l01.html', title:'07 - Verbs I', desc:'ます-form across present/past, affirmative/negative, plus を・に・で and an intro to 〜ませんか／〜ましょう, taught through daily verbs, food, and transportation.', status:'done' },
-  ]},
-  { num:6, title:'Adjectives &amp; Preferences', sub:'Describing things: い-adjectives, な-adjectives, and saying what you like.', lessons:[
-    { slug:'s06-l01', file:'coursesjp/jlpt-n5-s06-l01.html', title:'08 - Adjectives &amp; Preferences', desc:'い- and な-adjective conjugation, 〜が好きです／〜が嫌いです, and the 〜くて／〜で connecting form, taught through descriptive adjectives, colors, and shopping vocabulary.', status:'done' },
-  ]},
-  { num:7, title:'Verbs II', sub:'The single most useful verb form in beginner Japanese, covering requests, permission, and prohibition.', lessons:[
-    { slug:'s07-l01', file:'coursesjp/jlpt-n5-s07-l01.html', title:'09 - Verbs II', desc:'て-form formation for all three verb groups, 〜てください, 〜てもいいですか, 〜てはいけません, and an intro to 〜ています, taught through body parts and classroom instructions.', status:'done' },
-  ]},
-  { num:8, title:'Time, Calendar &amp; Routine', sub:'Dates and clock time, split across two files following the same pattern as Section 4.', lessons:[
-    { slug:'s08-l01', file:'coursesjp/jlpt-n5-s08-l01.html', title:'10 - Calendar', desc:'Days, months, and dates with irregular counters, 〜曜日, and 先週／今週／来週 etc., taught through weekly and monthly routine vocabulary.', status:'done' },
-    { slug:'s08-l02', file:'jlpt-n5-s08-l02.html', title:'11 - Clock Time', desc:'Telling time (〜時〜分), から〜まで, and frequency adverbs, taught through time expressions and schedule vocabulary.', status:'done' },
-  ]},
-  { num:9, title:'Verbs III', sub:'Casual speech and talking about family, the register shift away from です／ます.', lessons:[
-    { slug:'s09-l01', file:'coursesjp/jlpt-n5-s09-l01.html', title:'12 - Verbs III &amp; Family', desc:'Plain/dictionary form across all three verb groups, 〜ないでください, plain form + と思います, and casual vs. formal register, taught through family terms and weather.', status:'done' },
-  ]},
-  { num:10, title:'Comparisons &amp; Preferences', sub:'Comparing two things, picking a favorite, and saying what you want to do.', lessons:[
-    { slug:'s10-l01', file:'coursesjp/jlpt-n5-s10-l01.html', title:'13 - Comparisons &amp; Preferences', desc:'AはBより〜, 〜の方が〜, 〜で一番〜, and 〜たいです／〜たくないです, taught through nature vocabulary, seasons, and hobbies.', status:'done' },
-  ]},
-  { num:11, title:'Connecting Ideas &amp; Invitations', sub:'Giving reasons, linking sentences, and inviting someone somewhere.', lessons:[
-    { slug:'s11-l01', file:'coursesjp/jlpt-n5-s11-l01.html', title:'14 - Connecting Ideas &amp; Invitations', desc:'〜から, 〜とき, 〜ましょう／〜ましょうか, the full 〜ませんか invitation, and sentence connectors そして／それから, taught through health and invitation vocabulary.', status:'done' },
-  ]},
-  { num:12, title:'Ability, Experience &amp; Hobbies', sub:'What you can do and what you\u2019ve done, plus a full past-tense review, since little new kanji or vocab remains at this stage.', lessons:[
-    { slug:'s12-l01', file:'coursesjp/jlpt-n5-s12-l01.html', title:'15 - Ability, Experience &amp; Hobbies', desc:'〜ことができます, 〜ことがあります, nominalizing verbs with 辞書形＋こと, and a full past-tense review, taught through hobbies, sports, and travel vocabulary.', status:'done' },
-  ]},
+const LESSONS = [
+  { n:1,  file:'coursesjp/jlpt-n5-s01-l01.html', title:'Hiragana', desc:'Full hiragana chart with reading and listening drills, no-romaji exit test.', status:'open' },
+  { n:2,  file:'coursesjp/jlpt-n5-s01-l02.html', title:'Katakana', desc:'Full katakana chart for loanwords and foreign names, with drills and an exit test.', status:'locked' },
+  { n:3,  file:'coursesjp/jlpt-n5-s02-l01.html', title:'New Friends', desc:'Xは Yです and its forms, も and の, self-introduction and occupation vocabulary.', status:'locked' },
+  { n:4,  file:'coursesjp/jlpt-n5-s03-l01.html', title:'Shopping &amp; School Life', desc:'これ／それ／あれ, どれ／どの, ここ／そこ／あそこ, なに／なん.', status:'locked' },
+  { n:5,  file:'coursesjp/jlpt-n5-s04-l01.html', title:'Numbers &amp; Counting', desc:'〜があります／〜がいます, core counters, and numbers 1–10,000.', status:'locked' },
+  { n:6,  file:'coursesjp/jlpt-n5-s04-l02.html', title:'Location &amp; Direction', desc:'に vs で, spatial nouns, and へ, through rooms, directions, and landmarks.', status:'locked' },
+  { n:7,  file:'coursesjp/jlpt-n5-s05-l01.html', title:'Verbs I', desc:'ます-form present/past, affirmative/negative, を・に・で, intro to 〜ませんか／〜ましょう.', status:'locked' },
+  { n:8,  file:'coursesjp/jlpt-n5-s06-l01.html', title:'Adjectives &amp; Preferences', desc:'い- and な-adjective conjugation, 〜が好きです／〜が嫌いです, 〜くて／〜で.', status:'locked' },
+  { n:9,  file:'coursesjp/jlpt-n5-s07-l01.html', title:'Verbs II', desc:'て-form for all verb groups, 〜てください, 〜てもいいですか, 〜てはいけません.', status:'locked' },
+  { n:10, file:'coursesjp/jlpt-n5-s08-l01.html', title:'Calendar', desc:'Days, months, dates, irregular counters, 〜曜日, 先週／今週／来週.', status:'locked' },
+  { n:11, file:'coursesjp/jlpt-n5-s08-l02.html', title:'Clock Time', desc:'Telling time (〜時〜分), から〜まで, and frequency adverbs.', status:'locked' },
+  { n:12, file:'coursesjp/jlpt-n5-s09-l01.html', title:'Verbs III &amp; Family', desc:'Plain/dictionary form, 〜ないでください, plain form + と思います, family terms.', status:'locked' },
+  { n:13, file:'coursesjp/jlpt-n5-s10-l01.html', title:'Comparisons &amp; Preferences', desc:'AはBより〜, 〜の方が〜, 〜で一番〜, 〜たいです／〜たくないです.', status:'locked' },
+  { n:14, file:'coursesjp/jlpt-n5-s11-l01.html', title:'Connecting Ideas &amp; Invitations', desc:'〜から, 〜とき, 〜ましょう, 〜ませんか, そして／それから.', status:'locked' },
+  { n:15, file:'coursesjp/jlpt-n5-s12-l01.html', title:'Ability, Experience &amp; Hobbies', desc:'〜ことができます, 〜ことがあります, dictionary form + こと, full past-tense review.', status:'locked' },
 ];
 
-/* ============================================================
-   RENDER
-   ============================================================ */
 function renderOverall(){
-  const lessons = SECTIONS.flatMap(s=>s.lessons);
-  const total = lessons.length;
-  const live = lessons.filter(l=>l.status==='done').length;
+  const total = LESSONS.length;
+  const live = LESSONS.filter(l=>l.status==='open').length;
   const pct = Math.round((live/total)*100);
   document.getElementById('overallProgress').innerHTML = `
-    <div class="op-row"><span>Course engine live</span><b>${live} / ${total}</b></div>
+    <div class="op-row"><span>Lessons unlocked</span><b>${live} / ${total}</b></div>
     <div class="op-track"><div class="op-fill" style="width:${pct}%"></div></div>
-    <div class="op-legend">
-      <span><span class="op-dot" style="background:var(--celadon)"></span> Available now</span>
-      <span><span class="op-dot" style="background:var(--border)"></span> Coming soon</span>
-    </div>
+    <div class="op-note">Lessons 2–15 unlock for everyone once the goal is reached. <a href="${KOFI_URL}" target="_blank" rel="noopener">Support it here →</a></div>
   `;
 }
 
-function actionHtml(slug){
-  if(isLessonUnlocked(slug)){
-    return `<a href="${API_BASE}/lesson/${slug}" target="_blank" rel="noopener" class="rc-btn done-btn">Open</a>`;
-  }
-  return `<button type="button" class="rc-btn done-btn" onclick="openUnlockModal('${slug}')">Open</button>`;
-}
-
-function lessonCard(l, sectionNum){
-  const badge = l.slug.replace('s','S').replace('-l','·L').toUpperCase();
-
-  if(l.status==='done'){
+function lessonCard(l){
+  if(l.status === 'open'){
     return `
-    <div class="rcard done">
-      <div class="rcard-badge">${badge}</div>
+    <div class="rcard open">
+      <div class="rcard-badge">${l.n}</div>
       <div class="rcard-body">
-        <div class="rc-title">${l.title} <span class="rc-done-tag">✅ Live</span></div>
+        <div class="rc-title">Lesson ${l.n}: ${l.title} <span class="rc-free-tag">Free</span></div>
+        <div class="rc-desc">${l.desc}</div>
       </div>
-      <div class="rcard-actions" data-lesson-slug="${l.slug}">${actionHtml(l.slug)}</div>
+      <div class="rcard-actions">
+        <a class="rc-btn open-btn" href="${l.file}" target="_blank" rel="noopener">Open</a>
+      </div>
     </div>`;
   }
   return `
-    <div class="rcard soon">
-      <div class="rcard-badge">${badge}</div>
-      <div class="rcard-body">
-        <div class="rc-title">${l.title} <span class="rc-soon-tag">🔒 Coming soon</span></div>
-      </div>
-    </div>`;
+  <div class="rcard locked">
+    <div class="rcard-badge">${l.n}</div>
+    <div class="rcard-body">
+      <div class="rc-title">Lesson ${l.n}: ${l.title} <span class="rc-locked-tag">🔒 Locked</span></div>
+      <div class="rc-desc">${l.desc}</div>
+    </div>
+    <div class="rcard-actions">
+      <a class="rc-btn support-btn" href="${KOFI_URL}" target="_blank" rel="noopener">Support to Unlock</a>
+    </div>
+  </div>`;
 }
 
-// Re-paints just the action button on every lesson card in place,
-// based on the current ACCESS state — used after a successful
-// unlock so the rest of the card (and the scroll-reveal state of
-// its .phase container) is left untouched.
-function refreshLessonActions(){
-  document.querySelectorAll('.rcard-actions[data-lesson-slug]').forEach(el=>{
-    const slug = el.getAttribute('data-lesson-slug');
-    el.innerHTML = actionHtml(slug);
-  });
-}
+function renderLessons(){
+  const host = document.getElementById('lessons');
+  host.innerHTML = LESSONS.map(lessonCard).join('');
 
-function renderWeeks(){
-  const host = document.getElementById('phases');
-  host.innerHTML = SECTIONS.map((s,i)=>{
-    const color = COLORS[i % COLORS.length];
-    const range = s.lessons.length>1 ? `L01–L${String(s.lessons.length).padStart(2,'0')}` : 'L01';
-    const ribbonLabel = s.bootcamp ? `Bootcamp · ${range}` : range;
-    return `
-    <div class="phase" id="section${s.num}" data-section="${s.num}">
-      <div class="phase-head">
-        <div class="phase-num ${color}">${s.num}</div>
-        <div class="phase-title-wrap">
-          <h2>Section ${s.num}: ${s.title}</h2>
-          <div class="phase-sub">${s.sub}</div>
-        </div>
-        <div class="phase-ribbon ${color}">${ribbonLabel}</div>
-      </div>
-      <div class="course-list">
-        ${s.lessons.map(l=>lessonCard(l, s.num)).join('')}
-      </div>
-    </div>`;
-  }).join('');
-}
-
-/* Unlock modal wiring */
-document.getElementById('unlockCancelBtn').addEventListener('click', closeUnlockModal);
-document.getElementById('unlockSubmitBtn').addEventListener('click', submitUnlockCode);
-document.getElementById('unlockOverlay').addEventListener('click', (e)=>{
-  if(e.target.id === 'unlockOverlay') closeUnlockModal();
-});
-document.getElementById('unlockCode').addEventListener('keydown', (e)=>{
-  if(e.key === 'Enter') submitUnlockCode();
-});
-document.addEventListener('keydown', (e)=>{
-  if(e.key === 'Escape' && document.getElementById('unlockOverlay').classList.contains('open')) closeUnlockModal();
-});
-
-/* Load whatever's already unlocked (from a prior code redemption)
-   before the first render, so already-owned lessons render as
-   directly openable with no code prompt and no flash of the locked
-   state. */
-(async function init(){
-  await loadAccess();
-  renderOverall();
-  renderWeeks();
-
-  /* Scroll-reveal for each week */
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in-view'); });
-  }, {threshold:.08});
-  document.querySelectorAll('.phase').forEach(el=>io.observe(el));
+  }, {threshold:.1});
+  document.querySelectorAll('.rcard').forEach(el=>io.observe(el));
+}
+
+renderOverall();
+renderLessons();
+
+/* Sticky top bar scroll shadow */
+(function(){
+  const bar = document.getElementById('topbar');
+  const onScroll = () => bar.classList.toggle('is-scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
 })();
 
 /* Theme toggle - shares the same key as the rest of the site */
