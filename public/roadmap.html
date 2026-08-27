@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Full Korean Roadmap - Zero to Near-Fluent, Self-Paced | Hookitlingo</title>
-<meta name="description" content="Every Hookitlingo Korean course mapped out from absolute beginner to near-fluent, Hangeul, grammar, particles, verbs, numbers and more. Free, offline, self-paced.">
+<meta name="description" content="Every Hookitlingo Korean course mapped out from absolute beginner to near-fluent. Community-funded, unlocked lesson by lesson, no ads, no subscriptions.">
 <link rel="canonical" href="https://hookit.online/roadmap.html">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Full Korean Roadmap - Zero to Near-Fluent, Self-Paced | Hookitlingo">
-<meta property="og:description" content="Every Hookitlingo Korean course mapped out from absolute beginner to near-fluent, Hangeul, grammar, particles, verbs, numbers and more. Free, offline, self-paced.">
+<meta property="og:description" content="Every Hookitlingo Korean course mapped out from absolute beginner to near-fluent. Community-funded, unlocked lesson by lesson, no ads, no subscriptions.">
 <meta property="og:url" content="https://hookit.online/roadmap.html">
 <meta property="og:site_name" content="Hookitlingo">
 <meta property="og:image" content="https://hookit.online/og-image.png">
@@ -20,7 +20,7 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Full Korean Roadmap - Zero to Near-Fluent, Self-Paced | Hookitlingo">
-<meta name="twitter:description" content="Every Hookitlingo Korean course mapped out from absolute beginner to near-fluent, Hangeul, grammar, particles, verbs, numbers and more. Free, offline, self-paced.">
+<meta name="twitter:description" content="Every Hookitlingo Korean course mapped out from absolute beginner to near-fluent. Community-funded, unlocked lesson by lesson, no ads, no subscriptions.">
 <meta name="twitter:image" content="https://hookit.online/og-image.png">
 
 <script type="application/ld+json">
@@ -28,7 +28,7 @@
   "@context": "https://schema.org",
   "@type": "Course",
   "name": "The Full Korean Roadmap",
-  "description": "A self-paced course roadmap covering Hangeul, grammar, particles, verb conjugation, and numbers, mapped from absolute beginner to near-fluent Korean.",
+  "description": "A community-funded, self-paced course roadmap covering Hangeul, grammar, particles, verb conjugation, and numbers, mapped from absolute beginner to near-fluent Korean.",
   "provider": {
     "@type": "Organization",
     "name": "Hookitlingo",
@@ -73,7 +73,7 @@
   --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
   --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --kr:"Noto Serif KR","Apple SD Gothic Neo","Malgun Gothic","Nanum Gothic",sans-serif;
-  --maxw:820px;
+  --maxw:720px;
 }
 html[data-theme="light"]{
   --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6;
@@ -115,6 +115,19 @@ button{font-family:var(--sans); cursor:pointer;}
   position:sticky; top:0; z-index:30; display:flex; align-items:center; justify-content:space-between;
   gap:14px; padding:16px 5vw 20px; max-width:1080px; margin:0 auto;
 }
+#topbar::before{
+  content:""; position:absolute; left:0; right:0; top:0;
+  height:100%; padding-bottom:36px; margin-bottom:-36px;
+  background-color:color-mix(in srgb, var(--ink) 72%, transparent);
+  -webkit-backdrop-filter:blur(14px) saturate(140%); backdrop-filter:blur(14px) saturate(140%);
+  -webkit-mask-image:linear-gradient(to bottom, #000 58%, transparent 100%);
+  mask-image:linear-gradient(to bottom, #000 58%, transparent 100%);
+  opacity:0; pointer-events:none; z-index:-1;
+  transition:opacity .35s ease;
+}
+#topbar.is-scrolled::before{ opacity:1; }
+#topbar.is-scrolled{ padding-top:10px; padding-bottom:20px; }
+#topbar .brand, #topbar .top-actions{ position:relative; z-index:1; }
 .brand{display:flex; align-items:center; gap:12px;}
 .brand-block{
   width:42px;height:42px;border-radius:50%; flex:none; position:relative;
@@ -133,227 +146,125 @@ button{font-family:var(--sans); cursor:pointer;}
 }
 .topbtn-support:hover{filter:brightness(1.07); color:#fff;}
 
-/* ============================================================
-   SUPPORT MODAL - donation flow
-   ============================================================ */
-.hkl-overlay{
-  position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
-  padding:20px; background:rgba(15,8,17,.55); backdrop-filter:blur(3px);
-  opacity:0; pointer-events:none; transition:opacity .25s ease;
-}
-.hkl-overlay.open{opacity:1; pointer-events:auto;}
-.hkl-card{
-  position:relative; width:100%; max-width:400px; background:var(--surface); border:1px solid var(--border);
-  border-radius:var(--radius); padding:32px 26px 26px; box-shadow:0 30px 70px rgba(0,0,0,.4);
-  transform:translateY(14px) scale(.98); transition:transform .3s cubic-bezier(.2,.9,.2,1); text-align:center;
-}
-.hkl-overlay.open .hkl-card{transform:translateY(0) scale(1);}
-.hkl-close{
-  position:absolute; top:12px; right:14px; background:none; border:none; color:var(--text-faint);
-  font-size:1.2em; line-height:1; padding:6px;
-}
-.hkl-close:hover{color:var(--text);}
-.hkl-icon{font-size:2.4em; margin-bottom:10px;}
-.hkl-card h3{font-size:1.3em; margin-bottom:10px;}
-.hkl-card p{color:var(--text-dim); font-size:.92em; margin-bottom:20px;}
-.hkl-actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
-.hkl-btn{border-radius:999px; padding:11px 20px; font-size:.88em; font-weight:700; border:1px solid transparent;}
-.hkl-btn-yes{background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%)); color:#fff;}
-.hkl-btn-yes:hover{filter:brightness(1.07);}
-.hkl-btn-no{background:var(--surface2); border-color:var(--border); color:var(--text-dim);}
-.hkl-btn-no:hover{color:var(--text); border-color:var(--text-faint);}
-.hkl-amounts{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;}
-.hkl-amt{
-  background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm);
-  padding:14px 8px; font-family:var(--serif); font-size:1.2em; font-weight:600; color:var(--text);
-  transition:border-color .2s, background .2s, color .2s;
-}
-.hkl-amt:hover{border-color:var(--vermilion);}
-.hkl-amt.selected{border-color:var(--vermilion); background:var(--vermilion-dim); color:var(--vermilion);}
-.hkl-custom-row{
-  display:flex; align-items:center; gap:6px; background:var(--surface2); border:1px solid var(--border);
-  border-radius:var(--radius-sm); padding:10px 14px; margin-bottom:20px;
-}
-.hkl-custom-row span{color:var(--text-faint); font-weight:600;}
-.hkl-custom-row input{
-  flex:1; background:none; border:none; outline:none; color:var(--text); font-family:var(--serif);
-  font-size:1.1em; font-weight:600; min-width:0;
-}
-.hkl-back{background:none; border:none; color:var(--text-faint); font-size:.8em; margin-bottom:14px; padding:2px;}
-.hkl-back:hover{color:var(--text);}
-.hkl-pay-btn{
-  width:100%; background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
-  color:#fff; border-radius:999px; padding:13px; font-size:.95em; font-weight:700; border:none;
-}
-.hkl-pay-btn:disabled{opacity:.4; cursor:default;}
-.hkl-secure-note{margin-top:14px; font-size:.72em; color:var(--text-faint); margin-bottom:0;}
-.hkl-loading-spinner{
-  width:40px; height:40px; border:3px solid var(--border);
-  border-top-color:var(--vermilion); border-radius:50%;
-  animation:spin 1s linear infinite; margin:20px auto;
-}
-@keyframes spin{to{transform:rotate(360deg);}}
-
 /* Hero */
 .hero{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:20px 5vw 10px; text-align:center;}
 .eyebrow{font-size:.78em; letter-spacing:.16em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:14px;}
-.hero h1{font-size:clamp(2em,5vw,3em); margin-bottom:14px;}
-.hero .sub{color:var(--text-dim); font-size:1.08em; max-width:600px; margin:0 auto 26px;}
+.hero h1{font-size:clamp(1.9em,5vw,3em); margin-bottom:14px;}
+.hero .sub{color:var(--text-dim); font-size:1.08em; max-width:560px; margin:0 auto 22px;}
+.hero-cta{
+  display:inline-block; padding:12px 26px; border-radius:999px; font-weight:700; font-size:.92em;
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+  color:#fff; box-shadow:0 10px 26px color-mix(in srgb, var(--vermilion) 40%, transparent);
+}
+.hero-cta:hover{filter:brightness(1.06); color:#fff;}
 
-/* Overall progress strip */
-.overall-progress{
-  position:relative; z-index:2; max-width:640px; margin:0 auto 50px; padding:22px 26px;
+/* Journey path - shows progress as a path of lessons, not a dollar figure */
+.journey{
+  position:relative; z-index:2; max-width:var(--maxw); margin:34px auto 34px; padding:22px 18px 24px;
   background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
   box-shadow:0 20px 50px rgba(0,0,0,.25);
 }
-.overall-progress .op-row{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;}
-.overall-progress .op-row b{font-family:var(--serif); font-size:1.6em; color:var(--gold);}
-.overall-progress .op-row span{color:var(--text-faint); font-size:.82em;}
-.op-track{height:10px; background:var(--surface2); border-radius:6px; overflow:hidden;}
-.op-fill{height:100%; border-radius:6px; background:linear-gradient(90deg,var(--vermilion),var(--gold)); transition:width 1.2s cubic-bezier(.2,.9,.2,1);}
-.op-legend{display:flex; gap:18px; margin-top:14px; font-size:.8em; color:var(--text-faint); flex-wrap:wrap;}
-.op-legend span{display:flex; align-items:center; gap:6px;}
-.op-dot{width:9px;height:9px;border-radius:50%; display:inline-block;}
-
-/* Journey timeline */
-.journey{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:0 5vw 100px;}
-.journey-line{position:absolute; left:calc(5vw + 27px); top:0; bottom:60px; width:3px; background:linear-gradient(var(--vermilion), var(--inkblue) 33%, var(--text-faint) 66%, var(--border)); opacity:.5; border-radius:3px;}
-@media(max-width:820px){.journey-line{left:calc(5vw + 18px);}}
-
-.phase{position:relative; margin-bottom:56px; opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
-.phase.in-view{opacity:1; transform:translateY(0);}
-.phase-head{display:flex; align-items:center; gap:18px; margin-bottom:22px; padding-left:0;}
-.phase-num{
-  width:56px;height:56px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
-  font-family:var(--serif); font-size:1.5em; font-weight:600; color:#fff; position:relative; z-index:2;
-  border:3px solid var(--ink);
+.journey-title{font-size:.74em; text-transform:uppercase; letter-spacing:.12em; color:var(--text-faint); text-align:center; margin-bottom:16px; font-weight:700;}
+.journey-track{
+  display:flex; align-items:center; justify-content:center; overflow-x:auto; padding:6px 6px 16px; -webkit-overflow-scrolling:touch;
 }
-.phase-num.status-active{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--vermilion) 85%, #fff 15%), var(--vermilion) 75%); box-shadow:0 0 0 4px color-mix(in srgb, var(--vermilion) 25%, transparent), 0 8px 24px color-mix(in srgb, var(--vermilion) 40%, transparent);}
-.phase-num.status-soon{background:var(--surface3); color:var(--text-faint); border-color:var(--border);}
-.phase-title-wrap h2{margin-bottom:2px;}
-.phase-title-wrap .phase-sub{color:var(--text-faint); font-size:.86em;}
-.phase-ribbon{
-  margin-left:auto; font-size:.7em; text-transform:uppercase; letter-spacing:.1em; font-weight:700;
-  padding:5px 14px; border-radius:20px; white-space:nowrap;
+.journey-track{scrollbar-width:none;}
+.journey-track::-webkit-scrollbar{display:none;}
+.journey-node{
+  width:36px; height:36px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
+  font-family:var(--serif); font-weight:700; font-size:.92em; position:relative;
 }
-.phase-ribbon.active{background:var(--vermilion-dim); color:var(--vermilion);}
-.phase-ribbon.soon{background:var(--surface2); color:var(--text-faint); border:1px solid var(--border);}
+.journey-node.done{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--celadon) 88%, #fff 12%), var(--celadon) 72%); color:#fff;}
+.journey-node.next{background:var(--surface2); border:2px solid var(--gold); color:var(--gold); animation:journey-pulse 1.8s ease-in-out infinite;}
+.journey-node.future{background:var(--surface2); border:1px solid var(--border); color:var(--text-faint);}
+@keyframes journey-pulse{
+  0%,100%{box-shadow:0 0 0 0 color-mix(in srgb, var(--gold) 45%, transparent);}
+  50%{box-shadow:0 0 0 6px transparent;}
+}
+.journey-line{width:26px; height:3px; flex:none; background:var(--border); border-radius:2px;}
+.journey-line.done{background:var(--celadon);}
+.journey-note{text-align:center; font-size:.86em; color:var(--text-dim);}
+.journey-note b{color:var(--gold);}
+.journey-subnote{text-align:center; font-size:.74em; color:var(--text-faint); margin-top:3px;}
+.journey-subnote a{color:var(--gold); font-weight:600;}
 
-.course-list{display:flex; flex-direction:column; gap:14px; padding-left:76px;}
-@media(max-width:820px){.course-list{padding-left:50px;}}
+/* Share button */
+.share-wrap{position:relative; z-index:2; max-width:560px; margin:0 auto 34px; text-align:center;}
+.share-btn{
+  display:inline-flex; align-items:center; gap:9px; padding:12px 24px; border-radius:999px;
+  background:var(--surface2); border:1px solid var(--border); color:var(--text); font-weight:600; font-size:.9em;
+}
+.share-btn:hover{border-color:var(--celadon); color:var(--text);}
+.share-btn svg{width:16px; height:16px; flex:none;}
+.share-note{margin-top:9px; font-size:.78em; color:var(--text-faint);}
+.share-toast{
+  position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); z-index:60;
+  background:var(--surface3); border:1px solid var(--border); color:var(--text); padding:10px 18px;
+  border-radius:999px; font-size:.85em; opacity:0; pointer-events:none; transition:opacity .25s, transform .25s;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+.share-toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+/* Lesson list (Phase 1 - fundable) */
+.section-label{
+  position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:0 5vw 12px;
+  font-size:.78em; text-transform:uppercase; letter-spacing:.12em; color:var(--text-faint); font-weight:700;
+}
+.lessons{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:0 5vw 44px; display:flex; flex-direction:column; gap:12px;}
 
 .rcard{
   position:relative; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  padding:18px 20px; display:flex; align-items:center; gap:16px; transition:border-color .2s, transform .2s;
+  padding:16px 18px; display:flex; align-items:center; gap:16px; transition:border-color .2s, transform .2s;
+  opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease, border-color .2s;
 }
-.rcard::before{
-  content:''; position:absolute; left:-76px; top:50%; transform:translateY(-50%); width:14px; height:14px; border-radius:50%;
-  background:var(--surface); border:3px solid var(--border); z-index:2;
-}
-@media(max-width:820px){.rcard::before{left:-50px; width:12px; height:12px; border-width:2px;}}
-.rcard.live{border-color:color-mix(in srgb, var(--celadon) 45%, var(--border));}
-.rcard.live::before{border-color:var(--celadon); background:var(--celadon);}
-.rcard.live:hover{transform:translateX(4px); border-color:var(--celadon);}
-.rcard.soon{opacity:.62;}
-.rcard.soon::before{border-color:var(--border);}
-.rcard.soon:hover{opacity:.85;}
+.rcard.in-view{opacity:1; transform:translateY(0);}
+.rcard.open{border-color:color-mix(in srgb, var(--celadon) 50%, var(--border));}
+.rcard.open:hover{border-color:var(--celadon); transform:translateX(4px) translateY(0);}
+.rcard.locked{opacity:.85;}
 
 .rcard-badge{
-  width:44px;height:44px;border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
-  font-family:var(--kr); font-weight:700; font-size:19px; color:#fff;
+  width:44px; height:44px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
+  font-family:var(--kr); font-weight:700; font-size:1.05em; color:#fff;
 }
-.rcard.live .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--inkblue) 88%, #fff 12%), var(--inkblue) 72%);}
-.rcard.soon .rcard-badge{background:var(--surface3); color:var(--text-faint);}
+.rcard.open .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--celadon) 88%, #fff 12%), var(--celadon) 72%);}
+.rcard.locked .rcard-badge{background:var(--surface3); color:var(--text-faint);}
 
 .rcard-body{flex:1; min-width:0;}
-.rcard-body .rc-title{font-family:var(--kr); font-size:1.08em; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
-.rcard-body .rc-en{color:var(--text-dim); font-size:.82em; margin-top:1px;}
-.rcard-body .rc-tag{color:var(--text-faint); font-size:.8em; margin-top:4px;}
-.rc-live-tag{font-size:.62em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--celadon-dim); color:var(--celadon);}
-.rc-soon-tag{font-size:.62em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--surface2); color:var(--text-faint); border:1px solid var(--border); display:inline-flex; align-items:center; gap:4px;}
+.rc-title{font-size:1.02em; font-weight:600; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+.rc-title .kr{font-size:1em;}
+.rc-desc{color:var(--text-dim); font-size:.84em; margin-top:3px;}
+.rc-free-tag{font-size:.6em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--celadon-dim); color:var(--celadon);}
+.rc-locked-tag{font-size:.6em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--surface2); color:var(--text-faint); border:1px solid var(--border); display:inline-flex; align-items:center; gap:4px;}
+.rc-soon-tag{font-size:.6em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--surface2); color:var(--text-faint); border:1px solid var(--border); display:inline-flex; align-items:center; gap:4px;}
 
-.rcard-actions{flex:none; display:flex; gap:8px;}
-.rc-btn{
-  font-size:.82em; font-weight:600; padding:8px 14px; border-radius:999px; white-space:nowrap; border:none;
-}
-.rc-btn.primary{background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%)); color:#fff;}
-.rc-btn.primary:hover{filter:brightness(1.06);}
-.rc-lock{color:var(--text-faint); font-size:1.1em;}
+.rcard-actions{flex:none;}
+.rc-btn{font-size:.8em; font-weight:600; padding:9px 16px; border-radius:999px; white-space:nowrap; border:none; display:inline-block;}
+.rc-btn.open-btn{background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%)); color:#fff;}
+.rc-btn.open-btn:hover{filter:brightness(1.06); color:#fff;}
+.rc-btn.support-btn{background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%)); color:#fff;}
+.rc-btn.support-btn:hover{filter:brightness(1.06); color:#fff;}
 
-/* ============================================================
-   UNLOCK MODAL
-   ============================================================ */
-.unlock-overlay{
-  position:fixed; inset:0; z-index:100; display:none; align-items:center; justify-content:center;
-  background:color-mix(in srgb, var(--ink) 70%, transparent); backdrop-filter:blur(3px); padding:20px;
+/* Coming soon phases (2-4) - simple, no unlock mechanics yet */
+.soon-phase{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:0 5vw 8px;}
+.soon-phase h3{font-size:1.05em; margin-bottom:2px;}
+.soon-phase .soon-sub{color:var(--text-faint); font-size:.8em; margin-bottom:14px;}
+.soon-list{display:flex; flex-direction:column; gap:10px; margin-bottom:36px;}
+.soon-card{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm);
+  padding:13px 16px; display:flex; align-items:center; gap:14px; opacity:.7;
 }
-.unlock-overlay.open{display:flex;}
-.unlock-box{
-  width:100%; max-width:360px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  padding:26px 24px 22px; box-shadow:0 20px 60px color-mix(in srgb, var(--ink) 45%, transparent);
-  animation:unlockIn .18s cubic-bezier(.2,.9,.2,1);
+.soon-badge{
+  width:36px; height:36px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
+  font-family:var(--kr); font-weight:700; font-size:.92em; color:var(--text-faint); background:var(--surface3);
 }
-@keyframes unlockIn{from{opacity:0; transform:translateY(8px) scale(.98);} to{opacity:1; transform:none;}}
-.unlock-box h3{font-size:1.15em; margin-bottom:4px;}
-.unlock-box .unlock-sub{color:var(--text-dim); font-size:.85em; margin-bottom:16px;}
-.unlock-box input[type="text"]{
-  width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:10px; color:var(--text);
-  font-family:var(--sans); font-size:.95em; padding:11px 13px; outline:none; letter-spacing:.02em;
-}
-.unlock-box input[type="text"]:focus{border-color:var(--celadon);}
-.unlock-error{min-height:1.2em; color:#e0713f; font-size:.78em; margin-top:8px;}
-.unlock-actions{display:flex; gap:10px; margin-top:16px;}
-.unlock-actions .rc-btn{flex:1; padding:10px 12px; font-size:.85em; text-align:center;}
-.unlock-actions .rc-btn.ghost{background:var(--surface2); color:var(--text-dim); border:1px solid var(--border);}
-.unlock-actions .rc-btn.ghost:hover{color:var(--text); border-color:var(--text-faint);}
-.unlock-actions .rc-btn.primary:disabled{opacity:.6; filter:none; cursor:default;}
-.unlock-note{
-  margin-top:18px; padding:14px 16px; border-radius:var(--radius-sm);
-  background:linear-gradient(135deg, color-mix(in srgb, var(--vermilion) 16%, var(--surface2)), color-mix(in srgb, var(--gold) 14%, var(--surface2)));
-  border:1px solid color-mix(in srgb, var(--vermilion) 35%, var(--border));
-  color:var(--text-dim); font-size:.82em; line-height:1.5; text-align:center;
-}
-.unlock-note p{margin:0 0 10px; color:var(--text-dim);}
-.unlock-note a.unlock-note-cta{
-  display:inline-block; width:100%; padding:11px 14px; border-radius:999px;
-  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
-  color:#fff; font-weight:700; font-size:1em; letter-spacing:.01em;
-  box-shadow:0 6px 16px color-mix(in srgb, var(--vermilion) 45%, transparent);
-  transition:filter .15s ease, transform .15s ease;
-}
-.unlock-note a.unlock-note-cta:hover{filter:brightness(1.08); transform:translateY(-1px); color:#fff;}
+.soon-body{flex:1; min-width:0;}
+.soon-title{font-size:.94em; font-weight:600; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+.soon-en{color:var(--text-faint); font-size:.78em; margin-top:2px;}
 
-/* ===== MOBILE RESPONSIVENESS ===== */
-@media(max-width:640px){
-  #topbar{flex-direction:column; align-items:flex-start; gap:10px; padding:14px 5vw 16px;}
-  .top-actions{flex-wrap:wrap;}
-  .hero{padding:16px 5vw 8px;}
-  .hero h1{font-size:1.9em;}
-  .hero .sub{font-size:.95em;}
-  .overall-progress{padding:16px 18px; margin-bottom:36px;}
-  .overall-progress .op-row b{font-size:1.3em;}
-  .op-legend{gap:10px; font-size:.75em;}
-  
-  .journey-line{left:22px !important;}
-  .phase{margin-bottom:40px;}
-  .phase-head{gap:12px; flex-wrap:wrap;}
-  .phase-num{width:44px;height:44px;font-size:1.2em; border-width:2px;}
-  .phase-title-wrap h2{font-size:1.3em;}
-  .phase-title-wrap .phase-sub{font-size:.78em;}
-  .phase-ribbon{margin-left:0; margin-top:6px; font-size:.6em; padding:3px 10px;}
-  
-  .course-list{padding-left:52px !important; gap:10px;}
-  .rcard{padding:14px 16px; gap:12px;}
-  .rcard::before{left:-52px !important; width:10px; height:10px;}
-  .rcard-badge{width:36px;height:36px;font-size:15px;}
-  .rcard-body .rc-title{font-size:.95em;}
-  .rcard-body .rc-en{font-size:.78em;}
-  .rc-btn{padding:7px 12px; font-size:.78em;}
-}
-
-@media(max-width:560px){
+@media(max-width:520px){
   .rcard{flex-wrap:wrap;}
-  .rcard-actions{width:100%; justify-content:flex-end;}
+  .rcard-actions{width:100%;}
+  .rc-btn{width:100%; text-align:center;}
 }
 
 footer{position:relative; z-index:2; text-align:center; padding:10px 5vw 60px; color:var(--text-faint); font-size:.85em;}
@@ -371,286 +282,241 @@ footer a{text-decoration:underline;}
   </div>
   <div class="top-actions">
     <a class="topbtn" href="index.html">← Course Catalog</a>
+    <!-- Replace this href with your Korean Ko-fi goal page URL -->
+    <a class="topbtn topbtn-support" href="https://ko-fi.com/YOUR_KOFI_KR_PAGE" target="_blank" rel="noopener">Support the Goal</a>
     <button class="topbtn" id="themeBtn">☾ Dark</button>
   </div>
 </div>
 
 <div class="hero">
-  <div class="eyebrow">The Full Curriculum</div>
+  <div class="eyebrow">Community-Funded</div>
   <h1>Zero to <span class="kr" style="color:var(--gold); font-style:italic;">near-fluent</span>, mapped out.</h1>
-  <p class="sub">Nineteen courses across four phases, each one building your confidence for the next, a clear path that takes you all the way from your first word to real, natural conversations.</p>
+  <p class="sub">No ads, no subscriptions. Just a community-funded course, unlocked lesson by lesson. Lesson 1 is already open thanks to early support, and every other lesson unlocks for everyone once we hit the goal together, no matter how much you personally gave.</p>
+  <!-- Replace this href with your Korean Ko-fi goal page URL -->
+  <a class="hero-cta" href="https://ko-fi.com/YOUR_KOFI_KR_PAGE" target="_blank" rel="noopener">Support the Goal →</a>
 </div>
 
-<div class="overall-progress" id="overallProgress"></div>
+<div class="journey" id="journey"></div>
 
-<div class="journey">
-  <div class="journey-line"></div>
-  <div id="phases"></div>
+<div class="share-wrap">
+  <button class="share-btn" id="shareBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/></svg>
+    Share with a fellow learner
+  </button>
+  <div class="share-note">Every share gets us a little closer, together.</div>
 </div>
 
-<div class="unlock-overlay" id="unlockOverlay" role="dialog" aria-modal="true" aria-labelledby="unlockTitle">
-  <div class="unlock-box">
-    <h3 id="unlockTitle">Enter your access code</h3>
-    <p class="unlock-sub">You'll find this in the PDF you received after purchase.</p>
-    <input type="text" id="unlockCode" placeholder="e.g. KR-HANLINGO-XXXX" autocomplete="off" autocapitalize="off" spellcheck="false">
-    <div class="unlock-error" id="unlockError"></div>
-    <div class="unlock-actions">
-      <button type="button" class="rc-btn ghost" id="unlockCancelBtn">Cancel</button>
-      <button type="button" class="rc-btn primary" id="unlockSubmitBtn">Unlock</button>
-    </div>
-    <div class="unlock-note">
-      <p>Don't have a code yet? Get this lesson (or a bundle) and receive your code instantly.</p>
-      <a class="unlock-note-cta" href="https://hookitlingo.gumroad.com/l/ydoivu?layout=profile" target="_blank" rel="noopener">Get your code on Gumroad →</a>
-    </div>
-  </div>
-</div>
+<div class="section-label">Phase 1: Foundations</div>
+<div class="lessons" id="lessons"></div>
+
+<div id="soonPhases"></div>
+
+<div class="share-toast" id="shareToast">Copied! Go ahead and paste it.</div>
+
+<footer>
+  <p>Hookitlingo · <a href="index.html">Course Catalog</a></p>
+</footer>
 
 <script>
 /* ============================================================
-   LESSON ACCESS
-   Backed by /api/my-access + /api/unlock on the Hookit server.
-   Set API_BASE if the backend is hosted on a different domain
-   than this page (e.g. 'https://api.hookit.online'); leave it as
-   '' if the API is served from the same origin as this page.
-   COURSE_ID tells the shared server which product's lessons and
-   unlock codes this page cares about, so a Korean code doesn't
-   accidentally unlock Japanese lessons (or vice versa).
+   LESSON DATA (Phase 1 - fundable)
+   Lesson 1 is always unlocked. Lessons 2-5 unlock automatically,
+   in order, as CURRENT_PROGRESS_PCT rises. Each lesson needs an
+   equal 1/5th share of the $10k goal (20%) on top of the last one.
+
+   TO UPDATE: just change CURRENT_PROGRESS_PCT below by hand whenever
+   you check your Ko-fi total. Nothing else needs editing, the lessons
+   unlock themselves once the math crosses their mark.
+
+   Update `file` values to match whatever you actually name the
+   files once you upload them to /coursekr.
    ============================================================ */
-const API_BASE = '';
-const COURSE_ID = 'kr';
 
-let ACCESS = { all:false, slugs:[] };
-let pendingUnlockSlug = null;
+// Replace with your real Korean Ko-fi goal page URL. Used by every locked lesson's button.
+const KOFI_URL = 'https://ko-fi.com/YOUR_KOFI_KR_PAGE';
 
-function isLessonUnlocked(slug){
-  return ACCESS.all || ACCESS.slugs.includes(slug);
-}
+// 0-100. Update this by hand as the $10k goal fills up, everything else recalculates from it.
+const CURRENT_PROGRESS_PCT = 0;
 
-async function loadAccess(){
-  try{
-    const res = await fetch(`${API_BASE}/api/my-access?course=${COURSE_ID}`, { credentials:'include' });
-    if(res.ok){
-      const data = await res.json();
-      ACCESS = { all: !!data.all, slugs: Array.isArray(data.slugs) ? data.slugs : [] };
-    }
-  }catch(err){
-    console.warn('Could not load lesson access state', err);
-  }
-}
+const LESSONS = [
+  { n:1, file:'courseskr/hanlingo.html',        kr:'한글 Hangeul',       en:'Learn to Read Korean in One Hour', badge:'한' },
+  { n:2, file:'courseskr/korean-grammar.html',   kr:'한국어 문법',        en:'Grammar Part 1: Sentence Building', badge:'문' },
+  { n:3, file:'courseskr/korean-particlesg.html',kr:'한국어 조사',        en:'Grammar Part 2: Particles', badge:'조' },
+  { n:4, file:'courseskr/korean-numbers.html',   kr:'숫자와 시간',        en:'Numbers, Counters &amp; Time', badge:'수' },
+  { n:5, file:'courseskr/korean-verbs.html',     kr:'동사 활용',          en:'Verb Tenses &amp; Conjugation', badge:'동' },
+];
 
-function openUnlockModal(slug){
-  pendingUnlockSlug = slug;
-  const overlay = document.getElementById('unlockOverlay');
-  const input = document.getElementById('unlockCode');
-  document.getElementById('unlockError').textContent = '';
-  input.value = '';
-  overlay.classList.add('open');
-  setTimeout(()=>input.focus(), 30);
-}
-
-function closeUnlockModal(){
-  document.getElementById('unlockOverlay').classList.remove('open');
-  pendingUnlockSlug = null;
-}
-
-async function submitUnlockCode(){
-  const input = document.getElementById('unlockCode');
-  const errEl = document.getElementById('unlockError');
-  const submitBtn = document.getElementById('unlockSubmitBtn');
-  const code = input.value.trim();
-
-  if(!code){
-    errEl.textContent = 'Please enter your access code.';
-    return;
-  }
-
-  submitBtn.disabled = true;
-  const originalLabel = submitBtn.textContent;
-  submitBtn.textContent = 'Checking…';
-  errEl.textContent = '';
-
-  try{
-    const res = await fetch(`${API_BASE}/api/unlock`, {
-      method:'POST',
-      credentials:'include',
-      headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify({ code, course: COURSE_ID })
-    });
-    const data = await res.json().catch(()=>({}));
-
-    if(!res.ok || !data.ok){
-      errEl.textContent = data.error || 'That code was not recognized.';
-      return;
-    }
-
-    ACCESS = { all: !!data.all, slugs: Array.isArray(data.slugs) ? data.slugs : [] };
-    const slugToOpen = pendingUnlockSlug;
-    closeUnlockModal();
-    refreshLessonActions();
-    if(slugToOpen) window.open(`${API_BASE}/lesson/${COURSE_ID}/${slugToOpen}`, '_blank', 'noopener');
-  }catch(err){
-    errEl.textContent = 'Something went wrong — please try again.';
-  }finally{
-    submitBtn.disabled = false;
-    submitBtn.textContent = originalLabel;
-  }
-}
-
-/* ============================================================
-   ROADMAP DATA - the full 19-course curriculum plan
-   Live courses use `slug` (matching the file's protected route)
-   instead of a direct `file` link, so they open only once unlocked.
-   ============================================================ */
-const PHASES = [
+// Phase 2-4 - not part of the funding goal yet, shown as a preview of what's coming next.
+const SOON_PHASES = [
   {
-    num: 1, status: 'active', title: 'Foundations', sub: 'Absolute beginner',
+    title: 'Phase 2: Elementary', sub: 'Basic real conversation · TOPIK I',
     courses: [
-      {kr:'한글 Hangeul', en:'Learn to Read Korean in One Hour', badge:'한', status:'live', slug:'hanlingo'},
-      {kr:'한국어 문법', en:'Grammar Part 1 - Sentence Building', badge:'문', status:'live', slug:'korean-grammar'},
-      {kr:'한국어 조사', en:'Grammar Part 2 - Particles', badge:'조', status:'live', slug:'korean-particlesg'},
-      {kr:'숫자와 시간', en:'Numbers, Counters & Time', badge:'수', status:'live', slug:'korean-numbers'},
-      {kr:'동사 활용', en:'Verb Tenses & Conjugation', badge:'동', status:'live', slug:'korean-verbs' },
+      {kr:'존댓말과 반말', en:'Speech Levels &amp; Politeness', badge:'존'},
+      {kr:'위치와 존재', en:'Location, Existence &amp; Possession', badge:'위'},
+      {kr:'연결어미 I', en:'Core Connectives I (고, 아서/어서, (으)면)', badge:'연'},
+      {kr:'묘사와 비교', en:'Descriptive Sentences &amp; Comparison', badge:'묘'},
+      {kr:'일상 어휘', en:'Daily Life Vocabulary', badge:'일'},
     ]
   },
   {
-    num: 2, status: 'soon', title: 'Elementary', sub: 'Basic real conversation · TOPIK I',
+    title: 'Phase 3: Intermediate', sub: 'Sustained conversation · TOPIK II entry',
     courses: [
-      {kr:'존댓말과 반말', en:'Speech Levels & Politeness', badge:'존', status:'soon'},
-      {kr:'위치와 존재', en:'Location, Existence & Possession', badge:'위', status:'soon'},
-      {kr:'연결어미 I', en:'Core Connectives I (고, 아서/어서, (으)면)', badge:'연', status:'soon'},
-      {kr:'묘사와 비교', en:'Descriptive Sentences & Comparison', badge:'묘', status:'soon'},
-      {kr:'일상 어휘', en:'Daily Life Vocabulary', badge:'일', status:'soon'},
+      {kr:'연결어미 II', en:'Core Connectives II (지만, 는데, 거나)', badge:'연'},
+      {kr:'높임말', en:'Honorifics &amp; Formal Speech', badge:'높'},
+      {kr:'자연스러운 회화', en:'Natural Spoken Korean', badge:'회'},
+      {kr:'미묘한 조사', en:'Nuance Particles (도, 만, 밖에, 조차)', badge:'미'},
+      {kr:'읽기와 쓰기', en:'Reading &amp; Writing Practice', badge:'읽'},
     ]
   },
   {
-    num: 3, status: 'soon', title: 'Intermediate', sub: 'Sustained conversation · TOPIK II entry',
+    title: 'Phase 4: Upper-Intermediate', sub: 'Near-fluent, functional in most situations',
     courses: [
-      {kr:'연결어미 II', en:'Core Connectives II (지만, 는데, 거나)', badge:'연', status:'soon'},
-      {kr:'높임말', en:'Honorifics & Formal Speech', badge:'높', status:'soon'},
-      {kr:'자연스러운 회화', en:'Natural Spoken Korean', badge:'회', status:'soon'},
-      {kr:'미묘한 조사', en:'Nuance Particles (도, 만, 밖에, 조차)', badge:'미', status:'soon'},
-      {kr:'읽기와 쓰기', en:'Reading & Writing Practice', badge:'읽', status:'soon'},
-    ]
-  },
-  {
-    num: 4, status: 'soon', title: 'Upper-Intermediate', sub: 'Near-fluent, functional in most situations',
-    courses: [
-      {kr:'복문', en:'Complex Sentences (nominalization, indirect quotation)', badge:'복', status:'soon'},
-      {kr:'비즈니스 한국어', en:'Business & Professional Korean', badge:'비', status:'soon'},
-      {kr:'뉴스와 소설', en:'Reading News & Short Fiction', badge:'뉴', status:'soon'},
-      {kr:'종합 회화', en:'Capstone: Extended Conversation', badge:'종', status:'soon'},
+      {kr:'복문', en:'Complex Sentences (nominalization, indirect quotation)', badge:'복'},
+      {kr:'비즈니스 한국어', en:'Business &amp; Professional Korean', badge:'비'},
+      {kr:'뉴스와 소설', en:'Reading News &amp; Short Fiction', badge:'뉴'},
+      {kr:'종합 회화', en:'Capstone: Extended Conversation', badge:'종'},
     ]
   },
 ];
 
-/* ============================================================
-   RENDER
-   ============================================================ */
-function renderOverall(){
-  const all = PHASES.flatMap(p=>p.courses);
-  const live = all.filter(c=>c.status==='live').length;
-  const pct = Math.round((live/all.length)*100);
-  document.getElementById('overallProgress').innerHTML = `
-    <div class="op-row"><span>Course engine live</span><b>${live} / ${all.length}</b></div>
-    <div class="op-track"><div class="op-fill" style="width:${pct}%"></div></div>
-    <div class="op-legend">
-      <span><span class="op-dot" style="background:var(--celadon)"></span> Available now</span>
-      <span><span class="op-dot" style="background:var(--border)"></span> Coming soon</span>
-    </div>
+function thresholdFor(index){ return (index / LESSONS.length) * 100; } // index is 0-based
+function isUnlocked(index){ return index === 0 || CURRENT_PROGRESS_PCT >= thresholdFor(index) - 0.001; }
+
+function renderJourney(){
+  const nextIndex = LESSONS.findIndex((l,i)=>!isUnlocked(i));
+  let nodesHtml = '';
+  LESSONS.forEach((l,i)=>{
+    const cls = isUnlocked(i) ? 'done' : (i === nextIndex ? 'next' : 'future');
+    nodesHtml += `<div class="journey-node ${cls}">${l.n}</div>`;
+    if(i < LESSONS.length - 1){
+      const lineDone = isUnlocked(i+1);
+      nodesHtml += `<div class="journey-line ${lineDone ? 'done' : ''}"></div>`;
+    }
+  });
+
+  let note, subnote;
+  if(nextIndex === -1){
+    note = `All 5 Phase 1 lessons are unlocked 🎉`;
+    subnote = `Thank you to everyone who helped get here.`;
+  } else {
+    const remaining = Math.max(0, thresholdFor(nextIndex) - CURRENT_PROGRESS_PCT);
+    note = `<b>${remaining.toFixed(1)}%</b> more to unlock Lesson ${nextIndex + 1}`;
+    subnote = `Every share and every bit of support moves this closer. <a href="${KOFI_URL}" target="_blank" rel="noopener">Support it here →</a>`;
+  }
+
+  document.getElementById('journey').innerHTML = `
+    <div class="journey-title">Our Journey: ${LESSONS.filter((l,i)=>isUnlocked(i)).length} of ${LESSONS.length} unlocked</div>
+    <div class="journey-track">${nodesHtml}</div>
+    <div class="journey-note">${note}</div>
+    <div class="journey-subnote">${subnote}</div>
   `;
 }
 
-function actionHtml(slug){
-  if(isLessonUnlocked(slug)){
-    return `<a href="${API_BASE}/lesson/${COURSE_ID}/${slug}" target="_blank" rel="noopener" class="rc-btn primary">Open</a>`;
-  }
-  return `<button type="button" class="rc-btn primary" onclick="openUnlockModal('${slug}')">🔒 Unlock</button>`;
-}
-
-function courseCard(c){
-  if(c.status==='live'){
+function lessonCard(l, i){
+  if(isUnlocked(i)){
     return `
-    <div class="rcard live">
-      <div class="rcard-badge kr">${c.badge}</div>
+    <div class="rcard open">
+      <div class="rcard-badge kr">${l.badge}</div>
       <div class="rcard-body">
-        <div class="rc-title">${c.kr} <span class="rc-live-tag">Available</span></div>
-        <div class="rc-en">${c.en}</div>
+        <div class="rc-title"><span class="kr">${l.kr}</span> <span class="rc-free-tag">${i === 0 ? 'Unlocked' : 'Unlocked'}</span></div>
+        <div class="rc-desc">${l.en}</div>
       </div>
-      <div class="rcard-actions" data-lesson-slug="${c.slug}">${actionHtml(c.slug)}</div>
+      <div class="rcard-actions">
+        <a class="rc-btn open-btn" href="${l.file}" target="_blank" rel="noopener">Open</a>
+      </div>
     </div>`;
   }
   return `
-    <div class="rcard soon">
-      <div class="rcard-badge kr">${c.badge}</div>
-      <div class="rcard-body">
-        <div class="rc-title">${c.kr} <span class="rc-soon-tag">🔒 Coming soon</span></div>
-        <div class="rc-en">${c.en}</div>
-      </div>
-    </div>`;
+  <div class="rcard locked">
+    <div class="rcard-badge kr">${l.badge}</div>
+    <div class="rcard-body">
+      <div class="rc-title"><span class="kr">${l.kr}</span> <span class="rc-locked-tag">🔒 Locked</span></div>
+      <div class="rc-desc">${l.en}</div>
+    </div>
+    <div class="rcard-actions">
+      <a class="rc-btn support-btn" href="${KOFI_URL}" target="_blank" rel="noopener">Support to Unlock</a>
+    </div>
+  </div>`;
 }
 
-// Re-paints just the action button on every lesson card in place,
-// based on the current ACCESS state — used after a successful
-// unlock so the rest of the card (and its scroll-reveal state) is
-// left untouched.
-function refreshLessonActions(){
-  document.querySelectorAll('.rcard-actions[data-lesson-slug]').forEach(el=>{
-    const slug = el.getAttribute('data-lesson-slug');
-    el.innerHTML = actionHtml(slug);
-  });
-}
+function renderLessons(){
+  const host = document.getElementById('lessons');
+  host.innerHTML = LESSONS.map(lessonCard).join('');
 
-function renderPhases(){
-  const host = document.getElementById('phases');
-  host.innerHTML = PHASES.map(p=>{
-    const liveCount = p.courses.filter(c=>c.status==='live').length;
-    return `
-    <div class="phase" data-phase="${p.num}">
-      <div class="phase-head">
-        <div class="phase-num status-${p.status}">${p.num}</div>
-        <div class="phase-title-wrap">
-          <h2>Phase ${p.num} - ${p.title}</h2>
-          <div class="phase-sub">${p.sub} · ${liveCount}/${p.courses.length} live</div>
-        </div>
-        <div class="phase-ribbon ${p.status==='active'?'active':'soon'}">${p.status==='active'?'Active Phase':'Coming Soon'}</div>
-      </div>
-      <div class="course-list">
-        ${p.courses.map(courseCard).join('')}
-      </div>
-    </div>`;
-  }).join('');
-}
-
-/* Unlock modal wiring */
-document.getElementById('unlockCancelBtn').addEventListener('click', closeUnlockModal);
-document.getElementById('unlockSubmitBtn').addEventListener('click', submitUnlockCode);
-document.getElementById('unlockOverlay').addEventListener('click', (e)=>{
-  if(e.target.id === 'unlockOverlay') closeUnlockModal();
-});
-document.getElementById('unlockCode').addEventListener('keydown', (e)=>{
-  if(e.key === 'Enter') submitUnlockCode();
-});
-document.addEventListener('keydown', (e)=>{
-  if(e.key === 'Escape' && document.getElementById('unlockOverlay').classList.contains('open')) closeUnlockModal();
-});
-
-/* Load whatever's already unlocked (from a prior code redemption)
-   before the first render, so already-owned lessons render as
-   directly openable with no code prompt and no flash of the locked
-   state. */
-(async function init(){
-  await loadAccess();
-  renderOverall();
-  renderPhases();
-
-  /* Scroll-reveal for each phase */
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in-view'); });
-  }, {threshold:.12});
-  document.querySelectorAll('.phase').forEach(el=>io.observe(el));
+  }, {threshold:.1});
+  document.querySelectorAll('.rcard').forEach(el=>io.observe(el));
+}
+
+function renderSoonPhases(){
+  const host = document.getElementById('soonPhases');
+  host.innerHTML = SOON_PHASES.map(p => `
+    <div class="soon-phase">
+      <h3>${p.title}</h3>
+      <div class="soon-sub">${p.sub}</div>
+      <div class="soon-list">
+        ${p.courses.map(c => `
+          <div class="soon-card">
+            <div class="soon-badge kr">${c.badge}</div>
+            <div class="soon-body">
+              <div class="soon-title"><span class="kr">${c.kr}</span> <span class="rc-soon-tag">🔒 Coming soon</span></div>
+              <div class="soon-en">${c.en}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+renderJourney();
+renderLessons();
+renderSoonPhases();
+
+/* Share button - uses the device's native share sheet (Web Share API)
+   when available (mobile browsers, most modern desktop browsers), and
+   falls back to copying the message + link to the clipboard elsewhere. */
+(function(){
+  const PAGE_URL = 'https://hookit.online/roadmap.html';
+  const SHARE_TEXT = "Someone shared this free Korean roadmap with me, so I'm passing it along. Lesson 1's already unlocked, and if enough of us learning Korean share it, the rest opens up for everyone 🙏🌸";
+
+  const btn = document.getElementById('shareBtn');
+  const toast = document.getElementById('shareToast');
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(()=> toast.classList.remove('show'), 2600);
+  }
+
+  btn.addEventListener('click', async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'The Full Korean Roadmap', text: SHARE_TEXT, url: PAGE_URL });
+      } catch (err) {
+        // user closed the share sheet - not an error, do nothing
+      }
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(`${SHARE_TEXT} ${PAGE_URL}`);
+      showToast('Copied! Go ahead and paste it.');
+    } catch (err) {
+      showToast('Copy this link: ' + PAGE_URL);
+    }
+  });
 })();
 
-/* Theme toggle - shares the same key as the catalog page */
+/* Sticky top bar scroll shadow */
+(function(){
+  const bar = document.getElementById('topbar');
+  const onScroll = () => bar.classList.toggle('is-scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+})();
+
+/* Theme toggle - shares the same key as the rest of the site */
 const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
 function applyTheme(){
   document.documentElement.setAttribute('data-theme', ThemeState.theme);
@@ -684,10 +550,6 @@ applyTheme();
     host.appendChild(p);
   }
 })();
-
-/* ============================================================
-   SUPPORT - links to the Supporter Wall (supporters.html)
-   ============================================================ */
 </script>
 </body>
 </html>
