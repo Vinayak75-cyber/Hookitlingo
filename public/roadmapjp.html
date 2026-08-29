@@ -58,7 +58,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941;
@@ -67,14 +67,12 @@
   --vermilion:#e58aa2; --vermilion-dim:#5a2c3a;
   --celadon:#5fa688; --celadon-dim:#2a4a3d;
   --gold:#d9ab5c; --gold-dim:#5c471e;
-  --inkblue:#a084c9; --inkblue-dim:#3a2c50;
   --petal:#f3b6c6;
   --radius:16px; --radius-sm:10px;
   --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
   --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --kr:"Noto Serif KR","Apple SD Gothic Neo","Malgun Gothic","Nanum Gothic",sans-serif;
   --jp:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  --maxw:820px;
+  --maxw:720px;
 }
 html[data-theme="light"]{
   --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6;
@@ -83,7 +81,6 @@ html[data-theme="light"]{
   --vermilion:#c8546f; --vermilion-dim:#f6dae2;
   --celadon:#3f7d63; --celadon-dim:#d9ece2;
   --gold:#a4762b; --gold-dim:#f2e2c2;
-  --inkblue:#75509f; --inkblue-dim:#e7ddf2;
   --petal:#e59fb2;
 }
 *{box-sizing:border-box;}
@@ -141,142 +138,56 @@ button{font-family:var(--sans); cursor:pointer;}
 .top-actions{display:flex; gap:8px; align-items:center;}
 .topbtn{background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); border-radius:8px; padding:7px 14px; font-size:.85em;}
 .topbtn:hover{color:var(--text); border-color:var(--celadon);}
-.topbtn-support{
-  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
-  border:1px solid transparent; color:#fff; font-weight:600;
-}
-.topbtn-support:hover{filter:brightness(1.07); color:#fff;}
 
 /* Hero */
 .hero{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:20px 5vw 10px; text-align:center;}
 .eyebrow{font-size:.78em; letter-spacing:.16em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:14px;}
-.hero h1{font-size:clamp(2em,5vw,3em); margin-bottom:14px;}
-.hero .sub{color:var(--text-dim); font-size:1.08em; max-width:620px; margin:0 auto 26px;}
+.hero h1{font-size:clamp(1.9em,5vw,3em); margin-bottom:14px;}
+.hero .sub{color:var(--text-dim); font-size:1.08em; max-width:580px; margin:0 auto 22px;}
 
-/* Overall progress strip */
-.overall-progress{
-  position:relative; z-index:2; max-width:640px; margin:0 auto 50px; padding:22px 26px;
-  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  box-shadow:0 20px 50px rgba(0,0,0,.25);
+/* Level list - same flat card language as jlptn5roadmap.html */
+.section-label{
+  position:relative; z-index:2; max-width:var(--maxw); margin:36px auto 0; padding:0 5vw 12px;
+  font-size:.78em; text-transform:uppercase; letter-spacing:.12em; color:var(--text-faint); font-weight:700;
 }
-.overall-progress .op-row{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;}
-.overall-progress .op-row b{font-family:var(--serif); font-size:1.6em; color:var(--gold);}
-.overall-progress .op-row span{color:var(--text-faint); font-size:.82em;}
-.op-track{height:10px; background:var(--surface2); border-radius:6px; overflow:hidden;}
-.op-fill{height:100%; border-radius:6px; background:linear-gradient(90deg,var(--vermilion),var(--gold)); transition:width 1.2s cubic-bezier(.2,.9,.2,1);}
-.op-legend{display:flex; gap:18px; margin-top:14px; font-size:.8em; color:var(--text-faint); flex-wrap:wrap;}
-.op-legend span{display:flex; align-items:center; gap:6px;}
-.op-dot{width:9px;height:9px;border-radius:50%; display:inline-block;}
-
-/* Journey timeline */
-.journey{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:0 5vw 100px;}
-.journey-line{position:absolute; left:calc(5vw + 27px); top:0; bottom:60px; width:3px; background:linear-gradient(var(--vermilion), var(--gold) 50%, var(--border)); opacity:.5; border-radius:3px;}
-@media(max-width:820px){.journey-line{left:calc(5vw + 18px);}}
-
-.phase{position:relative; margin-bottom:56px; opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
-.phase.in-view{opacity:1; transform:translateY(0);}
-.phase-head{display:flex; align-items:center; gap:18px; margin-bottom:22px; padding-left:0;}
-.phase-num{
-  width:56px;height:56px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
-  font-family:var(--serif); font-size:1.4em; font-weight:600; color:#fff; position:relative; z-index:2;
-  border:3px solid var(--ink); background:var(--surface3); color:var(--text-faint);
-}
-.phase-title-wrap h2{margin-bottom:2px;}
-.phase-title-wrap .phase-sub{color:var(--text-faint); font-size:.86em;}
-.phase-ribbon{
-  margin-left:auto; font-size:.7em; text-transform:uppercase; letter-spacing:.1em; font-weight:700;
-  padding:5px 14px; border-radius:20px; white-space:nowrap;
-  background:var(--surface2); color:var(--text-faint); border:1px solid var(--border);
-}
-
-.course-list{display:flex; flex-direction:column; gap:14px; padding-left:76px;}
-@media(max-width:820px){.course-list{padding-left:50px;}}
+.lessons{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:0 5vw 60px; display:flex; flex-direction:column; gap:12px;}
 
 .rcard{
   position:relative; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  padding:18px 20px; display:flex; align-items:center; gap:16px; opacity:.72; transition:border-color .2s, opacity .2s, transform .2s;
+  padding:16px 18px; display:flex; align-items:center; gap:16px; transition:border-color .2s, transform .2s;
+  opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease, border-color .2s;
 }
-.rcard::before{
-  content:''; position:absolute; left:-76px; top:50%; transform:translateY(-50%); width:14px; height:14px; border-radius:50%;
-  background:var(--surface); border:3px solid var(--border); z-index:2;
-}
-@media(max-width:820px){.rcard::before{left:-50px; width:12px; height:12px; border-width:2px;}}
-.rcard:hover{opacity:.92;}
-.rcard.next{opacity:1; border-color:color-mix(in srgb, var(--gold) 50%, var(--border));}
-.rcard.next::before{border-color:var(--gold); background:var(--gold);}
-.rcard.next:hover{transform:translateX(4px); border-color:var(--gold);}
-.rcard.next .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--gold) 88%, #fff 12%), var(--gold) 72%); color:#fff;}
-.rc-next-tag{font-size:.62em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--gold-dim); color:var(--gold);}
-.rc-btn{font-size:.8em; font-weight:600; padding:8px 15px; border-radius:999px; white-space:nowrap;}
-.rc-btn.primary{background:linear-gradient(135deg,var(--gold), color-mix(in srgb, var(--gold) 55%, var(--vermilion) 45%)); color:#fff;}
-.rc-btn.primary:hover{filter:brightness(1.06);}
+.rcard.in-view{opacity:1; transform:translateY(0);}
+.rcard.open{border-color:color-mix(in srgb, var(--celadon) 50%, var(--border));}
+.rcard.open:hover{border-color:var(--celadon); transform:translateX(4px) translateY(0);}
+.rcard.locked{opacity:.85;}
 
 .rcard-badge{
-  width:48px;height:48px;border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
-  font-family:var(--serif); font-weight:700; font-size:17px; background:var(--surface3); color:var(--text-faint);
+  width:44px; height:44px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
+  font-family:var(--serif); font-weight:700; font-size:1em; color:#fff;
 }
+.rcard.open .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--celadon) 88%, #fff 12%), var(--celadon) 72%);}
+.rcard.locked .rcard-badge{background:var(--surface3); color:var(--text-faint);}
 
 .rcard-body{flex:1; min-width:0;}
-.rcard-body .rc-title{font-size:1.08em; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
-.rcard-body .rc-title .native{font-family:var(--jp); color:var(--text-faint); font-size:.7em; font-weight:400;}
-.rcard-body .rc-en{color:var(--text-dim); font-size:.86em; margin-top:4px;}
-.rcard-body .rc-tag{color:var(--text-faint); font-size:.78em; margin-top:6px; display:flex; gap:10px; flex-wrap:wrap;}
-.rc-soon-tag{font-size:.62em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--surface2); color:var(--text-faint); border:1px solid var(--border); display:inline-flex; align-items:center; gap:4px;}
+.rc-title{font-size:1.02em; font-weight:600; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+.rc-title .native{font-family:var(--jp); color:var(--text-faint); font-size:.72em; font-weight:400;}
+.rc-desc{color:var(--text-dim); font-size:.84em; margin-top:3px;}
+.rc-free-tag{font-size:.6em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--celadon-dim); color:var(--celadon);}
+.rc-locked-tag{font-size:.6em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--surface2); color:var(--text-faint); border:1px solid var(--border); display:inline-flex; align-items:center; gap:4px;}
 
-.rcard.upcoming{opacity:1; border-color:color-mix(in srgb, var(--inkblue) 38%, var(--border));}
-.rcard.upcoming::before{border-color:var(--inkblue); background:var(--inkblue);}
-.rcard.upcoming:hover{transform:translateX(4px); border-color:var(--inkblue);}
-.rcard.upcoming .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--inkblue) 85%, #fff 10%), var(--inkblue) 72%); color:#fff;}
-.rc-upcoming-tag{font-size:.62em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--inkblue-dim); color:var(--inkblue); display:inline-flex; align-items:center; gap:4px; white-space:nowrap;}
-
-.rc-eta{
-  width:56px; height:56px; border-radius:50%; flex:none; display:flex; flex-direction:column;
-  align-items:center; justify-content:center; background:var(--inkblue-dim);
-  border:1px solid color-mix(in srgb, var(--inkblue) 45%, var(--border));
-}
-.rc-eta-num{font-family:var(--serif); font-size:1.15em; font-weight:700; line-height:1; color:var(--inkblue);}
-.rc-eta-lbl{font-size:.56em; text-transform:uppercase; letter-spacing:.05em; color:var(--text-faint); margin-top:2px;}
-
-.rcard-actions{flex:none; display:flex; gap:8px;}
-.rc-lock{color:var(--text-faint); font-size:1.1em;}
-
-.roadfoot{max-width:var(--maxw); margin:0 auto 6px; padding:0 5vw; text-align:center; color:var(--text-faint); font-size:.85em;}
+.rcard-actions{flex:none;}
+.rc-btn{font-size:.8em; font-weight:600; padding:9px 16px; border-radius:999px; white-space:nowrap; border:none; display:inline-block;}
+.rc-btn.open-btn{background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%)); color:#fff;}
+.rc-btn.open-btn:hover{filter:brightness(1.06); color:#fff;}
 
 footer{position:relative; z-index:2; text-align:center; padding:10px 5vw 60px; color:var(--text-faint); font-size:.85em;}
 footer a{text-decoration:underline;}
 
-/* ===== MOBILE RESPONSIVENESS ===== */
-@media(max-width:640px){
-  #topbar{flex-direction:column; align-items:flex-start; gap:10px; padding:14px 5vw 16px;}
-  .top-actions{flex-wrap:wrap;}
-  .hero{padding:16px 5vw 8px;}
-  .hero h1{font-size:1.9em;}
-  .hero .sub{font-size:.95em;}
-  .overall-progress{padding:16px 18px; margin-bottom:36px;}
-  .overall-progress .op-row b{font-size:1.3em;}
-  .op-legend{gap:10px; font-size:.75em;}
-
-  .journey-line{left:22px !important;}
-  .phase{margin-bottom:40px;}
-  .phase-head{gap:12px; flex-wrap:wrap;}
-  .phase-num{width:44px;height:44px;font-size:1.1em; border-width:2px;}
-  .phase-title-wrap h2{font-size:1.3em;}
-  .phase-title-wrap .phase-sub{font-size:.78em;}
-  .phase-ribbon{margin-left:0; margin-top:6px; font-size:.6em; padding:3px 10px;}
-
-  .course-list{padding-left:52px !important; gap:10px;}
-  .rcard{padding:14px 16px; gap:12px;}
-  .rcard::before{left:-52px !important; width:10px; height:10px;}
-  .rcard-badge{width:36px;height:36px;font-size:14px;}
-  .rc-eta{width:44px;height:44px;}
-  .rc-eta-num{font-size:1em;}
-  .rc-eta-lbl{font-size:.5em;}
-  .rcard-body .rc-title{font-size:.95em;}
-  .rcard-body .rc-en{font-size:.78em;}
-}
-@media(max-width:560px){
+@media(max-width:520px){
   .rcard{flex-wrap:wrap;}
-  .rcard-actions{width:100%; justify-content:flex-end;}
+  .rcard-actions{width:100%;}
+  .rc-btn{width:100%; text-align:center;}
 }
 </style>
 </head>
@@ -290,27 +201,19 @@ footer a{text-decoration:underline;}
     <div class="brand-txt"><strong>Hookitlingo</strong><span>Korean &amp; Japanese, one file at a time</span></div>
   </div>
   <div class="top-actions">
-    <a class="topbtn" href="index.html">← Culture Catalog</a>
+    <a class="topbtn" href="index.html">← Course Catalog</a>
     <button class="topbtn" id="themeBtn">☾ Dark</button>
   </div>
 </div>
 
 <div class="hero">
   <div class="eyebrow jp">日本語 · JLPT</div>
-  <h1>Five levels. <span style="color:var(--gold); font-style:italic;">One ladder.</span> Start at the bottom.</h1>
-  <p class="sub">The Japanese Language Proficiency Test runs from N5 (absolute beginner) to N1 (near-native), five clearly defined rungs, each one unlocking a wider slice of real Japanese.</p>
+  <h1>Five levels, <span style="color:var(--gold); font-style:italic;">one path.</span> Start at N5.</h1>
+  <p class="sub">The Japanese Language Proficiency Test runs from N5 (absolute beginner) to N1 (near-native). N5 has a full roadmap ready right now, N4 through N1 are coming soon.</p>
 </div>
 
-<div class="overall-progress" id="overallProgress"></div>
-
-<div class="journey">
-  <div class="journey-line"></div>
-  <div id="phases"></div>
-</div>
-
-<div class="roadfoot">
-  <p>N5 has a full day-by-day roadmap ready to explore. N4, N3, N2, and N1 are coming soon.</p>
-</div>
+<div class="section-label">JLPT Levels</div>
+<div class="lessons" id="lessons"></div>
 
 <footer>
   <p>Want to start learning today instead? Head back to the <a href="index.html">catalog</a> and pick up Korean, it's already live.</p>
@@ -319,13 +222,13 @@ footer a{text-decoration:underline;}
 
 <script>
 /* ============================================================
-   JLPT ROADMAP DATA - 5 official levels, N5 (easiest) → N1 (hardest)
+   JLPT ROADMAP DATA - 5 official levels, N5 (easiest) -> N1 (hardest)
    ============================================================ */
 const JLPT_LEVELS = [
   {
     badge:'N5', native:'五級', en:'First Steps in Japanese',
     desc:'Hiragana, katakana, ~100 basic kanji, and simple everyday sentences. ~800 words, enough to introduce yourself and get by with help.',
-    status:'next', file:'jlptn5roadmap.html',
+    ready:true, file:'jlptn5roadmap.html',
   },
   {
     badge:'N4', native:'四級', en:'Everyday Conversations',
@@ -345,133 +248,49 @@ const JLPT_LEVELS = [
   },
 ];
 
-/* ============================================================
-   RENDER
-   ============================================================ */
-function renderOverall(){
-  const total = JLPT_LEVELS.length;
-  const ready = JLPT_LEVELS.filter(l=>l.status==='next').length;
-  const scheduled = JLPT_LEVELS.filter(l=>l.launch).length;
-  document.getElementById('overallProgress').innerHTML = `
-    <div class="op-row"><span>Levels with a roadmap</span><b>${ready} / ${total}</b></div>
-    <div class="op-track"><div class="op-fill" style="width:${Math.max(8, ready/total*100)}%"></div></div>
-    <div class="op-legend">
-      <span><span class="op-dot" style="background:var(--gold)"></span> Roadmap ready</span>
-      <span><span class="op-dot" style="background:var(--inkblue)"></span> Launch date set (${scheduled})</span>
-    </div>
-  `;
-}
-
-function formatLaunchDate(iso){
-  const d = new Date(iso + 'T00:00:00');
-  return d.toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
-}
-
-function daysUntil(iso){
-  const target = new Date(iso + 'T00:00:00');
-  const today = new Date();
-  today.setHours(0,0,0,0);
-  return Math.ceil((target - today) / 86400000);
-}
-
-function etaMarkup(days){
-  if(days > 1) return `<span class="rc-eta-num">${days}</span><span class="rc-eta-lbl">days</span>`;
-  if(days === 1) return `<span class="rc-eta-num">1</span><span class="rc-eta-lbl">day</span>`;
-  return `<span class="rc-eta-num">🎉</span><span class="rc-eta-lbl">Live</span>`;
-}
-
 function levelCard(c){
-  if(c.status==='next'){
+  if(c.ready){
     return `
-    <div class="rcard next">
+    <div class="rcard open">
       <div class="rcard-badge">${c.badge}</div>
       <div class="rcard-body">
-        <div class="rc-title">${c.en} <span class="native jp">${c.native}</span> <span class="rc-next-tag">84-Day Plan Ready</span></div>
-        <div class="rc-en">${c.desc}</div>
+        <div class="rc-title">${c.en} <span class="native jp">${c.native}</span> <span class="rc-free-tag">Ready</span></div>
+        <div class="rc-desc">${c.desc}</div>
       </div>
       <div class="rcard-actions">
-        <a class="rc-btn primary" href="${c.file}">Open Roadmap →</a>
-      </div>
-    </div>`;
-  }
-  if(c.launch){
-    const dateLabel = formatLaunchDate(c.launch);
-    const days = daysUntil(c.launch);
-    const eta = etaMarkup(days);
-    return `
-    <div class="rcard upcoming">
-      <div class="rcard-badge">${c.badge}</div>
-      <div class="rcard-body">
-        <div class="rc-title">${c.en} <span class="native jp">${c.native}</span> <span class="rc-upcoming-tag">🗓️ Launching ${dateLabel}</span></div>
-        <div class="rc-en">${c.desc}</div>
-      </div>
-      <div class="rcard-actions">
-        <div class="rc-eta" data-launch="${c.launch}" title="Launches ${dateLabel}">${eta}</div>
+        <a class="rc-btn open-btn" href="${c.file}">Open Roadmap →</a>
       </div>
     </div>`;
   }
   return `
-    <div class="rcard">
-      <div class="rcard-badge">${c.badge}</div>
-      <div class="rcard-body">
-        <div class="rc-title">${c.en} <span class="native jp">${c.native}</span> <span class="rc-soon-tag">🔒 Coming soon</span></div>
-        <div class="rc-en">${c.desc}</div>
-      </div>
-      <div class="rcard-actions">
-        <span class="rc-lock">🔒</span>
-      </div>
-    </div>`;
+  <div class="rcard locked">
+    <div class="rcard-badge">${c.badge}</div>
+    <div class="rcard-body">
+      <div class="rc-title">${c.en} <span class="native jp">${c.native}</span> <span class="rc-locked-tag">🔒 Coming soon</span></div>
+      <div class="rc-desc">${c.desc}</div>
+    </div>
+  </div>`;
 }
 
-function renderPhases(){
-  const host = document.getElementById('phases');
-  host.innerHTML = `
-    <div class="phase" data-phase="1">
-      <div class="phase-head">
-        <div class="phase-num">日</div>
-        <div class="phase-title-wrap">
-          <h2>The JLPT Ladder</h2>
-          <div class="phase-sub">Beginner (N5) to near-native (N1) - five official levels</div>
-        </div>
-        <div class="phase-ribbon">Coming soon</div>
-      </div>
-      <div class="course-list">
-        ${JLPT_LEVELS.map(levelCard).join('')}
-      </div>
-    </div>`;
+function renderLevels(){
+  const host = document.getElementById('lessons');
+  host.innerHTML = JLPT_LEVELS.map(levelCard).join('');
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in-view'); });
+  }, {threshold:.1});
+  document.querySelectorAll('.rcard').forEach(el=>io.observe(el));
 }
 
-renderOverall();
-renderPhases();
+renderLevels();
 
-/* ============================================================
-   COUNTDOWN AUTO-REFRESH — keeps "days left" accurate for
-   anyone who leaves this tab open across a day boundary.
-   Fires once at the next local midnight, then every 24h after.
-   ============================================================ */
-function refreshCountdowns(){
-  document.querySelectorAll('.rc-eta[data-launch]').forEach(el=>{
-    const launch = el.dataset.launch;
-    if(!launch) return;
-    el.innerHTML = etaMarkup(daysUntil(launch));
-    el.title = `Launches ${formatLaunchDate(launch)}`;
-  });
-}
-(function scheduleCountdownRefresh(){
-  const now = new Date();
-  const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 5);
-  const msUntilMidnight = nextMidnight - now;
-  setTimeout(function(){
-    refreshCountdowns();
-    setInterval(refreshCountdowns, 24 * 60 * 60 * 1000);
-  }, msUntilMidnight);
+/* Sticky top bar scroll shadow */
+(function(){
+  const bar = document.getElementById('topbar');
+  const onScroll = () => bar.classList.toggle('is-scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
 })();
-
-/* Scroll-reveal */
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in-view'); });
-}, {threshold:.12});
-document.querySelectorAll('.phase').forEach(el=>io.observe(el));
 
 /* Theme toggle - shares the same key as the rest of the site */
 const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
@@ -506,27 +325,6 @@ applyTheme();
     p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
     host.appendChild(p);
   }
-})();
-
-/* ============================================================
-   TOPBAR SCROLL STATE
-   Adds a blurred/solid background to the sticky topbar once the
-   page scrolls, so hero/body text doesn't show through it.
-   ============================================================ */
-(function(){
-  const topbar = document.getElementById('topbar');
-  if(!topbar) return;
-  const THRESHOLD = 12;
-  let ticking = false;
-  function applyState(){
-    topbar.classList.toggle('is-scrolled', window.scrollY > THRESHOLD);
-    ticking = false;
-  }
-  function onScroll(){
-    if(!ticking){ requestAnimationFrame(applyState); ticking = true; }
-  }
-  window.addEventListener('scroll', onScroll, { passive:true });
-  applyState();
 })();
 </script>
 </body>
