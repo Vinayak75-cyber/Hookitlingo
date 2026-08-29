@@ -226,13 +226,7 @@ button{font-family:var(--sans); cursor:pointer;}
 .modal-submit:hover{filter:brightness(1.06);}
 .modal-submit:disabled{opacity:.6; cursor:default;}
 .modal-error{color:var(--vermilion); font-size:.82em; margin-top:10px; min-height:1.2em;}
-.modal-divider{display:flex; align-items:center; gap:10px; margin:18px 0 14px; color:var(--text-faint); font-size:.75em; text-transform:uppercase; letter-spacing:.08em;}
-.modal-divider::before, .modal-divider::after{content:""; flex:1; height:1px; background:var(--border);}
-.modal-gumroad{
-  display:block; width:100%; text-align:center; padding:11px 14px; border-radius:10px; font-weight:700; font-size:.88em;
-  background:var(--surface2); border:1px solid var(--border); color:var(--text);
-}
-.modal-gumroad:hover{border-color:var(--gold); color:var(--text);}
+.modal-note{text-align:center; font-size:.8em; color:var(--text-faint); margin-top:16px;}
 
 .toast{
   position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); z-index:90;
@@ -267,9 +261,9 @@ button{font-family:var(--sans); cursor:pointer;}
 <div class="hero">
   <div class="eyebrow">Own It Once, Keep It Forever</div>
   <h1>15 lessons. Zero to <span class="jp" style="color:var(--gold); font-style:italic;">N5</span>-ready.</h1>
-  <p class="sub">Try Lesson 1 free right now. Already have a code? Unlock the full course instantly, no ads, no subscriptions.</p>
+  <p class="sub">Try Lesson 1 free right now. Got a code from your teacher? Unlock the full course instantly, no ads, no subscriptions.</p>
   <button class="hero-cta" id="heroUnlockBtn">Unlock Full Course</button>
-  <div class="hero-price">One-time <b>$9.99</b> · lifetime access · no code yet? <a href="https://hookitlingo.gumroad.com/l/oufabf" target="_blank" rel="noopener">Get it on Gumroad →</a></div>
+  <div class="hero-price">One-time <b>$9.99</b> · lifetime access · access codes are issued through participating teachers</div>
 </div>
 
 <div class="lessons" id="lessons"></div>
@@ -279,12 +273,11 @@ button{font-family:var(--sans); cursor:pointer;}
   <div class="modal-box">
     <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
     <h3>Unlock the Full Course</h3>
-    <div class="modal-sub">Enter the code from your purchase to unlock all 15 lessons instantly.</div>
+    <div class="modal-sub">Enter the code you got from your teacher to unlock all 15 lessons instantly.</div>
     <input type="text" class="modal-input" id="codeInput" placeholder="Enter your code" autocomplete="off">
     <button class="modal-submit" id="codeSubmit">Unlock</button>
     <div class="modal-error" id="modalError"></div>
-    <div class="modal-divider">or</div>
-    <a class="modal-gumroad" href="https://hookitlingo.gumroad.com/l/oufabf" target="_blank" rel="noopener">Get your code on Gumroad — $9.99 →</a>
+    <div class="modal-note">Don't have a code yet? Ask your teacher for access.</div>
   </div>
 </div>
 
@@ -299,9 +292,6 @@ button{font-family:var(--sans); cursor:pointer;}
    /public/coursesjp (never gated), lessons 2-15 are served through
    the protected /lesson/jp/<slug> route once unlocked.
    ============================================================ */
-
-// Replace with your real Gumroad product URL for this course.
-const GUMROAD_URL = 'https://hookitlingo.gumroad.com/l/oufabf';
 
 const LESSONS = [
   { n:1,  slug:'s01-l01', file:'coursesjp/jlpt-n5-s01-l01.html', title:'Hiragana', desc:'Full hiragana chart with reading and listening drills, no-romaji exit test.' },
@@ -435,7 +425,7 @@ async function submitCode(){
       closeUnlockModal();
       showToast('Course unlocked, enjoy! 🌸');
     } else {
-      modalError.textContent = (data && data.error) ? data.error : 'That code was not recognized. Please check it and try again, or get one on Gumroad below.';
+      modalError.textContent = (data && data.error) ? data.error : 'That code was not recognized. Please double check it, or ask your teacher for your access code.';
     }
   } catch (err) {
     modalError.textContent = 'Something went wrong checking that code. Please try again.';
