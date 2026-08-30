@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JLPT Roadmap - Five-Level Japanese Study Plan | Hookitlingo</title>
-<meta name="description" content="A free JLPT study roadmap covering five levels from absolute beginner to advanced Japanese. Structured, self-contained lessons you can study offline.">
-<link rel="canonical" href="https://hookit.online/roadmapjp.html">
+<title>Japanese - Roadmap, Teachers &amp; Learner Community | Hookitlingo</title>
+<meta name="description" content="Learn Japanese your way: a structured JLPT roadmap, real native speakers and teachers to practice with, and a community of fellow learners around the world.">
+<link rel="canonical" href="https://hookit.online/japanese-hub.html">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="JLPT Roadmap - Five-Level Japanese Study Plan | Hookitlingo">
-<meta property="og:description" content="A free JLPT study roadmap covering five levels from absolute beginner to advanced Japanese. Structured, self-contained lessons you can study offline.">
-<meta property="og:url" content="https://hookit.online/roadmapjp.html">
+<meta property="og:title" content="Japanese - Roadmap, Teachers &amp; Learner Community | Hookitlingo">
+<meta property="og:description" content="Learn Japanese your way: a structured JLPT roadmap, real native speakers and teachers to practice with, and a community of fellow learners around the world.">
+<meta property="og:url" content="https://hookit.online/japanese-hub.html">
 <meta property="og:site_name" content="Hookitlingo">
 <meta property="og:image" content="https://hookit.online/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -19,33 +19,9 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="JLPT Roadmap - Five-Level Japanese Study Plan | Hookitlingo">
-<meta name="twitter:description" content="A free JLPT study roadmap covering five levels from absolute beginner to advanced Japanese. Structured, self-contained lessons you can study offline.">
+<meta name="twitter:title" content="Japanese - Roadmap, Teachers &amp; Learner Community | Hookitlingo">
+<meta name="twitter:description" content="Learn Japanese your way: a structured JLPT roadmap, real native speakers and teachers to practice with, and a community of fellow learners around the world.">
 <meta name="twitter:image" content="https://hookit.online/og-image.png">
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Course",
-  "name": "JLPT Roadmap",
-  "description": "A five-level structured study roadmap for the JLPT Japanese proficiency exam, built from Hookitlingo's free offline courses.",
-  "provider": {
-    "@type": "Organization",
-    "name": "Hookitlingo",
-    "url": "https://hookit.online",
-    "logo": "https://hookit.online/og-image.png"
-  },
-  "url": "https://hookit.online/roadmapjp.html",
-  "inLanguage": "ja",
-  "isAccessibleForFree": true,
-  "hasCourseInstance": {
-    "@type": "CourseInstance",
-    "courseMode": "online",
-    "courseWorkload": "PT1H"
-  },
-  "teaches": "JLPT exam preparation"
-}
-</script>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WLEMFRK6XH"></script>
@@ -72,7 +48,7 @@
   --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
   --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --jp:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  --maxw:720px;
+  --maxw:1080px;
 }
 html[data-theme="light"]{
   --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6;
@@ -94,7 +70,7 @@ body{
   background-attachment:fixed; min-height:100vh;
 }
 ::selection{background:var(--vermilion); color:#fff;}
-h1,h2,h3,h4{font-family:var(--serif); font-weight:600; letter-spacing:.2px; margin:0 0 .4em;}
+h1,h2,h3{font-family:var(--serif); font-weight:600; letter-spacing:.2px; margin:0 0 .4em;}
 p{margin:0 0 1em;}
 a{color:var(--celadon); text-decoration:none;}
 .jp{font-family:var(--jp);}
@@ -105,27 +81,14 @@ button{font-family:var(--sans); cursor:pointer;}
 .petal{position:absolute; top:-8%; will-change:transform; animation:petal-fall linear infinite;}
 .petal svg{display:block; filter:drop-shadow(0 1px 1px rgba(0,0,0,.08));}
 @keyframes petal-fall{0%{transform:translate(0,-10vh) rotate(0deg);} 100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}}
-@media (prefers-reduced-motion: reduce){ .petals{display:none;} .reveal{opacity:1 !important; transform:none !important;} }
+@media (prefers-reduced-motion: reduce){ .petals{display:none;} }
 @media(max-width:900px){ .petals .petal:nth-child(even){display:none;} }
 
 /* Top bar */
 #topbar{
-  position:sticky; top:0; z-index:30; display:flex; align-items:center; justify-content:space-between;
-  gap:14px; padding:16px 5vw 20px; max-width:1080px; margin:0 auto;
+  position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between;
+  gap:14px; padding:18px 5vw 22px; max-width:var(--maxw); margin:0 auto;
 }
-#topbar::before{
-  content:""; position:absolute; left:0; right:0; top:0;
-  height:100%; padding-bottom:36px; margin-bottom:-36px;
-  background-color:color-mix(in srgb, var(--ink) 72%, transparent);
-  -webkit-backdrop-filter:blur(14px) saturate(140%); backdrop-filter:blur(14px) saturate(140%);
-  -webkit-mask-image:linear-gradient(to bottom, #000 58%, transparent 100%);
-  mask-image:linear-gradient(to bottom, #000 58%, transparent 100%);
-  opacity:0; pointer-events:none; z-index:-1;
-  transition:opacity .35s ease;
-}
-#topbar.is-scrolled::before{ opacity:1; }
-#topbar.is-scrolled{ padding-top:10px; padding-bottom:20px; }
-#topbar .brand, #topbar .top-actions{ position:relative; z-index:1; }
 .brand{display:flex; align-items:center; gap:12px;}
 .brand-block{
   width:42px;height:42px;border-radius:50%; flex:none; position:relative;
@@ -140,51 +103,39 @@ button{font-family:var(--sans); cursor:pointer;}
 .topbtn:hover{color:var(--text); border-color:var(--celadon);}
 
 /* Hero */
-.hero{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:20px 5vw 10px; text-align:center;}
+.hero{position:relative; z-index:2; max-width:700px; margin:0 auto; padding:20px 5vw 10px; text-align:center;}
 .eyebrow{font-size:.78em; letter-spacing:.16em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:14px;}
 .hero h1{font-size:clamp(1.9em,5vw,3em); margin-bottom:14px;}
-.hero .sub{color:var(--text-dim); font-size:1.08em; max-width:580px; margin:0 auto 22px;}
+.hero .sub{color:var(--text-dim); font-size:1.08em; max-width:600px; margin:0 auto; }
 
-/* Level list - same flat card language as jlptn5roadmap.html */
-.section-label{
-  position:relative; z-index:2; max-width:var(--maxw); margin:36px auto 0; padding:0 5vw 12px;
-  font-size:.78em; text-transform:uppercase; letter-spacing:.12em; color:var(--text-faint); font-weight:700;
+/* ===== Path cards — bigger, minimal, no imagery, sakura-emblem corner ===== */
+.path-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px;
+  max-width:var(--maxw); margin:40px auto 10px; padding:0 5vw; position:relative; z-index:2;
 }
-.lessons{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:0 5vw 60px; display:flex; flex-direction:column; gap:12px;}
-
-.rcard{
-  position:relative; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  padding:16px 18px; display:flex; align-items:center; gap:16px; transition:border-color .2s, transform .2s;
-  opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease, border-color .2s;
+.path-card{
+  position:relative; overflow:hidden; display:flex; flex-direction:column; color:var(--text);
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:30px 26px;
+  transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
-.rcard.in-view{opacity:1; transform:translateY(0);}
-.rcard.open{border-color:color-mix(in srgb, var(--celadon) 50%, var(--border));}
-.rcard.open:hover{border-color:var(--celadon); transform:translateX(4px) translateY(0);}
-.rcard.locked{opacity:.85;}
-
-.rcard-badge{
-  width:44px; height:44px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center;
-  font-family:var(--serif); font-weight:700; font-size:1em; color:#fff;
+.path-card:hover{transform:translateY(-5px); border-color:var(--vermilion); box-shadow:0 24px 55px color-mix(in srgb, var(--vermilion) 20%, transparent);}
+.path-emblem{position:absolute; top:-30px; right:-30px; width:130px; height:130px; opacity:.35; pointer-events:none;}
+.path-card h3{font-size:1.35em; margin-bottom:12px;}
+.path-card p{color:var(--text-dim); font-size:.92em; margin-bottom:0;}
+.path-meta{
+  display:flex; flex-wrap:wrap; gap:12px; margin:18px 0 20px; font-size:.75em; color:var(--text-faint);
+  text-transform:uppercase; letter-spacing:.05em;
 }
-.rcard.open .rcard-badge{background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--celadon) 88%, #fff 12%), var(--celadon) 72%);}
-.rcard.locked .rcard-badge{background:var(--surface3); color:var(--text-faint);}
+.path-cta{
+  margin-top:auto; font-weight:700; font-size:.9em; padding:11px 18px; border-radius:999px; text-align:center; color:#fff;
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+}
+.path-card:hover .path-cta{filter:brightness(1.06);}
 
-.rcard-body{flex:1; min-width:0;}
-.rc-title{font-size:1.02em; font-weight:600; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
-.rc-title .native{font-family:var(--jp); color:var(--text-faint); font-size:.72em; font-weight:400;}
-.rc-desc{color:var(--text-dim); font-size:.84em; margin-top:3px;}
-.rc-free-tag{font-size:.6em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--celadon-dim); color:var(--celadon);}
-.rc-locked-tag{font-size:.6em; text-transform:uppercase; letter-spacing:.06em; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--surface2); color:var(--text-faint); border:1px solid var(--border); display:inline-flex; align-items:center; gap:4px;}
-
-.rcard-actions{flex:none;}
-.rc-btn{font-size:.8em; font-weight:600; padding:9px 16px; border-radius:999px; white-space:nowrap; border:none; display:inline-block;}
-.rc-btn.open-btn{background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%)); color:#fff;}
-.rc-btn.open-btn:hover{filter:brightness(1.06); color:#fff;}
-
-footer{position:relative; z-index:2; text-align:center; padding:10px 5vw 60px; color:var(--text-faint); font-size:.85em;}
+footer{position:relative; z-index:2; text-align:center; padding:30px 5vw 60px; color:var(--text-faint); font-size:.85em;}
 footer a{text-decoration:underline;}
 
-/* ===== Auth: topbar controls ===== */
+/* ===== Auth: topbar controls (login button / profile menu) ===== */
 .topbtn-login{
   background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
   border:1px solid transparent; color:#fff; font-weight:600;
@@ -216,7 +167,7 @@ footer a{text-decoration:underline;}
 }
 .pd-item:hover{background:var(--surface2); color:var(--text);}
 
-/* ===== Auth modal (same login form used across the site) ===== */
+/* ===== Auth modal (same language as the learners/teachers pages) ===== */
 .modal-overlay{
   position:fixed; inset:0; z-index:80; background:rgba(10,6,12,.6); display:none;
   align-items:center; justify-content:center; padding:20px; -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
@@ -260,10 +211,10 @@ footer a{text-decoration:underline;}
 }
 .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
 
-@media(max-width:520px){
-  .rcard{flex-wrap:wrap;}
-  .rcard-actions{width:100%;}
-  .rc-btn{width:100%; text-align:center;}
+@media(max-width:640px){
+  #topbar{flex-direction:column; align-items:flex-start;}
+  .top-actions{width:100%; flex-wrap:wrap; gap:8px;}
+  .top-actions .topbtn{flex:1 1 auto; justify-content:center; font-size:.8em; padding:8px 10px; white-space:nowrap;}
 }
 </style>
 </head>
@@ -273,8 +224,8 @@ footer a{text-decoration:underline;}
 
 <div id="topbar">
   <div class="brand">
-    <div class="brand-block jp">虎</div>
-    <div class="brand-txt"><strong>Hookitlingo</strong><span>Korean &amp; Japanese, one file at a time</span></div>
+    <div class="brand-block jp">日</div>
+    <div class="brand-txt"><strong>Hookitlingo</strong><span>Japanese</span></div>
   </div>
   <div class="top-actions">
     <a class="topbtn" href="index.html">← Course Catalog</a>
@@ -284,19 +235,67 @@ footer a{text-decoration:underline;}
 </div>
 
 <div class="hero">
-  <div class="eyebrow jp">日本語 · JLPT</div>
-  <h1>Five levels, <span style="color:var(--gold); font-style:italic;">one path.</span> Start at N5.</h1>
-  <p class="sub">The Japanese Language Proficiency Test runs from N5 (absolute beginner) to N1 (near-native). N5 has a full roadmap ready right now, N4 through N1 are coming soon.</p>
+  <div class="eyebrow jp">日本語 · Course + Community</div>
+  <h1>Learn Japanese, <span style="color:var(--gold); font-style:italic;">your</span> way.</h1>
+  <p class="sub">A structured roadmap to study at your own pace, real native speakers and teachers to practice with, and fellow learners around the world to keep you going.</p>
 </div>
 
-<div class="section-label">JLPT Levels</div>
-<div class="lessons" id="lessons"></div>
+<div class="path-grid">
+  <a class="path-card" href="roadmapjp.html">
+    <svg class="path-emblem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="var(--vermilion)">
+        <path d="M50 50 C50 30 42 14 50 2 C58 14 50 30 50 50Z"/>
+        <path d="M50 50 C70 50 86 42 98 50 C86 58 70 50 50 50Z"/>
+        <path d="M50 50 C50 70 58 86 50 98 C42 86 50 70 50 50Z"/>
+        <path d="M50 50 C30 50 14 58 2 50 C14 42 30 50 50 50Z"/>
+        <path d="M50 50 C64 36 82 30 90 18 C78 26 72 44 50 50Z"/>
+      </g>
+      <circle cx="50" cy="50" r="9" fill="var(--gold)"/>
+    </svg>
+    <h3>Explore the Roadmap</h3>
+    <p>A structured, self-paced course from absolute beginner to JLPT-ready, hiragana through real sentence-building.</p>
+    <div class="path-meta"><span>Self-paced</span><span>JLPT N5 → N1</span></div>
+    <div class="path-cta">View the Roadmap →</div>
+  </a>
 
-<!-- Profile dropdown (rendered when logged in) -->
+  <a class="path-card" href="japanese-teachers.html">
+    <svg class="path-emblem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="var(--vermilion)">
+        <path d="M50 50 C50 30 42 14 50 2 C58 14 50 30 50 50Z"/>
+        <path d="M50 50 C70 50 86 42 98 50 C86 58 70 50 50 50Z"/>
+        <path d="M50 50 C50 70 58 86 50 98 C42 86 50 70 50 50Z"/>
+        <path d="M50 50 C30 50 14 58 2 50 C14 42 30 50 50 50Z"/>
+        <path d="M50 50 C64 36 82 30 90 18 C78 26 72 44 50 50Z"/>
+      </g>
+      <circle cx="50" cy="50" r="9" fill="var(--gold)"/>
+    </svg>
+    <h3>Native Speakers &amp; Teachers</h3>
+    <p>Find real Japanese natives and teachers to practice or take lessons with, subject to their own availability and rates.</p>
+    <div class="path-meta"><span>🌸 Personally reviewed</span><span>No bots</span></div>
+    <div class="path-cta">Meet Teachers &amp; Natives →</div>
+  </a>
+
+  <a class="path-card" href="japanese-learners.html">
+    <svg class="path-emblem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="var(--vermilion)">
+        <path d="M50 50 C50 30 42 14 50 2 C58 14 50 30 50 50Z"/>
+        <path d="M50 50 C70 50 86 42 98 50 C86 58 70 50 50 50Z"/>
+        <path d="M50 50 C50 70 58 86 50 98 C42 86 50 70 50 50Z"/>
+        <path d="M50 50 C30 50 14 58 2 50 C14 42 30 50 50 50Z"/>
+        <path d="M50 50 C64 36 82 30 90 18 C78 26 72 44 50 50Z"/>
+      </g>
+      <circle cx="50" cy="50" r="9" fill="var(--gold)"/>
+    </svg>
+    <h3>Connect with Fellow Learners</h3>
+    <p>Find other people learning Japanese around the world, practice together, and work through doubts as a community.</p>
+    <div class="path-meta"><span>Worldwide</span><span>Community-driven</span></div>
+    <div class="path-cta">Meet Learners →</div>
+  </a>
+</div>
+
+<!-- Auth modal + profile dropdown -->
 <div class="profile-backdrop" id="profileBackdrop"></div>
 <div class="profile-dropdown" id="profileDropdown"></div>
-
-<!-- Auth modal: log in -->
 <div class="modal-overlay" id="authOverlay">
   <div class="modal-box" id="authModalBox"></div>
 </div>
@@ -304,112 +303,74 @@ footer a{text-decoration:underline;}
 <div class="toast" id="toast"></div>
 
 <footer>
-  <p>Want to start learning today instead? Head back to the <a href="index.html">catalog</a> and pick up Korean, it's already live.</p>
-  <p>Powered by Hookitlingo</p>
+  <p>Powered by Hookitlingo · <a href="index.html">Course Catalog</a></p>
 </footer>
 
 <script>
-/* ============================================================
-   JLPT ROADMAP DATA - 5 official levels, N5 (easiest) -> N1 (hardest)
-   ============================================================ */
-const JLPT_LEVELS = [
-  {
-    badge:'N5', native:'五級', en:'First Steps in Japanese',
-    desc:'Hiragana, katakana, ~100 basic kanji, and simple everyday sentences. ~800 words, enough to introduce yourself and get by with help.',
-    ready:true, file:'jlptn5roadmap.html',
-  },
-  {
-    badge:'N4', native:'四級', en:'Everyday Conversations',
-    desc:'~1,500 words, ~300 kanji, and the grammar to follow slow, everyday conversation without translating in your head.',
-  },
-  {
-    badge:'N3', native:'三級', en:'The Bridge Level',
-    desc:'~3,750 words, ~650 kanji, the level that connects survival Japanese to genuine independence. Widely considered the biggest jump.',
-  },
-  {
-    badge:'N2', native:'二級', en:'Reading Between the Lines',
-    desc:'~6,000 words, ~1,000 kanji. Follow the news, read general-purpose writing, and handle a broad range of everyday and work situations.',
-  },
-  {
-    badge:'N1', native:'一級', en:'Near-Native Command',
-    desc:'~10,000+ words, ~2,000 kanji. Abstract arguments, specialized topics, and nuanced writing, the final rung before native fluency.',
-  },
-];
+const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', ThemeState.theme);
+  document.getElementById('themeBtn').textContent = ThemeState.theme === 'dark' ? '☾ Dark' : '☀ Light';
+}
+document.getElementById('themeBtn').onclick = () => {
+  ThemeState.theme = ThemeState.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('hkl_site_theme', ThemeState.theme);
+  applyTheme();
+};
+applyTheme();
 
-function levelCard(c){
-  if(c.ready){
-    return `
-    <div class="rcard open">
-      <div class="rcard-badge">${c.badge}</div>
-      <div class="rcard-body">
-        <div class="rc-title">${c.en} <span class="native jp">${c.native}</span> <span class="rc-free-tag">Ready</span></div>
-        <div class="rc-desc">${c.desc}</div>
-      </div>
-      <div class="rcard-actions">
-        <a class="rc-btn open-btn" href="${c.file}">Open Roadmap →</a>
-      </div>
-    </div>`;
+(function spawnPetals(){
+  const host = document.getElementById('petals');
+  if(!host) return;
+  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
+  const count = window.innerWidth < 700 ? 10 : 18;
+  for(let i=0;i<count;i++){
+    const size = 10 + Math.random()*12;
+    const left = Math.random()*100;
+    const dur = 10 + Math.random()*12;
+    const delay = -(Math.random()*dur);
+    const drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)];
+    const rotStart = Math.round(Math.random()*360);
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
+    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
+    host.appendChild(p);
   }
-  return `
-  <div class="rcard locked">
-    <div class="rcard-badge">${c.badge}</div>
-    <div class="rcard-body">
-      <div class="rc-title">${c.en} <span class="native jp">${c.native}</span> <span class="rc-locked-tag">🔒 Coming soon</span></div>
-      <div class="rc-desc">${c.desc}</div>
-    </div>
-  </div>`;
-}
-
-function renderLevels(){
-  const host = document.getElementById('lessons');
-  host.innerHTML = JLPT_LEVELS.map(levelCard).join('');
-
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in-view'); });
-  }, {threshold:.1});
-  document.querySelectorAll('.rcard').forEach(el=>io.observe(el));
-}
-
-renderLevels();
+})();
 
 /* ============================================================
-   AUTH — same account system used across the site (see
-   /api/me, /api/login, /api/logout in server.js). This page has
-   nothing to unlock, so all it does is show a Login button, swap
-   it for a profile icon once signed in, and let someone log out.
+   AUTH — same account system used on the learners/teachers pages:
+     GET  /api/me       -> { loggedIn, id, name, status, profile:{type, course} }
+     POST /api/login    { email, password }
+     POST /api/logout
+   The hub isn't gated by login (roadmap/teachers/learners pages
+   each handle their own access rules), but showing the login
+   button vs. the profile icon up top means someone doesn't have to
+   click through to a listing page just to see they're logged in,
+   or to get back to editing their profile.
    ============================================================ */
-let AUTH = { loggedIn: false, name: '', status: '' };
+let AUTH = { loggedIn: false, name: '', status: '', type: '', course: '' };
 
 // Simple outline "person" glyph shown inside the trigger circle once
 // logged in — currentColor so it follows the button's text color
 // (and its hover state) automatically, no separate theming needed.
 const PROFILE_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"></path></svg>`;
 
-function showToast(msg){
+function toast(msg){
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(()=> t.classList.remove('show'), 2800);
 }
 
-async function checkAuth(){
-  try {
-    const res = await fetch('/api/me', { credentials: 'include' });
-    const data = await res.json();
-    AUTH = data && data.loggedIn
-      ? { loggedIn: true, name: data.name || '', status: data.status || 'Pending' }
-      : { loggedIn: false, name: '', status: '' };
-  } catch (err) {
-    AUTH = { loggedIn: false, name: '', status: '' };
-  }
-  renderAuthSlot();
-}
-
-async function logout(){
-  try { await fetch('/api/logout', { method: 'POST', credentials: 'include' }); } catch (err) {}
-  AUTH = { loggedIn: false, name: '', status: '' };
-  renderAuthSlot();
-  showToast('Logged out.');
+// Works out which directory page this user's own profile belongs
+// in, so "Edit my profile" from here lands them in the right place.
+function listingPage(course, type){
+  const coursePrefix = course === 'kr' ? 'korean' : 'japanese';
+  const typeSuffix = type === 'teacher' ? 'teachers' : 'learners';
+  return `${coursePrefix}-${typeSuffix}.html`;
 }
 
 function renderAuthSlot(){
@@ -459,12 +420,38 @@ function renderAuthSlot(){
   document.getElementById('logoutBtn').onclick = () => { closeMenu(); logout(); };
 }
 
-/* Auth modal: just the login form */
+async function checkAuth(){
+  try {
+    const res = await fetch('/api/me', { credentials: 'include' });
+    const data = await res.json();
+    AUTH = data && data.loggedIn
+      ? {
+          loggedIn: true,
+          name: data.name || '',
+          status: data.status || 'Pending',
+          type: (data.profile && data.profile.type) || 'learner',
+          course: (data.profile && data.profile.course) || 'jp'
+        }
+      : { loggedIn: false, name: '', status: '', type: '', course: '' };
+  } catch (err) {
+    AUTH = { loggedIn: false, name: '', status: '', type: '', course: '' };
+  }
+  renderAuthSlot();
+}
+
+async function logout(){
+  try { await fetch('/api/logout', { method: 'POST', credentials: 'include' }); } catch (err) {}
+  AUTH = { loggedIn: false, name: '', status: '', type: '', course: '' };
+  renderAuthSlot();
+  toast('Logged out.');
+}
+
+/* ---- Auth modal ---- */
 const authOverlay = document.getElementById('authOverlay');
 const authModalBox = document.getElementById('authModalBox');
 
-function openAuthModal(){
-  renderLoginStep();
+function openAuthModal(note){
+  renderLoginStep(note);
   authOverlay.classList.add('show');
 }
 function closeAuthModal(){
@@ -472,12 +459,12 @@ function closeAuthModal(){
 }
 authOverlay.addEventListener('click', (e) => { if(e.target === authOverlay) closeAuthModal(); });
 
-function renderLoginStep(){
+function renderLoginStep(note){
   authModalBox.innerHTML = `
     <button class="modal-close" onclick="closeAuthModal()" aria-label="Close">✕</button>
     <div class="modal-icon">🌸</div>
     <h3>Welcome Back</h3>
-    <div class="modal-sub">Log in to your Hookitlingo account.</div>
+    <div class="modal-sub">${note || 'Log in to your Hookitlingo community profile.'}</div>
     <input type="email" class="modal-input" id="loginEmail" placeholder="Email" autocomplete="email">
     <input type="password" class="modal-input" id="loginPassword" placeholder="Password" autocomplete="current-password">
     <button class="modal-submit" id="loginSubmit">Log In</button>
@@ -509,10 +496,16 @@ function renderLoginStep(){
       });
       const data = await res.json();
       if(res.ok && data.ok){
-        AUTH = { loggedIn: true, name: data.name || '', status: data.status || 'Pending' };
+        AUTH = {
+          loggedIn: true,
+          name: data.name || '',
+          status: data.status || 'Pending',
+          type: (data.profile && data.profile.type) || 'learner',
+          course: (data.profile && data.profile.course) || 'jp'
+        };
         renderAuthSlot();
         closeAuthModal();
-        showToast(`Welcome back, ${data.name || 'there'}! 🌸`);
+        toast(`Welcome back, ${data.name || 'there'}! 🌸`);
       } else {
         errorBox.textContent = (data && data.error) ? data.error : 'Invalid email or password.';
       }
@@ -528,49 +521,6 @@ function renderLoginStep(){
 }
 
 checkAuth();
-
-/* Sticky top bar scroll shadow */
-(function(){
-  const bar = document.getElementById('topbar');
-  const onScroll = () => bar.classList.toggle('is-scrolled', window.scrollY > 8);
-  window.addEventListener('scroll', onScroll, { passive:true });
-  onScroll();
-})();
-
-/* Theme toggle - shares the same key as the rest of the site */
-const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
-function applyTheme(){
-  document.documentElement.setAttribute('data-theme', ThemeState.theme);
-  document.getElementById('themeBtn').textContent = ThemeState.theme === 'dark' ? '☾ Dark' : '☀ Light';
-}
-document.getElementById('themeBtn').onclick = () => {
-  ThemeState.theme = ThemeState.theme === 'dark' ? 'light' : 'dark';
-  localStorage.setItem('hkl_site_theme', ThemeState.theme);
-  applyTheme();
-};
-applyTheme();
-
-/* Petals - same drifting system as every other page */
-(function spawnPetals(){
-  const host = document.getElementById('petals');
-  if(!host) return;
-  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
-  const count = window.innerWidth < 700 ? 10 : 18;
-  for(let i=0;i<count;i++){
-    const size = 10 + Math.random()*12;
-    const left = Math.random()*100;
-    const dur = 10 + Math.random()*12;
-    const delay = -(Math.random()*dur);
-    const drift = Math.round(Math.random()*90-45)+'px';
-    const fill = colors[Math.floor(Math.random()*colors.length)];
-    const rotStart = Math.round(Math.random()*360);
-    const p = document.createElement('div');
-    p.className = 'petal';
-    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
-    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
-    host.appendChild(p);
-  }
-})();
 </script>
 </body>
 </html>

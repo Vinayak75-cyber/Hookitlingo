@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Your Profile | Hookitlingo</title>
+<meta name="description" content="Edit your Hookitlingo community profile.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941; --border:#4a3550;
+  --text:#f6ecec; --text-dim:#c7b2c4; --text-faint:#8f7a91;
+  --vermilion:#e58aa2; --vermilion-dim:#5a2c3a; --celadon:#5fa688; --celadon-dim:#2a4a3d;
+  --gold:#d9ab5c; --gold-dim:#5c471e; --petal:#f3b6c6;
+  --radius:16px; --radius-sm:10px;
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Inter",-apple-system,sans-serif; --jp:"Noto Serif JP",serif;
+  --maxw:640px;
+}
+html[data-theme="light"]{
+  --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6; --border:#eccabb;
+  --text:#3a2530; --text-dim:#79576a; --text-faint:#a98a9c;
+  --vermilion:#c8546f; --vermilion-dim:#f6dae2; --celadon:#3f7d63; --celadon-dim:#d9ece2;
+  --gold:#a4762b; --gold-dim:#f2e2c2; --petal:#e59fb2;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--text); font-family:var(--sans); line-height:1.6; min-height:100vh;
+  background:radial-gradient(1100px 620px at 12% -8%, color-mix(in srgb, var(--vermilion) 16%, transparent), transparent 58%), radial-gradient(900px 520px at 104% 6%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 55%), var(--ink);
+  background-attachment:fixed;
+}
+h1,h2,h3{font-family:var(--serif); font-weight:600; margin:0 0 .4em;}
+a{color:var(--celadon); text-decoration:none;}
+button{font-family:var(--sans); cursor:pointer;}
+label{font-size:.82em; font-weight:600; color:var(--text-dim); display:block; margin-bottom:6px;}
+
+/* Petals */
+.petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.petal{position:absolute; top:-8%; animation:petal-fall linear infinite;}
+@keyframes petal-fall{0%{transform:translate(0,-10vh) rotate(0deg);} 100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}}
+@media (prefers-reduced-motion: reduce){ .petals{display:none;} }
+@media(max-width:900px){ .petals .petal:nth-child(even){display:none;} }
+
+#topbar{position:relative; z-index:2; display:flex; justify-content:space-between; align-items:center; padding:18px 5vw 22px; max-width:1080px; margin:0 auto;}
+.topbtn{background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); border-radius:8px; padding:7px 14px; font-size:.85em;}
+.topbtn:hover{color:var(--text); border-color:var(--celadon);}
+
+.wrap{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:0 5vw 80px;}
+.eyebrow{font-size:.75em; letter-spacing:.14em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:8px;}
+.wrap h1{font-size:clamp(1.6em,4vw,2.1em); margin-bottom:6px;}
+.wrap .sub{color:var(--text-dim); font-size:.94em; margin-bottom:18px;}
+
+.status-banner{
+  display:flex; align-items:center; gap:10px; padding:12px 16px; border-radius:12px; margin-bottom:26px; font-size:.86em;
+}
+.status-banner.pending{background:var(--gold-dim); color:var(--gold); border:1px solid color-mix(in srgb, var(--gold) 40%, transparent);}
+.status-banner.approved{background:var(--celadon-dim); color:var(--celadon); border:1px solid color-mix(in srgb, var(--celadon) 40%, transparent);}
+.status-banner.rejected{background:var(--vermilion-dim); color:var(--vermilion); border:1px solid color-mix(in srgb, var(--vermilion) 40%, transparent);}
+
+.form-card{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:26px;
+  display:flex; flex-direction:column; gap:16px;
+}
+.field-group{display:flex; flex-direction:column; gap:4px;}
+.field-hint{font-size:.74em; color:var(--text-faint); margin-top:2px;}
+input[type=text], input[type=url], textarea{
+  width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--border); background:var(--surface2);
+  color:var(--text); font-size:.95em; font-family:var(--sans);
+}
+input:focus, textarea:focus{outline:none; border-color:var(--celadon);}
+textarea{resize:vertical; min-height:90px;}
+
+.section-title{font-size:.72em; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--text-faint); margin:8px 0 -4px;}
+.links-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+@media(max-width:520px){ .links-grid{grid-template-columns:1fr;} }
+
+.form-actions{display:flex; gap:10px; align-items:center; margin-top:6px; flex-wrap:wrap;}
+.save-btn{
+  padding:12px 26px; border-radius:999px; font-weight:700; font-size:.9em; color:#fff; border:none;
+  background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%));
+}
+.save-btn:hover{filter:brightness(1.06);}
+.save-btn:disabled{opacity:.6; cursor:default;}
+.preview-link{font-size:.85em; color:var(--text-dim); text-decoration:underline;}
+.form-error{color:var(--vermilion); font-size:.85em; min-height:1.2em;}
+
+.state-msg{
+  position:relative; z-index:2; max-width:480px; margin:100px auto; padding:0 5vw; text-align:center; color:var(--text-faint); font-size:.92em;
+}
+
+.toast{
+  position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); z-index:90;
+  background:var(--surface3); border:1px solid var(--border); color:var(--text); padding:10px 18px;
+  border-radius:999px; font-size:.85em; opacity:0; pointer-events:none; transition:opacity .25s, transform .25s;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="petals" id="petals" aria-hidden="true"></div>
+
+<div id="topbar">
+  <a class="topbtn" id="backLink" href="japanese-learners.html">← Back</a>
+  <button class="topbtn" id="themeBtn">☾ Dark</button>
+</div>
+
+<div class="wrap" id="pageHost">
+  <div class="state-msg">Loading your profile...</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   Social links share one combined cap (MAX_SOCIAL_LINKS) — unlike
+   the three dedicated Website slots, there's no per-platform limit,
+   just a ceiling on how many of these can be filled in at once.
+   This mirrors the same limit enforced server-side in server.js, so
+   this is just a friendlier heads-up, not the only line of defense.
+   ============================================================ */
+const SOCIAL_FIELD_IDS = ['fInstagram', 'fDiscord', 'fWhatsapp', 'fTwitter', 'fFacebook', 'fTiktok', 'fYoutube', 'fTelegram', 'fLine'];
+const MAX_SOCIAL_LINKS = 6;
+
+function enforceSocialLinkLimit(){
+  const fields = SOCIAL_FIELD_IDS.map(id => document.getElementById(id)).filter(Boolean);
+  if(!fields.length) return;
+  const filledCount = fields.filter(f => f.value.trim()).length;
+  fields.forEach(f => {
+    f.disabled = !f.value.trim() && filledCount >= MAX_SOCIAL_LINKS;
+  });
+  const hint = document.getElementById('socialLinksHint');
+  if(hint){
+    hint.textContent = filledCount >= MAX_SOCIAL_LINKS
+      ? `You've reached the limit of ${MAX_SOCIAL_LINKS} social links.`
+      : `Add up to ${MAX_SOCIAL_LINKS} (${filledCount}/${MAX_SOCIAL_LINKS} used).`;
+  }
+}
+
+const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', ThemeState.theme);
+  document.getElementById('themeBtn').textContent = ThemeState.theme === 'dark' ? '☾ Dark' : '☀ Light';
+}
+document.getElementById('themeBtn').onclick = () => {
+  ThemeState.theme = ThemeState.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('hkl_site_theme', ThemeState.theme);
+  applyTheme();
+};
+applyTheme();
+
+(function spawnPetals(){
+  const host = document.getElementById('petals');
+  if(!host) return;
+  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
+  const count = window.innerWidth < 700 ? 10 : 18;
+  for(let i=0;i<count;i++){
+    const size = 10 + Math.random()*12, left = Math.random()*100, dur = 10 + Math.random()*12;
+    const delay = -(Math.random()*dur), drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)], rotStart = Math.round(Math.random()*360);
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
+    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
+    host.appendChild(p);
+  }
+})();
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=> t.classList.remove('show'), 2800);
+}
+
+// Works out which directory page ("japanese-learners.html",
+// "korean-teachers.html", etc.) this user's own profile belongs in,
+// so the back link and preview links always point somewhere that
+// actually matches their type/course instead of assuming learner.
+function listingPage(course, type){
+  const coursePrefix = course === 'kr' ? 'korean' : 'japanese';
+  const typeSuffix = type === 'teacher' ? 'teachers' : 'learners';
+  return `${coursePrefix}-${typeSuffix}.html`;
+}
+
+function statusBanner(status, id, previewHref){
+  if(status === 'Approved'){
+    return `<div class="status-banner approved">🌸 Your profile is live. <a class="preview-link" href="${previewHref}">View it →</a></div>`;
+  }
+  if(status === 'Rejected'){
+    return `<div class="status-banner rejected">Your last submission wasn't approved. Update your details below and resubmit.</div>`;
+  }
+  return `<div class="status-banner pending">⏳ Your profile is pending review. It'll appear on the site once approved. <a class="preview-link" href="${previewHref}">Preview →</a></div>`;
+}
+
+function renderForm(me){
+  const p = me.profile || {};
+  const links = p.links || {};
+  const listing = listingPage(p.course, p.type);
+  const previewHref = `profile.html?id=${encodeURIComponent(me.id)}&type=${encodeURIComponent(p.type || 'learner')}`;
+  const audience = p.type === 'teacher' ? 'learners' : 'fellow learners';
+
+  document.getElementById('backLink').href = listing;
+
+  document.getElementById('pageHost').innerHTML = `
+    <div class="eyebrow jp">日本語 · プロフィール</div>
+    <h1>Edit Your Profile</h1>
+    <div class="sub">This is what ${audience} see once it's approved.</div>
+    ${statusBanner(me.status, me.id, previewHref)}
+
+    <div class="form-card">
+      <div class="field-group">
+        <label for="fName">Name</label>
+        <input type="text" id="fName" maxlength="100" value="${escapeAttr(p.name || me.name || '')}">
+      </div>
+      <div class="field-group">
+        <label for="fCountry">Country</label>
+        <input type="text" id="fCountry" maxlength="60" value="${escapeAttr(p.country || '')}">
+      </div>
+      <div class="field-group">
+        <label for="fTagline">Tagline</label>
+        <input type="text" id="fTagline" maxlength="140" value="${escapeAttr(p.tagline || '')}" placeholder="A short one-liner shown on your card">
+      </div>
+      <div class="field-group">
+        <label for="fAbout">About you</label>
+        <textarea id="fAbout" maxlength="1000">${escapeHtml(p.about || '')}</textarea>
+      </div>
+      <div class="field-group">
+        <label for="fImage">Photo URL</label>
+        <input type="url" id="fImage" maxlength="500" value="${escapeAttr(p.imageUrl || '')}" placeholder="https://...">
+        <div class="field-hint">Paste a link to an image hosted elsewhere — there's no upload here yet.</div>
+      </div>
+
+      <div class="section-title">Social Links (optional)</div>
+      <div class="field-hint" id="socialLinksHint" style="margin:-4px 0 4px;">Add up to 6.</div>
+      <div class="links-grid" id="socialLinksGrid">
+        <div class="field-group"><label for="fInstagram">Instagram</label><input type="text" id="fInstagram" maxlength="100" value="${escapeAttr(links.instagram || '')}" placeholder="handle"></div>
+        <div class="field-group"><label for="fDiscord">Discord</label><input type="text" id="fDiscord" maxlength="100" value="${escapeAttr(links.discord || '')}" placeholder="discord.gg/..."></div>
+        <div class="field-group"><label for="fWhatsapp">WhatsApp</label><input type="text" id="fWhatsapp" maxlength="40" value="${escapeAttr(links.whatsapp || '')}" placeholder="+91 ..."></div>
+        <div class="field-group"><label for="fTwitter">X / Twitter</label><input type="text" id="fTwitter" maxlength="100" value="${escapeAttr(links.twitter || '')}" placeholder="handle"></div>
+        <div class="field-group"><label for="fFacebook">Facebook</label><input type="text" id="fFacebook" maxlength="100" value="${escapeAttr(links.facebook || '')}" placeholder="handle"></div>
+        <div class="field-group"><label for="fTiktok">TikTok</label><input type="text" id="fTiktok" maxlength="100" value="${escapeAttr(links.tiktok || '')}" placeholder="handle"></div>
+        <div class="field-group"><label for="fYoutube">YouTube</label><input type="text" id="fYoutube" maxlength="100" value="${escapeAttr(links.youtube || '')}" placeholder="handle"></div>
+        <div class="field-group"><label for="fTelegram">Telegram</label><input type="text" id="fTelegram" maxlength="100" value="${escapeAttr(links.telegram || '')}" placeholder="handle"></div>
+        <div class="field-group"><label for="fLine">LINE</label><input type="text" id="fLine" maxlength="100" value="${escapeAttr(links.line || '')}" placeholder="LINE ID"></div>
+      </div>
+
+      <div class="section-title">Website Links (optional)</div>
+      <div class="links-grid">
+        <div class="field-group"><label for="fWebsite1">Website 1</label><input type="text" id="fWebsite1" maxlength="200" value="${escapeAttr(links.website1 || '')}" placeholder="yoursite.com"></div>
+        <div class="field-group"><label for="fWebsite1Label">Website 1 button text</label><input type="text" id="fWebsite1Label" maxlength="40" value="${escapeAttr(links.website1Label || '')}" placeholder="e.g. My Portfolio"></div>
+        <div class="field-group"><label for="fWebsite2">Website 2</label><input type="text" id="fWebsite2" maxlength="200" value="${escapeAttr(links.website2 || '')}" placeholder="yoursite.com"></div>
+        <div class="field-group"><label for="fWebsite2Label">Website 2 button text</label><input type="text" id="fWebsite2Label" maxlength="40" value="${escapeAttr(links.website2Label || '')}" placeholder="e.g. My Shop"></div>
+        <div class="field-group"><label for="fWebsite3">Website 3</label><input type="text" id="fWebsite3" maxlength="200" value="${escapeAttr(links.website3 || '')}" placeholder="yoursite.com"></div>
+        <div class="field-group"><label for="fWebsite3Label">Website 3 button text</label><input type="text" id="fWebsite3Label" maxlength="40" value="${escapeAttr(links.website3Label || '')}" placeholder="e.g. YouTube Channel"></div>
+      </div>
+
+      <div class="form-error" id="formError"></div>
+      <div class="form-actions">
+        <button class="save-btn" id="saveBtn">Save Changes</button>
+        <a class="preview-link" href="${previewHref}">Preview my profile</a>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('saveBtn').onclick = saveProfile;
+  SOCIAL_FIELD_IDS.forEach(id => document.getElementById(id).addEventListener('input', enforceSocialLinkLimit));
+  enforceSocialLinkLimit();
+}
+
+function escapeAttr(s){
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function escapeHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+async function saveProfile(){
+  const saveBtn = document.getElementById('saveBtn');
+  const errorBox = document.getElementById('formError');
+  const name = document.getElementById('fName').value.trim();
+  if(!name){
+    errorBox.textContent = 'Please enter your name.';
+    return;
+  }
+  const socialCount = SOCIAL_FIELD_IDS.filter(id => document.getElementById(id).value.trim()).length;
+  if(socialCount > MAX_SOCIAL_LINKS){
+    errorBox.textContent = `Please limit yourself to ${MAX_SOCIAL_LINKS} social links.`;
+    return;
+  }
+  errorBox.textContent = '';
+  saveBtn.disabled = true;
+  saveBtn.textContent = 'Saving...';
+
+  const payload = {
+    name,
+    country: document.getElementById('fCountry').value.trim(),
+    tagline: document.getElementById('fTagline').value.trim(),
+    about: document.getElementById('fAbout').value.trim(),
+    imageUrl: document.getElementById('fImage').value.trim(),
+    links: {
+      instagram: document.getElementById('fInstagram').value.trim(),
+      discord: document.getElementById('fDiscord').value.trim(),
+      whatsapp: document.getElementById('fWhatsapp').value.trim(),
+      website1: document.getElementById('fWebsite1').value.trim(),
+      website1Label: document.getElementById('fWebsite1Label').value.trim(),
+      website2: document.getElementById('fWebsite2').value.trim(),
+      website2Label: document.getElementById('fWebsite2Label').value.trim(),
+      website3: document.getElementById('fWebsite3').value.trim(),
+      website3Label: document.getElementById('fWebsite3Label').value.trim(),
+      twitter: document.getElementById('fTwitter').value.trim(),
+      facebook: document.getElementById('fFacebook').value.trim(),
+      tiktok: document.getElementById('fTiktok').value.trim(),
+      youtube: document.getElementById('fYoutube').value.trim(),
+      telegram: document.getElementById('fTelegram').value.trim(),
+      line: document.getElementById('fLine').value.trim()
+    }
+  };
+
+  try {
+    const res = await fetch('/api/profile', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if(res.ok && data.ok){
+      toast('Saved — your profile is now pending review. 🌸');
+      renderForm({ id: data.id, name: data.name, status: data.status, profile: data.profile });
+    } else if(res.status === 401){
+      window.location.href = 'japanese-learners.html?login=1';
+    } else {
+      errorBox.textContent = (data && data.error) ? data.error : 'Something went wrong saving your profile.';
+    }
+  } catch (err) {
+    errorBox.textContent = 'Something went wrong saving your profile. Please try again.';
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.textContent = 'Save Changes';
+  }
+}
+
+async function init(){
+  const pageHost = document.getElementById('pageHost');
+  try {
+    const res = await fetch('/api/me', { credentials: 'include' });
+    const data = await res.json();
+    if(!data || !data.loggedIn){
+      window.location.href = 'japanese-learners.html?login=1';
+      return;
+    }
+    renderForm(data);
+  } catch (err) {
+    pageHost.innerHTML = '<div class="state-msg">Could not load your profile right now. Please try again shortly.</div>';
+  }
+}
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join Hookitlingo</title>
+<meta name="description" content="Create your Hookitlingo community profile as a learner or a teacher.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941; --border:#4a3550;
+  --text:#f6ecec; --text-dim:#c7b2c4; --text-faint:#8f7a91;
+  --vermilion:#e58aa2; --vermilion-dim:#5a2c3a; --celadon:#5fa688; --celadon-dim:#2a4a3d;
+  --gold:#d9ab5c; --gold-dim:#5c471e; --petal:#f3b6c6;
+  --radius:16px; --radius-sm:10px;
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Inter",-apple-system,sans-serif; --jp:"Noto Serif JP",serif;
+  --maxw:640px;
+}
+html[data-theme="light"]{
+  --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6; --border:#eccabb;
+  --text:#3a2530; --text-dim:#79576a; --text-faint:#a98a9c;
+  --vermilion:#c8546f; --vermilion-dim:#f6dae2; --celadon:#3f7d63; --celadon-dim:#d9ece2;
+  --gold:#a4762b; --gold-dim:#f2e2c2; --petal:#e59fb2;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--text); font-family:var(--sans); line-height:1.6; min-height:100vh;
+  background:radial-gradient(1100px 620px at 12% -8%, color-mix(in srgb, var(--vermilion) 16%, transparent), transparent 58%), radial-gradient(900px 520px at 104% 6%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 55%), var(--ink);
+  background-attachment:fixed;
+}
+h1,h2,h3{font-family:var(--serif); font-weight:600; margin:0 0 .4em;}
+a{color:var(--celadon); text-decoration:none;}
+button{font-family:var(--sans); cursor:pointer;}
+label{font-size:.82em; font-weight:600; color:var(--text-dim); display:block; margin-bottom:6px;}
+.jp{font-family:var(--jp);}
+
+/* Petals */
+.petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.petal{position:absolute; top:-8%; animation:petal-fall linear infinite;}
+@keyframes petal-fall{0%{transform:translate(0,-10vh) rotate(0deg);} 100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}}
+@media (prefers-reduced-motion: reduce){ .petals{display:none;} }
+@media(max-width:900px){ .petals .petal:nth-child(even){display:none;} }
+
+#topbar{position:relative; z-index:2; display:flex; justify-content:space-between; align-items:center; padding:18px 5vw 22px; max-width:1080px; margin:0 auto;}
+.topbtn{background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); border-radius:8px; padding:7px 14px; font-size:.85em;}
+.topbtn:hover{color:var(--text); border-color:var(--celadon);}
+
+.wrap{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:0 5vw 80px;}
+.eyebrow{font-size:.75em; letter-spacing:.14em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:8px;}
+.wrap h1{font-size:clamp(1.6em,4vw,2.1em); margin-bottom:6px;}
+.wrap .sub{color:var(--text-dim); font-size:.94em; margin-bottom:18px;}
+
+/* ===== Community hero + benefits (sits above the form) ===== */
+.join-hero{margin-bottom:22px;}
+.join-hero h1{font-size:clamp(1.9em,5.5vw,2.5em); margin-bottom:10px;}
+.join-lede{color:var(--text-dim); font-size:1em; max-width:58ch; margin:0;}
+
+.benefits-card{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:26px 26px 22px; margin-bottom:28px;
+}
+.benefits-price{
+  display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+  margin-bottom:18px; padding-bottom:18px; border-bottom:1px solid var(--border);
+}
+.benefits-price-amount{
+  font-family:var(--serif); font-size:2.3em; font-weight:700; line-height:1;
+  background:linear-gradient(135deg,var(--vermilion), var(--gold));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.benefits-price-note{color:var(--text-faint); font-size:.8em; line-height:1.5;}
+.benefits-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:15px;}
+.benefits-list li{display:flex; gap:12px; align-items:flex-start; font-size:.92em; color:var(--text-dim);}
+.benefits-list li .b-icon{flex:none; font-size:1.2em; line-height:1.4;}
+.benefits-list li b{color:var(--text);}
+.benefits-foot{
+  margin-top:20px; padding-top:16px; border-top:1px solid var(--border);
+  font-size:.8em; color:var(--text-faint); text-align:center;
+}
+.form-lead-in{
+  display:flex; align-items:center; gap:12px; margin:8px 0 26px;
+  color:var(--text-faint); font-size:.8em; text-transform:uppercase; letter-spacing:.1em; font-weight:700;
+}
+.form-lead-in::before, .form-lead-in::after{content:''; flex:1; height:1px; background:var(--border);}
+
+.form-card{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:26px;
+  display:flex; flex-direction:column; gap:16px;
+}
+.field-group{display:flex; flex-direction:column; gap:4px;}
+.field-hint{font-size:.74em; color:var(--text-faint); margin-top:2px;}
+input[type=text], input[type=url], input[type=email], input[type=password], textarea{
+  width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--border); background:var(--surface2);
+  color:var(--text); font-size:.95em; font-family:var(--sans);
+}
+input:focus, textarea:focus{outline:none; border-color:var(--celadon);}
+textarea{resize:vertical; min-height:90px;}
+
+.section-title{font-size:.72em; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--text-faint); margin:8px 0 -4px;}
+.section-title.first{margin-top:0;}
+.links-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+@media(max-width:520px){ .links-grid{grid-template-columns:1fr;} }
+
+/* Role / course segmented toggles */
+.toggle-group{display:flex; gap:10px;}
+.toggle-btn{
+  flex:1; display:flex; align-items:center; justify-content:center; gap:7px; text-align:center;
+  padding:13px 10px; border-radius:12px; border:1px solid var(--border); background:var(--surface2);
+  color:var(--text-dim); font-weight:600; font-size:.88em; transition:border-color .15s ease, background .15s ease, color .15s ease;
+}
+.toggle-btn:hover{color:var(--text);}
+.toggle-btn.active{
+  color:#fff; border-color:transparent;
+  background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%));
+}
+.toggle-hint{font-size:.78em; color:var(--text-faint); margin:-6px 0 4px;}
+
+.form-actions{display:flex; gap:10px; align-items:center; margin-top:6px; flex-wrap:wrap;}
+.save-btn{
+  padding:12px 26px; border-radius:999px; font-weight:700; font-size:.9em; color:#fff; border:none;
+  background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%));
+}
+.save-btn:hover{filter:brightness(1.06);}
+.save-btn:disabled{opacity:.6; cursor:default;}
+.form-error{color:var(--vermilion); font-size:.85em; min-height:1.2em;}
+.form-note{text-align:center; font-size:.82em; color:var(--text-faint); margin-top:2px;}
+
+/* Confirmation screen */
+.confirm-card{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:36px 28px;
+  text-align:center;
+}
+.confirm-icon{font-size:2.6em; margin-bottom:10px;}
+.confirm-card h2{font-size:1.4em;}
+.confirm-steps{
+  list-style:none; margin:22px 0 0; padding:0; display:flex; flex-direction:column; gap:14px; text-align:left;
+}
+.confirm-step{display:flex; gap:12px; align-items:flex-start; padding:14px; border-radius:12px; background:var(--surface2); border:1px solid var(--border);}
+.confirm-step .cs-num{
+  flex:none; width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-family:var(--serif); font-weight:700; font-size:.85em; color:#fff;
+  background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--celadon) 85%, #fff 15%), var(--celadon) 75%);
+}
+.confirm-step .cs-text{font-size:.88em; color:var(--text-dim);}
+.confirm-step .cs-text b{color:var(--text);}
+.confirm-actions{margin-top:26px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
+
+.state-msg{
+  position:relative; z-index:2; max-width:480px; margin:100px auto; padding:0 5vw; text-align:center; color:var(--text-faint); font-size:.92em;
+}
+</style>
+</head>
+<body>
+
+<div class="petals" id="petals" aria-hidden="true"></div>
+
+<div id="topbar">
+  <a class="topbtn" id="backLink" href="japanese-hub.html">← Back</a>
+  <button class="topbtn" id="themeBtn">☾ Dark</button>
+</div>
+
+<div class="wrap" id="pageHost">
+  <div class="join-hero">
+    <div class="eyebrow">🌸 Hookitlingo Community</div>
+    <h1>Be Part of the Community</h1>
+    <p class="join-lede">Join a growing circle of learners and native speakers building real language skills together structured lessons, honest conversation practice, and every profile personally reviewed by an actual human, never a bot.</p>
+  </div>
+
+  <div class="benefits-card">
+    <div class="benefits-price">
+      <span class="benefits-price-amount">$9.99</span>
+      <span class="benefits-price-note">One-time payment · No subscription · No hidden charges<br>Pay once, keep your access forever.</span>
+    </div>
+    <ul class="benefits-list">
+      <li><span class="b-icon"></span><span><b>Full access to every course, N5 through N1.</b> N5 is live right now, and N4–N1 are on the way, once released, they're yours too, at no extra cost.</span></li>
+      <li><span class="b-icon"></span><span><b>Connect with learners</b> tackling the same language as you, from anywhere in the world.</span></li>
+      <li><span class="b-icon"></span><span><b>Reach out to teachers and native speakers</b>, subject to their own availability.</span></li>
+      <li><span class="b-icon"></span><span><b>Every future course and resource</b> we release at Hookitlingo, included for as long as you're part of the community.</span></li>
+      <li><span class="b-icon"></span><span><b>Your own shareable profile card</b>, with all your links and socials attached in one clean place.</span></li>
+    </ul>
+    <div class="benefits-foot">One fee. One community. Yours for good.</div>
+  </div>
+
+  <div class="form-lead-in">Create your profile</div>
+
+  <div class="eyebrow jp" id="eyebrow">日本語 · プロフィール</div>
+  <h1 id="pageTitle">Join as a Learner</h1>
+  <div class="sub" id="pageSub">Tell us about yourself a real person reviews every profile before it goes live.</div>
+
+  <div class="form-card" id="formCard">
+    <div class="section-title first">I'm joining as</div>
+    <div class="toggle-group" id="roleToggle">
+      <button type="button" class="toggle-btn active" data-role="learner">Learner</button>
+      <button type="button" class="toggle-btn" data-role="teacher">Teacher / Native Speaker</button>
+    </div>
+
+    <div class="section-title">Course</div>
+    <div class="toggle-group" id="courseToggle">
+      <button type="button" class="toggle-btn active" data-course="jp">日本語 Japanese</button>
+      <button type="button" class="toggle-btn" data-course="kr">한국어 Korean</button>
+    </div>
+    <div class="toggle-hint">This decides which directory your card shows up in once approved.</div>
+
+    <div class="section-title">Account</div>
+    <div class="field-group">
+      <label for="fEmail">Email</label>
+      <input type="email" id="fEmail" maxlength="200" autocomplete="email" placeholder="you@example.com">
+    </div>
+    <div class="field-group">
+      <label for="fPassword">Password</label>
+      <input type="password" id="fPassword" maxlength="200" autocomplete="new-password" placeholder="Min. 8 characters">
+    </div>
+
+    <div class="section-title">Profile</div>
+    <div class="field-group">
+      <label for="fName">Name</label>
+      <input type="text" id="fName" maxlength="100" autocomplete="name">
+    </div>
+    <div class="field-group">
+      <label for="fCountry">Country</label>
+      <input type="text" id="fCountry" maxlength="60">
+    </div>
+    <div class="field-group">
+      <label for="fTagline">Tagline</label>
+      <input type="text" id="fTagline" maxlength="140" placeholder="A short one-liner shown on your card">
+    </div>
+    <div class="field-group">
+      <label for="fAbout">About you</label>
+      <textarea id="fAbout" maxlength="1000"></textarea>
+    </div>
+    <div class="field-group">
+      <label for="fImage">Photo URL</label>
+      <input type="url" id="fImage" maxlength="500" placeholder="https://...">
+      <div class="field-hint">Paste a link to an image hosted elsewhere — there's no upload here yet.</div>
+    </div>
+
+    <div class="section-title">Social Links (optional)</div>
+    <div class="field-hint" id="socialLinksHint" style="margin:-4px 0 4px;">Add up to 6.</div>
+    <div class="links-grid" id="socialLinksGrid">
+      <div class="field-group"><label for="fInstagram">Instagram</label><input type="text" id="fInstagram" maxlength="100" placeholder="handle"></div>
+      <div class="field-group"><label for="fDiscord">Discord</label><input type="text" id="fDiscord" maxlength="100" placeholder="discord.gg/..."></div>
+      <div class="field-group"><label for="fWhatsapp">WhatsApp</label><input type="text" id="fWhatsapp" maxlength="40" placeholder="+91 ..."></div>
+      <div class="field-group"><label for="fTwitter">X / Twitter</label><input type="text" id="fTwitter" maxlength="100" placeholder="handle"></div>
+      <div class="field-group"><label for="fFacebook">Facebook</label><input type="text" id="fFacebook" maxlength="100" placeholder="handle"></div>
+      <div class="field-group"><label for="fTiktok">TikTok</label><input type="text" id="fTiktok" maxlength="100" placeholder="handle"></div>
+      <div class="field-group"><label for="fYoutube">YouTube</label><input type="text" id="fYoutube" maxlength="100" placeholder="handle"></div>
+      <div class="field-group"><label for="fTelegram">Telegram</label><input type="text" id="fTelegram" maxlength="100" placeholder="handle"></div>
+      <div class="field-group"><label for="fLine">LINE</label><input type="text" id="fLine" maxlength="100" placeholder="LINE ID"></div>
+    </div>
+
+    <div class="section-title">Website Links (optional)</div>
+    <div class="links-grid">
+      <div class="field-group"><label for="fWebsite1">Website 1</label><input type="text" id="fWebsite1" maxlength="200" placeholder="yoursite.com"></div>
+      <div class="field-group"><label for="fWebsite1Label">Website 1 button text</label><input type="text" id="fWebsite1Label" maxlength="40" placeholder="e.g. My Portfolio"></div>
+      <div class="field-group"><label for="fWebsite2">Website 2</label><input type="text" id="fWebsite2" maxlength="200" placeholder="yoursite.com"></div>
+      <div class="field-group"><label for="fWebsite2Label">Website 2 button text</label><input type="text" id="fWebsite2Label" maxlength="40" placeholder="e.g. My Shop"></div>
+      <div class="field-group"><label for="fWebsite3">Website 3</label><input type="text" id="fWebsite3" maxlength="200" placeholder="yoursite.com"></div>
+      <div class="field-group"><label for="fWebsite3Label">Website 3 button text</label><input type="text" id="fWebsite3Label" maxlength="40" placeholder="e.g. YouTube Channel"></div>
+    </div>
+
+    <div class="form-error" id="formError"></div>
+    <div class="form-actions">
+      <button class="save-btn" id="submitBtn">Create Account</button>
+    </div>
+    <div class="form-note">No payment needed yet, we'll send a secure payment link once your profile is approved.</div>
+    <div class="form-note">Already have an account? <a href="#" id="loginLink">Log in</a></div>
+  </div>
+</div>
+
+<script>
+// The profile link shown after signup should always read as the real
+// production domain — not whatever host/port happens to be serving
+// this page — since that's the link the person will actually use once
+// their profile is live. The one exception is local dev: keep it as
+// window.location.origin there so the printed link is still clickable
+// while testing on localhost.
+const PROD_ORIGIN = 'https://hookit.online';
+const SITE_ORIGIN = /^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname)
+  ? window.location.origin
+  : PROD_ORIGIN;
+
+const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', ThemeState.theme);
+  document.getElementById('themeBtn').textContent = ThemeState.theme === 'dark' ? '☾ Dark' : '☀ Light';
+}
+document.getElementById('themeBtn').onclick = () => {
+  ThemeState.theme = ThemeState.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('hkl_site_theme', ThemeState.theme);
+  applyTheme();
+};
+applyTheme();
+
+(function spawnPetals(){
+  const host = document.getElementById('petals');
+  if(!host) return;
+  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
+  const count = window.innerWidth < 700 ? 10 : 18;
+  for(let i=0;i<count;i++){
+    const size = 10 + Math.random()*12, left = Math.random()*100, dur = 10 + Math.random()*12;
+    const delay = -(Math.random()*dur), drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)], rotStart = Math.round(Math.random()*360);
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
+    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
+    host.appendChild(p);
+  }
+})();
+
+/* ============================================================
+   If someone's already logged in, skip straight to editing
+   their existing profile instead of letting them fill out a
+   second signup form.
+   ============================================================ */
+async function redirectIfLoggedIn(){
+  try {
+    const res = await fetch('/api/me', { credentials: 'include' });
+    const data = await res.json();
+    if(data && data.loggedIn){
+      window.location.href = 'edit-profile.html';
+    }
+  } catch (err) { /* not logged in — carry on */ }
+}
+redirectIfLoggedIn();
+
+/* ============================================================
+   Role + course selection drives the copy on the page, and which
+   listing page ("japanese-learners.html", "korean-teachers.html",
+   etc.) the back/login links point at — this same form now covers
+   every combination instead of there being a separate signup page
+   per course/type.
+   ============================================================ */
+/* ============================================================
+   Social links share one combined cap (MAX_SOCIAL_LINKS) — unlike
+   the three dedicated Website slots, there's no per-platform limit,
+   just a ceiling on how many of these can be filled in at once.
+   This mirrors the same limit enforced server-side in server.js, so
+   this is just a friendlier heads-up, not the only line of defense.
+   ============================================================ */
+const SOCIAL_FIELD_IDS = ['fInstagram', 'fDiscord', 'fWhatsapp', 'fTwitter', 'fFacebook', 'fTiktok', 'fYoutube', 'fTelegram', 'fLine'];
+const MAX_SOCIAL_LINKS = 6;
+
+function enforceSocialLinkLimit(){
+  const fields = SOCIAL_FIELD_IDS.map(id => document.getElementById(id));
+  const filledCount = fields.filter(f => f.value.trim()).length;
+  fields.forEach(f => {
+    f.disabled = !f.value.trim() && filledCount >= MAX_SOCIAL_LINKS;
+  });
+  const hint = document.getElementById('socialLinksHint');
+  if(hint){
+    hint.textContent = filledCount >= MAX_SOCIAL_LINKS
+      ? `You've reached the limit of ${MAX_SOCIAL_LINKS} social links.`
+      : `Add up to ${MAX_SOCIAL_LINKS} (${filledCount}/${MAX_SOCIAL_LINKS} used).`;
+  }
+}
+SOCIAL_FIELD_IDS.forEach(id => document.getElementById(id).addEventListener('input', enforceSocialLinkLimit));
+enforceSocialLinkLimit();
+
+const STATE = { role: 'learner', course: 'jp' };
+
+const COPY = {
+  jp: { eyebrow: '日本語 · プロフィール', courseLabel: 'Japanese', hub: 'japanese-hub.html' },
+  kr: { eyebrow: '한국어 · 프로필', courseLabel: 'Korean', hub: 'korean-hub.html' }
+};
+
+function listingPage(course, role){
+  const coursePrefix = course === 'kr' ? 'korean' : 'japanese';
+  return `${coursePrefix}-${role}s.html`;
+}
+
+function updateCopy(){
+  const c = COPY[STATE.course];
+  const roleLabel = STATE.role === 'teacher' ? 'Teacher / Native Speaker' : 'Learner';
+  document.getElementById('eyebrow').textContent = c.eyebrow;
+  document.getElementById('pageTitle').textContent = `Join as a ${roleLabel}`;
+  document.getElementById('pageSub').textContent = STATE.role === 'teacher'
+    ? `Tell us about yourself, a real person reviews every teacher profile before it goes live to ${c.courseLabel} learners.`
+    : `Tell us about yourself, a real person reviews every profile before it goes live.`;
+  document.getElementById('backLink').href = listingPage(STATE.course, STATE.role);
+  document.getElementById('loginLink').href = `${listingPage(STATE.course, STATE.role)}?login=1`;
+}
+
+function wireToggle(groupId, key, onPick){
+  const group = document.getElementById(groupId);
+  group.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.onclick = () => {
+      group.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      STATE[key] = btn.dataset[key];
+      onPick();
+    };
+  });
+}
+wireToggle('roleToggle', 'role', updateCopy);
+wireToggle('courseToggle', 'course', updateCopy);
+updateCopy();
+
+function renderConfirmScreen(slug){
+  const dest = listingPage(STATE.course, STATE.role);
+  const destLabel = STATE.role === 'teacher' ? 'Teachers' : 'Learners';
+  // The profile isn't public yet (still Pending), but showing the
+  // link now means the person already has it saved/copied for their
+  // bio the moment it goes live — nothing here works until approval.
+  const profileUrl = slug ? `${SITE_ORIGIN}/u/${slug}` : '';
+  const linkBlock = profileUrl ? `
+      <div class="confirm-link" style="margin:16px 0;padding:12px 14px;border-radius:10px;background:rgba(0,0,0,0.04);word-break:break-all;">
+        <div style="font-size:13px;opacity:0.7;margin-bottom:4px;">Your profile link (live once approved):</div>
+        <a href="${profileUrl}" style="font-weight:600;">${profileUrl}</a>
+      </div>` : '';
+  document.getElementById('pageHost').innerHTML = `
+    <div class="confirm-card">
+      <div class="confirm-icon">🌸</div>
+      <h2>You're on the list!</h2>
+      <p class="sub" style="margin-bottom:0;">Here's what happens next.</p>
+      ${linkBlock}
+      <ul class="confirm-steps">
+        <li class="confirm-step">
+          <span class="cs-num">1</span>
+          <span class="cs-text"><b>Under review.</b> A real person looks over every profile — no bots. This usually doesn't take long.</span>
+        </li>
+        <li class="confirm-step">
+          <span class="cs-num">2</span>
+          <span class="cs-text"><b>Secure payment link.</b> Once approved, we'll send you a secure link to complete payment.</span>
+        </li>
+        <li class="confirm-step">
+          <span class="cs-num">3</span>
+          <span class="cs-text"><b>You're live.</b> Your profile activates as soon as payment is done, and appears in the directory.</span>
+        </li>
+      </ul>
+      <div class="confirm-actions">
+        <a class="save-btn" style="display:inline-block;" href="${dest}">Back to ${destLabel}</a>
+      </div>
+    </div>
+  `;
+}
+
+function collectPayload(){
+  return {
+    name: document.getElementById('fName').value.trim(),
+    email: document.getElementById('fEmail').value.trim(),
+    password: document.getElementById('fPassword').value,
+    course: STATE.course,
+    type: STATE.role,
+    country: document.getElementById('fCountry').value.trim(),
+    tagline: document.getElementById('fTagline').value.trim(),
+    about: document.getElementById('fAbout').value.trim(),
+    imageUrl: document.getElementById('fImage').value.trim(),
+    links: {
+      instagram: document.getElementById('fInstagram').value.trim(),
+      discord: document.getElementById('fDiscord').value.trim(),
+      whatsapp: document.getElementById('fWhatsapp').value.trim(),
+      website1: document.getElementById('fWebsite1').value.trim(),
+      website1Label: document.getElementById('fWebsite1Label').value.trim(),
+      website2: document.getElementById('fWebsite2').value.trim(),
+      website2Label: document.getElementById('fWebsite2Label').value.trim(),
+      website3: document.getElementById('fWebsite3').value.trim(),
+      website3Label: document.getElementById('fWebsite3Label').value.trim(),
+      twitter: document.getElementById('fTwitter').value.trim(),
+      facebook: document.getElementById('fFacebook').value.trim(),
+      tiktok: document.getElementById('fTiktok').value.trim(),
+      youtube: document.getElementById('fYoutube').value.trim(),
+      telegram: document.getElementById('fTelegram').value.trim(),
+      line: document.getElementById('fLine').value.trim()
+    }
+  };
+}
+
+async function submitSignup(){
+  const submitBtn = document.getElementById('submitBtn');
+  const errorBox = document.getElementById('formError');
+  const payload = collectPayload();
+
+  if(!payload.name){
+    errorBox.textContent = 'Please enter your name.';
+    return;
+  }
+  if(!payload.email){
+    errorBox.textContent = 'Please enter your email.';
+    return;
+  }
+  if(payload.password.length < 8){
+    errorBox.textContent = 'Password must be at least 8 characters.';
+    return;
+  }
+  const socialCount = SOCIAL_FIELD_IDS.filter(id => document.getElementById(id).value.trim()).length;
+  if(socialCount > MAX_SOCIAL_LINKS){
+    errorBox.textContent = `Please limit yourself to ${MAX_SOCIAL_LINKS} social links.`;
+    return;
+  }
+
+  errorBox.textContent = '';
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Creating account...';
+
+  try {
+    const res = await fetch('/api/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if(res.ok && data.ok){
+      renderConfirmScreen(data.slug);
+    } else {
+      errorBox.textContent = (data && data.error) ? data.error : 'Something went wrong creating your account.';
+    }
+  } catch (err) {
+    errorBox.textContent = 'Something went wrong creating your account. Please try again.';
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Create Account';
+  }
+}
+
+document.getElementById('submitBtn').onclick = submitSignup;
+</script>
+</body>
+</html>

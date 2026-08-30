@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile | Hookitlingo</title>
+<meta name="description" content="A Hookitlingo community profile.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#120c14; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941; --border:#4a3550;
+  --text:#f6ecec; --text-dim:#c7b2c4; --text-faint:#8f7a91;
+  --vermilion:#e58aa2; --celadon:#5fa688; --celadon-dim:#2a4a3d;
+  --gold:#d9ab5c; --petal:#f3b6c6;
+  --radius:14px;
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Inter",-apple-system,sans-serif; --jp:"Noto Serif JP",serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0; height:100%;}
+body{color:var(--text); font-family:var(--sans); line-height:1.6; background:var(--ink);}
+h1{font-family:var(--serif); font-weight:600; margin:0;}
+a{color:inherit; text-decoration:none;}
+
+body{
+  background:
+    radial-gradient(circle at 78% 12%, color-mix(in srgb, var(--vermilion) 20%, transparent), transparent 55%),
+    radial-gradient(circle at 12% 88%, color-mix(in srgb, var(--gold) 16%, transparent), transparent 55%),
+    var(--ink);
+}
+
+/* Petals - fall across the full page, behind the card */
+.petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.petal{position:absolute; top:-8%; animation:petal-fall linear infinite; opacity:.6;}
+@keyframes petal-fall{0%{transform:translate(0,-10vh) rotate(0deg);} 100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}}
+@media (prefers-reduced-motion: reduce){ .petals{display:none;} }
+
+/* ===== Floating card layout ===== */
+.profile-hero{
+  position:relative; z-index:2; min-height:100vh; min-height:100dvh;
+  display:flex; align-items:center; justify-content:center;
+  padding:5vh 24px;
+}
+
+.profile-stack{
+  width:100%; max-width:900px;
+  display:flex; flex-direction:column; align-items:center; gap:18px;
+}
+
+.profile-card{
+  position:relative; width:100%;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 30px 70px rgba(0,0,0,.55), 0 2px 14px rgba(0,0,0,.4);
+}
+
+.outro-bar{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:13px 26px; border-radius:999px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.14);
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  color:var(--text); font-size:.88em; font-weight:600;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+  transition:transform .18s ease, background .18s ease, border-color .18s ease;
+}
+.outro-bar:hover{background:rgba(255,255,255,.13); border-color:rgba(255,255,255,.26); transform:translateY(-2px);}
+.outro-bar .icon-glyph{width:15px; height:15px; display:inline-flex;}
+.outro-bar .icon-glyph svg{width:100%; height:100%; fill:none; display:block;}
+
+.card-top{position:relative; padding:44px 40px 22px;}
+.profile-bg{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 22%; z-index:0;
+  display:block;
+}
+.profile-bg-fallback{
+  position:absolute; inset:0; z-index:0;
+  background:radial-gradient(circle at 65% 30%, color-mix(in srgb, var(--vermilion) 45%, transparent), transparent 60%),
+             radial-gradient(circle at 25% 75%, color-mix(in srgb, var(--gold) 32%, transparent), transparent 55%),
+             var(--surface2);
+}
+.card-top-scrim{
+  position:absolute; inset:0; z-index:1;
+  background:linear-gradient(180deg, rgba(18,12,20,.12) 0%, rgba(18,12,20,.5) 72%, rgba(18,12,20,.78) 100%);
+}
+.card-top-frame{
+  position:relative; z-index:2;
+  padding:24px 28px 14px;
+  min-height:360px;
+  display:flex; flex-direction:column; justify-content:flex-end;
+}
+
+.p-badge{
+  display:inline-flex; align-items:center; gap:5px; font-size:.68em; font-weight:700; text-transform:uppercase; letter-spacing:.08em;
+  padding:4px 12px; border-radius:999px; margin-bottom:8px; align-self:flex-start;
+}
+.p-badge.learner{background:var(--celadon-dim); color:var(--celadon);}
+.p-badge.teacher{background:color-mix(in srgb, var(--gold) 24%, transparent); color:var(--gold);}
+
+.profile-card h1{font-size:clamp(2.1em,4.8vw,3em); color:#fff; margin-bottom:2px; text-shadow:0 2px 10px rgba(0,0,0,.4);}
+.p-sub{color:rgba(255,255,255,.78); font-size:1.05em; margin-bottom:0; text-shadow:0 1px 6px rgba(0,0,0,.4);}
+.p-about{color:rgba(255,255,255,.85); font-size:.96em; line-height:1.6; max-width:540px; margin-top:8px; text-shadow:0 1px 6px rgba(0,0,0,.4);}
+.p-about strong{color:#fff;}
+
+.card-divider{height:1px; background:var(--border); margin:0 34px;}
+
+.card-bottom{
+  display:flex; align-items:center; justify-content:space-between; gap:20px;
+  padding:18px 34px 22px;
+}
+
+.icon-row{display:flex; flex-wrap:wrap; align-items:center; gap:20px;}
+.bottom-inner-divider{display:none;}
+.icon-link{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:26px; height:26px; color:var(--petal); opacity:.9;
+  transition:transform .18s ease, opacity .18s ease;
+}
+.icon-link svg{width:100%; height:100%; fill:currentColor; display:block;}
+.icon-link:hover{transform:translateY(-2px); opacity:1;}
+
+.cta-btn{
+  display:inline-flex; align-items:center; gap:9px; white-space:nowrap;
+  font-size:.92em; font-weight:600; color:#1c1116;
+  padding:13px 24px; border-radius:999px;
+  background:linear-gradient(90deg, var(--vermilion), var(--gold));
+  box-shadow:0 10px 24px rgba(229,138,162,.28);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.cta-btn:hover{transform:translateY(-2px); box-shadow:0 14px 30px rgba(229,138,162,.36);}
+.cta-btn .icon-glyph{width:17px; height:17px; display:inline-flex;}
+.cta-btn .icon-glyph svg{width:100%; height:100%; fill:currentColor; display:block;}
+
+/* Glassmorphism website link bars — sit above the icon row / CTA, one per
+   filled-in Website slot. Three across on desktop, stacked on mobile. */
+.link-bars{display:flex; gap:14px; margin:22px 34px 18px;}
+.link-bar{
+  flex:1; min-width:0;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:13px 18px; border-radius:var(--radius);
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.16);
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  color:var(--text); font-size:.88em; font-weight:600;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  transition:transform .18s ease, background .18s ease, border-color .18s ease;
+}
+.link-bar:hover{background:rgba(255,255,255,.15); border-color:rgba(255,255,255,.32); transform:translateY(-2px);}
+.link-bar .icon-glyph{width:15px; height:15px; flex-shrink:0; display:inline-flex; opacity:.85;}
+.link-bar .icon-glyph svg{width:100%; height:100%; fill:none; display:block;}
+.link-bar span.link-bar-text{overflow:hidden; text-overflow:ellipsis;}
+
+.site-link{
+  display:inline-block; margin:0 34px 26px; font-size:.8em; color:rgba(255,255,255,.55);
+  padding:8px 0;
+}
+.site-link:hover{color:rgba(255,255,255,.85);}
+
+.state-msg{
+  position:relative; z-index:2; min-height:100vh; display:flex; align-items:center; justify-content:center;
+  text-align:center; color:var(--text-faint); font-size:.95em; padding:0 6vw;
+}
+
+/* ===== Mobile: stack the bottom bar, full-width CTA below the icon row ===== */
+@media(max-width:640px){
+  .profile-hero{padding:max(20px, env(safe-area-inset-top)) 18px 24px; align-items:center;}
+  .profile-stack{gap:14px;}
+  .profile-card{border-radius:26px;}
+  .outro-bar{padding:12px 22px; border-radius:999px; font-size:.85em; max-width:calc(100% - 8px);}
+  .card-top{padding:34px 24px 22px;}
+  .card-top-frame{padding:20px 22px 12px; min-height:300px;}
+  .card-divider{margin:0 24px;}
+  .link-bars{flex-direction:column; gap:10px; margin:18px 24px 16px;}
+  .card-bottom{flex-direction:column; align-items:stretch; gap:16px; padding:24px 24px 24px;}
+  .icon-row{justify-content:center; gap:22px;}
+  .bottom-inner-divider{display:block; height:1px; margin:0 8px; background:linear-gradient(90deg, transparent, var(--border) 50%, transparent);}
+  .cta-btn{justify-content:center; width:100%;}
+  .site-link{margin:0 24px 24px; text-align:center;}
+}
+
+/* ===== Pending-approval overlay: profile card renders normally but
+   blurred, with a small lock card on top saying it isn't public yet.
+   Shown only to the profile's own owner previewing it before
+   approval — everyone else already gets redirected/blocked earlier. ===== */
+.pending-blur{filter:blur(14px) brightness(.55); pointer-events:none; user-select:none;}
+.pending-overlay{
+  position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center;
+  padding:24px; background:rgba(18,12,20,.35);
+}
+.pending-card{
+  max-width:340px; width:100%; text-align:center; border-radius:var(--radius);
+  background:var(--surface2); border:1px solid var(--border);
+  padding:28px 26px; box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+.pending-icon{font-size:1.8em; margin-bottom:10px;}
+.pending-card h2{font-family:var(--serif); font-weight:600; font-size:1.4em; margin:0 0 8px;}
+.pending-card p{margin:0; color:var(--text-dim); font-size:.92em;}
+</style>
+
+</head>
+<body>
+
+<div class="petals" id="petals" aria-hidden="true"></div>
+
+<div id="pageHost">
+  <div class="state-msg">Loading profile...</div>
+</div>
+
+<script>
+(function spawnPetals(){
+  const host = document.getElementById('petals');
+  if(!host) return;
+  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
+  const count = window.innerWidth < 700 ? 16 : 12;
+  for(let i=0;i<count;i++){
+    const size = 9 + Math.random()*10, left = Math.random()*100, dur = 12 + Math.random()*12;
+    const delay = -(Math.random()*dur), drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)], rotStart = Math.round(Math.random()*360);
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
+    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
+    host.appendChild(p);
+  }
+})();
+
+// Real brand/glyph icons (24x24 viewBox, single fill path) instead of emoji,
+// so they render identically everywhere rather than depending on the
+// platform's emoji font.
+const ICON_SVG = {
+  instagram: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>',
+  discord: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>',
+  whatsapp: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>',
+  website: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 14.5 14.5 9.5M8 17.5 5.6 19.9a3.2 3.2 0 0 1-4.5-4.5L3.5 13M16 6.5l2.4-2.4a3.2 3.2 0 0 1 4.5 4.5L20.5 11" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  mail: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 6.5C2 5.12 3.12 4 4.5 4h15C20.88 4 22 5.12 22 6.5v11c0 1.38-1.12 2.5-2.5 2.5h-15A2.5 2.5 0 012 17.5v-11zm2.2.2 7.36 5.52a.7.7 0 0 0 .84 0L19.76 6.7A.5.5 0 0 0 19.5 6h-15a.5.5 0 0 0-.3.7z"/></svg>',
+  arrowRight: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 12h15.5M13 5.5 19.5 12 13 18.5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  twitter: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>',
+  facebook: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 1.928-.287 1.739h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg>',
+  tiktok: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07Z"/></svg>',
+  youtube: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a2.996 2.996 0 0 0-2.113-2.117C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.385.524A2.996 2.996 0 0 0 .502 6.186 31.336 31.336 0 0 0 0 12a31.336 31.336 0 0 0 .502 5.814 2.996 2.996 0 0 0 2.113 2.117c1.88.524 9.385.524 9.385.524s7.505 0 9.385-.524a2.996 2.996 0 0 0 2.113-2.117A31.336 31.336 0 0 0 24 12a31.336 31.336 0 0 0-.502-5.814ZM9.545 15.568V8.432L15.818 12l-6.273 3.568Z"/></svg>',
+  telegram: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.301.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>',
+  line: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.365 9.863c.349 0 .63.285.631.631 0 .345-.282.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .348-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>'
+};
+
+const LINK_META = {
+  instagram: { icon: ICON_SVG.instagram, label: 'Instagram' },
+  discord:   { icon: ICON_SVG.discord, label: 'Discord' },
+  whatsapp:  { icon: ICON_SVG.whatsapp, label: 'WhatsApp' },
+  telegram:  { icon: ICON_SVG.telegram, label: 'Telegram' },
+  line:      { icon: ICON_SVG.line, label: 'LINE' },
+  twitter:   { icon: ICON_SVG.twitter, label: 'X (Twitter)' },
+  facebook:  { icon: ICON_SVG.facebook, label: 'Facebook' },
+  tiktok:    { icon: ICON_SVG.tiktok, label: 'TikTok' },
+  youtube:   { icon: ICON_SVG.youtube, label: 'YouTube' }
+};
+// The three optional website links get their own glassmorphism bars
+// (see linkBarsHtml) instead of a small icon in the row above, so each
+// can carry its own button text.
+const WEBSITE_SLOTS = [
+  { urlKey: 'website1', labelKey: 'website1Label', fallback: 'Website 1' },
+  { urlKey: 'website2', labelKey: 'website2Label', fallback: 'Website 2' },
+  { urlKey: 'website3', labelKey: 'website3Label', fallback: 'Website 3' }
+];
+// Preference order for the "Get in touch" call-to-action button —
+// email comes first since that's the button's whole point; the rest
+// are a fallback for when a profile has no Email filled in.
+const CONTACT_PRIORITY = ['email', 'whatsapp', 'telegram', 'line', 'instagram', 'discord', 'website1'];
+
+function escapeHtml(s){
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function normalizeUrl(val, platform){
+  if(!val) return null;
+  const trimmed = String(val).trim();
+  if(/^https?:\/\//i.test(trimmed)) return trimmed;
+
+  switch(platform){
+    case 'instagram':
+      return `https://instagram.com/${trimmed.replace(/^@/, '')}`;
+    case 'whatsapp': {
+      // Stored as a raw phone number (e.g. "+91 8459444524") -> wa.me deep link
+      const digits = trimmed.replace(/[^0-9]/g, '');
+      return digits ? `https://wa.me/${digits}` : null;
+    }
+    case 'website1':
+    case 'website2':
+    case 'website3':
+      // Stored as a bare domain (e.g. "hookit.online") -> add the protocol
+      return `https://${trimmed.replace(/^\/+/, '')}`;
+    case 'discord':
+      // Stored as an invite code/link fragment (e.g. "discord.gg/abc123")
+      if (/^discord\.(gg|com)\//i.test(trimmed)) return `https://${trimmed}`;
+      // A bare username/tag has no reliable public profile URL on Discord's
+      // side, so there's nothing safe to link to — leave it unlinked.
+      return null;
+    case 'twitter':
+      return `https://x.com/${trimmed.replace(/^@/, '')}`;
+    case 'facebook':
+      return `https://facebook.com/${trimmed.replace(/^@/, '')}`;
+    case 'tiktok':
+      return `https://tiktok.com/@${trimmed.replace(/^@/, '')}`;
+    case 'youtube':
+      return `https://youtube.com/@${trimmed.replace(/^@/, '')}`;
+    case 'telegram':
+      return `https://t.me/${trimmed.replace(/^@/, '')}`;
+    case 'line':
+      // Stored as a personal LINE ID -> LINE's own add-friend deep link
+      return `https://line.me/ti/p/~${trimmed.replace(/^~/, '')}`;
+    case 'email':
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed) ? `mailto:${trimmed}` : null;
+    default:
+      return null;
+  }
+}
+
+function iconRowHtml(links){
+  let html = '';
+  Object.keys(LINK_META).forEach(key => {
+    const val = links && links[key];
+    if(!val) return;
+    const meta = LINK_META[key];
+    const url = normalizeUrl(val, key);
+    if(url){
+      html += `<a class="icon-link" href="${url}" target="_blank" rel="noopener" title="${meta.label}">${meta.icon}</a>`;
+    } else {
+      // No reliable direct link could be built (e.g. a bare Discord tag) —
+      // still show the icon, just not clickable.
+      html += `<span class="icon-link" title="${meta.label}: ${val}">${meta.icon}</span>`;
+    }
+  });
+  return html;
+}
+
+function linkBarsHtml(links){
+  let html = '';
+  WEBSITE_SLOTS.forEach(slot => {
+    const val = links && links[slot.urlKey];
+    if(!val) return;
+    const url = normalizeUrl(val, slot.urlKey);
+    if(!url) return;
+    const label = (links && links[slot.labelKey]) ? links[slot.labelKey] : slot.fallback;
+    html += `<a class="link-bar" href="${url}" target="_blank" rel="noopener" title="${escapeHtml(label)}"><span class="link-bar-text">${escapeHtml(label)}</span></a>`;
+  });
+  return html;
+}
+
+function contactCtaHtml(links){
+  for(const key of CONTACT_PRIORITY){
+    const val = links && links[key];
+    if(!val) continue;
+    const url = normalizeUrl(val, key) || null;
+    if(url){
+      return `<a class="cta-btn" href="${url}" target="_blank" rel="noopener"><span class="icon-glyph">${ICON_SVG.mail}</span>Get in touch</a>`;
+    }
+  }
+  return `<a class="cta-btn" href="japanese-hub.html"><span class="icon-glyph">${ICON_SVG.mail}</span>Get in touch</a>`;
+}
+
+function renderProfile(p){
+  const badgeClass = p.type === 'teacher' ? 'teacher' : 'learner';
+  const badgeLabel = p.type === 'teacher' ? 'Teacher / Native Speaker' : 'Learner';
+  const sub = p.tagline || p.country || '';
+
+  const bgHtml = p.imageUrl
+    ? `<img class="profile-bg" id="profileBg" src="${p.imageUrl}" alt="" onerror="this.remove(); document.getElementById('profileBgFallback')?.style.removeProperty('display');">`
+    : '';
+  const fallbackHtml = `<div class="profile-bg-fallback" id="profileBgFallback" style="${p.imageUrl ? 'display:none;' : ''}"></div>`;
+  const linkBars = linkBarsHtml(p.links);
+
+  document.getElementById('pageHost').innerHTML = `
+    <div class="profile-hero">
+      <div class="profile-stack">
+        <div class="profile-card">
+          <div class="card-top">
+            ${bgHtml}
+            ${fallbackHtml}
+            <div class="card-top-scrim"></div>
+            <div class="card-top-frame">
+              <div class="p-badge ${badgeClass}">${badgeLabel}</div>
+              <h1>${p.name}</h1>
+              ${sub ? `<div class="p-sub">${sub}</div>` : ''}
+              ${p.about ? `<p class="p-about">${p.about}</p>` : ''}
+            </div>
+          </div>
+          <div class="card-divider"></div>
+          ${linkBars ? `<div class="link-bars">${linkBars}</div>` : ''}
+          <div class="card-bottom">
+            <div class="icon-row">${iconRowHtml(p.links) || ''}</div>
+            <div class="bottom-inner-divider"></div>
+            ${contactCtaHtml(p.links)}
+          </div>
+        </div>
+        <a class="outro-bar" href="https://hookit.online/" target="_blank" rel="noopener">See more on Hookitlingo<span class="icon-glyph">${ICON_SVG.arrowRight}</span></a>
+      </div>
+    </div>
+  `;
+}
+
+function showPendingOverlay(status){
+  const hero = document.querySelector('#pageHost .profile-hero');
+  if(hero) hero.classList.add('pending-blur');
+
+  const isRejected = status === 'Rejected';
+  const overlay = document.createElement('div');
+  overlay.className = 'pending-overlay';
+  overlay.innerHTML = `
+    <div class="pending-card">
+      <div class="pending-icon">${isRejected ? '⚠️' : '🔒'}</div>
+      <h2>${isRejected ? 'Changes needed' : 'Approval pending'}</h2>
+      <p>${isRejected
+        ? "This profile wasn't approved as-is. Head to your edit page to update it and resubmit."
+        : "This is a preview — your profile isn't public yet. It'll go live once it's been reviewed."}</p>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+}
+
+async function loadProfile(){
+  const params = new URLSearchParams(window.location.search);
+  // New clean links come as /u/<slug>; legacy links come as
+  // /profile.html?id=<recordId>. Prefer the path-based slug when
+  // present so anyone hitting /u/priya-142 doesn't need a query
+  // string at all, but keep the old ?id= working for links already
+  // shared or bookmarked before this existed.
+  const slugMatch = window.location.pathname.match(/^\/u\/([a-z0-9-]+)$/i);
+  const slug = slugMatch ? slugMatch[1] : null;
+  const id = params.get('id');
+  const pageHost = document.getElementById('pageHost');
+
+  if(!slug && !id){
+    pageHost.innerHTML = '<div class="state-msg">Profile not found.</div>';
+    return;
+  }
+
+  try {
+    const lookupParam = slug ? `slug=${encodeURIComponent(slug)}` : `id=${encodeURIComponent(id)}`;
+    const res = await fetch(`/api/directory?${lookupParam}`, { credentials: 'include' });
+    const data = await res.json();
+    if(res.status === 401 && data && data.loginRequired){
+      // Not logged in — send them to the listing page (learners or
+      // teachers, whichever this card came from) with the login modal
+      // pre-opened, then they land right back here once they've
+      // logged in (see handleCardClick() there). Clean /u/ links carry
+      // no ?type=, so fall back to sniffing document.referrer for
+      // which grid they clicked from; default to learners if that's
+      // inconclusive too (they still land back on this exact profile
+      // right after logging in either way, via ?next=).
+      const referrerSaysTeacher = /japanese-teachers\.html/i.test(document.referrer || '');
+      const listingPage = (params.get('type') === 'teacher' || referrerSaysTeacher)
+        ? 'japanese-teachers.html' : 'japanese-learners.html';
+      window.location.href = `${listingPage}?login=1&next=${encodeURIComponent(window.location.href)}`;
+      return;
+    }
+    if(!res.ok || !data.profile){
+      pageHost.innerHTML = '<div class="state-msg">This profile could not be found.</div>';
+      return;
+    }
+    renderProfile(data.profile);
+    document.title = `${data.profile.name} | Hookitlingo`;
+    // This response only ever includes a non-Approved profile at all
+    // when the viewer is its own owner previewing it early (anyone
+    // else got redirected or 404'd above) — so blur it and cover it
+    // with a pending notice instead of showing the raw page as-is.
+    if(data.status && data.status !== 'Approved'){
+      showPendingOverlay(data.status);
+    }
+  } catch (err) {
+    pageHost.innerHTML = '<div class="state-msg">Could not load this profile right now.</div>';
+  }
+}
+
+loadProfile();
+</script>
+</body>
+</html>

@@ -3,24 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hookit — Learn Korean &amp; Japanese Offline, No Subscription</title>
-<meta name="description" content="Free, self-contained Korean and Japanese courses you download once and study offline forever. No accounts, no subscriptions, no ads — just Hangeul, grammar, TOPIK &amp; JLPT prep.">
+<title>Hookitlingo - Learn Korean &amp; Japanese with Interactive Lessons &amp; a Global Community</title>
+<meta name="description" content="Learn Korean and Japanese through structured, interactive lessons with quizzes, tests, and flashcards. Connect with fellow learners, teachers, and native speakers from around the world, and get your own shareable profile card.">
 <link rel="canonical" href="https://hookit.online/">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hookit — Learn Korean &amp; Japanese Offline, No Subscription">
-<meta property="og:description" content="Free, self-contained Korean and Japanese courses you download once and study offline forever. No accounts, no subscriptions, no ads — just Hangeul, grammar, TOPIK &amp; JLPT prep.">
+<meta property="og:title" content="Hookitlingo - Learn Korean &amp; Japanese with Interactive Lessons &amp; a Global Community">
+<meta property="og:description" content="Learn Korean and Japanese through structured, interactive lessons with quizzes, tests, and flashcards. Connect with fellow learners, teachers, and native speakers from around the world, and get your own shareable profile card.">
 <meta property="og:url" content="https://hookit.online/">
-<meta property="og:site_name" content="Hookit">
+<meta property="og:site_name" content="Hookitlingo">
 <meta property="og:image" content="https://hookit.online/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Hookitlingo — Learn Korean &amp; Japanese Offline, No Subscription">
-<meta name="twitter:description" content="Free, self-contained Korean and Japanese courses you download once and study offline forever. No accounts, no subscriptions, no ads — just Hangeul, grammar, TOPIK &amp; JLPT prep.">
+<meta name="twitter:title" content="Hookitlingo - Learn Korean &amp; Japanese with Interactive Lessons &amp; a Global Community">
+<meta name="twitter:description" content="Learn Korean and Japanese through structured, interactive lessons with quizzes, tests, and flashcards. Connect with fellow learners, teachers, and native speakers from around the world, and get your own shareable profile card.">
 <meta name="twitter:image" content="https://hookit.online/og-image.png">
 
 <script type="application/ld+json">
@@ -29,7 +29,7 @@
   "@type": "WebSite",
   "name": "Hookitlingo",
   "url": "https://hookit.online",
-  "description": "Free, offline, self-contained Korean and Japanese courses — no accounts, no subscriptions.",
+  "description": "Learn Korean and Japanese through structured, interactive lessons with quizzes, tests, and flashcards, then connect with a community of learners, teachers, and native speakers from around the world.",
   "publisher": {
     "@type": "Organization",
     "name": "Hookitlingo",
@@ -139,6 +139,82 @@ button{font-family:var(--sans); cursor:pointer;}
 }
 .topbtn-contact:hover{background:var(--celadon-dim); color:var(--text);}
 
+/* ===== Auth: topbar controls ===== */
+.topbtn-login{
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+  border:1px solid transparent; color:#fff; font-weight:600;
+}
+.topbtn-login:hover{filter:brightness(1.07); color:#fff;}
+
+.profile-menu{position:relative;}
+.profile-backdrop{position:fixed; inset:0; z-index:95; background:transparent; display:none;}
+.profile-backdrop.show{display:block;}
+.profile-trigger{
+  display:flex; align-items:center; justify-content:center; background:none;
+  border:1px solid var(--border); border-radius:50%; width:34px; height:34px; padding:0; color:var(--text-dim);
+}
+.profile-trigger:hover{color:var(--text); border-color:var(--celadon);}
+.profile-avatar{
+  width:22px; height:22px; display:flex; align-items:center; justify-content:center;
+}
+.profile-avatar svg{width:22px; height:22px; display:block;}
+.profile-dropdown{
+  position:fixed; width:210px; background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; box-shadow:0 20px 45px rgba(0,0,0,.35); padding:8px; display:none; z-index:100;
+}
+.profile-dropdown.show{display:block;}
+.profile-dropdown-status{padding:8px 10px; font-size:.74em; color:var(--text-faint); border-bottom:1px solid var(--border); margin-bottom:6px;}
+.profile-dropdown-status b{color:var(--gold);}
+.pd-item{
+  display:flex; align-items:center; gap:8px; width:100%; text-align:left; padding:9px 10px; border-radius:8px;
+  background:none; border:none; color:var(--text-dim); font-size:.85em;
+}
+.pd-item:hover{background:var(--surface2); color:var(--text);}
+
+/* ===== Auth modal (same login form used across the site) ===== */
+.auth-overlay{
+  position:fixed; inset:0; z-index:110; background:rgba(10,6,12,.6); display:none;
+  align-items:center; justify-content:center; padding:20px; -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+}
+.auth-overlay.show{display:flex;}
+.auth-box{
+  width:100%; max-width:400px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:26px 24px; box-shadow:0 30px 70px rgba(0,0,0,.4); position:relative;
+}
+.auth-close{
+  position:absolute; top:14px; right:14px; width:30px; height:30px; border-radius:50%; background:var(--surface2);
+  border:1px solid var(--border); color:var(--text-dim); font-size:1em; display:flex; align-items:center; justify-content:center;
+}
+.auth-close:hover{color:var(--text);}
+.auth-box h3{font-size:1.2em; margin:0 0 6px; text-align:center;}
+.auth-box .auth-sub{color:var(--text-dim); font-size:.86em; margin-bottom:18px; text-align:center;}
+.auth-icon{font-size:2.2em; text-align:center; margin-bottom:8px;}
+.auth-input{
+  width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--border); background:var(--surface2);
+  color:var(--text); font-size:.95em; font-family:var(--sans); margin-bottom:10px;
+}
+.auth-input:focus{outline:none; border-color:var(--celadon);}
+.auth-submit{
+  width:100%; padding:11px 14px; border-radius:10px; border:none; font-weight:700; font-size:.9em; color:#fff;
+  background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%));
+}
+.auth-submit:hover{filter:brightness(1.06);}
+.auth-submit:disabled{opacity:.6; cursor:default;}
+.auth-error{color:var(--vermilion); font-size:.82em; margin-top:10px; min-height:1.2em;}
+.auth-secondary-link{
+  display:block; width:100%; text-align:center; background:none; border:none; color:var(--text-faint);
+  font-size:.82em; padding:6px; text-decoration:underline; margin-top:6px;
+}
+.auth-secondary-link:hover{color:var(--text);}
+
+.auth-toast{
+  position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); z-index:120;
+  background:var(--surface3); border:1px solid var(--border); color:var(--text); padding:10px 18px;
+  border-radius:999px; font-size:.85em; opacity:0; pointer-events:none; transition:opacity .25s, transform .25s;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+.auth-toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
 /* Support Modal */
 .hkl-overlay{
   position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
@@ -198,7 +274,7 @@ button{font-family:var(--sans); cursor:pointer;}
 }
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/* Thank-you screen — bigger card + bowing character */
+/* Thank-you screen: bigger card + bowing character */
 .hkl-card--thanks{ max-width:480px; padding:44px 34px 36px; }
 .hkl-bow-char{ width:150px; height:auto; display:block; margin:0 auto 8px; overflow:visible; }
 .hkl-bow-upper{
@@ -275,20 +351,21 @@ footer a{color:var(--text-faint); text-decoration:underline;}
 <div id="topbar">
   <div class="brand">
     <div class="brand-block kr">虎</div>
-    <div class="brand-txt"><strong>Hookitlingo</strong><span>Korean &amp; Japanese, one file at a time</span></div>
+    <div class="brand-txt"><strong>Hookitlingo</strong><span>Korean &amp; Japanese, learned together</span></div>
   </div>
   <div class="top-actions">
     <a class="topbtn" href="blog/">📝 Blog</a>
     <button class="topbtn topbtn-contact" id="contactBtn">✉️ Contact</button>
     <button class="topbtn" id="themeBtn">☾ Dark</button>
+    <div id="authSlot"></div>
   </div>
 </div>
 
 <div class="hero">
-  <div class="eyebrow">Hookitlingo</div>
-  <h1>Which culture do you wanna <span class="accent">dive into</span>?</h1>
-  <p class="sub">Each course is a complete interactive learning experience, packed with chapters, quizzes, flashcards, and audio, all seamlessly built in.</p>
-  <p class="sub2">No installs, no accounts, no internet required once it's on your device.</p>
+  <div class="eyebrow">Two Languages, One Community</div>
+  <h1>Which culture do you want to <span class="accent">dive into</span>?</h1>
+  <p class="sub">Structured, interactive lessons with quizzes, tests, flashcards, and more, built to take you from your first characters to real conversations.</p>
+  <p class="sub2">Then connect with learners, teachers, and native speakers from around the world, and get your own shareable profile card once you're part of the community.</p>
 </div>
 
 <div class="culture-grid">
@@ -307,7 +384,7 @@ footer a{color:var(--text-faint); text-decoration:underline;}
     <div class="cul-cta">Explore the Korean Roadmap →</div>
   </a>
 
-  <a class="cul-card cul-japanese" href="roadmapjp.html">
+  <a class="cul-card cul-japanese" href="japanese-hub.html">
     <div class="cul-emblem" aria-hidden="true"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <circle cx="50" cy="50" r="34" fill="var(--vermilion)"/>
     </svg></div>
@@ -315,10 +392,21 @@ footer a{color:var(--text-faint); text-decoration:underline;}
     <div class="cul-title"><span class="native">日本語</span><span class="en">Japanese</span></div>
     <p class="cul-fact"><strong>Fun fact -</strong> Japanese blends three scripts in a single sentence Hiragana, Katakana, and Kanji, each carrying a different job.</p>
     <p class="cul-tip"><strong>Tip -</strong> Hiragana and Katakana are each learnable in a weekend. Kanji is the long game that follows.</p>
-    <div class="cul-stats"><span>Roadmap live</span></div>
-    <div class="cul-cta">Explore the Japanese Roadmap →</div>
+    <div class="cul-stats"><span>Roadmap live</span><span>🌸 Now with community</span></div>
+    <div class="cul-cta">See What's Inside →</div>
   </a>
 </div>
+
+<!-- Profile dropdown (rendered when logged in) -->
+<div class="profile-backdrop" id="profileBackdrop"></div>
+<div class="profile-dropdown" id="profileDropdown"></div>
+
+<!-- Auth modal: log in -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-box" id="authModalBox"></div>
+</div>
+
+<div class="auth-toast" id="authToast"></div>
 
 <!-- Contact Modal -->
 <div class="hkl-overlay" id="contactOverlay">
@@ -326,7 +414,7 @@ footer a{color:var(--text-faint); text-decoration:underline;}
     <button class="hkl-close" id="contactClose" aria-label="Close">✕</button>
     <div class="hkl-icon">🌸</div>
     <h3>Contact Us</h3>
-    <p>Have a question, feedback, or a concern about a course? We'd genuinely love to hear from you — reach out anytime and we'll get back to you as soon as we can.</p>
+    <p>Have a question, feedback, or a concern about a course? We'd genuinely love to hear from you. Reach out anytime and we'll get back to you as soon as we can.</p>
     <p style="font-family:var(--serif); font-size:1.2em; font-weight:600; color:var(--vermilion); margin-bottom:22px;">hookitlingo@gmail.com</p>
     <div class="hkl-actions">
       <a class="hkl-btn hkl-btn-yes" href="mailto:hookitlingo@gmail.com" style="text-decoration:none; display:inline-block;">Email Us</a>
@@ -336,7 +424,7 @@ footer a{color:var(--text-faint); text-decoration:underline;}
 </div>
 
 <footer>
-  <p class="fnote">Each file works completely offline once downloaded. Progress, XP, and badges save locally in your browser, if a course doesn't seem to save your progress, check that your browser allows local storage for files opened from disk.</p>
+  <p class="fnote">Every lesson comes with quizzes, flashcards, and audio built right in. Progress, XP, and badges save locally in your browser as you work through each course.</p>
   <p>Powered by Hookitlingo</p>
 </footer>
 
@@ -381,7 +469,7 @@ applyTheme();
 })();
 
 /* ============================================================
-   CULTURE CARD STATUS — flip data-status="soon" to anything else
+   CULTURE CARD STATUS: flip data-status="soon" to anything else
    (or remove the attribute) on a .cul-card to make it live again.
    ============================================================ */
 (function(){
@@ -418,6 +506,163 @@ applyTheme();
   contactOverlay.addEventListener('click', (e)=>{ if(e.target === contactOverlay) closeContact(); });
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeContact(); });
 })();
+
+/* ============================================================
+   AUTH: same account system used across the site (see
+   /api/me, /api/login, /api/logout in server.js). This page has
+   nothing to unlock, so all it does is show a Login button, swap
+   it for a profile icon once signed in, and let someone log out.
+   ============================================================ */
+let AUTH = { loggedIn: false, name: '', status: '' };
+
+// Simple outline "person" glyph shown inside the avatar circle once
+// logged in — plain currentColor SVG so it always matches the white
+// text color already used on that circle, no separate theming needed.
+const PROFILE_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"></path></svg>`;
+
+function showAuthToast(msg){
+  const t = document.getElementById('authToast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=> t.classList.remove('show'), 2800);
+}
+
+async function checkAuth(){
+  try {
+    const res = await fetch('/api/me', { credentials: 'include' });
+    const data = await res.json();
+    AUTH = data && data.loggedIn
+      ? { loggedIn: true, name: data.name || '', status: data.status || 'Pending' }
+      : { loggedIn: false, name: '', status: '' };
+  } catch (err) {
+    AUTH = { loggedIn: false, name: '', status: '' };
+  }
+  renderAuthSlot();
+}
+
+async function logout(){
+  try { await fetch('/api/logout', { method: 'POST', credentials: 'include' }); } catch (err) {}
+  AUTH = { loggedIn: false, name: '', status: '' };
+  renderAuthSlot();
+  showAuthToast('Logged out.');
+}
+
+function renderAuthSlot(){
+  const slot = document.getElementById('authSlot');
+  const dropdown = document.getElementById('profileDropdown');
+  const backdrop = document.getElementById('profileBackdrop');
+  if(!AUTH.loggedIn){
+    slot.innerHTML = `<button class="topbtn topbtn-login" id="loginBtn">Login</button>`;
+    document.getElementById('loginBtn').onclick = () => openAuthModal();
+    dropdown.classList.remove('show');
+    dropdown.innerHTML = '';
+    backdrop.classList.remove('show');
+    return;
+  }
+  const statusLine = AUTH.status === 'Approved'
+    ? 'Your profile is <b>live</b>'
+    : AUTH.status === 'Rejected'
+      ? 'Profile not approved'
+      : 'Profile <b>pending approval</b>';
+  slot.innerHTML = `
+    <div class="profile-menu">
+      <button class="profile-trigger" id="profileTrigger">
+        <span class="profile-avatar">${PROFILE_ICON_SVG}</span>
+      </button>
+    </div>`;
+  dropdown.innerHTML = `
+    <div class="profile-dropdown-status">${statusLine}</div>
+    <button class="pd-item" id="editProfileBtn">✎ Edit my profile</button>
+    <button class="pd-item" id="logoutBtn">↪ Log out</button>
+  `;
+  const trigger = document.getElementById('profileTrigger');
+
+  function positionDropdown(){
+    const r = trigger.getBoundingClientRect();
+    dropdown.style.top = (r.bottom + 8) + 'px';
+    dropdown.style.right = (window.innerWidth - r.right) + 'px';
+  }
+  function openMenu(){ positionDropdown(); dropdown.classList.add('show'); backdrop.classList.add('show'); }
+  function closeMenu(){ dropdown.classList.remove('show'); backdrop.classList.remove('show'); }
+
+  trigger.onclick = (e) => {
+    e.stopPropagation();
+    if(dropdown.classList.contains('show')) closeMenu(); else openMenu();
+  };
+  backdrop.onclick = closeMenu;
+  document.getElementById('editProfileBtn').onclick = () => { closeMenu(); window.location.href = 'edit-profile.html'; };
+  document.getElementById('logoutBtn').onclick = () => { closeMenu(); logout(); };
+}
+
+/* Auth modal: just the login form */
+const authOverlay = document.getElementById('authOverlay');
+const authModalBox = document.getElementById('authModalBox');
+
+function openAuthModal(){
+  renderLoginStep();
+  authOverlay.classList.add('show');
+}
+function closeAuthModal(){
+  authOverlay.classList.remove('show');
+}
+authOverlay.addEventListener('click', (e) => { if(e.target === authOverlay) closeAuthModal(); });
+
+function renderLoginStep(){
+  authModalBox.innerHTML = `
+    <button class="auth-close" onclick="closeAuthModal()" aria-label="Close">✕</button>
+    <div class="auth-icon">🌸</div>
+    <h3>Welcome Back</h3>
+    <div class="auth-sub">Log in to your Hookitlingo account.</div>
+    <input type="email" class="auth-input" id="loginEmail" placeholder="Email" autocomplete="email">
+    <input type="password" class="auth-input" id="loginPassword" placeholder="Password" autocomplete="current-password">
+    <button class="auth-submit" id="loginSubmit">Log In</button>
+    <div class="auth-error" id="authError"></div>
+    <button class="auth-secondary-link" onclick="location.href='signup.html'">New here? Create an account</button>
+  `;
+  const emailInput = document.getElementById('loginEmail');
+  const passInput = document.getElementById('loginPassword');
+  const submitBtn = document.getElementById('loginSubmit');
+  const errorBox = document.getElementById('authError');
+  setTimeout(()=> emailInput.focus(), 50);
+
+  async function submit(){
+    const email = emailInput.value.trim();
+    const password = passInput.value;
+    if(!email || !password){
+      errorBox.textContent = 'Please enter your email and password.';
+      return;
+    }
+    errorBox.textContent = '';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Logging in...';
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if(res.ok && data.ok){
+        AUTH = { loggedIn: true, name: data.name || '', status: data.status || 'Pending' };
+        renderAuthSlot();
+        closeAuthModal();
+        showAuthToast(`Welcome back, ${data.name || 'there'}! 🌸`);
+      } else {
+        errorBox.textContent = (data && data.error) ? data.error : 'Invalid email or password.';
+      }
+    } catch (err) {
+      errorBox.textContent = 'Something went wrong logging you in. Please try again.';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Log In';
+    }
+  }
+  submitBtn.onclick = submit;
+  passInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') submit(); });
+}
+
+checkAuth();
 </script>
 </body>
 </html>
