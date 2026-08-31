@@ -314,6 +314,23 @@ button{font-family:var(--sans); cursor:pointer;}
   .rc-btn{width:100%; text-align:center;}
 }
 
+/* Top nav - mobile */
+@media(max-width:640px){
+  #topbar{flex-wrap:wrap; row-gap:10px; padding:14px 4vw 16px;}
+  #topbar.is-scrolled{padding-top:10px; padding-bottom:14px;}
+  .brand-txt span{display:none;}
+  .top-actions{
+    width:100%; justify-content:flex-start; overflow-x:auto; -webkit-overflow-scrolling:touch;
+    scrollbar-width:none; padding-bottom:2px;
+  }
+  .top-actions::-webkit-scrollbar{display:none;}
+  .topbtn{padding:7px 12px; font-size:.8em; flex:none; white-space:nowrap;}
+}
+@media(max-width:380px){
+  .brand-block{width:36px; height:36px; font-size:15px;}
+  .brand-txt strong{font-size:1em;}
+}
+
 footer{position:relative; z-index:2; text-align:center; padding:10px 5vw 60px; color:var(--text-faint); font-size:.85em;}
 footer a{text-decoration:underline;}
 </style>
