@@ -43,13 +43,49 @@ if (!COOKIE_SECRET) {
 }
 app.use(cookieParser(COOKIE_SECRET || 'dev-only-insecure-secret-change-me'));
 
+// attachSession is defined further down (near the other user-account
+// code) but referenced here, BEFORE static files and every other
+// route, so req.sessionUserId is already populated by the time the
+// course-gated hub routes below (or anything else) needs it.
+app.use((req, res, next) => attachSession(req, res, next));
+
+// COURSE-GATED PAGES — registered before express.static on purpose.
+// A static-file match short-circuits the request and never reaches
+// middleware registered after it, so these routes have to come first
+// to have any say over the listed files. guardHubPage() is defined
+// further down (near fetchUserRecord) but, same as attachSession,
+// hoisting means it's safe to reference here.
+//
+// This is every course-specific entry page currently referenced
+// elsewhere in this codebase: the hub itself, the learner/teacher
+// directory listing pages (see listingPage() in signup.html), and
+// each course's roadmap page (see COURSES further down — the literal
+// defaults here match those, since COURSES isn't defined yet at this
+// point in the file). If you add another course-specific page later
+// (e.g. a workbook page), add its path to the matching array below.
+const COURSE_GATED_PAGES = {
+  jp: [
+    '/japanese-hub.html',
+    '/japanese-learners.html',
+    '/japanese-teachers.html',
+    process.env.ROADMAP_REDIRECT_PATH || '/jlptn5roadmap.html',
+    '/roadmapjp.html'
+  ],
+  kr: [
+    '/korean-hub.html',
+    '/korean-learners.html',
+    '/korean-teachers.html',
+    process.env.KR_ROADMAP_REDIRECT_PATH || '/roadmap.html'
+  ]
+};
+Object.entries(COURSE_GATED_PAGES).forEach(([courseId, gatedPaths]) => {
+  gatedPaths.forEach((gatedPath) => {
+    app.get(gatedPath, (req, res, next) => guardHubPage(courseId, req, res, next));
+  });
+});
+
 // Serve static files from /public (site pages, assets — NOT lessons)
 app.use(express.static(path.join(__dirname, 'public')));
-
-// attachSession is defined further down (near the other user-account
-// code) but referenced here so every route — public or protected —
-// gets req.sessionUserId populated up front.
-app.use((req, res, next) => attachSession(req, res, next));
 
 // POST /api/upload-image — see routes/upload.js for the route itself
 // and lib/r2.js for the Cloudflare R2 client it uploads through.
@@ -550,6 +586,78 @@ function attachSession(req, res, next) {
 }
 
 // ============================================================
+// COURSE-GATED PAGES — the hub, roadmap, and learner/teacher listing
+// pages are the "front door" for each course. If someone is already
+// logged into an account for the OTHER course, the real file is
+// never even read off disk — guardHubPage() (registered ahead of
+// express.static, see COURSE_GATED_PAGES above) intercepts the
+// request first and sends back a small interstitial instead, telling
+// them to log out to switch. Since this runs before the static
+// middleware and reads the account straight from Airtable, there's no
+// client-side check here to defeat via dev tools — the actual page
+// HTML simply never leaves the server for a mismatched request.
+//
+// A logged-out visitor, or someone logged into an account for the
+// SAME course, always falls through untouched (next() hands off to
+// express.static, which serves the real file exactly as before).
+// ============================================================
+const COURSE_LABELS = { jp: 'Japanese', kr: 'Korean' };
+
+function renderCourseLockedPage(blockedCourseId, yourCourseId) {
+  const blockedLabel = COURSE_LABELS[blockedCourseId];
+  const yourLabel = COURSE_LABELS[yourCourseId];
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log out to switch courses — Hookitlingo</title>
+<style>
+  body{margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; background:#1c1420; color:#f6ecec; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; padding:20px;}
+  .card{max-width:420px; background:#26192b; border:1px solid #4a3550; border-radius:16px; padding:32px 28px; text-align:center; box-shadow:0 30px 70px rgba(0,0,0,.4);}
+  .icon{font-size:2.4em; margin-bottom:10px;}
+  h1{font-size:1.25em; margin:0 0 12px; font-weight:600;}
+  p{color:#c7b2c4; font-size:.95em; line-height:1.6; margin:0 0 22px;}
+  .actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
+  button, a.btn{border-radius:999px; padding:11px 20px; font-size:.88em; font-weight:700; border:1px solid transparent; cursor:pointer; text-decoration:none; display:inline-block; font-family:inherit;}
+  .btn-yes{background:linear-gradient(135deg,#e58aa2,#d9ab5c); color:#fff;}
+  .btn-yes:hover{filter:brightness(1.07);}
+  .btn-no{background:#2f2035; border-color:#4a3550; color:#c7b2c4;}
+  .btn-no:hover{color:#f6ecec;}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🌸</div>
+    <h1>You're signed in to your ${yourLabel} account</h1>
+    <p>To browse the ${blockedLabel} course, log out of your ${yourLabel} account first, one account is only ever linked to one course at a time.</p>
+    <div class="actions">
+      <button class="btn-yes" id="logoutBtn">Log out</button>
+      <a class="btn" style="background:#2f2035;border:1px solid #4a3550;color:#c7b2c4;" href="/">Back to home</a>
+    </div>
+  </div>
+  <script>
+    document.getElementById('logoutBtn').onclick = async function(){
+      try { await fetch('/api/logout', { method: 'POST', credentials: 'include' }); } catch (e) {}
+      window.location.href = '/';
+    };
+  </script>
+</body>
+</html>`;
+}
+
+async function guardHubPage(courseId, req, res, next) {
+  if (req.sessionUserId) {
+    const record = await fetchUserRecord(req.sessionUserId);
+    const userCourse = record && record.fields ? normalizeCourseId(record.fields.Course) : null;
+    if (userCourse && userCourse !== courseId) {
+      return res.send(renderCourseLockedPage(courseId, userCourse));
+    }
+  }
+  next();
+}
+
+// ============================================================
 // PUBLIC DIRECTORY — the "Connect with Learners / Teachers" pages
 // read from here. Public, no auth needed, but only ever returns
 // rows you've personally set Status to "Approved" on, and only a
@@ -776,8 +884,20 @@ app.post('/api/signup', async (req, res) => {
       return res.status(502).json({ error: 'Something went wrong creating your account. Please try again.' });
     }
     const dupeData = await dupeRes.json();
-    if (dupeData.records && dupeData.records.length > 0) {
-      return res.status(409).json({ error: 'An account with that email already exists. Try logging in instead.' });
+    const dupeRecord = dupeData.records && dupeData.records[0];
+    if (dupeRecord) {
+      // Same message either way that the email is taken, but if the
+      // existing account belongs to the OTHER course, say so — that's
+      // a more useful next step than a generic "log in instead" when
+      // logging in wouldn't actually get them into the course they
+      // were just trying to join.
+      const existingCourseId = normalizeCourseId(dupeRecord.fields && dupeRecord.fields.Course);
+      if (existingCourseId === courseId) {
+        return res.status(409).json({ error: 'An account with that email already exists. Try logging in instead.' });
+      }
+      return res.status(409).json({
+        error: `This email is already registered with our ${COURSE_LABELS[existingCourseId]} course. Please use a different email to sign up for ${COURSE_LABELS[courseId]}.`
+      });
     }
 
     const passwordHash = await bcrypt.hash(password, BCRYPT_ROUNDS);

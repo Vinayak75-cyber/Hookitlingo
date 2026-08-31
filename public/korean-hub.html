@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korean - Roadmap, Teachers &amp; Learner Community | Hookitlingo</title>
+<meta name="description" content="Learn Korean your way: a structured roadmap from Hangeul to near-fluent, real native speakers and teachers to practice with, and a community of fellow learners around the world.">
+<link rel="canonical" href="https://hookit.online/korean-hub.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Korean - Roadmap, Teachers &amp; Learner Community | Hookitlingo">
+<meta property="og:description" content="Learn Korean your way: a structured roadmap from Hangeul to near-fluent, real native speakers and teachers to practice with, and a community of fellow learners around the world.">
+<meta property="og:url" content="https://hookit.online/korean-hub.html">
+<meta property="og:site_name" content="Hookitlingo">
+<meta property="og:image" content="https://hookit.online/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Korean - Roadmap, Teachers &amp; Learner Community | Hookitlingo">
+<meta name="twitter:description" content="Learn Korean your way: a structured roadmap from Hangeul to near-fluent, real native speakers and teachers to practice with, and a community of fellow learners around the world.">
+<meta name="twitter:image" content="https://hookit.online/og-image.png">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLEMFRK6XH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WLEMFRK6XH');
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941;
+  --border:#4a3550;
+  --text:#f6ecec; --text-dim:#c7b2c4; --text-faint:#8f7a91;
+  --vermilion:#e58aa2; --vermilion-dim:#5a2c3a;
+  --celadon:#5fa688; --celadon-dim:#2a4a3d;
+  --gold:#d9ab5c; --gold-dim:#5c471e;
+  --petal:#f3b6c6;
+  --radius:16px; --radius-sm:10px;
+  --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --kr:"Noto Serif KR","Apple SD Gothic Neo","Malgun Gothic","Nanum Gothic",sans-serif;
+  --maxw:1080px;
+}
+html[data-theme="light"]{
+  --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6;
+  --border:#eccabb;
+  --text:#3a2530; --text-dim:#79576a; --text-faint:#a98a9c;
+  --vermilion:#c8546f; --vermilion-dim:#f6dae2;
+  --celadon:#3f7d63; --celadon-dim:#d9ece2;
+  --gold:#a4762b; --gold-dim:#f2e2c2;
+  --petal:#e59fb2;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--text); font-family:var(--sans); line-height:1.65;
+  background:
+    radial-gradient(1100px 620px at 12% -8%, color-mix(in srgb, var(--vermilion) 16%, transparent), transparent 58%),
+    radial-gradient(900px 520px at 104% 6%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 55%),
+    var(--ink);
+  background-attachment:fixed; min-height:100vh;
+}
+::selection{background:var(--vermilion); color:#fff;}
+h1,h2,h3{font-family:var(--serif); font-weight:600; letter-spacing:.2px; margin:0 0 .4em;}
+p{margin:0 0 1em;}
+a{color:var(--celadon); text-decoration:none;}
+.kr{font-family:var(--kr);}
+button{font-family:var(--sans); cursor:pointer;}
+
+/* Petals */
+.petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.petal{position:absolute; top:-8%; will-change:transform; animation:petal-fall linear infinite;}
+.petal svg{display:block; filter:drop-shadow(0 1px 1px rgba(0,0,0,.08));}
+@keyframes petal-fall{0%{transform:translate(0,-10vh) rotate(0deg);} 100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}}
+@media (prefers-reduced-motion: reduce){ .petals{display:none;} }
+@media(max-width:900px){ .petals .petal:nth-child(even){display:none;} }
+
+/* Top bar */
+#topbar{
+  position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between;
+  gap:14px; padding:18px 5vw 22px; max-width:var(--maxw); margin:0 auto;
+}
+.brand{display:flex; align-items:center; gap:12px;}
+.brand-block{
+  width:42px;height:42px;border-radius:50%; flex:none; position:relative;
+  background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--vermilion) 88%, #fff 12%), var(--vermilion) 72%);
+  display:flex;align-items:center;justify-content:center; font-family:var(--kr); font-weight:700; font-size:18px; color:#fff9f7;
+  transform:rotate(-7deg); box-shadow:0 4px 12px color-mix(in srgb, var(--vermilion) 50%, transparent);
+}
+.brand-txt strong{display:block; font-family:var(--serif); font-size:1.15em;}
+.brand-txt span{display:block; font-size:.66em; color:var(--text-faint); letter-spacing:.1em; text-transform:uppercase;}
+.top-actions{display:flex; gap:8px; align-items:center;}
+.topbtn{background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); border-radius:8px; padding:7px 14px; font-size:.85em;}
+.topbtn:hover{color:var(--text); border-color:var(--celadon);}
+
+/* Hero */
+.hero{position:relative; z-index:2; max-width:700px; margin:0 auto; padding:20px 5vw 10px; text-align:center;}
+.eyebrow{font-size:.78em; letter-spacing:.16em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:14px;}
+.hero h1{font-size:clamp(1.9em,5vw,3em); margin-bottom:14px;}
+.hero .sub{color:var(--text-dim); font-size:1.08em; max-width:600px; margin:0 auto; }
+
+/* ===== Path cards — bigger, minimal, no imagery, emblem corner ===== */
+.path-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px;
+  max-width:var(--maxw); margin:40px auto 10px; padding:0 5vw; position:relative; z-index:2;
+}
+.path-card{
+  position:relative; overflow:hidden; display:flex; flex-direction:column; color:var(--text);
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:30px 26px;
+  transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.path-card:hover{transform:translateY(-5px); border-color:var(--vermilion); box-shadow:0 24px 55px color-mix(in srgb, var(--vermilion) 20%, transparent);}
+.path-emblem{position:absolute; top:-30px; right:-30px; width:130px; height:130px; opacity:.35; pointer-events:none;}
+.path-card h3{font-size:1.35em; margin-bottom:12px;}
+.path-card p{color:var(--text-dim); font-size:.92em; margin-bottom:0;}
+.path-meta{
+  display:flex; flex-wrap:wrap; gap:12px; margin:18px 0 20px; font-size:.75em; color:var(--text-faint);
+  text-transform:uppercase; letter-spacing:.05em;
+}
+.path-cta{
+  margin-top:auto; font-weight:700; font-size:.9em; padding:11px 18px; border-radius:999px; text-align:center; color:#fff;
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+}
+.path-card:hover .path-cta{filter:brightness(1.06);}
+
+footer{position:relative; z-index:2; text-align:center; padding:30px 5vw 60px; color:var(--text-faint); font-size:.85em;}
+footer a{text-decoration:underline;}
+
+/* ===== Auth: topbar controls (login button / profile menu) ===== */
+.topbtn-login{
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+  border:1px solid transparent; color:#fff; font-weight:600;
+}
+.topbtn-login:hover{filter:brightness(1.07); color:#fff;}
+
+.profile-menu{position:relative;}
+.profile-backdrop{position:fixed; inset:0; z-index:35; background:transparent; display:none;}
+.profile-backdrop.show{display:block;}
+.profile-trigger{
+  display:flex; align-items:center; justify-content:center; background:none;
+  border:1px solid var(--border); border-radius:50%; width:34px; height:34px; padding:0; color:var(--text-dim);
+}
+.profile-trigger:hover{color:var(--text); border-color:var(--celadon);}
+.profile-avatar{
+  width:22px; height:22px; display:flex; align-items:center; justify-content:center;
+}
+.profile-avatar svg{width:22px; height:22px; display:block;}
+.profile-dropdown{
+  position:fixed; width:210px; background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; box-shadow:0 20px 45px rgba(0,0,0,.35); padding:8px; display:none; z-index:40;
+}
+.profile-dropdown.show{display:block;}
+.profile-dropdown-status{padding:8px 10px; font-size:.74em; color:var(--text-faint); border-bottom:1px solid var(--border); margin-bottom:6px;}
+.profile-dropdown-status b{color:var(--gold);}
+.pd-item{
+  display:flex; align-items:center; gap:8px; width:100%; text-align:left; padding:9px 10px; border-radius:8px;
+  background:none; border:none; color:var(--text-dim); font-size:.85em;
+}
+.pd-item:hover{background:var(--surface2); color:var(--text);}
+
+/* ===== Auth modal (same language as the learners/teachers pages) ===== */
+.modal-overlay{
+  position:fixed; inset:0; z-index:80; background:rgba(10,6,12,.6); display:none;
+  align-items:center; justify-content:center; padding:20px; -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+}
+.modal-overlay.show{display:flex;}
+.modal-box{
+  width:100%; max-width:400px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:26px 24px; box-shadow:0 30px 70px rgba(0,0,0,.4); position:relative;
+}
+.modal-close{
+  position:absolute; top:14px; right:14px; width:30px; height:30px; border-radius:50%; background:var(--surface2);
+  border:1px solid var(--border); color:var(--text-dim); font-size:1em; display:flex; align-items:center; justify-content:center;
+}
+.modal-close:hover{color:var(--text);}
+.modal-box h3{font-size:1.2em; margin:0 0 6px; text-align:center;}
+.modal-box .modal-sub{color:var(--text-dim); font-size:.86em; margin-bottom:18px; text-align:center;}
+.modal-icon{font-size:2.2em; text-align:center; margin-bottom:8px;}
+.modal-input{
+  width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--border); background:var(--surface2);
+  color:var(--text); font-size:.95em; font-family:var(--sans); margin-bottom:10px;
+}
+.modal-input:focus{outline:none; border-color:var(--celadon);}
+.modal-submit{
+  width:100%; padding:11px 14px; border-radius:10px; border:none; font-weight:700; font-size:.9em; color:#fff;
+  background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%));
+}
+.modal-submit:hover{filter:brightness(1.06);}
+.modal-submit:disabled{opacity:.6; cursor:default;}
+.modal-error{color:var(--vermilion); font-size:.82em; margin-top:10px; min-height:1.2em;}
+.modal-secondary-link{
+  display:block; width:100%; text-align:center; background:none; border:none; color:var(--text-faint);
+  font-size:.82em; padding:6px; text-decoration:underline; margin-top:6px;
+}
+.modal-secondary-link:hover{color:var(--text);}
+
+.toast{
+  position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); z-index:90;
+  background:var(--surface3); border:1px solid var(--border); color:var(--text); padding:10px 18px;
+  border-radius:999px; font-size:.85em; opacity:0; pointer-events:none; transition:opacity .25s, transform .25s;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+@media(max-width:640px){
+  #topbar{flex-direction:column; align-items:flex-start;}
+  .top-actions{width:100%; flex-wrap:wrap; gap:8px;}
+  .top-actions .topbtn{flex:1 1 auto; justify-content:center; font-size:.8em; padding:8px 10px; white-space:nowrap;}
+}
+</style>
+</head>
+<body>
+
+<div class="petals" id="petals" aria-hidden="true"></div>
+
+<div id="topbar">
+  <div class="brand">
+    <div class="brand-block kr">한</div>
+    <div class="brand-txt"><strong>Hookitlingo</strong><span>Korean</span></div>
+  </div>
+  <div class="top-actions">
+    <a class="topbtn" href="index.html">← Course Catalog</a>
+    <button class="topbtn" id="themeBtn">☾ Dark</button>
+    <div id="authSlot"></div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="eyebrow kr">한국어 · Course + Community</div>
+  <h1>Learn Korean, <span style="color:var(--gold); font-style:italic;">your</span> way.</h1>
+  <p class="sub">A structured roadmap to study at your own pace, real native speakers and teachers to practice with, and fellow learners around the world to keep you going.</p>
+</div>
+
+<div class="path-grid">
+  <a class="path-card" href="roadmap.html">
+    <svg class="path-emblem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="var(--vermilion)">
+        <path d="M50 50 C50 30 42 14 50 2 C58 14 50 30 50 50Z"/>
+        <path d="M50 50 C70 50 86 42 98 50 C86 58 70 50 50 50Z"/>
+        <path d="M50 50 C50 70 58 86 50 98 C42 86 50 70 50 50Z"/>
+        <path d="M50 50 C30 50 14 58 2 50 C14 42 30 50 50 50Z"/>
+        <path d="M50 50 C64 36 82 30 90 18 C78 26 72 44 50 50Z"/>
+      </g>
+      <circle cx="50" cy="50" r="9" fill="var(--gold)"/>
+    </svg>
+    <h3>Explore the Roadmap</h3>
+    <p>A structured, self-paced course from absolute beginner to near-fluent, Hangeul through real sentence-building.</p>
+    <div class="path-meta"><span>Self-paced</span><span>Hangeul → Near-fluent</span></div>
+    <div class="path-cta">View the Roadmap →</div>
+  </a>
+
+  <a class="path-card" href="korean-teachers.html">
+    <svg class="path-emblem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="var(--vermilion)">
+        <path d="M50 50 C50 30 42 14 50 2 C58 14 50 30 50 50Z"/>
+        <path d="M50 50 C70 50 86 42 98 50 C86 58 70 50 50 50Z"/>
+        <path d="M50 50 C50 70 58 86 50 98 C42 86 50 70 50 50Z"/>
+        <path d="M50 50 C30 50 14 58 2 50 C14 42 30 50 50 50Z"/>
+        <path d="M50 50 C64 36 82 30 90 18 C78 26 72 44 50 50Z"/>
+      </g>
+      <circle cx="50" cy="50" r="9" fill="var(--gold)"/>
+    </svg>
+    <h3>Native Speakers &amp; Teachers</h3>
+    <p>Find real Korean natives and teachers to practice or take lessons with, subject to their own availability and rates.</p>
+    <div class="path-meta"><span>🌸 Personally reviewed</span><span>No bots</span></div>
+    <div class="path-cta">Meet Teachers &amp; Natives →</div>
+  </a>
+
+  <a class="path-card" href="korean-learners.html">
+    <svg class="path-emblem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="var(--vermilion)">
+        <path d="M50 50 C50 30 42 14 50 2 C58 14 50 30 50 50Z"/>
+        <path d="M50 50 C70 50 86 42 98 50 C86 58 70 50 50 50Z"/>
+        <path d="M50 50 C50 70 58 86 50 98 C42 86 50 70 50 50Z"/>
+        <path d="M50 50 C30 50 14 58 2 50 C14 42 30 50 50 50Z"/>
+        <path d="M50 50 C64 36 82 30 90 18 C78 26 72 44 50 50Z"/>
+      </g>
+      <circle cx="50" cy="50" r="9" fill="var(--gold)"/>
+    </svg>
+    <h3>Connect with Fellow Learners</h3>
+    <p>Find other people learning Korean around the world, practice together, and work through doubts as a community.</p>
+    <div class="path-meta"><span>Worldwide</span><span>Community-driven</span></div>
+    <div class="path-cta">Meet Learners →</div>
+  </a>
+</div>
+
+<!-- Auth modal + profile dropdown -->
+<div class="profile-backdrop" id="profileBackdrop"></div>
+<div class="profile-dropdown" id="profileDropdown"></div>
+<div class="modal-overlay" id="authOverlay">
+  <div class="modal-box" id="authModalBox"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  <p>Powered by Hookitlingo · <a href="index.html">Course Catalog</a></p>
+</footer>
+
+<script>
+const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', ThemeState.theme);
+  document.getElementById('themeBtn').textContent = ThemeState.theme === 'dark' ? '☾ Dark' : '☀ Light';
+}
+document.getElementById('themeBtn').onclick = () => {
+  ThemeState.theme = ThemeState.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('hkl_site_theme', ThemeState.theme);
+  applyTheme();
+};
+applyTheme();
+
+(function spawnPetals(){
+  const host = document.getElementById('petals');
+  if(!host) return;
+  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
+  const count = window.innerWidth < 700 ? 10 : 18;
+  for(let i=0;i<count;i++){
+    const size = 10 + Math.random()*12;
+    const left = Math.random()*100;
+    const dur = 10 + Math.random()*12;
+    const delay = -(Math.random()*dur);
+    const drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)];
+    const rotStart = Math.round(Math.random()*360);
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
+    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
+    host.appendChild(p);
+  }
+})();
+
+/* ============================================================
+   AUTH — same account system used on the learners/teachers pages:
+     GET  /api/me       -> { loggedIn, id, name, status, profile:{type, course} }
+     POST /api/login    { email, password }
+     POST /api/logout
+   The hub isn't gated by login (roadmap/teachers/learners pages
+   each handle their own access rules), but showing the login
+   button vs. the profile icon up top means someone doesn't have to
+   click through to a listing page just to see they're logged in,
+   or to get back to editing their profile.
+   ============================================================ */
+let AUTH = { loggedIn: false, name: '', status: '', type: '', course: '' };
+
+// Simple outline "person" glyph shown inside the trigger circle once
+// logged in — currentColor so it follows the button's text color
+// (and its hover state) automatically, no separate theming needed.
+const PROFILE_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"></path></svg>`;
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=> t.classList.remove('show'), 2800);
+}
+
+// Works out which directory page this user's own profile belongs
+// in, so "Edit my profile" from here lands them in the right place.
+function listingPage(course, type){
+  const coursePrefix = course === 'kr' ? 'korean' : 'japanese';
+  const typeSuffix = type === 'teacher' ? 'teachers' : 'learners';
+  return `${coursePrefix}-${typeSuffix}.html`;
+}
+
+function renderAuthSlot(){
+  const slot = document.getElementById('authSlot');
+  const dropdown = document.getElementById('profileDropdown');
+  const backdrop = document.getElementById('profileBackdrop');
+  if(!AUTH.loggedIn){
+    slot.innerHTML = `<button class="topbtn topbtn-login" id="loginBtn">Login</button>`;
+    document.getElementById('loginBtn').onclick = () => openAuthModal();
+    dropdown.classList.remove('show');
+    dropdown.innerHTML = '';
+    backdrop.classList.remove('show');
+    return;
+  }
+  const statusLine = AUTH.status === 'Approved'
+    ? 'Your profile is <b>live</b>'
+    : AUTH.status === 'Rejected'
+      ? 'Profile not approved'
+      : 'Profile <b>pending approval</b>';
+  slot.innerHTML = `
+    <div class="profile-menu">
+      <button class="profile-trigger" id="profileTrigger">
+        <span class="profile-avatar">${PROFILE_ICON_SVG}</span>
+      </button>
+    </div>`;
+  dropdown.innerHTML = `
+    <div class="profile-dropdown-status">${statusLine}</div>
+    <button class="pd-item" id="editProfileBtn">✎ Edit my profile</button>
+    <button class="pd-item" id="logoutBtn">↪ Log out</button>
+  `;
+  const trigger = document.getElementById('profileTrigger');
+
+  function positionDropdown(){
+    const r = trigger.getBoundingClientRect();
+    dropdown.style.top = (r.bottom + 8) + 'px';
+    dropdown.style.right = (window.innerWidth - r.right) + 'px';
+  }
+  function openMenu(){ positionDropdown(); dropdown.classList.add('show'); backdrop.classList.add('show'); }
+  function closeMenu(){ dropdown.classList.remove('show'); backdrop.classList.remove('show'); }
+
+  trigger.onclick = (e) => {
+    e.stopPropagation();
+    if(dropdown.classList.contains('show')) closeMenu(); else openMenu();
+  };
+  backdrop.onclick = closeMenu;
+  document.getElementById('editProfileBtn').onclick = () => { closeMenu(); window.location.href = 'edit-profile.html'; };
+  document.getElementById('logoutBtn').onclick = () => { closeMenu(); logout(); };
+}
+
+async function checkAuth(){
+  try {
+    const res = await fetch('/api/me', { credentials: 'include' });
+    const data = await res.json();
+    AUTH = data && data.loggedIn
+      ? {
+          loggedIn: true,
+          name: data.name || '',
+          status: data.status || 'Pending',
+          type: (data.profile && data.profile.type) || 'learner',
+          course: (data.profile && data.profile.course) || 'kr'
+        }
+      : { loggedIn: false, name: '', status: '', type: '', course: '' };
+  } catch (err) {
+    AUTH = { loggedIn: false, name: '', status: '', type: '', course: '' };
+  }
+  renderAuthSlot();
+}
+
+async function logout(){
+  try { await fetch('/api/logout', { method: 'POST', credentials: 'include' }); } catch (err) {}
+  AUTH = { loggedIn: false, name: '', status: '', type: '', course: '' };
+  renderAuthSlot();
+  toast('Logged out.');
+}
+
+/* ---- Auth modal ---- */
+const authOverlay = document.getElementById('authOverlay');
+const authModalBox = document.getElementById('authModalBox');
+
+function openAuthModal(note){
+  renderLoginStep(note);
+  authOverlay.classList.add('show');
+}
+function closeAuthModal(){
+  authOverlay.classList.remove('show');
+}
+authOverlay.addEventListener('click', (e) => { if(e.target === authOverlay) closeAuthModal(); });
+
+function renderLoginStep(note){
+  authModalBox.innerHTML = `
+    <button class="modal-close" onclick="closeAuthModal()" aria-label="Close">✕</button>
+    <div class="modal-icon">🌸</div>
+    <h3>Welcome Back</h3>
+    <div class="modal-sub">${note || 'Log in to your Hookitlingo community profile.'}</div>
+    <input type="email" class="modal-input" id="loginEmail" placeholder="Email" autocomplete="email">
+    <input type="password" class="modal-input" id="loginPassword" placeholder="Password" autocomplete="current-password">
+    <button class="modal-submit" id="loginSubmit">Log In</button>
+    <div class="modal-error" id="authError"></div>
+    <button class="modal-secondary-link" onclick="location.href='signup.html'">New here? Create an account</button>
+  `;
+  const emailInput = document.getElementById('loginEmail');
+  const passInput = document.getElementById('loginPassword');
+  const submitBtn = document.getElementById('loginSubmit');
+  const errorBox = document.getElementById('authError');
+  setTimeout(()=> emailInput.focus(), 50);
+
+  async function submit(){
+    const email = emailInput.value.trim();
+    const password = passInput.value;
+    if(!email || !password){
+      errorBox.textContent = 'Please enter your email and password.';
+      return;
+    }
+    errorBox.textContent = '';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Logging in...';
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if(res.ok && data.ok){
+        AUTH = {
+          loggedIn: true,
+          name: data.name || '',
+          status: data.status || 'Pending',
+          type: (data.profile && data.profile.type) || 'learner',
+          course: (data.profile && data.profile.course) || 'kr'
+        };
+        renderAuthSlot();
+        closeAuthModal();
+        toast(`Welcome back, ${data.name || 'there'}! 🌸`);
+      } else {
+        errorBox.textContent = (data && data.error) ? data.error : 'Invalid email or password.';
+      }
+    } catch (err) {
+      errorBox.textContent = 'Something went wrong logging you in. Please try again.';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Log In';
+    }
+  }
+  submitBtn.onclick = submit;
+  passInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') submit(); });
+}
+
+checkAuth();
+</script>
+</body>
+</html>

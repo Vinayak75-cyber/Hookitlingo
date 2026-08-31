@@ -148,6 +148,11 @@ button{font-family:var(--sans); cursor:pointer;}
   border:1px solid transparent; color:#fff; font-weight:600;
 }
 .topbtn-support:hover{filter:brightness(1.07); color:#fff;}
+.topbtn-support.is-unlocked{
+  background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%));
+  cursor:default;
+}
+.topbtn-support.is-unlocked:hover{filter:none;}
 
 /* Hero */
 .hero{position:relative; z-index:2; max-width:var(--maxw); margin:0 auto; padding:20px 5vw 10px; text-align:center;}
@@ -161,6 +166,12 @@ button{font-family:var(--sans); cursor:pointer;}
   border:none; cursor:pointer;
 }
 .hero-cta:hover{filter:brightness(1.06); color:#fff;}
+.hero-cta.is-unlocked{
+  background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%));
+  box-shadow:0 10px 26px color-mix(in srgb, var(--celadon) 40%, transparent);
+  cursor:default;
+}
+.hero-cta.is-unlocked:hover{filter:none;}
 .hero-price{margin-top:12px; font-size:.8em; color:var(--text-faint);}
 .hero-price b{color:var(--gold); font-family:var(--serif); font-size:1.15em;}
 
@@ -232,7 +243,45 @@ button{font-family:var(--sans); cursor:pointer;}
 .modal-submit:hover{filter:brightness(1.06);}
 .modal-submit:disabled{opacity:.6; cursor:default;}
 .modal-error{color:var(--vermilion); font-size:.82em; margin-top:10px; min-height:1.2em;}
-.modal-note{text-align:center; font-size:.8em; color:var(--text-faint); margin-top:16px;}
+.modal-icon{font-size:2.2em; text-align:center; margin-bottom:8px;}
+.modal-box h3{text-align:center;}
+.modal-secondary-link{
+  display:block; width:100%; text-align:center; background:none; border:none; color:var(--text-faint);
+  font-size:.82em; padding:6px; text-decoration:underline; margin-top:6px;
+}
+.modal-secondary-link:hover{color:var(--text);}
+
+/* ===== Auth: topbar controls (login button / profile menu) ===== */
+.topbtn-login{
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+  border:1px solid transparent; color:#fff; font-weight:600;
+}
+.topbtn-login:hover{filter:brightness(1.07); color:#fff;}
+
+.profile-menu{position:relative;}
+.profile-backdrop{position:fixed; inset:0; z-index:35; background:transparent; display:none;}
+.profile-backdrop.show{display:block;}
+.profile-trigger{
+  display:flex; align-items:center; justify-content:center; background:none;
+  border:1px solid var(--border); border-radius:50%; width:34px; height:34px; padding:0; color:var(--text-dim);
+}
+.profile-trigger:hover{color:var(--text); border-color:var(--celadon);}
+.profile-avatar{
+  width:22px; height:22px; display:flex; align-items:center; justify-content:center;
+}
+.profile-avatar svg{width:22px; height:22px; display:block;}
+.profile-dropdown{
+  position:fixed; width:210px; background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; box-shadow:0 20px 45px rgba(0,0,0,.35); padding:8px; display:none; z-index:40;
+}
+.profile-dropdown.show{display:block;}
+.profile-dropdown-status{padding:8px 10px; font-size:.74em; color:var(--text-faint); border-bottom:1px solid var(--border); margin-bottom:6px;}
+.profile-dropdown-status b{color:var(--gold);}
+.pd-item{
+  display:flex; align-items:center; gap:8px; width:100%; text-align:left; padding:9px 10px; border-radius:8px;
+  background:none; border:none; color:var(--text-dim); font-size:.85em;
+}
+.pd-item:hover{background:var(--surface2); color:var(--text);}
 
 .toast{
   position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); z-index:90;
@@ -282,6 +331,7 @@ footer a{text-decoration:underline;}
     <a class="topbtn" href="index.html">← Course Catalog</a>
     <button class="topbtn topbtn-support" id="topUnlockBtn">Unlock Phase 1</button>
     <button class="topbtn" id="themeBtn">☾ Dark</button>
+    <div id="authSlot"></div>
   </div>
 </div>
 
@@ -290,7 +340,7 @@ footer a{text-decoration:underline;}
   <h1>Zero to <span class="kr" style="color:var(--gold); font-style:italic;">near-fluent</span>, mapped out.</h1>
   <p class="sub">Nineteen courses across four phases, each one building on the last. Phase 1: Foundations is ready now, five lessons covering Hangeul, grammar, particles, numbers and verbs.</p>
   <button class="hero-cta" id="heroUnlockBtn">Unlock Phase 1</button>
-  <div class="hero-price">Lesson 1 is free, no signup needed. The rest of Phase 1 is a one-time <b>$5.99</b> · lifetime access · access codes are issued through participating teachers</div>
+  <div class="hero-price">Lesson 1 is free, no signup needed. The rest of Phase 1 is a one-time <b>$5.99</b> · lifetime access</div>
 </div>
 
 <div class="section-label">Phase 1: Foundations</div>
@@ -298,17 +348,13 @@ footer a{text-decoration:underline;}
 
 <div id="soonPhases"></div>
 
-<!-- Unlock modal -->
+<!-- Profile dropdown (rendered when logged in) -->
+<div class="profile-backdrop" id="profileBackdrop"></div>
+<div class="profile-dropdown" id="profileDropdown"></div>
+
+<!-- Unlock modal - single step: log in. An Approved account unlocks every lesson immediately. -->
 <div class="modal-overlay" id="unlockOverlay">
-  <div class="modal-box">
-    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
-    <h3>Unlock Phase 1: Foundations</h3>
-    <div class="modal-sub">Enter the code you got from your teacher to unlock all 5 Phase 1 lessons instantly.</div>
-    <input type="text" class="modal-input" id="codeInput" placeholder="Enter your code" autocomplete="off">
-    <button class="modal-submit" id="codeSubmit">Unlock</button>
-    <div class="modal-error" id="modalError"></div>
-    <div class="modal-note">Don't have a code yet? Ask your teacher for access.</div>
-  </div>
+  <div class="modal-box" id="modalBox"></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -440,10 +486,15 @@ function renderSoonPhases(){
 /* ============================================================
    Talks to the existing server.js endpoints for the "kr" course:
      GET  /api/my-access?course=kr   -> { all, slugs }
-     POST /api/unlock  { code, course:'kr' } -> { ok, all, slugs, error }
+     GET  /api/me       -> { loggedIn, name, status, ... }
+     POST /api/login    { email, password }
+     POST /api/logout
    No server changes needed. Lesson 1 (hanlingo) is a static file
    in /public/courseskr (never gated); the rest of Phase 1 is served
-   through the protected /lesson/kr/<slug> route once unlocked.
+   through the protected /lesson/kr/<slug> route once unlocked. An
+   Approved account for course "kr" is treated by /api/my-access as
+   full ("all") access — that's how logging in unlocks every lesson
+   below.
    ============================================================ */
 async function loadAccess(){
   try {
@@ -454,31 +505,46 @@ async function loadAccess(){
     }
   } catch (err) {
     // Network hiccup - fall back to nothing personally unlocked and
-    // let the learner try the code again from the modal.
+    // let the learner try again once the connection's back.
   }
   renderLessons();
+  updateUnlockButtons();
 }
 
-/* Unlock modal */
-const overlay = document.getElementById('unlockOverlay');
-const codeInput = document.getElementById('codeInput');
-const codeSubmit = document.getElementById('codeSubmit');
-const modalError = document.getElementById('modalError');
-
-function openUnlockModal(){
-  modalError.textContent = '';
-  codeInput.value = '';
-  overlay.classList.add('show');
-  setTimeout(()=> codeInput.focus(), 50);
+// Flips the hero/topbar unlock buttons to a green "Phase 1 Unlocked"
+// state once ACCESS.all is true (i.e. a logged-in Approved account) —
+// same celadon gradient jlptn5roadmap.html uses, so it reads as
+// "done" rather than as another call to action.
+function updateUnlockButtons(){
+  const heroBtn = document.getElementById('heroUnlockBtn');
+  const topBtn = document.getElementById('topUnlockBtn');
+  [heroBtn, topBtn].forEach(btn => {
+    if(!btn) return;
+    if(ACCESS.all){
+      btn.textContent = 'Phase 1 Unlocked';
+      btn.classList.add('is-unlocked');
+      btn.onclick = null;
+    } else {
+      btn.textContent = 'Unlock Phase 1';
+      btn.classList.remove('is-unlocked');
+      btn.onclick = openUnlockModal;
+    }
+  });
 }
-function closeUnlockModal(){
-  overlay.classList.remove('show');
-}
 
-document.getElementById('heroUnlockBtn').onclick = openUnlockModal;
-document.getElementById('topUnlockBtn').onclick = openUnlockModal;
-document.getElementById('modalClose').onclick = closeUnlockModal;
-overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeUnlockModal(); });
+/* ============================================================
+   AUTH — same account system used on the hub/learners/teachers
+   pages. Logging in here doesn't just show a profile icon: an
+   Approved account for course "kr" is exactly what unlocks every
+   lesson (see loadAccess() / /api/my-access above), so the login
+   step below IS the unlock path now.
+   ============================================================ */
+let AUTH = { loggedIn: false, name: '', status: '' };
+
+// Simple outline "person" glyph shown inside the trigger circle once
+// logged in — currentColor so it follows the button's text color
+// (and its hover state) automatically, no separate theming needed.
+const PROFILE_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"></path></svg>`;
 
 function showToast(msg){
   const t = document.getElementById('toast');
@@ -487,47 +553,151 @@ function showToast(msg){
   setTimeout(()=> t.classList.remove('show'), 2800);
 }
 
-async function submitCode(){
-  const code = codeInput.value.trim();
-  if(!code){
-    modalError.textContent = 'Please enter a code.';
-    return;
-  }
-  modalError.textContent = '';
-  codeSubmit.disabled = true;
-  codeSubmit.textContent = 'Checking...';
-
+async function checkAuth(){
   try {
-    const res = await fetch('/api/unlock', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ code, course: 'kr' })
-    });
+    const res = await fetch('/api/me', { credentials: 'include' });
     const data = await res.json();
-
-    if(res.ok && data.ok){
-      ACCESS = { all: !!data.all, slugs: Array.isArray(data.slugs) ? data.slugs : [] };
-      renderLessons();
-      closeUnlockModal();
-      showToast('Phase 1 unlocked, enjoy! 🌸');
-    } else {
-      modalError.textContent = (data && data.error) ? data.error : 'That code was not recognized. Please double check it, or ask your teacher for your access code.';
-    }
+    AUTH = data && data.loggedIn
+      ? { loggedIn: true, name: data.name || '', status: data.status || 'Pending' }
+      : { loggedIn: false, name: '', status: '' };
   } catch (err) {
-    modalError.textContent = 'Something went wrong checking that code. Please try again.';
-  } finally {
-    codeSubmit.disabled = false;
-    codeSubmit.textContent = 'Unlock';
+    AUTH = { loggedIn: false, name: '', status: '' };
   }
+  renderAuthSlot();
 }
 
-codeSubmit.onclick = submitCode;
-codeInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') submitCode(); });
+async function logout(){
+  try { await fetch('/api/logout', { method: 'POST', credentials: 'include' }); } catch (err) {}
+  AUTH = { loggedIn: false, name: '', status: '' };
+  renderAuthSlot();
+  loadAccess(); // drop any account-granted access back to nothing
+  showToast('Logged out.');
+}
+
+function renderAuthSlot(){
+  const slot = document.getElementById('authSlot');
+  const dropdown = document.getElementById('profileDropdown');
+  const backdrop = document.getElementById('profileBackdrop');
+  if(!AUTH.loggedIn){
+    slot.innerHTML = `<button class="topbtn topbtn-login" id="loginBtn">Login</button>`;
+    document.getElementById('loginBtn').onclick = () => openUnlockModal();
+    dropdown.classList.remove('show');
+    dropdown.innerHTML = '';
+    backdrop.classList.remove('show');
+    return;
+  }
+  const statusLine = AUTH.status === 'Approved'
+    ? 'Phase 1 <b>unlocked</b>'
+    : AUTH.status === 'Rejected'
+      ? 'Account not approved'
+      : 'Account <b>pending approval</b>';
+  slot.innerHTML = `
+    <div class="profile-menu">
+      <button class="profile-trigger" id="profileTrigger">
+        <span class="profile-avatar">${PROFILE_ICON_SVG}</span>
+      </button>
+    </div>`;
+  dropdown.innerHTML = `
+    <div class="profile-dropdown-status">${statusLine}</div>
+    <button class="pd-item" id="editProfileBtn">✎ Edit my profile</button>
+    <button class="pd-item" id="logoutBtn">↪ Log out</button>
+  `;
+  const trigger = document.getElementById('profileTrigger');
+
+  function positionDropdown(){
+    const r = trigger.getBoundingClientRect();
+    dropdown.style.top = (r.bottom + 8) + 'px';
+    dropdown.style.right = (window.innerWidth - r.right) + 'px';
+  }
+  function openMenu(){ positionDropdown(); dropdown.classList.add('show'); backdrop.classList.add('show'); }
+  function closeMenu(){ dropdown.classList.remove('show'); backdrop.classList.remove('show'); }
+
+  trigger.onclick = (e) => {
+    e.stopPropagation();
+    if(dropdown.classList.contains('show')) closeMenu(); else openMenu();
+  };
+  backdrop.onclick = closeMenu;
+  document.getElementById('editProfileBtn').onclick = () => { closeMenu(); window.location.href = 'edit-profile.html'; };
+  document.getElementById('logoutBtn').onclick = () => { closeMenu(); logout(); };
+}
+
+/* Unlock modal - single step: log in. An Approved account unlocks
+   every lesson immediately (see loadAccess()). */
+const overlay = document.getElementById('unlockOverlay');
+const modalBox = document.getElementById('modalBox');
+
+function openUnlockModal(){
+  renderLoginStep();
+  overlay.classList.add('show');
+}
+function closeUnlockModal(){
+  overlay.classList.remove('show');
+}
+overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeUnlockModal(); });
+
+function renderLoginStep(note){
+  modalBox.innerHTML = `
+    <button class="modal-close" onclick="closeUnlockModal()" aria-label="Close">✕</button>
+    <div class="modal-icon">🌸</div>
+    <h3>Welcome Back</h3>
+    <div class="modal-sub" style="text-align:center;">${note || 'Log in to unlock Phase 1.'}</div>
+    <input type="email" class="modal-input" id="loginEmail" placeholder="Email" autocomplete="email">
+    <input type="password" class="modal-input" id="loginPassword" placeholder="Password" autocomplete="current-password">
+    <button class="modal-submit" id="loginSubmit">Log In</button>
+    <div class="modal-error" id="loginError"></div>
+    <button class="modal-secondary-link" onclick="location.href='signup.html'">New here? Create an account</button>
+  `;
+  const emailInput = document.getElementById('loginEmail');
+  const passInput = document.getElementById('loginPassword');
+  const submitBtn = document.getElementById('loginSubmit');
+  const errorBox = document.getElementById('loginError');
+  setTimeout(()=> emailInput.focus(), 50);
+
+  async function submit(){
+    const email = emailInput.value.trim();
+    const password = passInput.value;
+    if(!email || !password){
+      errorBox.textContent = 'Please enter your email and password.';
+      return;
+    }
+    errorBox.textContent = '';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Logging in...';
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if(res.ok && data.ok){
+        AUTH = { loggedIn: true, name: data.name || '', status: data.status || 'Pending' };
+        renderAuthSlot();
+        closeUnlockModal();
+        await loadAccess(); // pulls fresh /api/my-access - unlocks all lessons if Approved
+        showToast(ACCESS.all ? 'Phase 1 unlocked, enjoy! 🌸' : `Welcome back, ${data.name || 'there'}! 🌸`);
+      } else {
+        errorBox.textContent = (data && data.error) ? data.error : 'Invalid email or password.';
+      }
+    } catch (err) {
+      errorBox.textContent = 'Something went wrong logging you in. Please try again.';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Log In';
+    }
+  }
+  submitBtn.onclick = submit;
+  passInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') submit(); });
+}
+
+document.getElementById('heroUnlockBtn').onclick = openUnlockModal;
+document.getElementById('topUnlockBtn').onclick = openUnlockModal;
 
 renderLessons();
 renderSoonPhases();
 loadAccess();
+checkAuth();
 
 /* Sticky top bar scroll shadow */
 (function(){

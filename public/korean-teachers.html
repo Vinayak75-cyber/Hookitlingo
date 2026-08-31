@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korean Teachers &amp; Native Speakers | Hookitlingo</title>
+<meta name="description" content="Connect with real native Korean speakers and teachers, personally reviewed profiles, no bots.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941; --border:#4a3550;
+  --text:#f6ecec; --text-dim:#c7b2c4; --text-faint:#8f7a91;
+  --vermilion:#e58aa2; --vermilion-dim:#5a2c3a; --celadon:#5fa688; --celadon-dim:#2a4a3d;
+  --gold:#d9ab5c; --gold-dim:#5c471e; --petal:#f3b6c6;
+  --radius:16px; --radius-sm:10px;
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Inter",-apple-system,sans-serif; --kr:"Noto Serif KR",serif;
+  --maxw:1080px;
+}
+html[data-theme="light"]{
+  --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6; --border:#eccabb;
+  --text:#3a2530; --text-dim:#79576a; --text-faint:#a98a9c;
+  --vermilion:#c8546f; --vermilion-dim:#f6dae2; --celadon:#3f7d63; --celadon-dim:#d9ece2;
+  --gold:#a4762b; --gold-dim:#f2e2c2; --petal:#e59fb2;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--text); font-family:var(--sans); line-height:1.6; min-height:100vh;
+  background:radial-gradient(1100px 620px at 12% -8%, color-mix(in srgb, var(--vermilion) 16%, transparent), transparent 58%), radial-gradient(900px 520px at 104% 6%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 55%), var(--ink);
+  background-attachment:fixed;
+}
+h1,h2,h3{font-family:var(--serif); font-weight:600; margin:0 0 .4em;}
+a{color:var(--celadon); text-decoration:none;}
+.kr{font-family:var(--kr);}
+
+/* Petals */
+.petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.petal{position:absolute; top:-8%; animation:petal-fall linear infinite;}
+@keyframes petal-fall{0%{transform:translate(0,-10vh) rotate(0deg);} 100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}}
+@media (prefers-reduced-motion: reduce){ .petals{display:none;} }
+@media(max-width:900px){ .petals .petal:nth-child(even){display:none;} }
+
+#topbar{position:relative; z-index:2; display:flex; justify-content:space-between; align-items:center; padding:18px 5vw 22px; max-width:var(--maxw); margin:0 auto;}
+.topbtn{background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); border-radius:8px; padding:7px 14px; font-size:.85em;}
+.topbtn:hover{color:var(--text); border-color:var(--celadon);}
+
+.hero{position:relative; z-index:2; max-width:640px; margin:0 auto; padding:10px 5vw 6px; text-align:center;}
+.eyebrow{font-size:.75em; letter-spacing:.14em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:10px;}
+.hero h1{font-size:clamp(1.7em,4.5vw,2.5em); margin-bottom:10px;}
+.hero .sub{color:var(--text-dim); font-size:1em; margin-bottom:6px;}
+.trust-line{
+  display:inline-flex; align-items:center; gap:7px; font-size:.78em; color:var(--celadon); font-weight:600;
+  background:var(--celadon-dim); padding:6px 14px; border-radius:999px; margin-top:6px;
+}
+
+/* Grid */
+.grid{
+  position:relative; z-index:2; max-width:var(--maxw); margin:40px auto 20px; padding:0 5vw;
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:20px;
+}
+.pcard{
+  position:relative; display:block; aspect-ratio:4/5; border-radius:var(--radius); overflow:hidden;
+  background:var(--surface2); border:1px solid var(--border);
+  transition:transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+  opacity:0; transform:translateY(14px);
+}
+.pcard.in-view{opacity:1; transform:translateY(0); transition:opacity .5s ease, transform .5s ease, border-color .22s ease, box-shadow .22s ease;}
+.pcard:hover{transform:translateY(-4px); border-color:var(--vermilion); box-shadow:0 20px 45px color-mix(in srgb, var(--vermilion) 18%, transparent);}
+.pcard-photo{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;}
+.pcard-fallback{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-family:var(--serif); font-weight:700; font-size:3em; color:#fff;
+  background:radial-gradient(circle at 33% 28%, color-mix(in srgb, var(--vermilion) 85%, #fff 15%), var(--vermilion) 75%);
+}
+.pcard-overlay{
+  position:absolute; left:0; right:0; bottom:0; padding:26px 14px 12px;
+  background:linear-gradient(to top, rgba(10,6,12,.85) 30%, rgba(10,6,12,.35) 65%, transparent 100%);
+  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  -webkit-mask-image:linear-gradient(to top, black 45%, transparent 100%);
+  mask-image:linear-gradient(to top, black 45%, transparent 100%);
+}
+.pcard-name{font-family:var(--serif); font-weight:600; font-size:1.15em; color:#fff; margin-bottom:3px; text-shadow:0 1px 3px rgba(0,0,0,.4);}
+.pcard-tagline{color:rgba(255,255,255,.8); font-size:.76em; line-height:1.4;}
+
+.pcard-flag{
+  position:absolute; top:0; right:0; z-index:2;
+  display:flex; align-items:center; justify-content:center;
+  padding:7px 12px 7px 14px; border-bottom-left-radius:12px;
+  font-size:1.05em; line-height:1;
+  background:color-mix(in srgb, var(--ink) 55%, transparent);
+  border-left:1px solid rgba(255,255,255,.22);
+  border-bottom:1px solid rgba(255,255,255,.22);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  box-shadow:0 4px 14px rgba(0,0,0,.3);
+}
+
+.shuffle-pill{
+  display:inline-flex; align-items:center; gap:7px; margin-top:14px; cursor:pointer;
+  font-family:var(--sans); font-weight:600; font-size:.8em; color:var(--text-dim);
+  padding:8px 16px; border-radius:999px; border:1px solid color-mix(in srgb, var(--text) 15%, transparent);
+  background:color-mix(in srgb, var(--surface) 55%, transparent);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  box-shadow:0 4px 18px rgba(0,0,0,.12);
+  transition:transform .15s ease, color .2s ease, border-color .2s ease, background .2s ease;
+}
+.shuffle-pill:hover{ color:var(--text); border-color:var(--celadon); transform:translateY(-1px); }
+.shuffle-pill:active{ transform:translateY(0); }
+.shuffle-pill svg{width:14px; height:14px; stroke:currentColor; transition:transform .4s ease;}
+.shuffle-pill:hover svg{transform:rotate(180deg);}
+
+.state-msg{
+  position:relative; z-index:2; max-width:480px; margin:60px auto; padding:0 5vw; text-align:center; color:var(--text-faint); font-size:.92em;
+}
+
+footer{position:relative; z-index:2; text-align:center; padding:20px 5vw 60px; color:var(--text-faint); font-size:.85em;}
+footer a{text-decoration:underline;}
+
+/* ===== Auth: topbar controls ===== */
+.topbtn-login{
+  background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));
+  border:1px solid transparent; color:#fff; font-weight:600;
+}
+.topbtn-login:hover{filter:brightness(1.07); color:#fff;}
+
+.profile-menu{position:relative;}
+.profile-backdrop{position:fixed; inset:0; z-index:35; background:transparent; display:none;}
+.profile-backdrop.show{display:block;}
+.profile-trigger{
+  display:flex; align-items:center; justify-content:center; background:none;
+  border:1px solid var(--border); border-radius:50%; width:34px; height:34px; padding:0; color:var(--text-dim);
+}
+.profile-trigger:hover{color:var(--text); border-color:var(--celadon);}
+.profile-avatar{
+  width:22px; height:22px; display:flex; align-items:center; justify-content:center;
+}
+.profile-avatar svg{width:22px; height:22px; display:block;}
+.profile-dropdown{
+  position:fixed; width:210px; background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; box-shadow:0 20px 45px rgba(0,0,0,.35); padding:8px; display:none; z-index:40;
+}
+.profile-dropdown.show{display:block;}
+.profile-dropdown-status{padding:8px 10px; font-size:.74em; color:var(--text-faint); border-bottom:1px solid var(--border); margin-bottom:6px;}
+.profile-dropdown-status b{color:var(--gold);}
+.pd-item{
+  display:flex; align-items:center; gap:8px; width:100%; text-align:left; padding:9px 10px; border-radius:8px;
+  background:none; border:none; color:var(--text-dim); font-size:.85em;
+}
+.pd-item:hover{background:var(--surface2); color:var(--text);}
+
+/* ===== Auth modal (reuses the roadmap page's modal language) ===== */
+.modal-overlay{
+  position:fixed; inset:0; z-index:80; background:rgba(10,6,12,.6); display:none;
+  align-items:center; justify-content:center; padding:20px; -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+}
+.modal-overlay.show{display:flex;}
+.modal-box{
+  width:100%; max-width:400px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:26px 24px; box-shadow:0 30px 70px rgba(0,0,0,.4); position:relative;
+}
+.modal-close{
+  position:absolute; top:14px; right:14px; width:30px; height:30px; border-radius:50%; background:var(--surface2);
+  border:1px solid var(--border); color:var(--text-dim); font-size:1em; display:flex; align-items:center; justify-content:center;
+}
+.modal-close:hover{color:var(--text);}
+.modal-box h3{font-size:1.2em; margin:0 0 6px; text-align:center;}
+.modal-box .modal-sub{color:var(--text-dim); font-size:.86em; margin-bottom:18px; text-align:center;}
+.modal-icon{font-size:2.2em; text-align:center; margin-bottom:8px;}
+.modal-input{
+  width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--border); background:var(--surface2);
+  color:var(--text); font-size:.95em; font-family:var(--sans); margin-bottom:10px;
+}
+.modal-input:focus{outline:none; border-color:var(--celadon);}
+.modal-submit{
+  width:100%; padding:11px 14px; border-radius:10px; border:none; font-weight:700; font-size:.9em; color:#fff;
+  background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%));
+}
+.modal-submit:hover{filter:brightness(1.06);}
+.modal-submit:disabled{opacity:.6; cursor:default;}
+.modal-error{color:var(--vermilion); font-size:.82em; margin-top:10px; min-height:1.2em;}
+.modal-note{text-align:center; font-size:.8em; color:var(--text-faint); margin-top:16px;}
+.modal-secondary-link{
+  display:block; width:100%; text-align:center; background:none; border:none; color:var(--text-faint);
+  font-size:.82em; padding:6px; text-decoration:underline; margin-top:6px;
+}
+.modal-secondary-link:hover{color:var(--text);}
+
+.toast{
+  position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); z-index:90;
+  background:var(--surface3); border:1px solid var(--border); color:var(--text); padding:10px 18px;
+  border-radius:999px; font-size:.85em; opacity:0; pointer-events:none; transition:opacity .25s, transform .25s;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+.back-to-top{
+  position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(16px); z-index:50;
+  display:inline-flex; align-items:center; gap:7px; cursor:pointer;
+  font-family:var(--sans); font-weight:600; font-size:.82em; color:var(--text-dim);
+  padding:9px 18px; border-radius:999px; border:1px solid color-mix(in srgb, var(--text) 15%, transparent);
+  background:color-mix(in srgb, var(--surface) 55%, transparent);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  box-shadow:0 10px 30px rgba(0,0,0,.28);
+  opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease, color .2s ease, border-color .2s ease;
+}
+.back-to-top.show{ opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0); }
+.back-to-top:hover{ color:var(--text); border-color:var(--celadon); }
+.back-to-top svg{width:14px; height:14px; stroke:currentColor;}
+</style>
+</head>
+<body>
+
+<div class="petals" id="petals" aria-hidden="true"></div>
+
+<div id="topbar">
+  <a class="topbtn" href="korean-hub.html">← Back</a>
+  <div class="top-actions" style="display:flex; gap:8px; align-items:center;">
+    <button class="topbtn" id="themeBtn">☾ Dark</button>
+    <div id="authSlot"></div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="eyebrow kr">한국어 · 강사</div>
+  <h1>Native Speakers &amp; Teachers</h1>
+  <p class="sub">Real Korean natives and teachers, ready to practice or take lessons with subject to their own availability and rates.</p>
+  <div class="trust-line">🌸 Every profile personally reviewed, no bots</div>
+  <div>
+    <button type="button" class="shuffle-pill" id="shufflePill" aria-label="Shuffle the order of profiles">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+      Shuffle
+    </button>
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+<div class="state-msg" id="stateMsg" style="display:none;"></div>
+
+<!-- Auth modal: login <-> signup, two steps re-rendered into the same box -->
+<div class="profile-backdrop" id="profileBackdrop"></div>
+<div class="profile-dropdown" id="profileDropdown"></div>
+<div class="modal-overlay" id="authOverlay">
+  <div class="modal-box" id="authModalBox"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<button type="button" class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+  Back to top
+</button>
+
+<footer>
+  <p>Are you a teacher or native speaker? <a href="signup.html">Create your profile</a> to be listed here.</p>
+</footer>
+
+<script>
+const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', ThemeState.theme);
+  document.getElementById('themeBtn').textContent = ThemeState.theme === 'dark' ? '☾ Dark' : '☀ Light';
+}
+document.getElementById('themeBtn').onclick = () => {
+  ThemeState.theme = ThemeState.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('hkl_site_theme', ThemeState.theme);
+  applyTheme();
+};
+applyTheme();
+
+(function spawnPetals(){
+  const host = document.getElementById('petals');
+  if(!host) return;
+  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
+  const count = window.innerWidth < 700 ? 10 : 18;
+  for(let i=0;i<count;i++){
+    const size = 10 + Math.random()*12, left = Math.random()*100, dur = 10 + Math.random()*12;
+    const delay = -(Math.random()*dur), drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)], rotStart = Math.round(Math.random()*360);
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
+    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
+    host.appendChild(p);
+  }
+})();
+
+// Country is free text on the signup form (not a fixed dropdown), so this
+// maps common country names/aliases -> ISO 3166-1 alpha-2 codes, which are
+// then turned into a flag emoji via regional-indicator code points. Names
+// that don't match anything here just get no flag (silent, not an error) -
+// safer than guessing wrong on a typo like "Untied States".
+const COUNTRY_TO_ISO2 = {
+  "afghanistan":"AF","albania":"AL","algeria":"DZ","andorra":"AD","angola":"AO",
+  "argentina":"AR","armenia":"AM","australia":"AU","austria":"AT","azerbaijan":"AZ",
+  "bahamas":"BS","bahrain":"BH","bangladesh":"BD","barbados":"BB","belarus":"BY",
+  "belgium":"BE","belize":"BZ","benin":"BJ","bhutan":"BT","bolivia":"BO",
+  "bosnia":"BA","bosnia and herzegovina":"BA","botswana":"BW","brazil":"BR","brunei":"BN",
+  "bulgaria":"BG","burkina faso":"BF","burundi":"BI","cambodia":"KH","cameroon":"CM",
+  "canada":"CA","cape verde":"CV","chad":"TD","chile":"CL","china":"CN",
+  "colombia":"CO","costa rica":"CR","croatia":"HR","cuba":"CU","cyprus":"CY",
+  "czechia":"CZ","czech republic":"CZ","denmark":"DK","djibouti":"DJ","dominica":"DM",
+  "dominican republic":"DO","ecuador":"EC","egypt":"EG","el salvador":"SV","england":"GB",
+  "estonia":"EE","eswatini":"SZ","ethiopia":"ET","fiji":"FJ","finland":"FI",
+  "france":"FR","gabon":"GA","gambia":"GM","georgia":"GE","germany":"DE",
+  "ghana":"GH","greece":"GR","greenland":"GL","guatemala":"GT","guinea":"GN",
+  "guyana":"GY","haiti":"HT","honduras":"HN","hong kong":"HK","hungary":"HU",
+  "iceland":"IS","india":"IN","indonesia":"ID","iran":"IR","iraq":"IQ",
+  "ireland":"IE","israel":"IL","italy":"IT","ivory coast":"CI","jamaica":"JM",
+  "japan":"JP","jordan":"JO","kazakhstan":"KZ","kenya":"KE","kosovo":"XK",
+  "kuwait":"KW","kyrgyzstan":"KG","laos":"LA","latvia":"LV","lebanon":"LB",
+  "lesotho":"LS","liberia":"LR","libya":"LY","liechtenstein":"LI","lithuania":"LT",
+  "luxembourg":"LU","macau":"MO","madagascar":"MG","malawi":"MW","malaysia":"MY",
+  "maldives":"MV","mali":"ML","malta":"MT","mauritania":"MR","mauritius":"MU",
+  "mexico":"MX","moldova":"MD","monaco":"MC","mongolia":"MN","montenegro":"ME",
+  "morocco":"MA","mozambique":"MZ","myanmar":"MM","burma":"MM","namibia":"NA",
+  "nepal":"NP","netherlands":"NL","holland":"NL","new zealand":"NZ","nicaragua":"NI",
+  "niger":"NE","nigeria":"NG","north korea":"KP","north macedonia":"MK","macedonia":"MK",
+  "norway":"NO","oman":"OM","pakistan":"PK","palestine":"PS","panama":"PA",
+  "papua new guinea":"PG","paraguay":"PY","peru":"PE","philippines":"PH","poland":"PL",
+  "portugal":"PT","qatar":"QA","romania":"RO","russia":"RU","rwanda":"RW",
+  "saudi arabia":"SA","scotland":"GB","senegal":"SN","serbia":"RS","seychelles":"SC",
+  "sierra leone":"SL","singapore":"SG","slovakia":"SK","slovenia":"SI","somalia":"SO",
+  "south africa":"ZA","south korea":"KR","korea":"KR","spain":"ES","sri lanka":"LK",
+  "sudan":"SD","suriname":"SR","sweden":"SE","switzerland":"CH","syria":"SY",
+  "taiwan":"TW","tajikistan":"TJ","tanzania":"TZ","thailand":"TH","togo":"TG",
+  "trinidad and tobago":"TT","trinidad":"TT","tunisia":"TN","turkey":"TR","turkiye":"TR",
+  "turkmenistan":"TM","uganda":"UG","ukraine":"UA","united arab emirates":"AE","uae":"AE",
+  "united kingdom":"GB","uk":"GB","great britain":"GB","britain":"GB",
+  "united states":"US","united states of america":"US","usa":"US","us":"US","america":"US",
+  "uruguay":"UY","uzbekistan":"UZ","venezuela":"VE","vietnam":"VN","wales":"GB",
+  "yemen":"YE","zambia":"ZM","zimbabwe":"ZW"
+};
+
+function countryFlagEmoji(countryRaw){
+  if(!countryRaw) return '';
+  const key = countryRaw.trim().toLowerCase().replace(/\./g, '').replace(/\s+/g, ' ');
+  const iso2 = COUNTRY_TO_ISO2[key];
+  if(!iso2) return '';
+  return String.fromCodePoint(...[...iso2].map(c => 127397 + c.charCodeAt(0)));
+}
+
+function cardHtml(p){
+  const initial = (p.name || '?').trim().charAt(0).toUpperCase();
+  const photoHtml = p.imageUrl
+    ? `<img class="pcard-photo" src="${p.imageUrl}" alt="" loading="lazy" onerror="this.remove();">`
+    : '';
+  const fallbackHtml = p.imageUrl ? '' : `<div class="pcard-fallback">${initial}</div>`;
+  const tagline = p.tagline || p.country || '';
+  const flagEmoji = countryFlagEmoji(p.country);
+  const flagHtml = flagEmoji ? `<div class="pcard-flag" title="${p.country}">${flagEmoji}</div>` : '';
+  // Prefer the clean /u/<slug> link once a profile has one; fall
+  // back to the old ?id=&type= form for any profile that doesn't
+  // (e.g. a hand-created row nobody's given a Slug in Airtable yet).
+  // Not a plain href: opening a specific profile requires being
+  // logged in (the /api/directory endpoint enforces this too — this
+  // is just so a guest gets the login modal instead of a dead 401
+  // page). handleCardClick() does the real navigation.
+  const profileHref = p.slug
+    ? `/u/${encodeURIComponent(p.slug)}`
+    : `profile.html?id=${encodeURIComponent(p.id)}&type=teacher`;
+  return `
+    <a class="pcard" href="${profileHref}" onclick="return handleCardClick(event, this.href);">
+      ${photoHtml}
+      ${fallbackHtml}
+      ${flagHtml}
+      <div class="pcard-overlay">
+        <div class="pcard-name">${p.name}</div>
+        <div class="pcard-tagline">${tagline}</div>
+      </div>
+    </a>`;
+}
+
+function handleCardClick(e, href){
+  if(AUTH.loggedIn){
+    return true; // let the normal navigation happen
+  }
+  e.preventDefault();
+  PENDING_PROFILE_URL = href; // resume this navigation right after login
+  openAuthModal('login', 'Log in to view this profile.');
+  return false;
+}
+
+let PROFILES = []; // current directory, kept around so the shuffle pill can reorder in place
+
+function renderGrid(){
+  const grid = document.getElementById('grid');
+  grid.innerHTML = PROFILES.map(cardHtml).join('');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in-view'); });
+  }, {threshold:.1});
+  document.querySelectorAll('.pcard').forEach(el=>io.observe(el));
+}
+
+function shuffleProfiles(){
+  // Fisher-Yates, in place, then just re-render from the same array.
+  for(let i = PROFILES.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [PROFILES[i], PROFILES[j]] = [PROFILES[j], PROFILES[i]];
+  }
+  renderGrid();
+}
+document.getElementById('shufflePill').onclick = shuffleProfiles;
+
+(function setupBackToTop(){
+  const btn = document.getElementById('backToTop');
+  const toggle = () => btn.classList.toggle('show', window.scrollY > 400);
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+  btn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+})();
+
+async function loadDirectory(){
+  const grid = document.getElementById('grid');
+  const stateMsg = document.getElementById('stateMsg');
+  try {
+    const res = await fetch('/api/directory?course=kr&type=teacher');
+    const data = await res.json();
+    const profiles = (data && data.profiles) || [];
+
+    if(!res.ok){
+      stateMsg.style.display = 'block';
+      stateMsg.textContent = (data && data.error) ? data.error : 'Could not load the directory right now.';
+      return;
+    }
+    if(profiles.length === 0){
+      stateMsg.style.display = 'block';
+      stateMsg.textContent = "No teachers listed yet, check back soon!";
+      return;
+    }
+
+    PROFILES = profiles;
+    renderGrid();
+  } catch (err) {
+    stateMsg.style.display = 'block';
+    stateMsg.textContent = 'Could not load the directory right now, please try again shortly.';
+  }
+}
+
+loadDirectory();
+
+/* ============================================================
+   AUTH — talks to the server.js account endpoints:
+     GET  /api/me       -> { loggedIn, id, name, status, ... }
+     POST /api/login    { email, password }
+     POST /api/logout
+   Signup itself happens on its own page (signup.html) rather than
+   in this modal, so a new profile can be filled out in full before
+   it's ever submitted — "New here?" below just links there. Every
+   account starts life as Status "Pending" until approved by hand
+   in Airtable — that's reflected in the profile dropdown, not
+   hidden from the user.
+   ============================================================ */
+let AUTH = { loggedIn: false, name: '', status: '' };
+
+// Simple outline "person" glyph shown inside the trigger circle once
+// logged in — currentColor so it follows the button's text color
+// (and its hover state) automatically, no separate theming needed.
+const PROFILE_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"></path></svg>`;
+let PENDING_PROFILE_URL = null; // set by handleCardClick(), consumed right after a successful login
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=> t.classList.remove('show'), 2800);
+}
+
+function renderAuthSlot(){
+  const slot = document.getElementById('authSlot');
+  const dropdown = document.getElementById('profileDropdown');
+  const backdrop = document.getElementById('profileBackdrop');
+  if(!AUTH.loggedIn){
+    slot.innerHTML = `<button class="topbtn topbtn-login" id="loginBtn">Login</button>`;
+    document.getElementById('loginBtn').onclick = () => openAuthModal('login');
+    dropdown.classList.remove('show');
+    dropdown.innerHTML = '';
+    backdrop.classList.remove('show');
+    return;
+  }
+  const statusLine = AUTH.status === 'Approved'
+    ? 'Your profile is <b>live</b>'
+    : AUTH.status === 'Rejected'
+      ? 'Profile not approved'
+      : 'Profile <b>pending approval</b>';
+  slot.innerHTML = `
+    <div class="profile-menu">
+      <button class="profile-trigger" id="profileTrigger">
+        <span class="profile-avatar">${PROFILE_ICON_SVG}</span>
+      </button>
+    </div>`;
+  // The dropdown itself lives outside #topbar (see the static
+  // #profileDropdown div near the top of <body>) so its z-index
+  // isn't trapped inside #topbar's own stacking context — it and
+  // #profileBackdrop are plain siblings, directly comparable, so
+  // the dropdown reliably paints above the backdrop with no
+  // ordering surprises. Its position is computed from the trigger
+  // button's actual on-screen location each time it opens.
+  dropdown.innerHTML = `
+    <div class="profile-dropdown-status">${statusLine}</div>
+    <button class="pd-item" id="editProfileBtn">✎ Edit my profile</button>
+    <button class="pd-item" id="logoutBtn">↪ Log out</button>
+  `;
+  const trigger = document.getElementById('profileTrigger');
+
+  function positionDropdown(){
+    const r = trigger.getBoundingClientRect();
+    dropdown.style.top = (r.bottom + 8) + 'px';
+    dropdown.style.right = (window.innerWidth - r.right) + 'px';
+  }
+  function openMenu(){ positionDropdown(); dropdown.classList.add('show'); backdrop.classList.add('show'); }
+  function closeMenu(){ dropdown.classList.remove('show'); backdrop.classList.remove('show'); }
+
+  // Backdrop pattern instead of a document click-bubbling listener:
+  // the backdrop sits under the dropdown but over everything else,
+  // so the browser itself decides which one a click hits based on
+  // what's on top at that pixel — no event-order/timing to get
+  // wrong, and a click on a dropdown item can never be intercepted
+  // by the close logic, because it never reaches the backdrop at all.
+  trigger.onclick = (e) => {
+    e.stopPropagation();
+    if(dropdown.classList.contains('show')) closeMenu(); else openMenu();
+  };
+  backdrop.onclick = closeMenu;
+  document.getElementById('editProfileBtn').onclick = () => { closeMenu(); window.location.href = 'edit-profile.html'; };
+  document.getElementById('logoutBtn').onclick = () => { closeMenu(); logout(); };
+}
+
+async function checkAuth(){
+  try {
+    const res = await fetch('/api/me', { credentials: 'include' });
+    const data = await res.json();
+    AUTH = data && data.loggedIn
+      ? { loggedIn: true, name: data.name || '', status: data.status || 'Pending' }
+      : { loggedIn: false, name: '', status: '' };
+  } catch (err) {
+    AUTH = { loggedIn: false, name: '', status: '' };
+  }
+  renderAuthSlot();
+}
+
+async function logout(){
+  try { await fetch('/api/logout', { method: 'POST', credentials: 'include' }); } catch (err) {}
+  AUTH = { loggedIn: false, name: '', status: '' };
+  renderAuthSlot();
+  toast('Logged out.');
+}
+
+/* ---- Auth modal: two steps, login <-> signup, re-rendered into the same box ---- */
+const authOverlay = document.getElementById('authOverlay');
+const authModalBox = document.getElementById('authModalBox');
+
+function openAuthModal(step, note){
+  renderLoginStep(note);
+  authOverlay.classList.add('show');
+}
+function closeAuthModal(){
+  authOverlay.classList.remove('show');
+}
+authOverlay.addEventListener('click', (e) => { if(e.target === authOverlay) closeAuthModal(); });
+
+function renderLoginStep(note){
+  authModalBox.innerHTML = `
+    <button class="modal-close" onclick="closeAuthModal()" aria-label="Close">✕</button>
+    <div class="modal-icon">🌸</div>
+    <h3>Welcome Back</h3>
+    <div class="modal-sub">${note || 'Log in to connect with teachers and native speakers.'}</div>
+    <input type="email" class="modal-input" id="loginEmail" placeholder="Email" autocomplete="email">
+    <input type="password" class="modal-input" id="loginPassword" placeholder="Password" autocomplete="current-password">
+    <button class="modal-submit" id="loginSubmit">Log In</button>
+    <div class="modal-error" id="authError"></div>
+    <button class="modal-secondary-link" onclick="location.href='signup.html'">New here? Create an account</button>
+  `;
+  const emailInput = document.getElementById('loginEmail');
+  const passInput = document.getElementById('loginPassword');
+  const submitBtn = document.getElementById('loginSubmit');
+  const errorBox = document.getElementById('authError');
+  setTimeout(()=> emailInput.focus(), 50);
+
+  async function submit(){
+    const email = emailInput.value.trim();
+    const password = passInput.value;
+    if(!email || !password){
+      errorBox.textContent = 'Please enter your email and password.';
+      return;
+    }
+    errorBox.textContent = '';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Logging in...';
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if(res.ok && data.ok){
+        AUTH = { loggedIn: true, name: data.name || '', status: data.status || 'Pending' };
+        renderAuthSlot();
+        closeAuthModal();
+        toast(`Welcome back, ${data.name || 'there'}! 🌸`);
+        if(PENDING_PROFILE_URL){
+          const url = PENDING_PROFILE_URL;
+          PENDING_PROFILE_URL = null;
+          window.location.href = url;
+        }
+      } else {
+        errorBox.textContent = (data && data.error) ? data.error : 'Invalid email or password.';
+      }
+    } catch (err) {
+      errorBox.textContent = 'Something went wrong logging you in. Please try again.';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Log In';
+    }
+  }
+  submitBtn.onclick = submit;
+  passInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') submit(); });
+}
+
+// A guest sent here after clicking "view profile" while logged out
+// (see profile.html) lands with ?login=1 — open the modal for them
+// automatically instead of making them find the button.
+(function openModalFromRedirect(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('login') === '1'){
+    const next = params.get('next');
+    if(next) PENDING_PROFILE_URL = next; // full URL from profile.html's own redirect
+    openAuthModal('login', 'Log in to view that profile.');
+  }
+})();
+
+checkAuth();
+</script>
+</body>
+</html>

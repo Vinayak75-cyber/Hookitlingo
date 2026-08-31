@@ -55,6 +55,7 @@ label{font-size:.82em; font-weight:600; color:var(--text-dim); display:block; ma
 .join-hero{margin-bottom:22px;}
 .join-hero h1{font-size:clamp(1.9em,5.5vw,2.5em); margin-bottom:10px;}
 .join-lede{color:var(--text-dim); font-size:1em; max-width:58ch; margin:0;}
+.hero-course-toggle{max-width:360px; margin-top:16px;}
 
 .benefits-card{
   background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
@@ -70,6 +71,13 @@ label{font-size:.82em; font-weight:600; color:var(--text-dim); display:block; ma
   -webkit-background-clip:text; background-clip:text; color:transparent;
 }
 .benefits-price-note{color:var(--text-faint); font-size:.8em; line-height:1.5;}
+.price-limited-note{
+  display:flex; align-items:flex-start; gap:9px; margin:-4px 0 18px; padding:11px 13px;
+  border-radius:10px; background:var(--gold-dim); border:1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+  color:var(--text-dim); font-size:.8em; line-height:1.5;
+}
+.price-limited-note .pln-icon{flex:none; font-size:1.05em; line-height:1.5;}
+.price-limited-note b{color:var(--text);}
 .benefits-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:15px;}
 .benefits-list li{display:flex; gap:12px; align-items:flex-start; font-size:.92em; color:var(--text-dim);}
 .benefits-list li .b-icon{flex:none; font-size:1.2em; line-height:1.4;}
@@ -194,6 +202,10 @@ textarea{resize:vertical; min-height:90px;}
     <div class="eyebrow">🌸 Hookitlingo Community</div>
     <h1>Be Part of the Community</h1>
     <p class="join-lede">Join a growing circle of learners and native speakers building real language skills together structured lessons, honest conversation practice, and every profile personally reviewed by an actual human, never a bot.</p>
+    <div class="toggle-group hero-course-toggle" id="heroCourseToggle">
+      <button type="button" class="toggle-btn active" data-course="jp">日本語 Japanese</button>
+      <button type="button" class="toggle-btn" data-course="kr">한국어 Korean</button>
+    </div>
   </div>
 
   <div class="benefits-card">
@@ -201,8 +213,9 @@ textarea{resize:vertical; min-height:90px;}
       <span class="benefits-price-amount">$9.99</span>
       <span class="benefits-price-note">One-time payment · No subscription · No hidden charges<br>Pay once, keep your access forever.</span>
     </div>
+    <div class="price-limited-note" id="priceLimitedNote"><span class="pln-icon">⏳</span><span></span></div>
     <ul class="benefits-list">
-      <li><span class="b-icon"></span><span><b>Full access to every course, N5 through N1.</b> N5 is live right now, and N4–N1 are on the way, once released, they're yours too, at no extra cost.</span></li>
+      <li><span class="b-icon"></span><span id="benefit1Text"></span></li>
       <li><span class="b-icon"></span><span><b>Connect with learners</b> tackling the same language as you, from anywhere in the world.</span></li>
       <li><span class="b-icon"></span><span><b>Reach out to teachers and native speakers</b>, subject to their own availability.</span></li>
       <li><span class="b-icon"></span><span><b>Every future course and resource</b> we release at Hookitlingo, included for as long as you're part of the community.</span></li>
@@ -553,8 +566,20 @@ document.getElementById('imageRemoveBtn').addEventListener('click', removeImage)
 const STATE = { role: 'learner', course: 'jp' };
 
 const COPY = {
-  jp: { eyebrow: '日本語 · プロフィール', courseLabel: 'Japanese', hub: 'japanese-hub.html' },
-  kr: { eyebrow: '한국어 · 프로필', courseLabel: 'Korean', hub: 'korean-hub.html' }
+  jp: {
+    eyebrow: '日本語 · プロフィール',
+    courseLabel: 'Japanese',
+    hub: 'japanese-hub.html',
+    benefit1: '<b>Full access to every course, N5 through N1.</b> N5 is live right now, and N4–N1 are on the way, once released, they\'re yours too, at no extra cost.',
+    limitedNote: 'This $9.99 rate covers N5 through N1, and it\'s here for a limited time. Once N4–N1 are live and the full course is unlocked, the price goes up, so joining now locks in today\'s rate for good.'
+  },
+  kr: {
+    eyebrow: '한국어 · 프로필',
+    courseLabel: 'Korean',
+    hub: 'korean-hub.html',
+    benefit1: '<b>Full access to every phase, Phase 1 through Phase 4.</b> Phase 1 is live right now, and Phases 2–4 are on the way, once released, they\'re yours too, at no extra cost.',
+    limitedNote: 'This $9.99 rate covers Phase 1 through Phase 4, and it\'s here for a limited time. Once Phases 2–4 are live and the full course is unlocked, the price goes up, so joining now locks in today\'s rate for good.'
+  }
 };
 
 function listingPage(course, role){
@@ -572,6 +597,8 @@ function updateCopy(){
     : `Tell us about yourself, a real person reviews every profile before it goes live.`;
   document.getElementById('backLink').href = listingPage(STATE.course, STATE.role);
   document.getElementById('loginLink').href = `${listingPage(STATE.course, STATE.role)}?login=1`;
+  document.getElementById('benefit1Text').innerHTML = c.benefit1;
+  document.getElementById('priceLimitedNote').lastElementChild.innerHTML = `<b>Limited-time price.</b> ${c.limitedNote}`;
 }
 
 function wireToggle(groupId, key, onPick){
@@ -586,7 +613,27 @@ function wireToggle(groupId, key, onPick){
   });
 }
 wireToggle('roleToggle', 'role', updateCopy);
-wireToggle('courseToggle', 'course', updateCopy);
+
+/* The course can be picked from two places now — the hero toggle up
+   top and the "Course" toggle further down in the form. Both write
+   to the same STATE.course, so picking one keeps the other in sync
+   instead of the two drifting apart. */
+function syncCourseToggles(){
+  document.querySelectorAll('#heroCourseToggle .toggle-btn, #courseToggle .toggle-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.course === STATE.course);
+  });
+}
+function wireCourseToggle(groupId){
+  document.getElementById(groupId).querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.onclick = () => {
+      STATE.course = btn.dataset.course;
+      syncCourseToggles();
+      updateCopy();
+    };
+  });
+}
+wireCourseToggle('heroCourseToggle');
+wireCourseToggle('courseToggle');
 updateCopy();
 
 function renderConfirmScreen(slug){
