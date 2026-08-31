@@ -90,15 +90,22 @@ label{font-size:.82em; font-weight:600; color:var(--text-dim); display:block; ma
 }
 .field-group{display:flex; flex-direction:column; gap:4px;}
 .field-hint{font-size:.74em; color:var(--text-faint); margin-top:2px;}
-input[type=text], input[type=url], input[type=email], input[type=password], textarea{
+input[type=text], input[type=url], input[type=email], input[type=password], textarea, select{
   width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--border); background:var(--surface2);
   color:var(--text); font-size:.95em; font-family:var(--sans);
 }
+select{
+  appearance:none; -webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238f7a91' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 12px center; background-size:16px;
+  padding-right:38px;
+}
+select:invalid, select.placeholder-selected{ color:var(--text-faint); }
 input[type=file]{
   width:100%; padding:9px 12px; border-radius:10px; border:1px solid var(--border); background:var(--surface2);
   color:var(--text-dim); font-size:.86em; font-family:var(--sans);
 }
-input:focus, textarea:focus{outline:none; border-color:var(--celadon);}
+input:focus, textarea:focus, select:focus{outline:none; border-color:var(--celadon);}
 textarea{resize:vertical; min-height:90px;}
 .required-mark{color:var(--vermilion);}
 .image-preview-wrap{position:relative; display:inline-block; margin-top:8px;}
@@ -241,7 +248,45 @@ textarea{resize:vertical; min-height:90px;}
     </div>
     <div class="field-group">
       <label for="fCountry">Country</label>
-      <input type="text" id="fCountry" maxlength="60">
+      <select id="fCountry" onchange="this.classList.toggle('placeholder-selected', !this.value)">
+        <option value="" class="placeholder-selected">Select your country</option>
+        <option>Afghanistan</option><option>Albania</option><option>Algeria</option><option>Andorra</option><option>Angola</option>
+        <option>Argentina</option><option>Armenia</option><option>Australia</option><option>Austria</option><option>Azerbaijan</option>
+        <option>Bahamas</option><option>Bahrain</option><option>Bangladesh</option><option>Barbados</option><option>Belarus</option>
+        <option>Belgium</option><option>Belize</option><option>Benin</option><option>Bhutan</option><option>Bolivia</option>
+        <option>Bosnia and Herzegovina</option><option>Botswana</option><option>Brazil</option><option>Brunei</option>
+        <option>Bulgaria</option><option>Burkina Faso</option><option>Burundi</option><option>Cambodia</option><option>Cameroon</option>
+        <option>Canada</option><option>Cape Verde</option><option>Chad</option><option>Chile</option><option>China</option>
+        <option>Colombia</option><option>Costa Rica</option><option>Croatia</option><option>Cuba</option><option>Cyprus</option>
+        <option>Czechia</option><option>Denmark</option><option>Djibouti</option><option>Dominica</option>
+        <option>Dominican Republic</option><option>Ecuador</option><option>Egypt</option><option>El Salvador</option>
+        <option>Estonia</option><option>Eswatini</option><option>Ethiopia</option><option>Fiji</option><option>Finland</option>
+        <option>France</option><option>Gabon</option><option>Gambia</option><option>Georgia</option><option>Germany</option>
+        <option>Ghana</option><option>Greece</option><option>Greenland</option><option>Guatemala</option><option>Guinea</option>
+        <option>Guyana</option><option>Haiti</option><option>Honduras</option><option>Hong Kong</option><option>Hungary</option>
+        <option>Iceland</option><option>India</option><option>Indonesia</option><option>Iran</option><option>Iraq</option>
+        <option>Ireland</option><option>Israel</option><option>Italy</option><option>Ivory Coast</option><option>Jamaica</option>
+        <option>Japan</option><option>Jordan</option><option>Kazakhstan</option><option>Kenya</option><option>Kosovo</option>
+        <option>Kuwait</option><option>Kyrgyzstan</option><option>Laos</option><option>Latvia</option><option>Lebanon</option>
+        <option>Lesotho</option><option>Liberia</option><option>Libya</option><option>Liechtenstein</option><option>Lithuania</option>
+        <option>Luxembourg</option><option>Macau</option><option>Madagascar</option><option>Malawi</option><option>Malaysia</option>
+        <option>Maldives</option><option>Mali</option><option>Malta</option><option>Mauritania</option><option>Mauritius</option>
+        <option>Mexico</option><option>Moldova</option><option>Monaco</option><option>Mongolia</option><option>Montenegro</option>
+        <option>Morocco</option><option>Mozambique</option><option>Myanmar</option><option>Namibia</option><option>Nepal</option>
+        <option>Netherlands</option><option>New Zealand</option><option>Nicaragua</option><option>Niger</option><option>Nigeria</option>
+        <option>North Korea</option><option>North Macedonia</option><option>Norway</option><option>Oman</option><option>Pakistan</option>
+        <option>Palestine</option><option>Panama</option><option>Papua New Guinea</option><option>Paraguay</option><option>Peru</option>
+        <option>Philippines</option><option>Poland</option><option>Portugal</option><option>Qatar</option><option>Romania</option>
+        <option>Russia</option><option>Rwanda</option><option>Saudi Arabia</option><option>Senegal</option><option>Serbia</option>
+        <option>Seychelles</option><option>Sierra Leone</option><option>Singapore</option><option>Slovakia</option><option>Slovenia</option>
+        <option>Somalia</option><option>South Africa</option><option>South Korea</option><option>Spain</option><option>Sri Lanka</option>
+        <option>Sudan</option><option>Suriname</option><option>Sweden</option><option>Switzerland</option><option>Syria</option>
+        <option>Taiwan</option><option>Tajikistan</option><option>Tanzania</option><option>Thailand</option><option>Togo</option>
+        <option>Trinidad and Tobago</option><option>Tunisia</option><option>Turkey</option><option>Turkmenistan</option>
+        <option>Uganda</option><option>Ukraine</option><option>United Arab Emirates</option><option>United Kingdom</option>
+        <option>United States</option><option>Uruguay</option><option>Uzbekistan</option><option>Venezuela</option><option>Vietnam</option>
+        <option>Yemen</option><option>Zambia</option><option>Zimbabwe</option>
+      </select>
     </div>
     <div class="field-group">
       <label for="fTagline">Tagline</label>
@@ -255,7 +300,7 @@ textarea{resize:vertical; min-height:90px;}
       <label for="fImageFile">Photo <span class="required-mark">*</span></label>
       <input type="file" id="fImageFile" accept="image/jpeg,image/png,image/webp,image/gif">
       <input type="hidden" id="fImage" value="">
-      <div class="field-hint" id="imageUploadHint">JPG, PNG, WEBP, or GIF — up to 5MB. Required.</div>
+      <div class="field-hint" id="imageUploadHint">JPG, PNG, WEBP, or GIF, up to 5MB. Required.</div>
       <div class="image-preview-wrap" id="imagePreviewWrap" style="display:none;">
         <img id="imagePreview" alt="Preview">
         <button type="button" class="image-remove-btn" id="imageRemoveBtn" title="Remove photo" aria-label="Remove photo">✕</button>
@@ -476,12 +521,12 @@ async function handleImageFileChange(){
       hiddenInput.value = data.url;
       hint.textContent = 'Uploaded ✓';
     } else {
-      hint.textContent = (data && data.error) ? data.error : 'Upload failed — please try a different image.';
+      hint.textContent = (data && data.error) ? data.error : 'Upload failed, please try a different image.';
       previewWrap.style.display = 'none';
       fileInput.value = '';
     }
   } catch (err) {
-    hint.textContent = 'Upload failed — please try a different image.';
+    hint.textContent = 'Upload failed, please try a different image.';
     previewWrap.style.display = 'none';
     fileInput.value = '';
   }
@@ -549,7 +594,7 @@ function renderConfirmScreen(slug){
   const destLabel = STATE.role === 'teacher' ? 'Teachers' : 'Learners';
   // The profile isn't public yet (still Pending), but showing the
   // link now means the person already has it saved/copied for their
-  // bio the moment it goes live — nothing here works until approval.
+  // bio the moment it goes live nothing here works until approval.
   const profileUrl = slug ? `${SITE_ORIGIN}/u/${slug}` : '';
   const linkBlock = profileUrl ? `
       <div class="confirm-link" style="margin:16px 0;padding:12px 14px;border-radius:10px;background:rgba(0,0,0,0.04);word-break:break-all;">
@@ -651,7 +696,7 @@ async function submitSignup(){
     return;
   }
   if(!payload.links.instagram){
-    errorBox.textContent = 'Instagram is required — please add your Instagram handle.';
+    errorBox.textContent = 'Instagram is required, please add your Instagram handle.';
     return;
   }
 

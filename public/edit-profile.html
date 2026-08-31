@@ -72,6 +72,7 @@ input[type=file]{
   color:var(--text-dim); font-size:.86em; font-family:var(--sans);
 }
 input:focus, textarea:focus{outline:none; border-color:var(--celadon);}
+input:disabled{color:var(--text-faint); background:var(--surface); cursor:not-allowed; opacity:.75;}
 textarea{resize:vertical; min-height:90px;}
 .required-mark{color:var(--vermilion);}
 .image-preview-wrap{position:relative; display:inline-block; margin-top:8px;}
@@ -305,7 +306,7 @@ function listingPage(course, type){
 
 function statusBanner(status, id, previewHref){
   if(status === 'Approved'){
-    return `<div class="status-banner approved">🌸 Your profile is live. <a class="preview-link" href="${previewHref}">View it →</a></div>`;
+    return `<div class="status-banner approved">🌸 Your profile is live.</div>`;
   }
   if(status === 'Rejected'){
     return `<div class="status-banner rejected">Your last submission wasn't approved. Update your details below and resubmit.</div>`;
@@ -335,7 +336,8 @@ function renderForm(me){
       </div>
       <div class="field-group">
         <label for="fCountry">Country</label>
-        <input type="text" id="fCountry" maxlength="60" value="${escapeAttr(p.country || '')}">
+        <input type="text" id="fCountry" maxlength="60" value="${escapeAttr(p.country || '')}" disabled>
+        <div class="field-hint">Country can't be changed here — contact support if this needs to be corrected.</div>
       </div>
       <div class="field-group">
         <label for="fTagline">Tagline</label>
@@ -389,7 +391,6 @@ function renderForm(me){
       <div class="form-error" id="formError"></div>
       <div class="form-actions">
         <button class="save-btn" id="saveBtn">Save Changes</button>
-        <a class="preview-link" href="${previewHref}">Preview my profile</a>
       </div>
     </div>
   `;
@@ -443,7 +444,7 @@ async function saveProfile(){
     return;
   }
   if(!document.getElementById('fInstagram').value.trim()){
-    errorBox.textContent = 'Instagram is required — please add your Instagram handle.';
+    errorBox.textContent = 'Instagram is required, please add your Instagram handle.';
     return;
   }
   errorBox.textContent = '';
@@ -485,7 +486,7 @@ async function saveProfile(){
     });
     const data = await res.json();
     if(res.ok && data.ok){
-      toast('Saved — your profile is now pending review. 🌸');
+      toast('Your changes are saved');
       renderForm({ id: data.id, name: data.name, status: data.status, profile: data.profile });
     } else if(res.status === 401){
       window.location.href = 'japanese-learners.html?login=1';

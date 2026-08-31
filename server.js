@@ -39,7 +39,7 @@ app.use(express.json());
 // changing it later invalidates everyone's existing unlock cookie.
 const COOKIE_SECRET = process.env.COOKIE_SECRET;
 if (!COOKIE_SECRET) {
-  console.warn('WARNING: COOKIE_SECRET is not set. Set it in your environment before deploying — unlock cookies will not be secure without it.');
+  console.warn('WARNING: COOKIE_SECRET is not set. Set it in your environment before deploying, unlock cookies will not be secure without it.');
 }
 app.use(cookieParser(COOKIE_SECRET || 'dev-only-insecure-secret-change-me'));
 
@@ -317,7 +317,7 @@ app.post('/api/unlock', async (req, res) => {
 
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
   if (isUnlockRateLimited(ip)) {
-    return res.status(429).json({ error: 'Too many attempts — please try again in a bit.' });
+    return res.status(429).json({ error: 'Too many attempts, please try again in a bit.' });
   }
 
   const rawCode = String((req.body && req.body.code) || '').trim();
@@ -340,7 +340,7 @@ app.post('/api/unlock', async (req, res) => {
     if (!airtableRes.ok) {
       const errText = await airtableRes.text();
       console.error('Airtable access lookup failed:', errText);
-      return res.status(502).json({ error: 'Failed to check that code — please try again.' });
+      return res.status(502).json({ error: 'Failed to check that code, please try again.' });
     }
     const data = await airtableRes.json();
     const rec = data.records && data.records[0];
@@ -696,7 +696,7 @@ app.post('/api/signup', async (req, res) => {
     return res.status(500).json({ error: 'Accounts are not configured yet.' });
   }
   if (isSignupRateLimited(getClientIp(req))) {
-    return res.status(429).json({ error: 'Too many signup attempts — please try again in a bit.' });
+    return res.status(429).json({ error: 'Too many signup attempts, please try again in a bit.' });
   }
 
   const name = String((req.body && req.body.name) || '').trim().slice(0, 100);
@@ -754,7 +754,7 @@ app.post('/api/signup', async (req, res) => {
     return res.status(400).json({ error: 'Please upload a profile picture.' });
   }
   if (!profileLinks.Instagram) {
-    return res.status(400).json({ error: 'Instagram is required — please add your Instagram handle.' });
+    return res.status(400).json({ error: 'Instagram is required, please add your Instagram handle.' });
   }
 
   const escapedEmail = emailRaw.replace(/'/g, "\\'");
@@ -860,7 +860,7 @@ app.post('/api/login', async (req, res) => {
     return res.status(500).json({ error: 'Accounts are not configured yet.' });
   }
   if (isLoginRateLimited(getClientIp(req))) {
-    return res.status(429).json({ error: 'Too many login attempts — please try again in a bit.' });
+    return res.status(429).json({ error: 'Too many login attempts, please try again in a bit.' });
   }
 
   const emailRaw = String((req.body && req.body.email) || '').trim().toLowerCase();
@@ -1034,7 +1034,7 @@ app.put('/api/profile', async (req, res) => {
     return res.status(400).json({ error: 'Please upload your profile picture.' });
   }
   if (!instagram) {
-    return res.status(400).json({ error: 'Instagram is required — please add your Instagram handle.' });
+    return res.status(400).json({ error: 'Instagram is required, please add your Instagram handle.' });
   }
 
   const fields = {
