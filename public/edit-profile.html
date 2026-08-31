@@ -67,12 +67,34 @@ input[type=text], input[type=url], textarea{
   width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--border); background:var(--surface2);
   color:var(--text); font-size:.95em; font-family:var(--sans);
 }
+input[type=file]{
+  width:100%; padding:9px 12px; border-radius:10px; border:1px solid var(--border); background:var(--surface2);
+  color:var(--text-dim); font-size:.86em; font-family:var(--sans);
+}
 input:focus, textarea:focus{outline:none; border-color:var(--celadon);}
 textarea{resize:vertical; min-height:90px;}
+.required-mark{color:var(--vermilion);}
+.image-preview-wrap{position:relative; display:inline-block; margin-top:8px;}
+.image-preview-wrap img{display:block; max-width:160px; border-radius:10px; border:1px solid var(--border);}
+.image-remove-btn{
+  position:absolute; top:-9px; right:-9px; width:24px; height:24px; border-radius:50%;
+  background:var(--vermilion); color:#fff; border:2px solid var(--surface); font-size:.78em; line-height:1;
+  display:flex; align-items:center; justify-content:center; padding:0; font-weight:700;
+}
+.image-remove-btn:hover{filter:brightness(1.1);}
 
 .section-title{font-size:.72em; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--text-faint); margin:8px 0 -4px;}
 .links-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
 @media(max-width:520px){ .links-grid{grid-template-columns:1fr;} }
+
+.chip-grid{display:flex; flex-wrap:wrap; gap:8px;}
+.chip{
+  padding:8px 14px; border-radius:999px; border:1px solid var(--border); background:var(--surface2);
+  color:var(--text-dim); font-size:.84em; font-family:var(--sans);
+}
+.chip:hover:not(:disabled){border-color:var(--celadon); color:var(--text);}
+.chip.selected{background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%)); border-color:transparent; color:#fff; font-weight:600;}
+.chip:disabled{opacity:.4; cursor:default;}
 
 .form-actions{display:flex; gap:10px; align-items:center; margin-top:6px; flex-wrap:wrap;}
 .save-btn{
@@ -134,11 +156,108 @@ function enforceSocialLinkLimit(){
   if(hint){
     hint.textContent = filledCount >= MAX_SOCIAL_LINKS
       ? `You've reached the limit of ${MAX_SOCIAL_LINKS} social links.`
-      : `Add up to ${MAX_SOCIAL_LINKS} (${filledCount}/${MAX_SOCIAL_LINKS} used).`;
+      : `Instagram is required. Add up to ${MAX_SOCIAL_LINKS} total (${filledCount}/${MAX_SOCIAL_LINKS} used).`;
   }
 }
 
 const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
+
+/* ============================================================
+   Interests & Hobbies — the pick-list itself lives only in
+   server.js (INTEREST_OPTIONS) so there's one place to edit it.
+   loadInterestOptions() fetches that list once at page-load and
+   renderForm() builds the chip buttons from it, instead of
+   hardcoding a second copy here that could silently drift out of
+   sync.
+   ============================================================ */
+let INTEREST_OPTIONS = [];
+let MAX_INTERESTS = 5; // overwritten with the server's value once fetched
+
+async function loadInterestOptions(){
+  try {
+    const res = await fetch('/api/interest-options');
+    const data = await res.json();
+    if(data && Array.isArray(data.options)) INTEREST_OPTIONS = data.options;
+    if(data && typeof data.max === 'number') MAX_INTERESTS = data.max;
+  } catch (err) {
+    // Leave INTEREST_OPTIONS empty — interests are optional, so the
+    // rest of the form still works fine even if this fetch fails;
+    // the chip grid just renders with nothing in it.
+  }
+}
+
+function enforceInterestLimit(){
+  const chips = Array.from(document.querySelectorAll('#interestsGrid .chip'));
+  if(!chips.length) return;
+  const selectedCount = chips.filter(c => c.classList.contains('selected')).length;
+  chips.forEach(c => {
+    c.disabled = !c.classList.contains('selected') && selectedCount >= MAX_INTERESTS;
+  });
+  const hint = document.getElementById('interestsHint');
+  if(hint){
+    hint.textContent = selectedCount >= MAX_INTERESTS
+      ? `You've reached the limit of ${MAX_INTERESTS} interests.`
+      : `Pick up to ${MAX_INTERESTS} (${selectedCount}/${MAX_INTERESTS} used).`;
+  }
+}
+
+/* ============================================================
+   Photo upload — uploads straight to R2 (via POST /api/upload-image)
+   the moment a file is chosen. The returned public URL is stashed
+   in the hidden #fImage input, which is what saveProfile() actually
+   reads — so that code didn't need to change at all, it just gets a
+   real R2 URL now instead of a pasted one.
+   ============================================================ */
+async function handleImageFileChange(){
+  const fileInput = document.getElementById('fImageFile');
+  const hiddenInput = document.getElementById('fImage');
+  const hint = document.getElementById('imageUploadHint');
+  const previewWrap = document.getElementById('imagePreviewWrap');
+  const preview = document.getElementById('imagePreview');
+  const file = fileInput.files[0];
+  if(!file) return;
+
+  preview.src = URL.createObjectURL(file);
+  previewWrap.style.display = 'inline-block';
+  hiddenInput.value = '';
+  hint.textContent = 'Uploading...';
+
+  const formData = new FormData();
+  formData.append('image', file);
+  try {
+    const res = await fetch('/api/upload-image', { method: 'POST', body: formData });
+    const data = await res.json();
+    if(res.ok && data.ok){
+      hiddenInput.value = data.url;
+      hint.textContent = 'Uploaded ✓';
+    } else {
+      hint.textContent = (data && data.error) ? data.error : 'Upload failed — please try a different image.';
+      previewWrap.style.display = 'none';
+      fileInput.value = '';
+    }
+  } catch (err) {
+    hint.textContent = 'Upload failed — please try a different image.';
+    previewWrap.style.display = 'none';
+    fileInput.value = '';
+  }
+}
+
+// The ✕ button lets someone cancel/remove a chosen or already-saved
+// photo before saving — clears the file input, the hidden R2 URL, and
+// the preview so the form goes back to "no photo selected".
+function removeImage(){
+  const fileInput = document.getElementById('fImageFile');
+  const hiddenInput = document.getElementById('fImage');
+  const previewWrap = document.getElementById('imagePreviewWrap');
+  const preview = document.getElementById('imagePreview');
+  const hint = document.getElementById('imageUploadHint');
+  fileInput.value = '';
+  hiddenInput.value = '';
+  preview.src = '';
+  previewWrap.style.display = 'none';
+  hint.textContent = 'JPG, PNG, WEBP, or GIF — up to 5MB. Required.';
+}
+
 function applyTheme(){
   document.documentElement.setAttribute('data-theme', ThemeState.theme);
   document.getElementById('themeBtn').textContent = ThemeState.theme === 'dark' ? '☾ Dark' : '☀ Light';
@@ -227,15 +346,26 @@ function renderForm(me){
         <textarea id="fAbout" maxlength="1000">${escapeHtml(p.about || '')}</textarea>
       </div>
       <div class="field-group">
-        <label for="fImage">Photo URL</label>
-        <input type="url" id="fImage" maxlength="500" value="${escapeAttr(p.imageUrl || '')}" placeholder="https://...">
-        <div class="field-hint">Paste a link to an image hosted elsewhere — there's no upload here yet.</div>
+        <label for="fImageFile">Photo <span class="required-mark">*</span></label>
+        <input type="file" id="fImageFile" accept="image/jpeg,image/png,image/webp,image/gif">
+        <input type="hidden" id="fImage" value="${escapeAttr(p.imageUrl || '')}">
+        <div class="field-hint" id="imageUploadHint">JPG, PNG, WEBP, or GIF — up to 5MB. Required.</div>
+        <div class="image-preview-wrap" id="imagePreviewWrap" style="${p.imageUrl ? '' : 'display:none;'}">
+          <img id="imagePreview" src="${escapeAttr(p.imageUrl || '')}" alt="Preview">
+          <button type="button" class="image-remove-btn" id="imageRemoveBtn" title="Remove photo" aria-label="Remove photo">✕</button>
+        </div>
       </div>
 
-      <div class="section-title">Social Links (optional)</div>
-      <div class="field-hint" id="socialLinksHint" style="margin:-4px 0 4px;">Add up to 6.</div>
+      <div class="section-title">Interests &amp; Hobbies (optional)</div>
+      <div class="field-hint" id="interestsHint" style="margin:-4px 0 4px;">Pick up to 5.</div>
+      <div class="chip-grid" id="interestsGrid">
+        ${INTEREST_OPTIONS.map(opt => `<button type="button" class="chip${(p.interests || []).includes(opt) ? ' selected' : ''}" data-interest="${escapeAttr(opt)}">${escapeHtml(opt)}</button>`).join('')}
+      </div>
+
+      <div class="section-title">Social Links</div>
+      <div class="field-hint" id="socialLinksHint" style="margin:-4px 0 4px;">Instagram is required. Add up to 6 total.</div>
       <div class="links-grid" id="socialLinksGrid">
-        <div class="field-group"><label for="fInstagram">Instagram</label><input type="text" id="fInstagram" maxlength="100" value="${escapeAttr(links.instagram || '')}" placeholder="handle"></div>
+        <div class="field-group"><label for="fInstagram">Instagram <span class="required-mark">*</span></label><input type="text" id="fInstagram" maxlength="100" value="${escapeAttr(links.instagram || '')}" placeholder="handle"></div>
         <div class="field-group"><label for="fDiscord">Discord</label><input type="text" id="fDiscord" maxlength="100" value="${escapeAttr(links.discord || '')}" placeholder="discord.gg/..."></div>
         <div class="field-group"><label for="fWhatsapp">WhatsApp</label><input type="text" id="fWhatsapp" maxlength="40" value="${escapeAttr(links.whatsapp || '')}" placeholder="+91 ..."></div>
         <div class="field-group"><label for="fTwitter">X / Twitter</label><input type="text" id="fTwitter" maxlength="100" value="${escapeAttr(links.twitter || '')}" placeholder="handle"></div>
@@ -265,8 +395,17 @@ function renderForm(me){
   `;
 
   document.getElementById('saveBtn').onclick = saveProfile;
+  document.getElementById('fImageFile').addEventListener('change', handleImageFileChange);
+  document.getElementById('imageRemoveBtn').addEventListener('click', removeImage);
   SOCIAL_FIELD_IDS.forEach(id => document.getElementById(id).addEventListener('input', enforceSocialLinkLimit));
   enforceSocialLinkLimit();
+  document.querySelectorAll('#interestsGrid .chip').forEach(chip => {
+    chip.onclick = () => {
+      chip.classList.toggle('selected');
+      enforceInterestLimit();
+    };
+  });
+  enforceInterestLimit();
 }
 
 function escapeAttr(s){
@@ -289,6 +428,24 @@ async function saveProfile(){
     errorBox.textContent = `Please limit yourself to ${MAX_SOCIAL_LINKS} social links.`;
     return;
   }
+  const selectedInterestCount = document.querySelectorAll('#interestsGrid .chip.selected').length;
+  if(selectedInterestCount > MAX_INTERESTS){
+    errorBox.textContent = `Please select up to ${MAX_INTERESTS} interests.`;
+    return;
+  }
+  const imageFile = document.getElementById('fImageFile').files[0];
+  if(imageFile && !document.getElementById('fImage').value.trim()){
+    errorBox.textContent = 'Please wait for your photo to finish uploading (or remove it) before saving.';
+    return;
+  }
+  if(!document.getElementById('fImage').value.trim()){
+    errorBox.textContent = 'Please upload your profile picture.';
+    return;
+  }
+  if(!document.getElementById('fInstagram').value.trim()){
+    errorBox.textContent = 'Instagram is required — please add your Instagram handle.';
+    return;
+  }
   errorBox.textContent = '';
   saveBtn.disabled = true;
   saveBtn.textContent = 'Saving...';
@@ -299,6 +456,7 @@ async function saveProfile(){
     tagline: document.getElementById('fTagline').value.trim(),
     about: document.getElementById('fAbout').value.trim(),
     imageUrl: document.getElementById('fImage').value.trim(),
+    interests: Array.from(document.querySelectorAll('#interestsGrid .chip.selected')).map(c => c.dataset.interest),
     links: {
       instagram: document.getElementById('fInstagram').value.trim(),
       discord: document.getElementById('fDiscord').value.trim(),
@@ -345,7 +503,7 @@ async function saveProfile(){
 async function init(){
   const pageHost = document.getElementById('pageHost');
   try {
-    const res = await fetch('/api/me', { credentials: 'include' });
+    const [, res] = await Promise.all([loadInterestOptions(), fetch('/api/me', { credentials: 'include' })]);
     const data = await res.json();
     if(!data || !data.loggedIn){
       window.location.href = 'japanese-learners.html?login=1';

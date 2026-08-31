@@ -5,6 +5,10 @@ const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcryptjs'); // pure-JS bcrypt — no native build step needed on most hosts
 require('dotenv').config();
+// Image upload (Cloudflare R2) — split into its own file/router
+// purely for readability; still runs in this same process, not a
+// separate server. See routes/upload.js and lib/r2.js.
+const uploadRouter = require('./routes/upload');
 
 const app = express();
 
@@ -46,6 +50,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // code) but referenced here so every route — public or protected —
 // gets req.sessionUserId populated up front.
 app.use((req, res, next) => attachSession(req, res, next));
+
+// POST /api/upload-image — see routes/upload.js for the route itself
+// and lib/r2.js for the Cloudflare R2 client it uploads through.
+app.use(uploadRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -396,6 +404,10 @@ app.post('/api/unlock', async (req, res) => {
 //   Name (text), Type (text: "learner" or "teacher"),
 //   Course (text: "jp" or "kr"), Country (text), Tagline (text),
 //   ImageURL (text — the public R2 URL for their photo),
+//   Interests (Multiple select — see the INTEREST_OPTIONS list
+//   below for the exact option names to create; must match
+//   character-for-character since Airtable multi-select choices
+//   are case- and text-sensitive),
 //   Instagram, Discord, WhatsApp, Website1, Website1Label, Website2,
 //   Website2Label, Website3, Website3Label, Twitter, Facebook,
 //   TikTok, YouTube, Telegram, LINE, Email (text, all optional —
@@ -446,6 +458,18 @@ app.post('/api/unlock', async (req, res) => {
 //               it's used to make the "Get in touch" button link
 //               straight to a mailto:, before falling back to
 //               WhatsApp/Telegram/etc. if Email is left blank.
+//
+// Interests — a Multiple select field capped at 5 choices per
+// person (enforced in code below, not by Airtable itself). The
+// allowed options are the INTEREST_OPTIONS list further down this
+// file, also served publicly at GET /api/interest-options so
+// signup.html and edit-profile.html can build their chip pickers
+// from it instead of hardcoding their own copy. Create the Airtable
+// field's choices to match INTEREST_OPTIONS exactly before anyone
+// signs up or edits their profile — Airtable itself isn't wired up
+// to this list, so it's the one place that still has to be kept in
+// sync by hand, and a write containing an option Airtable doesn't
+// recognize yet will fail.
 //
 // Only rows with Status = "Approved" are ever returned by
 // /api/directory below, so a row sits invisible on the public site
@@ -546,6 +570,7 @@ function toPublicProfile(record) {
     tagline: f.Tagline || '',
     about: f.Bio || '',
     imageUrl: f.ImageURL || '',
+    interests: Array.isArray(f.Interests) ? f.Interests : [],
     links: {
       instagram: f.Instagram || '',
       discord: f.Discord || '',
@@ -691,6 +716,7 @@ app.post('/api/signup', async (req, res) => {
   const tagline = cleanStr(body.tagline, 140);
   const about = cleanStr(body.about, 1000);
   const imageUrl = cleanStr(body.imageUrl, 500);
+  const interests = sanitizeInterests(body.interests);
   const profileLinks = {
     Instagram: cleanStr(links.instagram, 100),
     Discord: cleanStr(links.discord, 100),
@@ -720,6 +746,15 @@ app.post('/api/signup', async (req, res) => {
   }
   if (countFilledSocialLinks(links) > MAX_SOCIAL_LINKS) {
     return res.status(400).json({ error: `Please limit yourself to ${MAX_SOCIAL_LINKS} social links.` });
+  }
+  if (interests.length > MAX_INTERESTS) {
+    return res.status(400).json({ error: `Please select up to ${MAX_INTERESTS} interests.` });
+  }
+  if (!imageUrl) {
+    return res.status(400).json({ error: 'Please upload a profile picture.' });
+  }
+  if (!profileLinks.Instagram) {
+    return res.status(400).json({ error: 'Instagram is required — please add your Instagram handle.' });
   }
 
   const escapedEmail = emailRaw.replace(/'/g, "\\'");
@@ -764,6 +799,7 @@ app.post('/api/signup', async (req, res) => {
           Tagline: tagline,
           Bio: about,
           ImageURL: imageUrl,
+          Interests: interests,
           ...profileLinks,
           Status: 'Pending'
         }
@@ -935,6 +971,42 @@ function countFilledSocialLinks(links) {
   return SOCIAL_LINK_KEYS.reduce((count, key) => count + (cleanStr(links[key], 200) ? 1 : 0), 0);
 }
 
+// Interests & Hobbies — a fixed pick-list (not free text) so it maps
+// cleanly onto an Airtable Multiple select field. This is the ONE
+// place in the codebase this list is defined — signup.html and
+// edit-profile.html fetch it from GET /api/interest-options below
+// rather than hardcoding their own copy. The Airtable field's
+// choices still have to be kept in sync with this list by hand,
+// since Airtable itself doesn't read from here.
+const INTEREST_OPTIONS = [
+  'Anime & Manga', 'K-Pop', 'K-Dramas', 'J-Dramas & J-Pop', 'Gaming',
+  'Cooking & Baking', 'Traveling', 'Photography', 'Reading', 'Movies & TV',
+  'Music', 'Art & Drawing', 'Fitness & Sports', 'Yoga', 'Hiking & Outdoors',
+  'Fashion', 'Calligraphy', 'Dance', 'Board Games', 'Martial Arts',
+  'Coding & Tech', 'Podcasts', 'Cosplay', 'Language Exchange'
+];
+const MAX_INTERESTS = 5;
+// Drops anything that isn't one of the known options (defends against
+// a tampered request sending arbitrary strings Airtable would reject)
+// and dedupes, but does NOT silently truncate over the cap — callers
+// check .length against MAX_INTERESTS themselves and return a 400,
+// same pattern as countFilledSocialLinks/MAX_SOCIAL_LINKS above.
+function sanitizeInterests(raw) {
+  const arr = Array.isArray(raw) ? raw : [];
+  return [...new Set(arr.filter(v => INTEREST_OPTIONS.includes(v)))];
+}
+
+// Public, no auth needed — lets signup.html and edit-profile.html
+// fetch the pick-list at page-load instead of hardcoding their own
+// copy. This makes server.js the ONE place that needs editing when
+// the list changes (plus the Airtable field's choices, which still
+// has to be updated by hand — Airtable doesn't expose an API for
+// that here). Before this endpoint existed, the same 24 strings were
+// duplicated three times over and could silently drift out of sync.
+app.get('/api/interest-options', (req, res) => {
+  res.json({ options: INTEREST_OPTIONS, max: MAX_INTERESTS });
+});
+
 app.put('/api/profile', async (req, res) => {
   if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
     return res.status(500).json({ error: 'Accounts are not configured yet.' });
@@ -946,11 +1018,23 @@ app.put('/api/profile', async (req, res) => {
   const body = req.body || {};
   const links = body.links || {};
   const name = cleanStr(body.name, 100);
+  const interests = sanitizeInterests(body.interests);
+  const imageUrl = cleanStr(body.imageUrl, 500);
+  const instagram = cleanStr(links.instagram, 100);
   if (!name) {
     return res.status(400).json({ error: 'Please enter your name.' });
   }
   if (countFilledSocialLinks(links) > MAX_SOCIAL_LINKS) {
     return res.status(400).json({ error: `Please limit yourself to ${MAX_SOCIAL_LINKS} social links.` });
+  }
+  if (interests.length > MAX_INTERESTS) {
+    return res.status(400).json({ error: `Please select up to ${MAX_INTERESTS} interests.` });
+  }
+  if (!imageUrl) {
+    return res.status(400).json({ error: 'Please upload your profile picture.' });
+  }
+  if (!instagram) {
+    return res.status(400).json({ error: 'Instagram is required — please add your Instagram handle.' });
   }
 
   const fields = {
@@ -958,8 +1042,9 @@ app.put('/api/profile', async (req, res) => {
     Country: cleanStr(body.country, 60),
     Tagline: cleanStr(body.tagline, 140),
     Bio: cleanStr(body.about, 1000),
-    ImageURL: cleanStr(body.imageUrl, 500),
-    Instagram: cleanStr(links.instagram, 100),
+    ImageURL: imageUrl,
+    Interests: interests,
+    Instagram: instagram,
     Discord: cleanStr(links.discord, 100),
     WhatsApp: cleanStr(links.whatsapp, 40),
     Website1: cleanStr(links.website1, 200),

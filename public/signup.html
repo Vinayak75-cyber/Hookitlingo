@@ -94,13 +94,35 @@ input[type=text], input[type=url], input[type=email], input[type=password], text
   width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--border); background:var(--surface2);
   color:var(--text); font-size:.95em; font-family:var(--sans);
 }
+input[type=file]{
+  width:100%; padding:9px 12px; border-radius:10px; border:1px solid var(--border); background:var(--surface2);
+  color:var(--text-dim); font-size:.86em; font-family:var(--sans);
+}
 input:focus, textarea:focus{outline:none; border-color:var(--celadon);}
 textarea{resize:vertical; min-height:90px;}
+.required-mark{color:var(--vermilion);}
+.image-preview-wrap{position:relative; display:inline-block; margin-top:8px;}
+.image-preview-wrap img{display:block; max-width:160px; border-radius:10px; border:1px solid var(--border);}
+.image-remove-btn{
+  position:absolute; top:-9px; right:-9px; width:24px; height:24px; border-radius:50%;
+  background:var(--vermilion); color:#fff; border:2px solid var(--surface); font-size:.78em; line-height:1;
+  display:flex; align-items:center; justify-content:center; padding:0; font-weight:700;
+}
+.image-remove-btn:hover{filter:brightness(1.1);}
 
 .section-title{font-size:.72em; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--text-faint); margin:8px 0 -4px;}
 .section-title.first{margin-top:0;}
 .links-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
 @media(max-width:520px){ .links-grid{grid-template-columns:1fr;} }
+
+.chip-grid{display:flex; flex-wrap:wrap; gap:8px;}
+.chip{
+  padding:8px 14px; border-radius:999px; border:1px solid var(--border); background:var(--surface2);
+  color:var(--text-dim); font-size:.84em; font-family:var(--sans);
+}
+.chip:hover:not(:disabled){border-color:var(--celadon); color:var(--text);}
+.chip.selected{background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%)); border-color:transparent; color:#fff; font-weight:600;}
+.chip:disabled{opacity:.4; cursor:default;}
 
 /* Role / course segmented toggles */
 .toggle-group{display:flex; gap:10px;}
@@ -230,15 +252,24 @@ textarea{resize:vertical; min-height:90px;}
       <textarea id="fAbout" maxlength="1000"></textarea>
     </div>
     <div class="field-group">
-      <label for="fImage">Photo URL</label>
-      <input type="url" id="fImage" maxlength="500" placeholder="https://...">
-      <div class="field-hint">Paste a link to an image hosted elsewhere — there's no upload here yet.</div>
+      <label for="fImageFile">Photo <span class="required-mark">*</span></label>
+      <input type="file" id="fImageFile" accept="image/jpeg,image/png,image/webp,image/gif">
+      <input type="hidden" id="fImage" value="">
+      <div class="field-hint" id="imageUploadHint">JPG, PNG, WEBP, or GIF — up to 5MB. Required.</div>
+      <div class="image-preview-wrap" id="imagePreviewWrap" style="display:none;">
+        <img id="imagePreview" alt="Preview">
+        <button type="button" class="image-remove-btn" id="imageRemoveBtn" title="Remove photo" aria-label="Remove photo">✕</button>
+      </div>
     </div>
 
-    <div class="section-title">Social Links (optional)</div>
-    <div class="field-hint" id="socialLinksHint" style="margin:-4px 0 4px;">Add up to 6.</div>
+    <div class="section-title">Interests &amp; Hobbies (optional)</div>
+    <div class="field-hint" id="interestsHint" style="margin:-4px 0 4px;">Pick up to 5.</div>
+    <div class="chip-grid" id="interestsGrid"><!-- populated by loadInterestOptions() from GET /api/interest-options --></div>
+
+    <div class="section-title">Social Links</div>
+    <div class="field-hint" id="socialLinksHint" style="margin:-4px 0 4px;">Instagram is required. Add up to 6 total.</div>
     <div class="links-grid" id="socialLinksGrid">
-      <div class="field-group"><label for="fInstagram">Instagram</label><input type="text" id="fInstagram" maxlength="100" placeholder="handle"></div>
+      <div class="field-group"><label for="fInstagram">Instagram <span class="required-mark">*</span></label><input type="text" id="fInstagram" maxlength="100" placeholder="handle"></div>
       <div class="field-group"><label for="fDiscord">Discord</label><input type="text" id="fDiscord" maxlength="100" placeholder="discord.gg/..."></div>
       <div class="field-group"><label for="fWhatsapp">WhatsApp</label><input type="text" id="fWhatsapp" maxlength="40" placeholder="+91 ..."></div>
       <div class="field-group"><label for="fTwitter">X / Twitter</label><input type="text" id="fTwitter" maxlength="100" placeholder="handle"></div>
@@ -352,11 +383,127 @@ function enforceSocialLinkLimit(){
   if(hint){
     hint.textContent = filledCount >= MAX_SOCIAL_LINKS
       ? `You've reached the limit of ${MAX_SOCIAL_LINKS} social links.`
-      : `Add up to ${MAX_SOCIAL_LINKS} (${filledCount}/${MAX_SOCIAL_LINKS} used).`;
+      : `Instagram is required. Add up to ${MAX_SOCIAL_LINKS} total (${filledCount}/${MAX_SOCIAL_LINKS} used).`;
   }
 }
 SOCIAL_FIELD_IDS.forEach(id => document.getElementById(id).addEventListener('input', enforceSocialLinkLimit));
 enforceSocialLinkLimit();
+
+/* ============================================================
+   Interests & Hobbies — the pick-list itself lives only in
+   server.js (INTEREST_OPTIONS) so there's one place to edit it.
+   This fetches that list at page-load and builds the chip buttons
+   from it, instead of hardcoding a second copy here that could
+   silently drift out of sync.
+   ============================================================ */
+let MAX_INTERESTS = 5; // overwritten with the server's value once fetched below
+
+function escapeAttrLite(s){
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function escapeHtmlLite(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function enforceInterestLimit(){
+  const chips = Array.from(document.querySelectorAll('#interestsGrid .chip'));
+  const selectedCount = chips.filter(c => c.classList.contains('selected')).length;
+  chips.forEach(c => {
+    c.disabled = !c.classList.contains('selected') && selectedCount >= MAX_INTERESTS;
+  });
+  const hint = document.getElementById('interestsHint');
+  if(hint){
+    hint.textContent = selectedCount >= MAX_INTERESTS
+      ? `You've reached the limit of ${MAX_INTERESTS} interests.`
+      : `Pick up to ${MAX_INTERESTS} (${selectedCount}/${MAX_INTERESTS} used).`;
+  }
+}
+
+async function loadInterestOptions(){
+  const grid = document.getElementById('interestsGrid');
+  try {
+    const res = await fetch('/api/interest-options');
+    const data = await res.json();
+    const options = (data && Array.isArray(data.options)) ? data.options : [];
+    if(data && typeof data.max === 'number') MAX_INTERESTS = data.max;
+    grid.innerHTML = options.map(opt =>
+      `<button type="button" class="chip" data-interest="${escapeAttrLite(opt)}">${escapeHtmlLite(opt)}</button>`
+    ).join('');
+    grid.querySelectorAll('.chip').forEach(chip => {
+      chip.onclick = () => {
+        chip.classList.toggle('selected');
+        enforceInterestLimit();
+      };
+    });
+    enforceInterestLimit();
+  } catch (err) {
+    // Leave the grid empty — interests are optional, so the rest of
+    // the form still works fine even if this fetch fails.
+  }
+}
+loadInterestOptions();
+
+/* ============================================================
+   Photo upload — uploads straight to R2 (via POST /api/upload-image)
+   the moment a file is chosen, rather than waiting for form submit.
+   The returned public URL is stashed in the hidden #fImage input,
+   which is what collectPayload() actually reads — so downstream
+   code didn't need to change at all, it just gets a real R2 URL now
+   instead of a pasted one.
+   ============================================================ */
+async function handleImageFileChange(){
+  const fileInput = document.getElementById('fImageFile');
+  const hiddenInput = document.getElementById('fImage');
+  const hint = document.getElementById('imageUploadHint');
+  const previewWrap = document.getElementById('imagePreviewWrap');
+  const preview = document.getElementById('imagePreview');
+  const file = fileInput.files[0];
+  if(!file) return;
+
+  // Show the picked file immediately via a local blob URL — no need
+  // to wait for the network round-trip just to preview it.
+  preview.src = URL.createObjectURL(file);
+  previewWrap.style.display = 'inline-block';
+  hiddenInput.value = '';
+  hint.textContent = 'Uploading...';
+
+  const formData = new FormData();
+  formData.append('image', file);
+  try {
+    const res = await fetch('/api/upload-image', { method: 'POST', body: formData });
+    const data = await res.json();
+    if(res.ok && data.ok){
+      hiddenInput.value = data.url;
+      hint.textContent = 'Uploaded ✓';
+    } else {
+      hint.textContent = (data && data.error) ? data.error : 'Upload failed — please try a different image.';
+      previewWrap.style.display = 'none';
+      fileInput.value = '';
+    }
+  } catch (err) {
+    hint.textContent = 'Upload failed — please try a different image.';
+    previewWrap.style.display = 'none';
+    fileInput.value = '';
+  }
+}
+document.getElementById('fImageFile').addEventListener('change', handleImageFileChange);
+
+// The ✕ button lets someone cancel/remove a chosen or already-uploaded
+// photo before submitting — clears the file input, the hidden R2 URL,
+// and the preview so the form goes back to "no photo selected".
+function removeImage(){
+  const fileInput = document.getElementById('fImageFile');
+  const hiddenInput = document.getElementById('fImage');
+  const previewWrap = document.getElementById('imagePreviewWrap');
+  const preview = document.getElementById('imagePreview');
+  const hint = document.getElementById('imageUploadHint');
+  fileInput.value = '';
+  hiddenInput.value = '';
+  preview.src = '';
+  previewWrap.style.display = 'none';
+  hint.textContent = 'JPG, PNG, WEBP, or GIF — up to 5MB. Required.';
+}
+document.getElementById('imageRemoveBtn').addEventListener('click', removeImage);
 
 const STATE = { role: 'learner', course: 'jp' };
 
@@ -418,7 +565,7 @@ function renderConfirmScreen(slug){
       <ul class="confirm-steps">
         <li class="confirm-step">
           <span class="cs-num">1</span>
-          <span class="cs-text"><b>Under review.</b> A real person looks over every profile — no bots. This usually doesn't take long.</span>
+          <span class="cs-text"><b>Under review.</b> A real person looks over every profile, no bots. This usually doesn't take long.</span>
         </li>
         <li class="confirm-step">
           <span class="cs-num">2</span>
@@ -447,6 +594,7 @@ function collectPayload(){
     tagline: document.getElementById('fTagline').value.trim(),
     about: document.getElementById('fAbout').value.trim(),
     imageUrl: document.getElementById('fImage').value.trim(),
+    interests: Array.from(document.querySelectorAll('#interestsGrid .chip.selected')).map(c => c.dataset.interest),
     links: {
       instagram: document.getElementById('fInstagram').value.trim(),
       discord: document.getElementById('fDiscord').value.trim(),
@@ -487,6 +635,23 @@ async function submitSignup(){
   const socialCount = SOCIAL_FIELD_IDS.filter(id => document.getElementById(id).value.trim()).length;
   if(socialCount > MAX_SOCIAL_LINKS){
     errorBox.textContent = `Please limit yourself to ${MAX_SOCIAL_LINKS} social links.`;
+    return;
+  }
+  if(payload.interests.length > MAX_INTERESTS){
+    errorBox.textContent = `Please select up to ${MAX_INTERESTS} interests.`;
+    return;
+  }
+  const imageFile = document.getElementById('fImageFile').files[0];
+  if(imageFile && !payload.imageUrl){
+    errorBox.textContent = 'Please wait for your photo to finish uploading (or remove it) before submitting.';
+    return;
+  }
+  if(!payload.imageUrl){
+    errorBox.textContent = 'Please upload your profile picture.';
+    return;
+  }
+  if(!payload.links.instagram){
+    errorBox.textContent = 'Instagram is required — please add your Instagram handle.';
     return;
   }
 
