@@ -354,7 +354,6 @@ footer a{color:var(--text-faint); text-decoration:underline;}
     <div class="brand-txt"><strong>Hookitlingo</strong><span>Korean &amp; Japanese, learned together</span></div>
   </div>
   <div class="top-actions">
-    <a class="topbtn" href="blog/">📝 Blog</a>
     <button class="topbtn topbtn-contact" id="contactBtn">✉️ Contact</button>
     <button class="topbtn" id="themeBtn">☾ Dark</button>
     <div id="authSlot"></div>
@@ -615,6 +614,9 @@ function renderLoginStep(){
     <div class="auth-sub">Log in to your Hookitlingo account.</div>
     <input type="email" class="auth-input" id="loginEmail" placeholder="Email" autocomplete="email">
     <input type="password" class="auth-input" id="loginPassword" placeholder="Password" autocomplete="current-password">
+    <div style="text-align:right; margin:-4px 0 14px;">
+      <a href="forgot-password.html" style="color:var(--text-faint); font-size:.82em; text-decoration:underline;">Forgot password?</a>
+    </div>
     <button class="auth-submit" id="loginSubmit">Log In</button>
     <div class="auth-error" id="authError"></div>
     <button class="auth-secondary-link" onclick="location.href='signup.html'">New here? Create an account</button>

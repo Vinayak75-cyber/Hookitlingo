@@ -4,6 +4,8 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcryptjs'); // pure-JS bcrypt — no native build step needed on most hosts
+const crypto = require('crypto'); // built into Node — used for password-reset tokens
+const { Resend } = require('resend'); // npm install resend — sends the password-reset email
 require('dotenv').config();
 // Image upload (Cloudflare R2) — split into its own file/router
 // purely for readability; still runs in this same process, not a
@@ -529,6 +531,65 @@ const AIRTABLE_RECORD_ID_RE = /^rec[A-Za-z0-9]+$/;
 const MIN_PASSWORD_LENGTH = 8;
 const BCRYPT_ROUNDS = 10;
 
+// ============================================================
+// PASSWORD RESET — "forgot password" flow. Two Airtable fields on
+// CommunityProfiles, alongside the existing Email/PasswordHash, need
+// to be added by hand (same philosophy as every other field in this
+// table):
+//   ResetTokenHash   (text — a sha256 hash of the reset token, never
+//                      the raw token itself)
+//   ResetTokenExpiry (text — an ISO timestamp; the token is only
+//                      valid before this)
+//
+// Flow: /api/forgot-password generates a random token, stores its
+// HASH (so a leaked Airtable export can't be used to reset anyone's
+// password) with a short expiry, and emails the RAW token as a link
+// via Resend. /api/reset-password hashes whatever token it's given
+// and looks for a matching, unexpired row.
+//
+// Requires two env vars:
+//   RESEND_API_KEY   — from resend.com
+//   RESEND_FROM_EMAIL — a "from" address on a domain you've verified
+//                        with Resend, e.g. 'Hookitlingo <noreply@hookit.online>'
+// SITE_URL (defaults to https://hookit.online) is used to build the
+// link that goes in the email.
+// ============================================================
+const RESET_TOKEN_BYTES = 32;
+const RESET_TOKEN_MAX_AGE_MS = 60 * 60 * 1000; // 1 hour
+const SITE_URL = (process.env.SITE_URL || 'https://hookit.online').replace(/\/+$/, '');
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const RESEND_FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Hookitlingo <noreply@hookit.online>';
+const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
+if (!RESEND_API_KEY) {
+  console.warn('WARNING: RESEND_API_KEY is not set. Password-reset emails will not be sent.');
+}
+
+// Raw token -> sha256 hex digest. We only ever store/compare the
+// hash, so a database leak alone can't be used to reset an account.
+function hashResetToken(rawToken) {
+  return crypto.createHash('sha256').update(rawToken).digest('hex');
+}
+
+function buildResetEmailHtml(resetUrl) {
+  return `
+    <div style="font-family:sans-serif; max-width:480px; margin:0 auto; color:#3a2530;">
+      <h2 style="font-family:Georgia,serif;">Reset your Hookitlingo password</h2>
+      <p>We got a request to reset the password for this account. Click the button below to choose a new one — this link expires in 1 hour.</p>
+      <p style="text-align:center; margin:28px 0;">
+        <a href="${resetUrl}" style="background:#5fa688; color:#fff; padding:12px 24px; border-radius:10px; text-decoration:none; font-weight:bold; display:inline-block;">Reset Password</a>
+      </p>
+      <p style="color:#79576a; font-size:.9em;">If you didn't request this, you can safely ignore this email — your password won't change.</p>
+      <p style="color:#a98a9c; font-size:.8em;">If the button doesn't work, copy and paste this link: ${resetUrl}</p>
+    </div>
+  `;
+}
+
+const forgotPasswordRateLimit = new Map();
+const FORGOT_PASSWORD_MAX_PER_HOUR = 5;
+function isForgotPasswordRateLimited(ip) {
+  return isRateLimited(forgotPasswordRateLimit, ip, FORGOT_PASSWORD_MAX_PER_HOUR);
+}
+
 function setUserSessionCookie(res, userId) {
   res.cookie(USER_SESSION_COOKIE, JSON.stringify({ userId }), {
     signed: true,
@@ -1028,6 +1089,159 @@ app.post('/api/login', async (req, res) => {
   } catch (err) {
     console.error('Login error:', err);
     res.status(500).json({ error: 'Something went wrong logging you in. Please try again.' });
+  }
+});
+
+// POST /api/forgot-password — {email}. Always returns the same
+// generic success message whether or not the email is registered,
+// so this endpoint can't be used to check who has an account.
+app.post('/api/forgot-password', async (req, res) => {
+  if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
+    return res.status(500).json({ error: 'Accounts are not configured yet.' });
+  }
+  if (isForgotPasswordRateLimited(getClientIp(req))) {
+    return res.status(429).json({ error: 'Too many attempts, please try again in a bit.' });
+  }
+
+  const emailRaw = String((req.body && req.body.email) || '').trim().toLowerCase();
+  const genericMsg = { ok: true, message: 'If an account exists for that email, we\'ve sent a password reset link.' };
+
+  if (!EMAIL_RE.test(emailRaw)) {
+    // Still a 400 here (bad input, not a privacy leak) — but the
+    // message never confirms/denies the email is registered.
+    return res.status(400).json({ error: 'Please enter a valid email address.' });
+  }
+
+  const escapedEmail = emailRaw.replace(/'/g, "\\'");
+
+  try {
+    const params = new URLSearchParams({
+      filterByFormula: `LOWER({Email})='${escapedEmail}'`,
+      maxRecords: '1'
+    });
+    const lookupRes = await fetch(`${AIRTABLE_COMMUNITY_URL}?${params.toString()}`, {
+      headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` }
+    });
+    if (!lookupRes.ok) {
+      const errText = await lookupRes.text();
+      console.error('Airtable forgot-password lookup failed:', errText);
+      // Don't leak the failure mode to the client — just act as if
+      // nothing was found, same generic response either way.
+      return res.json(genericMsg);
+    }
+    const data = await lookupRes.json();
+    const record = data.records && data.records[0];
+    if (!record) {
+      return res.json(genericMsg);
+    }
+
+    const rawToken = crypto.randomBytes(RESET_TOKEN_BYTES).toString('hex');
+    const tokenHash = hashResetToken(rawToken);
+    const expiry = new Date(Date.now() + RESET_TOKEN_MAX_AGE_MS).toISOString();
+
+    const patchRes = await fetch(`${AIRTABLE_COMMUNITY_URL}/${encodeURIComponent(record.id)}`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ fields: { ResetTokenHash: tokenHash, ResetTokenExpiry: expiry } })
+    });
+    if (!patchRes.ok) {
+      const errText = await patchRes.text();
+      console.error('Airtable reset-token save failed:', errText);
+      return res.json(genericMsg);
+    }
+
+    if (resend) {
+      const resetUrl = `${SITE_URL}/reset-password.html?token=${rawToken}`;
+      try {
+        await resend.emails.send({
+          from: RESEND_FROM_EMAIL,
+          to: emailRaw,
+          subject: 'Reset your Hookitlingo password',
+          html: buildResetEmailHtml(resetUrl)
+        });
+      } catch (emailErr) {
+        // Token is saved either way — log it, but still tell the user
+        // the generic success message (don't reveal delivery details).
+        console.error('Resend send failed:', emailErr);
+      }
+    } else {
+      console.warn('Skipped sending reset email — RESEND_API_KEY not set.');
+    }
+
+    res.json(genericMsg);
+  } catch (err) {
+    console.error('Forgot-password error:', err);
+    res.json(genericMsg);
+  }
+});
+
+// POST /api/reset-password — {token, password}. Looks up the token
+// by its hash, checks it hasn't expired, and (if valid) overwrites
+// PasswordHash and clears the reset fields so the token is one-time-use.
+app.post('/api/reset-password', async (req, res) => {
+  if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
+    return res.status(500).json({ error: 'Accounts are not configured yet.' });
+  }
+
+  const rawToken = String((req.body && req.body.token) || '').trim();
+  const password = String((req.body && req.body.password) || '');
+  const invalidMsg = { error: 'This reset link is invalid or has expired. Please request a new one.' };
+
+  if (!rawToken) {
+    return res.status(400).json(invalidMsg);
+  }
+  if (password.length < MIN_PASSWORD_LENGTH) {
+    return res.status(400).json({ error: `Password must be at least ${MIN_PASSWORD_LENGTH} characters.` });
+  }
+
+  const tokenHash = hashResetToken(rawToken);
+
+  try {
+    const params = new URLSearchParams({
+      filterByFormula: `{ResetTokenHash}='${tokenHash}'`,
+      maxRecords: '1'
+    });
+    const lookupRes = await fetch(`${AIRTABLE_COMMUNITY_URL}?${params.toString()}`, {
+      headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` }
+    });
+    if (!lookupRes.ok) {
+      const errText = await lookupRes.text();
+      console.error('Airtable reset-token lookup failed:', errText);
+      return res.status(502).json({ error: 'Something went wrong resetting your password. Please try again.' });
+    }
+    const data = await lookupRes.json();
+    const record = data.records && data.records[0];
+    const expiryRaw = record && record.fields && record.fields.ResetTokenExpiry;
+    const expiryOk = expiryRaw && new Date(expiryRaw).getTime() > Date.now();
+
+    if (!record || !expiryOk) {
+      return res.status(400).json(invalidMsg);
+    }
+
+    const passwordHash = await bcrypt.hash(password, BCRYPT_ROUNDS);
+    const updateRes = await fetch(`${AIRTABLE_COMMUNITY_URL}/${encodeURIComponent(record.id)}`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      // Clearing the token fields makes the link one-time-use — a
+      // second attempt with the same token will find no match above.
+      body: JSON.stringify({ fields: { PasswordHash: passwordHash, ResetTokenHash: '', ResetTokenExpiry: '' } })
+    });
+    if (!updateRes.ok) {
+      const errText = await updateRes.text();
+      console.error('Airtable password update failed:', errText);
+      return res.status(502).json({ error: 'Something went wrong resetting your password. Please try again.' });
+    }
+
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('Reset-password error:', err);
+    res.status(500).json({ error: 'Something went wrong resetting your password. Please try again.' });
   }
 });
 

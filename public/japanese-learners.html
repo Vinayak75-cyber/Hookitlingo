@@ -53,6 +53,16 @@ a{color:var(--celadon); text-decoration:none;}
   background:var(--celadon-dim); padding:6px 14px; border-radius:999px; margin-top:6px;
 }
 
+.active-stat{
+  display:none; align-items:baseline; justify-content:center; gap:7px; margin-top:10px;
+}
+.active-stat .stat-number{
+  font-family:var(--serif); font-weight:700; font-size:1.7em; line-height:1; color:var(--gold);
+}
+.active-stat .stat-label{
+  font-size:.85em; color:var(--text-dim); font-weight:600;
+}
+
 /* Grid */
 .grid{
   position:relative; z-index:2; max-width:var(--maxw); margin:40px auto 20px; padding:0 5vw;
@@ -107,6 +117,27 @@ a{color:var(--celadon); text-decoration:none;}
 .shuffle-pill:active{ transform:translateY(0); }
 .shuffle-pill svg{width:14px; height:14px; stroke:currentColor; transition:transform .4s ease;}
 .shuffle-pill:hover svg{transform:rotate(180deg);}
+
+.density-pill{
+  display:none; align-items:center; gap:7px; margin-top:14px; margin-left:8px; cursor:pointer;
+  font-family:var(--sans); font-weight:600; font-size:.8em; color:var(--text-dim);
+  padding:8px 16px; border-radius:999px; border:1px solid color-mix(in srgb, var(--text) 15%, transparent);
+  background:color-mix(in srgb, var(--surface) 55%, transparent);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  box-shadow:0 4px 18px rgba(0,0,0,.12);
+  transition:transform .15s ease, color .2s ease, border-color .2s ease, background .2s ease;
+}
+.density-pill:hover{ color:var(--text); border-color:var(--celadon); transform:translateY(-1px); }
+.density-pill:active{ transform:translateY(0); }
+.density-pill svg{width:14px; height:14px; stroke:currentColor;}
+.hero-actions{display:flex; align-items:center; justify-content:center; flex-wrap:wrap;}
+@media(max-width:560px){
+  .density-pill{ display:inline-flex; }
+  .grid.grid-compact{ grid-template-columns:repeat(2,1fr); gap:10px; }
+  .grid.grid-compact .pcard-name{font-size:1em;}
+  .grid.grid-compact .pcard-tagline{font-size:.7em;}
+  .grid.grid-compact .pcard-overlay{padding:16px 10px 10px;}
+}
 
 .state-msg{
   position:relative; z-index:2; max-width:480px; margin:60px auto; padding:0 5vw; text-align:center; color:var(--text-faint); font-size:.92em;
@@ -224,10 +255,18 @@ footer a{text-decoration:underline;}
   <h1>Connect with Learners</h1>
   <p class="sub">Fellow Japanese learners from around the world, ready to practice and swap doubts together.</p>
   <div class="trust-line">🌸 Every profile personally reviewed, no bots</div>
-  <div>
+  <div class="active-stat" id="activeStat">
+    <span class="stat-number" id="activeCount">0</span>
+    <span class="stat-label" id="activeStatLabel"></span>
+  </div>
+  <div class="hero-actions">
     <button type="button" class="shuffle-pill" id="shufflePill" aria-label="Shuffle the order of profiles">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
       Shuffle
+    </button>
+    <button type="button" class="density-pill" id="densityPill" aria-pressed="false" aria-label="Toggle two profiles per row">
+      <svg id="densityIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="8" rx="1.5"></rect><rect x="3" y="13" width="18" height="8" rx="1.5"></rect></svg>
+      <span id="densityLabel">2 per row</span>
     </button>
   </div>
 </div>
@@ -400,6 +439,31 @@ function shuffleProfiles(){
 }
 document.getElementById('shufflePill').onclick = shuffleProfiles;
 
+(function setupDensityToggle(){
+  const btn = document.getElementById('densityPill');
+  const label = document.getElementById('densityLabel');
+  const icon = document.getElementById('densityIcon');
+  const grid = document.getElementById('grid');
+  const oneUpIcon = '<rect x="3" y="4" width="18" height="16" rx="1.5"></rect>';
+  const twoUpIcon = '<rect x="3" y="3" width="18" height="8" rx="1.5"></rect><rect x="3" y="13" width="18" height="8" rx="1.5"></rect>';
+
+  function apply(compact){
+    grid.classList.toggle('grid-compact', compact);
+    btn.setAttribute('aria-pressed', compact ? 'true' : 'false');
+    icon.innerHTML = compact ? oneUpIcon : twoUpIcon;
+    label.textContent = compact ? '1 per row' : '2 per row';
+  }
+
+  let compact = localStorage.getItem('hookitlingo-grid-compact') === '1';
+  apply(compact);
+
+  btn.onclick = () => {
+    compact = !compact;
+    localStorage.setItem('hookitlingo-grid-compact', compact ? '1' : '0');
+    apply(compact);
+  };
+})();
+
 (function setupBackToTop(){
   const btn = document.getElementById('backToTop');
   const toggle = () => btn.classList.toggle('show', window.scrollY > 400);
@@ -407,6 +471,25 @@ document.getElementById('shufflePill').onclick = shuffleProfiles;
   toggle();
   btn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 })();
+
+function animateActiveCount(target){
+  const wrap = document.getElementById('activeStat');
+  const el = document.getElementById('activeCount');
+  const labelEl = document.getElementById('activeStatLabel');
+  labelEl.textContent = target === 1 ? 'learner' : 'learners';
+  wrap.style.display = 'inline-flex';
+  el.textContent = '0';
+  if (target <= 0) return;
+  const duration = 900;
+  const start = performance.now();
+  function tick(now){
+    const p = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(eased * target).toLocaleString();
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
 
 async function loadDirectory(){
   const grid = document.getElementById('grid');
@@ -428,7 +511,8 @@ async function loadDirectory(){
     }
 
     PROFILES = profiles;
-    renderGrid();
+    shuffleProfiles();
+    animateActiveCount(profiles.length);
   } catch (err) {
     stateMsg.style.display = 'block';
     stateMsg.textContent = 'Could not load the directory right now, please try again shortly.';
