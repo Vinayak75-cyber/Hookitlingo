@@ -1437,6 +1437,299 @@ app.put('/api/profile', async (req, res) => {
 });
 
 // ============================================================
+// TEACHER ANNOUNCEMENTS — a single, temporary announcement a
+// logged-in teacher can post from the edit-profile page. It shows up
+// in an "Announcements" section on their own course's teacher
+// listing page (japanese-teachers.html / korean-teachers.html) until
+// the chosen duration elapses, then it simply stops being returned by
+// GET /api/announcements below. There's no cron job deleting rows —
+// expiry is just a time filter applied at read time (via an Airtable
+// formula comparing ExpiresAt to NOW()), which is simpler and can
+// never drift out of sync with a separate cleanup job.
+//
+// One active announcement per teacher: posting a new one replaces
+// whatever they already had live rather than stacking up a feed. If
+// you'd rather allow several at once later, drop the "find existing
+// row" step in POST /api/announcements below and just always create
+// a new row instead of patching one.
+//
+// Create a table in your Airtable base named exactly as below (or
+// point AIRTABLE_ANNOUNCEMENTS_TABLE_NAME at whatever you name it)
+// with these fields:
+//   TeacherId     (text — the CommunityProfiles record ID of the
+//                  teacher who posted it; never shown to the public)
+//   TeacherName   (text — cached at post time so the public listing
+//                  page doesn't need a second lookup per card)
+//   Course        (text — "jp" or "kr")
+//   ImageURL      (text — the public R2 URL, same upload flow as a
+//                  profile photo, via the existing POST
+//                  /api/upload-image)
+//   Text          (long text — capped at 150 words, enforced below)
+//   ButtonText    (text — the label the teacher chose for their button)
+//   ButtonLink    (text — the URL the button opens)
+//   DurationHours (number — one of 12/18/24/30/36/42/48)
+//   ExpiresAt     (Date field, WITH "include a time field" turned on
+//                  — computed here at post time, never typed in by
+//                  hand. Must be a real Date field, not text, for the
+//                  IS_AFTER(...) formula below to work.)
+// ============================================================
+const AIRTABLE_ANNOUNCEMENTS_TABLE_NAME = process.env.AIRTABLE_ANNOUNCEMENTS_TABLE_NAME || 'TeachersAnnouncements';
+const AIRTABLE_ANNOUNCEMENTS_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_ANNOUNCEMENTS_TABLE_NAME)}`;
+
+// The fixed duration slots the edit-profile page lets a teacher pick
+// from. Kept as a whitelist here (not just validated client-side) so
+// a tampered request can't set an arbitrary/huge duration.
+const ANNOUNCEMENT_DURATIONS_HOURS = [12, 18, 24, 30, 36, 42, 48];
+const ANNOUNCEMENT_MAX_WORDS = 150;
+const ANNOUNCEMENT_MAX_TEXT_CHARS = 1500; // generous backstop alongside the word-count check below
+
+function countWords(str) {
+  const trimmed = String(str || '').trim();
+  return trimmed ? trimmed.split(/\s+/).length : 0;
+}
+
+function toPublicAnnouncement(record) {
+  const f = record.fields || {};
+  return {
+    id: record.id,
+    teacherName: f.TeacherName || '',
+    course: f.Course || '',
+    imageUrl: f.ImageURL || '',
+    text: f.Text || '',
+    buttonText: f.ButtonText || '',
+    buttonLink: f.ButtonLink || '',
+    durationHours: f.DurationHours || null,
+    expiresAt: f.ExpiresAt || null
+  };
+}
+
+// Shared by every announcement route below: confirms there's a
+// logged-in session AND that the account's Type is "teacher". On
+// failure it sends the error response itself and returns null, so
+// callers just do `const teacher = await requireTeacherRecord(req,
+// res); if (!teacher) return;`. On success it returns the fetched
+// record so callers don't need to look it up a second time.
+async function requireTeacherRecord(req, res) {
+  if (!req.sessionUserId) {
+    res.status(401).json({ error: 'Please log in to manage announcements.' });
+    return null;
+  }
+  const record = await fetchUserRecord(req.sessionUserId);
+  if (!record || !record.fields) {
+    res.status(401).json({ error: 'Please log in to manage announcements.' });
+    return null;
+  }
+  if (record.fields.Type !== 'teacher') {
+    res.status(403).json({ error: 'Only teacher accounts can post announcements.' });
+    return null;
+  }
+  return record;
+}
+
+// GET /api/my-announcement — the teacher's own current announcement
+// (even if already expired), so edit-profile.html can show what's
+// live, prefill the form for editing, or show "no announcement yet".
+app.get('/api/my-announcement', async (req, res) => {
+  if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
+    return res.status(500).json({ error: 'Announcements are not configured yet.' });
+  }
+  const teacher = await requireTeacherRecord(req, res);
+  if (!teacher) return;
+
+  try {
+    const params = new URLSearchParams({
+      filterByFormula: `{TeacherId}='${teacher.id}'`,
+      maxRecords: '1'
+    });
+    const listRes = await fetch(`${AIRTABLE_ANNOUNCEMENTS_URL}?${params.toString()}`, {
+      headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` }
+    });
+    if (!listRes.ok) {
+      const errText = await listRes.text();
+      console.error('Airtable my-announcement lookup failed:', errText);
+      return res.status(502).json({ error: 'Failed to load your announcement. Please try again.' });
+    }
+    const data = await listRes.json();
+    const record = data.records && data.records[0];
+    if (!record) return res.json({ announcement: null });
+
+    const expired = !record.fields.ExpiresAt || new Date(record.fields.ExpiresAt).getTime() <= Date.now();
+    res.json({ announcement: toPublicAnnouncement(record), expired });
+  } catch (err) {
+    console.error('My-announcement error:', err);
+    res.status(500).json({ error: 'Failed to load your announcement. Please try again.' });
+  }
+});
+
+// POST /api/announcements — create or replace the logged-in
+// teacher's announcement. Body: {imageUrl, text, buttonText,
+// buttonLink, durationHours}. Course is taken from the teacher's own
+// account, never from the request body — a teacher can only ever
+// post into their own course's listing page.
+app.post('/api/announcements', async (req, res) => {
+  if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
+    return res.status(500).json({ error: 'Announcements are not configured yet.' });
+  }
+  const teacher = await requireTeacherRecord(req, res);
+  if (!teacher) return;
+
+  const body = req.body || {};
+  const imageUrl = cleanStr(body.imageUrl, 500);
+  const text = cleanStr(body.text, ANNOUNCEMENT_MAX_TEXT_CHARS);
+  const buttonText = cleanStr(body.buttonText, 40);
+  const buttonLink = cleanStr(body.buttonLink, 300);
+  const durationHours = Number(body.durationHours);
+
+  if (!imageUrl) {
+    return res.status(400).json({ error: 'Please add an image for your announcement.' });
+  }
+  if (!text) {
+    return res.status(400).json({ error: 'Please add some text for your announcement.' });
+  }
+  if (countWords(text) > ANNOUNCEMENT_MAX_WORDS) {
+    return res.status(400).json({ error: `Please keep your announcement text to ${ANNOUNCEMENT_MAX_WORDS} words or fewer.` });
+  }
+  if (!buttonText) {
+    return res.status(400).json({ error: 'Please add text for your button.' });
+  }
+  if (!buttonLink) {
+    return res.status(400).json({ error: 'Please add a link for your button.' });
+  }
+  if (!ANNOUNCEMENT_DURATIONS_HOURS.includes(durationHours)) {
+    return res.status(400).json({ error: 'Please choose a valid duration.' });
+  }
+
+  const courseId = normalizeCourseId(teacher.fields.Course);
+  const expiresAt = new Date(Date.now() + durationHours * 60 * 60 * 1000).toISOString();
+
+  const fields = {
+    TeacherId: teacher.id,
+    TeacherName: teacher.fields.Name || '',
+    Course: courseId,
+    ImageURL: imageUrl,
+    Text: text,
+    ButtonText: buttonText,
+    ButtonLink: buttonLink,
+    DurationHours: durationHours,
+    ExpiresAt: expiresAt
+  };
+
+  try {
+    // Replace any existing announcement from this teacher rather than
+    // letting them pile up — look for one first.
+    const findParams = new URLSearchParams({
+      filterByFormula: `{TeacherId}='${teacher.id}'`,
+      maxRecords: '1'
+    });
+    const findRes = await fetch(`${AIRTABLE_ANNOUNCEMENTS_URL}?${findParams.toString()}`, {
+      headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` }
+    });
+    const findData = findRes.ok ? await findRes.json() : { records: [] };
+    const existing = findData.records && findData.records[0];
+
+    const saveRes = existing
+      ? await fetch(`${AIRTABLE_ANNOUNCEMENTS_URL}/${encodeURIComponent(existing.id)}`, {
+          method: 'PATCH',
+          headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fields })
+        })
+      : await fetch(AIRTABLE_ANNOUNCEMENTS_URL, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fields })
+        });
+
+    if (!saveRes.ok) {
+      const errText = await saveRes.text();
+      console.error('Airtable announcement save failed:', errText);
+      return res.status(502).json({ error: 'Something went wrong saving your announcement. Please try again.' });
+    }
+    const record = await saveRes.json();
+    res.json({ ok: true, announcement: toPublicAnnouncement(record) });
+  } catch (err) {
+    console.error('Announcement save error:', err);
+    res.status(500).json({ error: 'Something went wrong saving your announcement. Please try again.' });
+  }
+});
+
+// DELETE /api/announcements — lets a teacher take their announcement
+// down early, before its duration runs out.
+app.delete('/api/announcements', async (req, res) => {
+  if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
+    return res.status(500).json({ error: 'Announcements are not configured yet.' });
+  }
+  const teacher = await requireTeacherRecord(req, res);
+  if (!teacher) return;
+
+  try {
+    const params = new URLSearchParams({
+      filterByFormula: `{TeacherId}='${teacher.id}'`,
+      maxRecords: '1'
+    });
+    const findRes = await fetch(`${AIRTABLE_ANNOUNCEMENTS_URL}?${params.toString()}`, {
+      headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` }
+    });
+    if (!findRes.ok) {
+      return res.status(502).json({ error: 'Something went wrong removing your announcement. Please try again.' });
+    }
+    const data = await findRes.json();
+    const existing = data.records && data.records[0];
+    if (!existing) return res.json({ ok: true });
+
+    const delRes = await fetch(`${AIRTABLE_ANNOUNCEMENTS_URL}/${encodeURIComponent(existing.id)}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` }
+    });
+    if (!delRes.ok) {
+      const errText = await delRes.text();
+      console.error('Airtable announcement delete failed:', errText);
+      return res.status(502).json({ error: 'Something went wrong removing your announcement. Please try again.' });
+    }
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('Announcement delete error:', err);
+    res.status(500).json({ error: 'Something went wrong removing your announcement. Please try again.' });
+  }
+});
+
+// GET /api/announcements?course=jp|kr — public, no auth needed. Only
+// ever returns announcements that haven't expired yet — the NOW()
+// comparison happens inside the Airtable formula itself, so an
+// expired row never even crosses the wire. Used by
+// japanese-teachers.html / korean-teachers.html's "Announcements"
+// section.
+app.get('/api/announcements', async (req, res) => {
+  if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
+    return res.status(500).json({ error: 'Announcements are not configured yet.' });
+  }
+  const courseId = normalizeCourseId(req.query.course);
+
+  try {
+    const filterByFormula = `AND({Course}='${courseId}', IS_AFTER({ExpiresAt}, NOW()))`;
+    const params = new URLSearchParams({
+      filterByFormula,
+      pageSize: '100',
+      'sort[0][field]': 'ExpiresAt',
+      'sort[0][direction]': 'desc'
+    });
+    const listRes = await fetch(`${AIRTABLE_ANNOUNCEMENTS_URL}?${params.toString()}`, {
+      headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` }
+    });
+    if (!listRes.ok) {
+      const errText = await listRes.text();
+      console.error('Airtable announcements list failed:', errText);
+      return res.status(502).json({ error: 'Failed to load announcements. Please try again.' });
+    }
+    const data = await listRes.json();
+    const announcements = (data.records || []).map(toPublicAnnouncement);
+    res.json({ announcements });
+  } catch (err) {
+    console.error('Announcements list error:', err);
+    res.status(500).json({ error: 'Failed to load announcements. Please try again.' });
+  }
+});
+
+// ============================================================
 // PROTECTED LESSON FILES
 // Lesson HTML lives outside /public (in each course's own directory
 // — see COURSES above) so it can only ever be reached through this

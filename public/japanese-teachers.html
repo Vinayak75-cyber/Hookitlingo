@@ -236,6 +236,40 @@ footer a{text-decoration:underline;}
 .back-to-top.show{ opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0); }
 .back-to-top:hover{ color:var(--text); border-color:var(--celadon); }
 .back-to-top svg{width:14px; height:14px; stroke:currentColor;}
+
+/* ===== Announcements ===== */
+.announcements-pill{display:none;}
+.pill-badge{
+  display:inline-flex; align-items:center; justify-content:center; min-width:17px; height:17px; padding:0 5px;
+  background:var(--vermilion); color:#fff; font-size:.72em; font-weight:700; border-radius:999px; margin-left:2px;
+}
+.announcements-section{display:none;}
+.announcements-section.show{display:block;}
+.announcements-wrap{
+  position:relative; z-index:2; max-width:600px; margin:0 auto; padding:10px 5vw 60px;
+}
+.announcements-wrap h2{text-align:center; margin-bottom:20px;}
+.announcement-post{
+  max-width:520px; margin:0 auto 24px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  overflow:hidden; opacity:0; transform:translateY(10px); animation:announcement-in .4s ease forwards;
+}
+@keyframes announcement-in{ to{opacity:1; transform:translateY(0);} }
+.announcement-post img{width:100%; display:block; height:auto;}
+.announcement-post-body{padding:20px 22px 24px; text-align:center;}
+.announcement-post-teacher{font-size:.75em; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); font-weight:700; margin-bottom:8px;}
+.announcement-post-text{color:var(--text); font-size:.95em; line-height:1.6; margin-bottom:18px; white-space:pre-wrap;}
+.announcement-post-btn-wrap{
+  padding:20px; border-radius:14px; display:flex; justify-content:center;
+  background:radial-gradient(400px 200px at 30% 0%, color-mix(in srgb, var(--vermilion) 30%, transparent), transparent 65%), var(--surface3);
+}
+.glass-btn{
+  display:inline-block; padding:12px 30px; border-radius:999px; font-weight:700; font-size:.9em;
+  color:#fff; text-decoration:none; letter-spacing:.01em;
+  background:rgba(255,255,255,0.14); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.4); box-shadow:0 6px 24px rgba(0,0,0,0.18);
+  transition:background .2s ease, transform .15s ease;
+}
+.glass-btn:hover{background:rgba(255,255,255,0.24); color:#fff; transform:translateY(-1px);}
 </style>
 </head>
 <body>
@@ -268,11 +302,24 @@ footer a{text-decoration:underline;}
       <svg id="densityIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="8" rx="1.5"></rect><rect x="3" y="13" width="18" height="8" rx="1.5"></rect></svg>
       <span id="densityLabel">2 per row</span>
     </button>
+    <button type="button" class="shuffle-pill announcements-pill" id="announcementsPill" aria-label="View teacher announcements">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+      Announcements
+      <span class="pill-badge" id="announcementsCount">0</span>
+    </button>
   </div>
 </div>
 
 <div class="grid" id="grid"></div>
 <div class="state-msg" id="stateMsg" style="display:none;"></div>
+
+<div class="announcements-section" id="announcementsSection">
+  <div class="announcements-wrap">
+    <button type="button" class="topbtn" id="announcementsBack" style="margin-bottom:18px;">← Back to profiles</button>
+    <h2 class="jp">📣 Announcements</h2>
+    <div id="announcementsList"></div>
+  </div>
+</div>
 
 <!-- Auth modal: login <-> signup, two steps re-rendered into the same box -->
 <div class="profile-backdrop" id="profileBackdrop"></div>
@@ -520,6 +567,79 @@ async function loadDirectory(){
 }
 
 loadDirectory();
+
+/* ============================================================
+   Announcements — a lightweight, separate "page" toggled in place
+   (hero + grid hidden, announcements section shown) rather than a
+   real navigation, so the back button/scroll position behave simply.
+   The pill button itself only appears once loadAnnouncements() finds
+   at least one live post for this course; GET /api/announcements
+   already excludes anything expired, so there's no client-side
+   expiry check needed here.
+   ============================================================ */
+let ANNOUNCEMENTS = [];
+
+function escapeHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function escapeAttr(s){
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function announcementPostHtml(a){
+  const imageHtml = a.imageUrl ? `<img src="${escapeAttr(a.imageUrl)}" alt="" loading="lazy">` : '';
+  return `
+    <div class="announcement-post">
+      ${imageHtml}
+      <div class="announcement-post-body">
+        <div class="announcement-post-teacher">${escapeHtml(a.teacherName || 'Teacher')}</div>
+        <div class="announcement-post-text">${escapeHtml(a.text || '')}</div>
+        <div class="announcement-post-btn-wrap">
+          <a class="glass-btn" href="${escapeAttr(a.buttonLink || '#')}" target="_blank" rel="noopener noreferrer">${escapeHtml(a.buttonText || 'Learn more')}</a>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderAnnouncements(){
+  document.getElementById('announcementsList').innerHTML = ANNOUNCEMENTS.map(announcementPostHtml).join('');
+}
+
+function showAnnouncements(){
+  document.querySelector('.hero').style.display = 'none';
+  document.getElementById('grid').style.display = 'none';
+  document.getElementById('stateMsg').style.display = 'none';
+  document.getElementById('announcementsSection').classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function hideAnnouncements(){
+  document.querySelector('.hero').style.display = '';
+  document.getElementById('grid').style.display = '';
+  document.getElementById('announcementsSection').classList.remove('show');
+}
+
+async function loadAnnouncements(){
+  const pill = document.getElementById('announcementsPill');
+  try {
+    const res = await fetch('/api/announcements?course=jp');
+    const data = await res.json();
+    ANNOUNCEMENTS = (data && data.announcements) || [];
+    if(ANNOUNCEMENTS.length > 0){
+      pill.style.display = 'inline-flex';
+      document.getElementById('announcementsCount').textContent = ANNOUNCEMENTS.length;
+      renderAnnouncements();
+    } else {
+      pill.style.display = 'none';
+    }
+  } catch (err) {
+    // Silent — announcements are a bonus feature, not core to the
+    // page, so a failed fetch just leaves the pill hidden.
+    pill.style.display = 'none';
+  }
+}
+document.getElementById('announcementsPill').onclick = showAnnouncements;
+document.getElementById('announcementsBack').onclick = hideAnnouncements;
+loadAnnouncements();
 
 /* ============================================================
    AUTH — talks to the server.js account endpoints:

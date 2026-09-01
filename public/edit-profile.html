@@ -97,6 +97,19 @@ textarea{resize:vertical; min-height:90px;}
 .chip.selected{background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%)); border-color:transparent; color:#fff; font-weight:600;}
 .chip:disabled{opacity:.4; cursor:default;}
 
+.tab-toggle{
+  display:flex; gap:4px; background:var(--surface2); border:1px solid var(--border); border-radius:999px;
+  padding:4px; margin-bottom:22px;
+}
+.tab-btn{
+  flex:1; padding:10px 16px; border-radius:999px; border:none; background:none; color:var(--text-dim);
+  font-size:.88em; font-weight:600; font-family:var(--sans); transition:background .2s ease, color .2s ease;
+}
+.tab-btn.active{background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%)); color:#fff;}
+.tab-btn:hover:not(.active){color:var(--text);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
 .form-actions{display:flex; gap:10px; align-items:center; margin-top:6px; flex-wrap:wrap;}
 .save-btn{
   padding:12px 26px; border-radius:999px; font-weight:700; font-size:.9em; color:#fff; border:none;
@@ -118,6 +131,29 @@ textarea{resize:vertical; min-height:90px;}
   box-shadow:0 10px 30px rgba(0,0,0,.3);
 }
 .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+/* ---- Teacher announcement section ---- */
+.announcement-note{color:var(--text-dim); font-size:.86em; margin:-8px 0 4px;}
+.duration-chip.selected{background:linear-gradient(135deg,var(--vermilion), color-mix(in srgb, var(--vermilion) 55%, var(--gold) 45%));}
+.glass-preview{
+  padding:26px 20px; border-radius:14px; display:flex; justify-content:center; align-items:center;
+  background:radial-gradient(600px 300px at 30% 0%, color-mix(in srgb, var(--celadon) 30%, transparent), transparent 60%), var(--surface3);
+  border:1px solid var(--border);
+}
+.glass-btn{
+  display:inline-block; padding:11px 26px; border-radius:999px; font-weight:700; font-size:.88em;
+  color:#fff; text-decoration:none; letter-spacing:.01em;
+  background:rgba(255,255,255,0.14); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.4); box-shadow:0 6px 24px rgba(0,0,0,0.18);
+}
+.announcement-status-line{font-size:.86em; color:var(--text-dim); margin-bottom:4px;}
+.announcement-status-line.live{color:var(--celadon);}
+.take-down-btn{
+  padding:11px 20px; border-radius:999px; font-weight:600; font-size:.87em; color:var(--vermilion);
+  background:var(--vermilion-dim); border:1px solid color-mix(in srgb, var(--vermilion) 40%, transparent);
+}
+.take-down-btn:hover{filter:brightness(1.08);}
+.take-down-btn:disabled{opacity:.6; cursor:default;}
 </style>
 </head>
 <body>
@@ -329,70 +365,81 @@ function renderForm(me){
     <div class="sub">This is what ${audience} see once it's approved.</div>
     ${statusBanner(me.status, me.id, previewHref)}
 
-    <div class="form-card">
-      <div class="field-group">
-        <label for="fName">Name</label>
-        <input type="text" id="fName" maxlength="100" value="${escapeAttr(p.name || me.name || '')}">
+    ${p.type === 'teacher' ? `
+      <div class="tab-toggle" id="editTabToggle">
+        <button type="button" class="tab-btn active" id="tabBtnProfile" data-tab="profile">Edit Profile</button>
+        <button type="button" class="tab-btn" id="tabBtnAnnouncement" data-tab="announcement">Create Announcement</button>
       </div>
-      <div class="field-group">
-        <label for="fCountry">Country</label>
-        <input type="text" id="fCountry" maxlength="60" value="${escapeAttr(p.country || '')}" disabled>
-        <div class="field-hint">Country can't be changed here — contact support if this needs to be corrected.</div>
-      </div>
-      <div class="field-group">
-        <label for="fTagline">Tagline</label>
-        <input type="text" id="fTagline" maxlength="140" value="${escapeAttr(p.tagline || '')}" placeholder="A short one-liner shown on your card">
-      </div>
-      <div class="field-group">
-        <label for="fAbout">About you</label>
-        <textarea id="fAbout" maxlength="1000">${escapeHtml(p.about || '')}</textarea>
-      </div>
-      <div class="field-group">
-        <label for="fImageFile">Photo <span class="required-mark">*</span></label>
-        <input type="file" id="fImageFile" accept="image/jpeg,image/png,image/webp,image/gif">
-        <input type="hidden" id="fImage" value="${escapeAttr(p.imageUrl || '')}">
-        <div class="field-hint" id="imageUploadHint">JPG, PNG, WEBP, or GIF — up to 5MB. Required.</div>
-        <div class="image-preview-wrap" id="imagePreviewWrap" style="${p.imageUrl ? '' : 'display:none;'}">
-          <img id="imagePreview" src="${escapeAttr(p.imageUrl || '')}" alt="Preview">
-          <button type="button" class="image-remove-btn" id="imageRemoveBtn" title="Remove photo" aria-label="Remove photo">✕</button>
+    ` : ''}
+
+    <div class="tab-panel active" id="profilePanel">
+      <div class="form-card">
+        <div class="field-group">
+          <label for="fName">Name</label>
+          <input type="text" id="fName" maxlength="100" value="${escapeAttr(p.name || me.name || '')}">
+        </div>
+        <div class="field-group">
+          <label for="fCountry">Country</label>
+          <input type="text" id="fCountry" maxlength="60" value="${escapeAttr(p.country || '')}" disabled>
+          <div class="field-hint">Country can't be changed here — contact support if this needs to be corrected.</div>
+        </div>
+        <div class="field-group">
+          <label for="fTagline">Tagline</label>
+          <input type="text" id="fTagline" maxlength="140" value="${escapeAttr(p.tagline || '')}" placeholder="A short one-liner shown on your card">
+        </div>
+        <div class="field-group">
+          <label for="fAbout">About you</label>
+          <textarea id="fAbout" maxlength="1000">${escapeHtml(p.about || '')}</textarea>
+        </div>
+        <div class="field-group">
+          <label for="fImageFile">Photo <span class="required-mark">*</span></label>
+          <input type="file" id="fImageFile" accept="image/jpeg,image/png,image/webp,image/gif">
+          <input type="hidden" id="fImage" value="${escapeAttr(p.imageUrl || '')}">
+          <div class="field-hint" id="imageUploadHint">JPG, PNG, WEBP, or GIF — up to 5MB. Required.</div>
+          <div class="image-preview-wrap" id="imagePreviewWrap" style="${p.imageUrl ? '' : 'display:none;'}">
+            <img id="imagePreview" src="${escapeAttr(p.imageUrl || '')}" alt="Preview">
+            <button type="button" class="image-remove-btn" id="imageRemoveBtn" title="Remove photo" aria-label="Remove photo">✕</button>
+          </div>
+        </div>
+
+        <div class="section-title">Interests &amp; Hobbies (optional)</div>
+        <div class="field-hint" id="interestsHint" style="margin:-4px 0 4px;">Pick up to 5.</div>
+        <div class="chip-grid" id="interestsGrid">
+          ${INTEREST_OPTIONS.map(opt => `<button type="button" class="chip${(p.interests || []).includes(opt) ? ' selected' : ''}" data-interest="${escapeAttr(opt)}">${escapeHtml(opt)}</button>`).join('')}
+        </div>
+
+        <div class="section-title">Social Links</div>
+        <div class="field-hint" id="socialLinksHint" style="margin:-4px 0 4px;">Instagram is required. Add up to 6 total.</div>
+        <div class="links-grid" id="socialLinksGrid">
+          <div class="field-group"><label for="fInstagram">Instagram <span class="required-mark">*</span></label><input type="text" id="fInstagram" maxlength="100" value="${escapeAttr(links.instagram || '')}" placeholder="handle"></div>
+          <div class="field-group"><label for="fDiscord">Discord</label><input type="text" id="fDiscord" maxlength="100" value="${escapeAttr(links.discord || '')}" placeholder="discord.gg/..."></div>
+          <div class="field-group"><label for="fWhatsapp">WhatsApp</label><input type="text" id="fWhatsapp" maxlength="40" value="${escapeAttr(links.whatsapp || '')}" placeholder="+91 ..."></div>
+          <div class="field-group"><label for="fTwitter">X / Twitter</label><input type="text" id="fTwitter" maxlength="100" value="${escapeAttr(links.twitter || '')}" placeholder="handle"></div>
+          <div class="field-group"><label for="fFacebook">Facebook</label><input type="text" id="fFacebook" maxlength="100" value="${escapeAttr(links.facebook || '')}" placeholder="handle"></div>
+          <div class="field-group"><label for="fTiktok">TikTok</label><input type="text" id="fTiktok" maxlength="100" value="${escapeAttr(links.tiktok || '')}" placeholder="handle"></div>
+          <div class="field-group"><label for="fYoutube">YouTube</label><input type="text" id="fYoutube" maxlength="100" value="${escapeAttr(links.youtube || '')}" placeholder="handle"></div>
+          <div class="field-group"><label for="fTelegram">Telegram</label><input type="text" id="fTelegram" maxlength="100" value="${escapeAttr(links.telegram || '')}" placeholder="handle"></div>
+          <div class="field-group"><label for="fLine">LINE</label><input type="text" id="fLine" maxlength="100" value="${escapeAttr(links.line || '')}" placeholder="LINE ID"></div>
+        </div>
+
+        <div class="section-title">Website Links (optional)</div>
+        <div class="links-grid">
+          <div class="field-group"><label for="fWebsite1">Website 1</label><input type="text" id="fWebsite1" maxlength="200" value="${escapeAttr(links.website1 || '')}" placeholder="yoursite.com"></div>
+          <div class="field-group"><label for="fWebsite1Label">Website 1 button text</label><input type="text" id="fWebsite1Label" maxlength="40" value="${escapeAttr(links.website1Label || '')}" placeholder="e.g. My Portfolio"></div>
+          <div class="field-group"><label for="fWebsite2">Website 2</label><input type="text" id="fWebsite2" maxlength="200" value="${escapeAttr(links.website2 || '')}" placeholder="yoursite.com"></div>
+          <div class="field-group"><label for="fWebsite2Label">Website 2 button text</label><input type="text" id="fWebsite2Label" maxlength="40" value="${escapeAttr(links.website2Label || '')}" placeholder="e.g. My Shop"></div>
+          <div class="field-group"><label for="fWebsite3">Website 3</label><input type="text" id="fWebsite3" maxlength="200" value="${escapeAttr(links.website3 || '')}" placeholder="yoursite.com"></div>
+          <div class="field-group"><label for="fWebsite3Label">Website 3 button text</label><input type="text" id="fWebsite3Label" maxlength="40" value="${escapeAttr(links.website3Label || '')}" placeholder="e.g. YouTube Channel"></div>
+        </div>
+
+        <div class="form-error" id="formError"></div>
+        <div class="form-actions">
+          <button class="save-btn" id="saveBtn">Save Changes</button>
         </div>
       </div>
-
-      <div class="section-title">Interests &amp; Hobbies (optional)</div>
-      <div class="field-hint" id="interestsHint" style="margin:-4px 0 4px;">Pick up to 5.</div>
-      <div class="chip-grid" id="interestsGrid">
-        ${INTEREST_OPTIONS.map(opt => `<button type="button" class="chip${(p.interests || []).includes(opt) ? ' selected' : ''}" data-interest="${escapeAttr(opt)}">${escapeHtml(opt)}</button>`).join('')}
-      </div>
-
-      <div class="section-title">Social Links</div>
-      <div class="field-hint" id="socialLinksHint" style="margin:-4px 0 4px;">Instagram is required. Add up to 6 total.</div>
-      <div class="links-grid" id="socialLinksGrid">
-        <div class="field-group"><label for="fInstagram">Instagram <span class="required-mark">*</span></label><input type="text" id="fInstagram" maxlength="100" value="${escapeAttr(links.instagram || '')}" placeholder="handle"></div>
-        <div class="field-group"><label for="fDiscord">Discord</label><input type="text" id="fDiscord" maxlength="100" value="${escapeAttr(links.discord || '')}" placeholder="discord.gg/..."></div>
-        <div class="field-group"><label for="fWhatsapp">WhatsApp</label><input type="text" id="fWhatsapp" maxlength="40" value="${escapeAttr(links.whatsapp || '')}" placeholder="+91 ..."></div>
-        <div class="field-group"><label for="fTwitter">X / Twitter</label><input type="text" id="fTwitter" maxlength="100" value="${escapeAttr(links.twitter || '')}" placeholder="handle"></div>
-        <div class="field-group"><label for="fFacebook">Facebook</label><input type="text" id="fFacebook" maxlength="100" value="${escapeAttr(links.facebook || '')}" placeholder="handle"></div>
-        <div class="field-group"><label for="fTiktok">TikTok</label><input type="text" id="fTiktok" maxlength="100" value="${escapeAttr(links.tiktok || '')}" placeholder="handle"></div>
-        <div class="field-group"><label for="fYoutube">YouTube</label><input type="text" id="fYoutube" maxlength="100" value="${escapeAttr(links.youtube || '')}" placeholder="handle"></div>
-        <div class="field-group"><label for="fTelegram">Telegram</label><input type="text" id="fTelegram" maxlength="100" value="${escapeAttr(links.telegram || '')}" placeholder="handle"></div>
-        <div class="field-group"><label for="fLine">LINE</label><input type="text" id="fLine" maxlength="100" value="${escapeAttr(links.line || '')}" placeholder="LINE ID"></div>
-      </div>
-
-      <div class="section-title">Website Links (optional)</div>
-      <div class="links-grid">
-        <div class="field-group"><label for="fWebsite1">Website 1</label><input type="text" id="fWebsite1" maxlength="200" value="${escapeAttr(links.website1 || '')}" placeholder="yoursite.com"></div>
-        <div class="field-group"><label for="fWebsite1Label">Website 1 button text</label><input type="text" id="fWebsite1Label" maxlength="40" value="${escapeAttr(links.website1Label || '')}" placeholder="e.g. My Portfolio"></div>
-        <div class="field-group"><label for="fWebsite2">Website 2</label><input type="text" id="fWebsite2" maxlength="200" value="${escapeAttr(links.website2 || '')}" placeholder="yoursite.com"></div>
-        <div class="field-group"><label for="fWebsite2Label">Website 2 button text</label><input type="text" id="fWebsite2Label" maxlength="40" value="${escapeAttr(links.website2Label || '')}" placeholder="e.g. My Shop"></div>
-        <div class="field-group"><label for="fWebsite3">Website 3</label><input type="text" id="fWebsite3" maxlength="200" value="${escapeAttr(links.website3 || '')}" placeholder="yoursite.com"></div>
-        <div class="field-group"><label for="fWebsite3Label">Website 3 button text</label><input type="text" id="fWebsite3Label" maxlength="40" value="${escapeAttr(links.website3Label || '')}" placeholder="e.g. YouTube Channel"></div>
-      </div>
-
-      <div class="form-error" id="formError"></div>
-      <div class="form-actions">
-        <button class="save-btn" id="saveBtn">Save Changes</button>
-      </div>
     </div>
+
+    ${p.type === 'teacher' ? `<div class="tab-panel" id="announcementPanel">${announcementCardHtml()}</div>` : ''}
   `;
 
   document.getElementById('saveBtn').onclick = saveProfile;
@@ -407,6 +454,317 @@ function renderForm(me){
     };
   });
   enforceInterestLimit();
+
+  if(p.type === 'teacher'){
+    bindAnnouncementCard();
+    loadAnnouncement();
+    bindEditTabToggle();
+  }
+}
+
+// Switches between the "Edit Profile" and "Create Announcement" panels
+// without navigating anywhere — both panels are already rendered in
+// the DOM (so nothing needs re-fetching when you switch back and
+// forth), CSS just shows one and hides the other.
+function bindEditTabToggle(){
+  const profileBtn = document.getElementById('tabBtnProfile');
+  const announcementBtn = document.getElementById('tabBtnAnnouncement');
+  const profilePanel = document.getElementById('profilePanel');
+  const announcementPanel = document.getElementById('announcementPanel');
+
+  function activate(tab){
+    const showAnnouncement = tab === 'announcement';
+    profileBtn.classList.toggle('active', !showAnnouncement);
+    announcementBtn.classList.toggle('active', showAnnouncement);
+    profilePanel.classList.toggle('active', !showAnnouncement);
+    announcementPanel.classList.toggle('active', showAnnouncement);
+  }
+  profileBtn.onclick = () => activate('profile');
+  announcementBtn.onclick = () => activate('announcement');
+}
+
+/* ============================================================
+   Teacher announcements — a single, temporary post a teacher can
+   put up on their own listing page (japanese-teachers.html or
+   korean-teachers.html). Lives in its own card below the main
+   profile form since it saves via its own endpoint
+   (/api/announcements), independently of "Save Changes" above.
+   Only rendered at all when p.type === 'teacher'.
+   ============================================================ */
+const ANNOUNCEMENT_DURATIONS_HOURS = [12, 18, 24, 30, 36, 42, 48];
+const ANNOUNCEMENT_MAX_WORDS = 150;
+let currentAnnouncement = null; // filled in by loadAnnouncement() once fetched
+
+function announcementCardHtml(){
+  return `
+    <div class="form-card" id="announcementCard">
+      <h2 style="margin-bottom:0;">Announcement</h2>
+      <div class="announcement-note">Post one live announcement on your listing page. It disappears automatically once your chosen duration is up.</div>
+      <div id="announcementStatus"></div>
+
+      <div class="field-group">
+        <label for="aImageFile">Image <span class="required-mark">*</span></label>
+        <input type="file" id="aImageFile" accept="image/jpeg,image/png,image/webp,image/gif">
+        <input type="hidden" id="aImage" value="">
+        <div class="field-hint" id="aImageHint">JPG, PNG, WEBP, or GIF — up to 5MB. Required.</div>
+        <div class="image-preview-wrap" id="aImagePreviewWrap" style="display:none;">
+          <img id="aImagePreview" src="" alt="Preview">
+          <button type="button" class="image-remove-btn" id="aImageRemoveBtn" title="Remove image" aria-label="Remove image">✕</button>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="aText">Announcement text <span class="required-mark">*</span></label>
+        <textarea id="aText" maxlength="1500" placeholder="What do you want learners to know?"></textarea>
+        <div class="field-hint" id="aTextHint">0/${ANNOUNCEMENT_MAX_WORDS} words</div>
+      </div>
+
+      <div class="links-grid">
+        <div class="field-group"><label for="aButtonText">Button text <span class="required-mark">*</span></label><input type="text" id="aButtonText" maxlength="40" placeholder="e.g. Join Now"></div>
+        <div class="field-group"><label for="aButtonLink">Button link <span class="required-mark">*</span></label><input type="text" id="aButtonLink" maxlength="300" placeholder="https://..."></div>
+      </div>
+
+      <div class="section-title">Duration</div>
+      <div class="field-hint" style="margin:-4px 0 4px;">How long this should stay up before it disappears on its own.</div>
+      <div class="chip-grid" id="aDurationGrid">
+        ${ANNOUNCEMENT_DURATIONS_HOURS.map(h => `<button type="button" class="chip duration-chip" data-hours="${h}">${h}h</button>`).join('')}
+      </div>
+
+      <div class="field-group" style="margin-top:4px;">
+        <label>Preview</label>
+        <div class="glass-preview">
+          <a href="#" id="aButtonPreview" class="glass-btn" onclick="return false;">Button text</a>
+        </div>
+      </div>
+
+      <div class="form-error" id="announcementError"></div>
+      <div class="form-actions">
+        <button class="save-btn" id="announcementSaveBtn">Post Announcement</button>
+        <button type="button" class="take-down-btn" id="announcementDeleteBtn" style="display:none;">Take Down Now</button>
+      </div>
+    </div>
+  `;
+}
+
+function countWords(str){
+  const trimmed = String(str || '').trim();
+  return trimmed ? trimmed.split(/\s+/).length : 0;
+}
+
+function updateAnnouncementWordCount(){
+  const hint = document.getElementById('aTextHint');
+  if(!hint) return;
+  const words = countWords(document.getElementById('aText').value);
+  hint.textContent = `${words}/${ANNOUNCEMENT_MAX_WORDS} words`;
+  hint.style.color = words > ANNOUNCEMENT_MAX_WORDS ? 'var(--vermilion)' : '';
+}
+
+function updateAnnouncementButtonPreview(){
+  const preview = document.getElementById('aButtonPreview');
+  if(!preview) return;
+  preview.textContent = document.getElementById('aButtonText').value.trim() || 'Button text';
+}
+
+function selectedAnnouncementDuration(){
+  const chip = document.querySelector('#aDurationGrid .chip.selected');
+  return chip ? Number(chip.dataset.hours) : null;
+}
+
+async function handleAnnouncementImageChange(){
+  const fileInput = document.getElementById('aImageFile');
+  const hiddenInput = document.getElementById('aImage');
+  const hint = document.getElementById('aImageHint');
+  const previewWrap = document.getElementById('aImagePreviewWrap');
+  const preview = document.getElementById('aImagePreview');
+  const file = fileInput.files[0];
+  if(!file) return;
+
+  preview.src = URL.createObjectURL(file);
+  previewWrap.style.display = 'inline-block';
+  hiddenInput.value = '';
+  hint.textContent = 'Uploading...';
+
+  const formData = new FormData();
+  formData.append('image', file);
+  try {
+    const res = await fetch('/api/upload-image', { method: 'POST', body: formData });
+    const data = await res.json();
+    if(res.ok && data.ok){
+      hiddenInput.value = data.url;
+      hint.textContent = 'Uploaded ✓';
+    } else {
+      hint.textContent = (data && data.error) ? data.error : 'Upload failed — please try a different image.';
+      previewWrap.style.display = 'none';
+      fileInput.value = '';
+    }
+  } catch (err) {
+    hint.textContent = 'Upload failed — please try a different image.';
+    previewWrap.style.display = 'none';
+    fileInput.value = '';
+  }
+}
+
+function removeAnnouncementImage(){
+  document.getElementById('aImageFile').value = '';
+  document.getElementById('aImage').value = '';
+  document.getElementById('aImagePreview').src = '';
+  document.getElementById('aImagePreviewWrap').style.display = 'none';
+  document.getElementById('aImageHint').textContent = 'JPG, PNG, WEBP, or GIF — up to 5MB. Required.';
+}
+
+function formatExpiry(iso){
+  try {
+    return new Date(iso).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+  } catch (err) {
+    return '';
+  }
+}
+
+function resetAnnouncementForm(){
+  currentAnnouncement = null;
+  removeAnnouncementImage();
+  document.getElementById('aText').value = '';
+  document.getElementById('aButtonText').value = '';
+  document.getElementById('aButtonLink').value = '';
+  document.querySelectorAll('#aDurationGrid .chip').forEach(c => c.classList.remove('selected'));
+  document.getElementById('announcementSaveBtn').textContent = 'Post Announcement';
+  document.getElementById('announcementDeleteBtn').style.display = 'none';
+  document.getElementById('announcementStatus').innerHTML = '<div class="announcement-status-line">No announcement live right now.</div>';
+  updateAnnouncementWordCount();
+  updateAnnouncementButtonPreview();
+}
+
+async function loadAnnouncement(){
+  const statusBox = document.getElementById('announcementStatus');
+  if(!statusBox) return;
+  try {
+    const res = await fetch('/api/my-announcement', { credentials: 'include' });
+    const data = await res.json();
+    const a = data && data.announcement;
+    if(a && !data.expired){
+      currentAnnouncement = a;
+      statusBox.innerHTML = `<div class="announcement-status-line live">🔔 Your announcement is live until ${escapeHtml(formatExpiry(a.expiresAt))}.</div>`;
+      document.getElementById('aImage').value = a.imageUrl || '';
+      document.getElementById('aImagePreview').src = a.imageUrl || '';
+      document.getElementById('aImagePreviewWrap').style.display = a.imageUrl ? 'inline-block' : 'none';
+      document.getElementById('aText').value = a.text || '';
+      document.getElementById('aButtonText').value = a.buttonText || '';
+      document.getElementById('aButtonLink').value = a.buttonLink || '';
+      document.querySelectorAll('#aDurationGrid .chip').forEach(c => {
+        c.classList.toggle('selected', Number(c.dataset.hours) === a.durationHours);
+      });
+      document.getElementById('announcementSaveBtn').textContent = 'Update Announcement';
+      document.getElementById('announcementDeleteBtn').style.display = 'inline-block';
+    } else {
+      statusBox.innerHTML = '<div class="announcement-status-line">No announcement live right now.</div>';
+      document.getElementById('announcementDeleteBtn').style.display = 'none';
+    }
+    updateAnnouncementWordCount();
+    updateAnnouncementButtonPreview();
+  } catch (err) {
+    statusBox.innerHTML = '<div class="announcement-status-line">Could not load your announcement status.</div>';
+  }
+}
+
+async function saveAnnouncement(){
+  const btn = document.getElementById('announcementSaveBtn');
+  const errorBox = document.getElementById('announcementError');
+  const imageUrl = document.getElementById('aImage').value.trim();
+  const text = document.getElementById('aText').value.trim();
+  const buttonText = document.getElementById('aButtonText').value.trim();
+  const buttonLink = document.getElementById('aButtonLink').value.trim();
+  const durationHours = selectedAnnouncementDuration();
+
+  if(document.getElementById('aImageFile').files[0] && !imageUrl){
+    errorBox.textContent = 'Please wait for your image to finish uploading before posting.';
+    return;
+  }
+  if(!imageUrl){
+    errorBox.textContent = 'Please add an image for your announcement.';
+    return;
+  }
+  if(!text){
+    errorBox.textContent = 'Please add some text for your announcement.';
+    return;
+  }
+  if(countWords(text) > ANNOUNCEMENT_MAX_WORDS){
+    errorBox.textContent = `Please keep your announcement text to ${ANNOUNCEMENT_MAX_WORDS} words or fewer.`;
+    return;
+  }
+  if(!buttonText){
+    errorBox.textContent = 'Please add text for your button.';
+    return;
+  }
+  if(!buttonLink){
+    errorBox.textContent = 'Please add a link for your button.';
+    return;
+  }
+  if(!durationHours){
+    errorBox.textContent = 'Please choose how long this should stay up.';
+    return;
+  }
+
+  errorBox.textContent = '';
+  btn.disabled = true;
+  btn.textContent = 'Posting...';
+
+  try {
+    const res = await fetch('/api/announcements', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ imageUrl, text, buttonText, buttonLink, durationHours })
+    });
+    const data = await res.json();
+    if(res.ok && data.ok){
+      toast('Your announcement is live');
+      await loadAnnouncement();
+    } else if(res.status === 401){
+      window.location.href = 'japanese-learners.html?login=1';
+    } else {
+      errorBox.textContent = (data && data.error) ? data.error : 'Something went wrong posting your announcement.';
+    }
+  } catch (err) {
+    errorBox.textContent = 'Something went wrong posting your announcement. Please try again.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = currentAnnouncement ? 'Update Announcement' : 'Post Announcement';
+  }
+}
+
+async function deleteAnnouncement(){
+  if(!confirm('Take down your announcement now?')) return;
+  const btn = document.getElementById('announcementDeleteBtn');
+  btn.disabled = true;
+  try {
+    const res = await fetch('/api/announcements', { method: 'DELETE', credentials: 'include' });
+    const data = await res.json();
+    if(res.ok && data.ok){
+      toast('Announcement taken down');
+      resetAnnouncementForm();
+    } else {
+      toast((data && data.error) || 'Could not take down your announcement.');
+    }
+  } catch (err) {
+    toast('Could not take down your announcement.');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function bindAnnouncementCard(){
+  document.getElementById('announcementSaveBtn').onclick = saveAnnouncement;
+  document.getElementById('announcementDeleteBtn').onclick = deleteAnnouncement;
+  document.getElementById('aImageFile').addEventListener('change', handleAnnouncementImageChange);
+  document.getElementById('aImageRemoveBtn').addEventListener('click', removeAnnouncementImage);
+  document.getElementById('aText').addEventListener('input', updateAnnouncementWordCount);
+  document.getElementById('aButtonText').addEventListener('input', updateAnnouncementButtonPreview);
+  document.querySelectorAll('#aDurationGrid .chip').forEach(chip => {
+    chip.onclick = () => {
+      document.querySelectorAll('#aDurationGrid .chip').forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+    };
+  });
 }
 
 function escapeAttr(s){
