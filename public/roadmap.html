@@ -660,6 +660,9 @@ function renderLoginStep(note){
     <div class="modal-sub" style="text-align:center;">${note || 'Log in to unlock Phase 1.'}</div>
     <input type="email" class="modal-input" id="loginEmail" placeholder="Email" autocomplete="email">
     <input type="password" class="modal-input" id="loginPassword" placeholder="Password" autocomplete="current-password">
+    <div style="text-align:right; margin:-4px 0 14px;">
+      <a href="forgot-password.html" style="color:var(--text-faint); font-size:.82em; text-decoration:underline;">Forgot Password?</a>
+    </div>
     <button class="modal-submit" id="loginSubmit">Log In</button>
     <div class="modal-error" id="loginError"></div>
     <button class="modal-secondary-link" onclick="location.href='signup.html'">New here? Create an account</button>
