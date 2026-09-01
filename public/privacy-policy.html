@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy - Hookitlingo</title>
+<meta name="description" content="How Hookitlingo collects, uses, and protects your information.">
+<link rel="canonical" href="https://hookit.online/privacy-policy.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== TOKENS (matches index.html) ===== */
+:root{
+  --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941;
+  --border:#4a3550;
+  --text:#f6ecec; --text-dim:#c7b2c4; --text-faint:#8f7a91;
+  --vermilion:#e58aa2; --vermilion-dim:#5a2c3a;
+  --celadon:#5fa688; --celadon-dim:#2a4a3d;
+  --gold:#d9ab5c; --gold-dim:#5c471e;
+  --inkblue:#a084c9; --inkblue-dim:#3a2c50;
+  --petal:#f3b6c6;
+  --radius:16px; --radius-sm:10px;
+  --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --kr:"Noto Serif KR","Apple SD Gothic Neo","Malgun Gothic","Nanum Gothic",sans-serif;
+  --maxw:1080px;
+}
+html[data-theme="light"]{
+  --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6;
+  --border:#eccabb;
+  --text:#3a2530; --text-dim:#79576a; --text-faint:#a98a9c;
+  --vermilion:#c8546f; --vermilion-dim:#f6dae2;
+  --celadon:#3f7d63; --celadon-dim:#d9ece2;
+  --gold:#a4762b; --gold-dim:#f2e2c2;
+  --inkblue:#75509f; --inkblue-dim:#e7ddf2;
+  --petal:#e59fb2;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--text); font-family:var(--sans);
+  font-size:16px; line-height:1.65; transition:background .3s,color .3s;
+  background:
+    radial-gradient(1100px 620px at 12% -8%, color-mix(in srgb, var(--vermilion) 16%, transparent), transparent 58%),
+    radial-gradient(900px 520px at 104% 6%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 55%),
+    var(--ink);
+  background-attachment:fixed;
+  min-height:100vh;
+}
+::selection{background:var(--vermilion); color:#fff;}
+h1,h2,h3{font-family:var(--serif); font-weight:600; letter-spacing:.2px; margin:0 0 .4em;}
+p{margin:0 0 1em;}
+a{color:var(--celadon);}
+.kr{font-family:var(--kr);}
+button{font-family:var(--sans); cursor:pointer;}
+
+/* Petals */
+.petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.petal{position:absolute; top:-8%; will-change:transform; animation:petal-fall linear infinite;}
+.petal svg{display:block; filter:drop-shadow(0 1px 1px rgba(0,0,0,.08));}
+@keyframes petal-fall{
+  0%{transform:translate(0,-10vh) rotate(0deg);}
+  100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}
+}
+@media (prefers-reduced-motion: reduce){ .petals{display:none;} }
+@media(max-width:900px){ .petals .petal:nth-child(even){display:none;} }
+
+/* ===== Topbar ===== */
+#topbar{
+  position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between;
+  max-width:var(--maxw); margin:0 auto; padding:20px 5vw 6px;
+}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
+.brand-block{
+  width:38px; height:38px; border-radius:10px; background:var(--surface2); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:1.2em;
+}
+.brand-txt{color:var(--text);}
+.brand-txt strong{display:block; font-family:var(--serif); font-size:1.3em; letter-spacing:.2px;}
+.brand-txt span{display:block; font-size:.68em; color:var(--text-faint); letter-spacing:.14em; text-transform:uppercase;}
+.top-actions{display:flex; align-items:center; gap:10px;}
+.topbtn{
+  background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); border-radius:8px;
+  padding:9px 14px; font-size:.85em; font-weight:600;
+}
+.topbtn:hover{color:var(--text); border-color:var(--text-faint);}
+
+/* ===== Legal doc content ===== */
+.page{position:relative; z-index:2; max-width:760px; margin:0 auto; padding:40px 5vw 20px;}
+.page h1{font-size:clamp(1.8em,4.5vw,2.5em); margin-bottom:6px;}
+.updated{color:var(--text-faint); font-size:.85em; margin-bottom:30px;}
+.legal-box{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:32px 30px; margin-bottom:40px;
+}
+.legal-box h2{font-size:1.25em; margin-top:1.6em; color:var(--text);}
+.legal-box h2:first-child{margin-top:0;}
+.legal-box p, .legal-box li{color:var(--text-dim); font-size:.96em;}
+.legal-box ul{padding-left:1.2em; margin:0 0 1em;}
+.legal-box li{margin-bottom:.5em;}
+.legal-box strong{color:var(--text);}
+.toc{
+  background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm);
+  padding:16px 20px; margin-bottom:30px; font-size:.9em;
+}
+.toc strong{display:block; margin-bottom:8px; color:var(--text);}
+.toc ol{margin:0; padding-left:1.1em; color:var(--text-dim);}
+.toc a{color:var(--text-dim); text-decoration:none;}
+.toc a:hover{color:var(--celadon); text-decoration:underline;}
+
+/* ===== Footer (matches index.html) ===== */
+footer{position:relative; z-index:2; text-align:center; padding:30px 5vw 50px; color:var(--text-faint); font-size:.82em;}
+footer .fnote{max-width:520px; margin:0 auto 10px;}
+footer a{color:var(--text-faint); text-decoration:underline;}
+.footer-links{list-style:none; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:8px 16px; margin:16px 0; padding:0;}
+.footer-links a{text-decoration:none;}
+.footer-links a:hover{color:var(--text-dim); text-decoration:underline;}
+.footer-links .fl-sep{color:var(--border);}
+footer .fcopyright{color:var(--text-faint); font-size:.92em; margin:14px 0 0;}
+</style>
+</head>
+<body>
+
+<div class="petals no-print" id="petals" aria-hidden="true"></div>
+
+<div id="topbar">
+  <a class="brand" href="index.html">
+    <div class="brand-block kr">虎</div>
+    <div class="brand-txt"><strong>Hookitlingo</strong><span>Korean &amp; Japanese, learned together</span></div>
+  </a>
+  <div class="top-actions">
+    <a class="topbtn" href="index.html">← Home</a>
+    <button class="topbtn" id="themeBtn">☾ Dark</button>
+  </div>
+</div>
+
+<div class="page">
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: September 1, 2026</p>
+
+  <div class="toc">
+    <strong>On this page</strong>
+    <ol>
+      <li><a href="#collect">Information we collect</a></li>
+      <li><a href="#use">How we use your information</a></li>
+      <li><a href="#profile">Your profile card and what's public</a></li>
+      <li><a href="#cookies">Cookies</a></li>
+      <li><a href="#sharing">Who we share information with</a></li>
+      <li><a href="#security">How we protect your information</a></li>
+      <li><a href="#retention">How long we keep it</a></li>
+      <li><a href="#rights">Your choices and rights</a></li>
+      <li><a href="#children">Children's privacy</a></li>
+      <li><a href="#changes">Changes to this policy</a></li>
+      <li><a href="#contact">Contact us</a></li>
+    </ol>
+  </div>
+
+  <div class="legal-box">
+    <p>This policy explains what information Hookitlingo collects when you use the site, why we collect it, and what say you have over it. We tried to write it in plain language instead of legal jargon. If anything here is unclear, just reach out and ask.</p>
+
+    <h2 id="collect">1. Information we collect</h2>
+    <p>When you create an account, we collect:</p>
+    <ul>
+      <li><strong>Basic account details</strong> you give us at signup, such as your name and email address.</li>
+      <li><strong>Your password</strong>, which we never store in plain text. It's hashed before it ever touches our database, so even we can't see what it actually is.</li>
+      <li><strong>Profile information</strong> you choose to add, including any social media links you attach to your shareable profile card.</li>
+      <li><strong>Any images you upload</strong>, such as a profile photo.</li>
+      <li><strong>Lesson progress</strong>, like which courses you've started, quiz results, and badges, most of which is currently saved locally in your browser rather than on our servers.</li>
+    </ul>
+    <p>We also automatically collect some technical information, like your browser type and general usage patterns on the site, through analytics tools (see the Cookies section below).</p>
+
+    <h2 id="use">2. How we use your information</h2>
+    <p>We use the information we collect to:</p>
+    <ul>
+      <li>Create and maintain your account</li>
+      <li>Let you log in securely and keep you signed in between visits</li>
+      <li>Generate your shareable profile card</li>
+      <li>Send you account-related emails, like password reset links</li>
+      <li>Understand how people use Hookitlingo so we can improve it</li>
+      <li>Keep the platform safe and prevent abuse</li>
+    </ul>
+    <p>We don't sell your personal information to anyone, and we don't use it for advertising outside of Hookitlingo.</p>
+
+    <h2 id="profile">3. Your profile card and what's public</h2>
+    <p>Part of Hookitlingo is meant to be shared. Anything you choose to put on your profile card, such as your name, a photo, and the social media links you add, may be visible to other users or to anyone you share the card's link with. Think of it the same way you'd think about any public social profile: don't put anything on it you wouldn't want a stranger to see.</p>
+    <p>You're in control of what goes on your card, and you can edit or remove those details from your account settings at any time.</p>
+
+    <h2 id="cookies">4. Cookies</h2>
+    <p>We use a small number of cookies to run the site:</p>
+    <ul>
+      <li><strong>A session cookie</strong> that keeps you logged in. This is required for the site to work and can't be turned off without also logging you out.</li>
+      <li><strong>Analytics cookies</strong> (via Google Analytics) that help us understand how people move through the site, which pages get used, and where things might be confusing. This data is aggregated and isn't used to personally identify you.</li>
+    </ul>
+    <p>You can block or delete cookies through your browser settings, though doing so may log you out or affect parts of the site that rely on staying signed in.</p>
+
+    <h2 id="sharing">5. Who we share information with</h2>
+    <p>We don't sell or rent your personal information. We do share it with a small number of service providers who help us run Hookitlingo, and only to the extent needed for them to do their job:</p>
+    <ul>
+      <li><strong>Airtable</strong>, which stores our account and profile data</li>
+      <li><strong>Resend</strong>, which sends account emails like password resets on our behalf</li>
+      <li><strong>Cloudflare</strong>, which stores images you upload</li>
+      <li><strong>Google Analytics</strong>, which provides us with aggregated usage statistics</li>
+    </ul>
+    <p>We may also share information if required by law, or to protect the safety of our users or the platform.</p>
+
+    <h2 id="security">6. How we protect your information</h2>
+    <p>Passwords are hashed, not stored as plain text. Your login session is protected with a signed cookie so it can't be tampered with. That said, no online service can guarantee perfect security, and we'd encourage you to use a password you don't reuse elsewhere.</p>
+
+    <h2 id="retention">7. How long we keep it</h2>
+    <p>We keep your account information for as long as your account is active. If you delete your account, we remove your personal details from our active systems, though some information may briefly remain in backups until they naturally cycle out.</p>
+
+    <h2 id="rights">8. Your choices and rights</h2>
+    <p>You can:</p>
+    <ul>
+      <li>Edit your profile details and social links at any time</li>
+      <li>Reset your password if you forget it</li>
+      <li>Request a copy of the personal information we hold about you</li>
+      <li>Ask us to delete your account and associated data</li>
+    </ul>
+    <p>If you're located somewhere with specific data protection laws, such as the EU or UK, you may have additional rights under regulations like the GDPR. Reach out to us and we'll do our best to help.</p>
+
+    <h2 id="children">9. Children's privacy</h2>
+    <p>Hookitlingo isn't intended for children under 13. If you believe a child has created an account or given us personal information, please contact us and we'll remove it.</p>
+
+    <h2 id="changes">10. Changes to this policy</h2>
+    <p>We may update this policy as Hookitlingo grows. If we make a significant change, we'll update the date at the top of this page. We'd encourage checking back occasionally.</p>
+
+    <h2 id="contact">11. Contact us</h2>
+    <p>Questions about this policy or your data? Reach out through our <a href="contact.html">contact page</a> and we'll get back to you.</p>
+  </div>
+</div>
+
+<footer>
+  <p class="fnote">Every lesson comes with quizzes, flashcards, and audio built right in. Progress, XP, and badges save locally in your browser as you work through each course.</p>
+  <p>Powered by Hookitlingo</p>
+
+  <ul class="footer-links">
+    <li><a href="about.html">About</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="terms-of-service.html">Terms of Service</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="cookie-policy.html">Cookie Policy</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="community-guidelines.html">Community Guidelines</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="contact.html">Contact</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="report.html">Report a User</a></li>
+  </ul>
+
+  <p class="fcopyright">&copy; <span id="footerYear"></span> Hookitlingo. All rights reserved.</p>
+</footer>
+
+<script>
+/* Theme toggle, shares the hkl_site_theme key with index.html so the choice stays in sync across pages */
+const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', ThemeState.theme);
+  document.getElementById('themeBtn').textContent = ThemeState.theme === 'dark' ? '☾ Dark' : '☀ Light';
+}
+document.getElementById('themeBtn').onclick = () => {
+  ThemeState.theme = ThemeState.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('hkl_site_theme', ThemeState.theme);
+  applyTheme();
+};
+applyTheme();
+
+/* Petals */
+(function spawnPetals(){
+  const host = document.getElementById('petals');
+  if(!host) return;
+  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
+  const count = window.innerWidth < 700 ? 10 : 18;
+  for(let i=0;i<count;i++){
+    const size = 10 + Math.random()*12;
+    const left = Math.random()*100;
+    const dur = 10 + Math.random()*12;
+    const delay = -(Math.random()*dur);
+    const drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)];
+    const rotStart = Math.round(Math.random()*360);
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
+    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
+    host.appendChild(p);
+  }
+})();
+
+/* Footer copyright year */
+const footerYearEl = document.getElementById('footerYear');
+if (footerYearEl) footerYearEl.textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

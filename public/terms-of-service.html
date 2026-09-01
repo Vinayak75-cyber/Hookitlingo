@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service - Hookitlingo</title>
+<meta name="description" content="The terms that govern your use of Hookitlingo.">
+<link rel="canonical" href="https://hookit.online/terms-of-service.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== TOKENS (matches index.html) ===== */
+:root{
+  --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941;
+  --border:#4a3550;
+  --text:#f6ecec; --text-dim:#c7b2c4; --text-faint:#8f7a91;
+  --vermilion:#e58aa2; --vermilion-dim:#5a2c3a;
+  --celadon:#5fa688; --celadon-dim:#2a4a3d;
+  --gold:#d9ab5c; --gold-dim:#5c471e;
+  --inkblue:#a084c9; --inkblue-dim:#3a2c50;
+  --petal:#f3b6c6;
+  --radius:16px; --radius-sm:10px;
+  --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --kr:"Noto Serif KR","Apple SD Gothic Neo","Malgun Gothic","Nanum Gothic",sans-serif;
+  --maxw:1080px;
+}
+html[data-theme="light"]{
+  --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6;
+  --border:#eccabb;
+  --text:#3a2530; --text-dim:#79576a; --text-faint:#a98a9c;
+  --vermilion:#c8546f; --vermilion-dim:#f6dae2;
+  --celadon:#3f7d63; --celadon-dim:#d9ece2;
+  --gold:#a4762b; --gold-dim:#f2e2c2;
+  --inkblue:#75509f; --inkblue-dim:#e7ddf2;
+  --petal:#e59fb2;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--text); font-family:var(--sans);
+  font-size:16px; line-height:1.65; transition:background .3s,color .3s;
+  background:
+    radial-gradient(1100px 620px at 12% -8%, color-mix(in srgb, var(--vermilion) 16%, transparent), transparent 58%),
+    radial-gradient(900px 520px at 104% 6%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 55%),
+    var(--ink);
+  background-attachment:fixed;
+  min-height:100vh;
+}
+::selection{background:var(--vermilion); color:#fff;}
+h1,h2,h3{font-family:var(--serif); font-weight:600; letter-spacing:.2px; margin:0 0 .4em;}
+p{margin:0 0 1em;}
+a{color:var(--celadon);}
+.kr{font-family:var(--kr);}
+button{font-family:var(--sans); cursor:pointer;}
+
+/* Petals */
+.petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.petal{position:absolute; top:-8%; will-change:transform; animation:petal-fall linear infinite;}
+.petal svg{display:block; filter:drop-shadow(0 1px 1px rgba(0,0,0,.08));}
+@keyframes petal-fall{
+  0%{transform:translate(0,-10vh) rotate(0deg);}
+  100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}
+}
+@media (prefers-reduced-motion: reduce){ .petals{display:none;} }
+@media(max-width:900px){ .petals .petal:nth-child(even){display:none;} }
+
+/* ===== Topbar ===== */
+#topbar{
+  position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between;
+  max-width:var(--maxw); margin:0 auto; padding:20px 5vw 6px;
+}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
+.brand-block{
+  width:38px; height:38px; border-radius:10px; background:var(--surface2); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:1.2em;
+}
+.brand-txt{color:var(--text);}
+.brand-txt strong{display:block; font-family:var(--serif); font-size:1.3em; letter-spacing:.2px;}
+.brand-txt span{display:block; font-size:.68em; color:var(--text-faint); letter-spacing:.14em; text-transform:uppercase;}
+.top-actions{display:flex; align-items:center; gap:10px;}
+.topbtn{
+  background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); border-radius:8px;
+  padding:9px 14px; font-size:.85em; font-weight:600;
+}
+.topbtn:hover{color:var(--text); border-color:var(--text-faint);}
+
+/* ===== Legal doc content ===== */
+.page{position:relative; z-index:2; max-width:760px; margin:0 auto; padding:40px 5vw 20px;}
+.page h1{font-size:clamp(1.8em,4.5vw,2.5em); margin-bottom:6px;}
+.updated{color:var(--text-faint); font-size:.85em; margin-bottom:30px;}
+.legal-box{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:32px 30px; margin-bottom:40px;
+}
+.legal-box h2{font-size:1.25em; margin-top:1.6em; color:var(--text);}
+.legal-box h2:first-child{margin-top:0;}
+.legal-box p, .legal-box li{color:var(--text-dim); font-size:.96em;}
+.legal-box ul{padding-left:1.2em; margin:0 0 1em;}
+.legal-box li{margin-bottom:.5em;}
+.legal-box strong{color:var(--text);}
+.toc{
+  background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm);
+  padding:16px 20px; margin-bottom:30px; font-size:.9em;
+}
+.toc strong{display:block; margin-bottom:8px; color:var(--text);}
+.toc ol{margin:0; padding-left:1.1em; color:var(--text-dim);}
+.toc a{color:var(--text-dim); text-decoration:none;}
+.toc a:hover{color:var(--celadon); text-decoration:underline;}
+
+/* ===== Footer (matches index.html) ===== */
+footer{position:relative; z-index:2; text-align:center; padding:30px 5vw 50px; color:var(--text-faint); font-size:.82em;}
+footer .fnote{max-width:520px; margin:0 auto 10px;}
+footer a{color:var(--text-faint); text-decoration:underline;}
+.footer-links{list-style:none; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:8px 16px; margin:16px 0; padding:0;}
+.footer-links a{text-decoration:none;}
+.footer-links a:hover{color:var(--text-dim); text-decoration:underline;}
+.footer-links .fl-sep{color:var(--border);}
+footer .fcopyright{color:var(--text-faint); font-size:.92em; margin:14px 0 0;}
+</style>
+</head>
+<body>
+
+<div class="petals no-print" id="petals" aria-hidden="true"></div>
+
+<div id="topbar">
+  <a class="brand" href="index.html">
+    <div class="brand-block kr">虎</div>
+    <div class="brand-txt"><strong>Hookitlingo</strong><span>Korean &amp; Japanese, learned together</span></div>
+  </a>
+  <div class="top-actions">
+    <a class="topbtn" href="index.html">← Home</a>
+    <button class="topbtn" id="themeBtn">☾ Dark</button>
+  </div>
+</div>
+
+<div class="page">
+  <h1>Terms of Service</h1>
+  <p class="updated">Last updated: September 1, 2026</p>
+
+  <div class="toc">
+    <strong>On this page</strong>
+    <ol>
+      <li><a href="#accept">Accepting these terms</a></li>
+      <li><a href="#eligibility">Who can use Hookitlingo</a></li>
+      <li><a href="#account">Your account</a></li>
+      <li><a href="#conduct">How we expect you to behave</a></li>
+      <li><a href="#interactions">Interactions with other users</a></li>
+      <li><a href="#content">Your content and our content</a></li>
+      <li><a href="#termination">Suspending or ending your account</a></li>
+      <li><a href="#disclaimer">No guarantees</a></li>
+      <li><a href="#liability">Limits on our liability</a></li>
+      <li><a href="#changes">Changes to these terms</a></li>
+      <li><a href="#contact">Contact us</a></li>
+    </ol>
+  </div>
+
+  <div class="legal-box">
+    <p>These terms cover the basics of using Hookitlingo: what we expect from you, what you can expect from us, and where the responsibility sits when things go wrong. By creating an account or using the site, you're agreeing to them.</p>
+
+    <h2 id="accept">1. Accepting these terms</h2>
+    <p>By signing up for Hookitlingo or using any part of the site, you're agreeing to these terms. If you don't agree with something here, the best move is not to create an account, or to stop using the ones you already have.</p>
+
+    <h2 id="eligibility">2. Who can use Hookitlingo</h2>
+    <p>You need to be at least 13 years old to create an account. If you're under 18, you should have a parent or guardian's permission to use the site. By signing up, you're confirming this applies to you.</p>
+
+    <h2 id="account">3. Your account</h2>
+    <p>You're responsible for the security of your own account, including keeping your password private and not sharing your login with anyone else. If you notice anything suspicious happening on your account, let us know as soon as you can.</p>
+    <p>The details you give us at signup, and anything you add to your profile afterward, should be accurate. Don't impersonate someone else or claim to be a native speaker of a language you don't actually speak, especially if you're offering yourself as a teacher.</p>
+
+    <h2 id="conduct">4. How we expect you to behave</h2>
+    <p>Hookitlingo works because people show up in good faith to teach, learn, and practice with each other. That means:</p>
+    <ul>
+      <li>Being respectful toward other users, even when a conversation gets awkward or a language barrier makes things harder</li>
+      <li>Not harassing, threatening, or targeting anyone on or off the platform</li>
+      <li>Not using the site to advertise unrelated products or services</li>
+      <li>Not uploading content that's illegal, hateful, or sexually explicit</li>
+      <li>Not attempting to hack, scrape, or otherwise interfere with how the site runs</li>
+    </ul>
+    <p>Our full expectations are laid out in the <a href="community-guidelines.html">Community Guidelines</a>, and breaking them can result in a warning, a suspension, or a permanent ban depending on what happened.</p>
+
+    <h2 id="interactions">5. Interactions with other users</h2>
+    <p>Part of Hookitlingo is connecting you with native speakers and other learners, and what happens in those conversations is largely between the two of you. We don't vet every teacher or learner personally, and we can't guarantee the accuracy of what someone teaches you or how a conversation will go. Use the same judgment you'd use meeting anyone new online: don't share sensitive personal information too quickly, and if a teacher or learner does something that makes you uncomfortable, use the <a href="report.html">report</a> link so we can look into it.</p>
+
+    <h2 id="content">6. Your content and our content</h2>
+    <p>Anything you upload, such as a profile photo or the details on your shareable card, stays yours. By uploading it, you're giving us permission to store and display it as part of running the site, for example showing your profile card to people you share it with. You can remove it at any time by editing your profile or deleting your account.</p>
+    <p>The lessons, courses, and other material we've built for Hookitlingo belong to us. You're welcome to use them to learn, but not to copy, redistribute, or resell them elsewhere.</p>
+
+    <h2 id="termination">7. Suspending or ending your account</h2>
+    <p>You can delete your account whenever you want. We may suspend or terminate an account that breaks these terms or the Community Guidelines, especially in cases involving harassment, harm to other users, or abuse of the platform.</p>
+
+    <h2 id="disclaimer">8. No guarantees</h2>
+    <p>We work hard to keep Hookitlingo running smoothly, but we can't promise it will always be available, error-free, or exactly what you expected. The site and its lessons are provided as they are, without guaranteeing any particular outcome for your language learning.</p>
+
+    <h2 id="liability">9. Limits on our liability</h2>
+    <p>To the extent allowed by law, Hookitlingo isn't liable for indirect or unintended damages arising from your use of the site, including anything that happens during interactions with other users that falls outside our control.</p>
+
+    <h2 id="changes">10. Changes to these terms</h2>
+    <p>We may update these terms as Hookitlingo grows or as our features change. If we make a meaningful change, we'll update the date at the top of this page. Continuing to use the site after that means you accept the updated terms.</p>
+
+    <h2 id="contact">11. Contact us</h2>
+    <p>Questions about these terms? Reach out through our <a href="contact.html">contact page</a>.</p>
+  </div>
+</div>
+
+<footer>
+  <p class="fnote">Every lesson comes with quizzes, flashcards, and audio built right in. Progress, XP, and badges save locally in your browser as you work through each course.</p>
+  <p>Powered by Hookitlingo</p>
+
+  <ul class="footer-links">
+    <li><a href="about.html">About</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="terms-of-service.html">Terms of Service</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="cookie-policy.html">Cookie Policy</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="community-guidelines.html">Community Guidelines</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="contact.html">Contact</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="report.html">Report a User</a></li>
+  </ul>
+
+  <p class="fcopyright">&copy; <span id="footerYear"></span> Hookitlingo. All rights reserved.</p>
+</footer>
+
+<script>
+/* Theme toggle, shares the hkl_site_theme key with index.html so the choice stays in sync across pages */
+const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', ThemeState.theme);
+  document.getElementById('themeBtn').textContent = ThemeState.theme === 'dark' ? '☾ Dark' : '☀ Light';
+}
+document.getElementById('themeBtn').onclick = () => {
+  ThemeState.theme = ThemeState.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('hkl_site_theme', ThemeState.theme);
+  applyTheme();
+};
+applyTheme();
+
+/* Petals */
+(function spawnPetals(){
+  const host = document.getElementById('petals');
+  if(!host) return;
+  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
+  const count = window.innerWidth < 700 ? 10 : 18;
+  for(let i=0;i<count;i++){
+    const size = 10 + Math.random()*12;
+    const left = Math.random()*100;
+    const dur = 10 + Math.random()*12;
+    const delay = -(Math.random()*dur);
+    const drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)];
+    const rotStart = Math.round(Math.random()*360);
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
+    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
+    host.appendChild(p);
+  }
+})();
+
+/* Footer copyright year */
+const footerYearEl = document.getElementById('footerYear');
+if (footerYearEl) footerYearEl.textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

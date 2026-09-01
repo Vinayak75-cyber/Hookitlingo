@@ -332,6 +332,11 @@ button{font-family:var(--sans); cursor:pointer;}
 footer{position:relative; z-index:2; text-align:center; padding:30px 5vw 50px; color:var(--text-faint); font-size:.82em;}
 footer .fnote{max-width:520px; margin:0 auto 10px;}
 footer a{color:var(--text-faint); text-decoration:underline;}
+.footer-links{list-style:none; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:8px 16px; margin:16px 0; padding:0;}
+.footer-links a{text-decoration:none;}
+.footer-links a:hover{color:var(--text-dim); text-decoration:underline;}
+.footer-links .fl-sep{color:var(--border);}
+footer .fcopyright{color:var(--text-faint); font-size:.92em; margin:14px 0 0;}
 
 @media(max-width:640px){
   #topbar{flex-direction:column; align-items:flex-start;}
@@ -425,9 +430,31 @@ footer a{color:var(--text-faint); text-decoration:underline;}
 <footer>
   <p class="fnote">Every lesson comes with quizzes, flashcards, and audio built right in. Progress, XP, and badges save locally in your browser as you work through each course.</p>
   <p>Powered by Hookitlingo</p>
+
+  <ul class="footer-links">
+    <li><a href="about.html">About</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="terms-of-service.html">Terms of Service</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="cookie-policy.html">Cookie Policy</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="community-guidelines.html">Community Guidelines</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="contact.html">Contact</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="report.html">Report a User</a></li>
+  </ul>
+
+  <p class="fcopyright">&copy; <span id="footerYear"></span> Hookitlingo. All rights reserved.</p>
 </footer>
 
 <script>
+/* Footer copyright year */
+const footerYearEl = document.getElementById('footerYear');
+if (footerYearEl) footerYearEl.textContent = new Date().getFullYear();
+
 /* ============================================================
    Theme toggle
    ============================================================ */

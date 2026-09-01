@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookie Policy - Hookitlingo</title>
+<meta name="description" content="How Hookitlingo uses cookies and similar technologies.">
+<link rel="canonical" href="https://hookit.online/cookie-policy.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== TOKENS (matches index.html) ===== */
+:root{
+  --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941;
+  --border:#4a3550;
+  --text:#f6ecec; --text-dim:#c7b2c4; --text-faint:#8f7a91;
+  --vermilion:#e58aa2; --vermilion-dim:#5a2c3a;
+  --celadon:#5fa688; --celadon-dim:#2a4a3d;
+  --gold:#d9ab5c; --gold-dim:#5c471e;
+  --inkblue:#a084c9; --inkblue-dim:#3a2c50;
+  --petal:#f3b6c6;
+  --radius:16px; --radius-sm:10px;
+  --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --kr:"Noto Serif KR","Apple SD Gothic Neo","Malgun Gothic","Nanum Gothic",sans-serif;
+  --maxw:1080px;
+}
+html[data-theme="light"]{
+  --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6;
+  --border:#eccabb;
+  --text:#3a2530; --text-dim:#79576a; --text-faint:#a98a9c;
+  --vermilion:#c8546f; --vermilion-dim:#f6dae2;
+  --celadon:#3f7d63; --celadon-dim:#d9ece2;
+  --gold:#a4762b; --gold-dim:#f2e2c2;
+  --inkblue:#75509f; --inkblue-dim:#e7ddf2;
+  --petal:#e59fb2;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--text); font-family:var(--sans);
+  font-size:16px; line-height:1.65; transition:background .3s,color .3s;
+  background:
+    radial-gradient(1100px 620px at 12% -8%, color-mix(in srgb, var(--vermilion) 16%, transparent), transparent 58%),
+    radial-gradient(900px 520px at 104% 6%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 55%),
+    var(--ink);
+  background-attachment:fixed;
+  min-height:100vh;
+}
+::selection{background:var(--vermilion); color:#fff;}
+h1,h2,h3{font-family:var(--serif); font-weight:600; letter-spacing:.2px; margin:0 0 .4em;}
+p{margin:0 0 1em;}
+a{color:var(--celadon);}
+.kr{font-family:var(--kr);}
+button{font-family:var(--sans); cursor:pointer;}
+
+/* Petals */
+.petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.petal{position:absolute; top:-8%; will-change:transform; animation:petal-fall linear infinite;}
+.petal svg{display:block; filter:drop-shadow(0 1px 1px rgba(0,0,0,.08));}
+@keyframes petal-fall{
+  0%{transform:translate(0,-10vh) rotate(0deg);}
+  100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}
+}
+@media (prefers-reduced-motion: reduce){ .petals{display:none;} }
+@media(max-width:900px){ .petals .petal:nth-child(even){display:none;} }
+
+/* ===== Topbar ===== */
+#topbar{
+  position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between;
+  max-width:var(--maxw); margin:0 auto; padding:20px 5vw 6px;
+}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
+.brand-block{
+  width:38px; height:38px; border-radius:10px; background:var(--surface2); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:1.2em;
+}
+.brand-txt{color:var(--text);}
+.brand-txt strong{display:block; font-family:var(--serif); font-size:1.3em; letter-spacing:.2px;}
+.brand-txt span{display:block; font-size:.68em; color:var(--text-faint); letter-spacing:.14em; text-transform:uppercase;}
+.top-actions{display:flex; align-items:center; gap:10px;}
+.topbtn{
+  background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); border-radius:8px;
+  padding:9px 14px; font-size:.85em; font-weight:600;
+}
+.topbtn:hover{color:var(--text); border-color:var(--text-faint);}
+
+/* ===== Legal doc content ===== */
+.page{position:relative; z-index:2; max-width:760px; margin:0 auto; padding:40px 5vw 20px;}
+.page h1{font-size:clamp(1.8em,4.5vw,2.5em); margin-bottom:6px;}
+.updated{color:var(--text-faint); font-size:.85em; margin-bottom:30px;}
+.legal-box{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:32px 30px; margin-bottom:40px;
+}
+.legal-box h2{font-size:1.25em; margin-top:1.6em; color:var(--text);}
+.legal-box h2:first-child{margin-top:0;}
+.legal-box p, .legal-box li, .legal-box td{color:var(--text-dim); font-size:.96em;}
+.legal-box ul{padding-left:1.2em; margin:0 0 1em;}
+.legal-box li{margin-bottom:.5em;}
+.legal-box strong{color:var(--text);}
+.toc{
+  background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm);
+  padding:16px 20px; margin-bottom:30px; font-size:.9em;
+}
+.toc strong{display:block; margin-bottom:8px; color:var(--text);}
+.toc ol{margin:0; padding-left:1.1em; color:var(--text-dim);}
+.toc a{color:var(--text-dim); text-decoration:none;}
+.toc a:hover{color:var(--celadon); text-decoration:underline;}
+
+.cookie-table{width:100%; border-collapse:collapse; margin:14px 0 20px; font-size:.9em;}
+.cookie-table th{
+  text-align:left; color:var(--text); font-weight:600; padding:8px 10px;
+  border-bottom:1px solid var(--border); font-size:.85em; text-transform:uppercase; letter-spacing:.04em;
+}
+.cookie-table td{padding:10px 10px; border-bottom:1px solid var(--border); vertical-align:top;}
+.cookie-table tr:last-child td{border-bottom:none;}
+.cookie-table code{
+  background:var(--surface2); border:1px solid var(--border); border-radius:4px; padding:1px 6px;
+  font-size:.9em; color:var(--gold);
+}
+
+/* ===== Footer (matches index.html) ===== */
+footer{position:relative; z-index:2; text-align:center; padding:30px 5vw 50px; color:var(--text-faint); font-size:.82em;}
+footer .fnote{max-width:520px; margin:0 auto 10px;}
+footer a{color:var(--text-faint); text-decoration:underline;}
+.footer-links{list-style:none; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:8px 16px; margin:16px 0; padding:0;}
+.footer-links a{text-decoration:none;}
+.footer-links a:hover{color:var(--text-dim); text-decoration:underline;}
+.footer-links .fl-sep{color:var(--border);}
+footer .fcopyright{color:var(--text-faint); font-size:.92em; margin:14px 0 0;}
+</style>
+</head>
+<body>
+
+<div class="petals no-print" id="petals" aria-hidden="true"></div>
+
+<div id="topbar">
+  <a class="brand" href="index.html">
+    <div class="brand-block kr">虎</div>
+    <div class="brand-txt"><strong>Hookitlingo</strong><span>Korean &amp; Japanese, learned together</span></div>
+  </a>
+  <div class="top-actions">
+    <a class="topbtn" href="index.html">← Home</a>
+    <button class="topbtn" id="themeBtn">☾ Dark</button>
+  </div>
+</div>
+
+<div class="page">
+  <h1>Cookie Policy</h1>
+  <p class="updated">Last updated: September 1, 2026</p>
+
+  <div class="toc">
+    <strong>On this page</strong>
+    <ol>
+      <li><a href="#what">What cookies are</a></li>
+      <li><a href="#use">Cookies we use</a></li>
+      <li><a href="#storage">Local storage (not quite a cookie, but similar)</a></li>
+      <li><a href="#control">Managing cookies</a></li>
+      <li><a href="#changes">Changes to this policy</a></li>
+      <li><a href="#contact">Contact us</a></li>
+    </ol>
+  </div>
+
+  <div class="legal-box">
+    <p>This page explains, in plain terms, the cookies and similar bits of storage Hookitlingo uses when you visit the site. For how we handle your personal information more broadly, see our <a href="privacy-policy.html">Privacy Policy</a>.</p>
+
+    <h2 id="what">1. What cookies are</h2>
+    <p>A cookie is a small text file a website stores in your browser. It lets the site remember something about you between visits, like whether you're logged in. Cookies aren't programs and can't run code on your device on their own.</p>
+
+    <h2 id="use">2. Cookies we use</h2>
+    <table class="cookie-table">
+      <tr>
+        <th>Cookie</th>
+        <th>Purpose</th>
+        <th>Type</th>
+      </tr>
+      <tr>
+        <td><code>hkl_user_session</code></td>
+        <td>Keeps you logged in between visits. This one is required for the site to work; without it, you'd have to log in again on every page.</td>
+        <td>Essential</td>
+      </tr>
+      <tr>
+        <td><code>_ga</code>, <code>_ga_*</code></td>
+        <td>Set by Google Analytics to distinguish visitors and measure how people use the site (which pages get visited, how often, roughly where from).</td>
+        <td>Analytics</td>
+      </tr>
+    </table>
+    <p>We don't use cookies for advertising, and we don't sell any information gathered through cookies to third parties.</p>
+
+    <h2 id="storage">3. Local storage (not quite a cookie, but similar)</h2>
+    <p>Some parts of Hookitlingo use your browser's local storage instead of a cookie. This includes:</p>
+    <ul>
+      <li>Your light or dark theme preference</li>
+      <li>Lesson progress, XP, and badges as you work through a course</li>
+    </ul>
+    <p>This information stays in your browser and isn't automatically sent to our servers. Clearing your browser's site data will reset it.</p>
+
+    <h2 id="control">4. Managing cookies</h2>
+    <p>Most browsers let you view, delete, or block cookies through their settings. Blocking the <code>hkl_user_session</code> cookie will prevent you from staying logged in. Blocking analytics cookies won't affect how the site functions for you, it just means we won't see your visit in our usage data.</p>
+    <p>If you'd rather opt out of Google Analytics specifically across the web, Google provides a <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">browser add-on</a> for that.</p>
+
+    <h2 id="changes">5. Changes to this policy</h2>
+    <p>If the cookies we use change, such as adding a new analytics or feature tool, we'll update this page and the date at the top.</p>
+
+    <h2 id="contact">6. Contact us</h2>
+    <p>Questions about our use of cookies? Reach out through our <a href="contact.html">contact page</a>.</p>
+  </div>
+</div>
+
+<footer>
+  <p class="fnote">Every lesson comes with quizzes, flashcards, and audio built right in. Progress, XP, and badges save locally in your browser as you work through each course.</p>
+  <p>Powered by Hookitlingo</p>
+
+  <ul class="footer-links">
+    <li><a href="about.html">About</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="terms-of-service.html">Terms of Service</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="cookie-policy.html">Cookie Policy</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="community-guidelines.html">Community Guidelines</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="contact.html">Contact</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="report.html">Report a User</a></li>
+  </ul>
+
+  <p class="fcopyright">&copy; <span id="footerYear"></span> Hookitlingo. All rights reserved.</p>
+</footer>
+
+<script>
+/* Theme toggle, shares the hkl_site_theme key with index.html so the choice stays in sync across pages */
+const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', ThemeState.theme);
+  document.getElementById('themeBtn').textContent = ThemeState.theme === 'dark' ? '☾ Dark' : '☀ Light';
+}
+document.getElementById('themeBtn').onclick = () => {
+  ThemeState.theme = ThemeState.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('hkl_site_theme', ThemeState.theme);
+  applyTheme();
+};
+applyTheme();
+
+/* Petals */
+(function spawnPetals(){
+  const host = document.getElementById('petals');
+  if(!host) return;
+  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
+  const count = window.innerWidth < 700 ? 10 : 18;
+  for(let i=0;i<count;i++){
+    const size = 10 + Math.random()*12;
+    const left = Math.random()*100;
+    const dur = 10 + Math.random()*12;
+    const delay = -(Math.random()*dur);
+    const drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)];
+    const rotStart = Math.round(Math.random()*360);
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
+    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
+    host.appendChild(p);
+  }
+})();
+
+/* Footer copyright year */
+const footerYearEl = document.getElementById('footerYear');
+if (footerYearEl) footerYearEl.textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

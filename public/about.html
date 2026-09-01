@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - Hookitlingo</title>
+<meta name="description" content="Hookitlingo connects Korean and Japanese learners with native-speaking teachers and fellow learners around the world, through interactive lessons and a shareable community profile.">
+<link rel="canonical" href="https://hookit.online/about.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== TOKENS (matches index.html) ===== */
+:root{
+  --ink:#1c1420; --surface:#26192b; --surface2:#2f2035; --surface3:#3b2941;
+  --border:#4a3550;
+  --text:#f6ecec; --text-dim:#c7b2c4; --text-faint:#8f7a91;
+  --vermilion:#e58aa2; --vermilion-dim:#5a2c3a;
+  --celadon:#5fa688; --celadon-dim:#2a4a3d;
+  --gold:#d9ab5c; --gold-dim:#5c471e;
+  --inkblue:#a084c9; --inkblue-dim:#3a2c50;
+  --petal:#f3b6c6;
+  --radius:16px; --radius-sm:10px;
+  --serif:"Cormorant Garamond","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --kr:"Noto Serif KR","Apple SD Gothic Neo","Malgun Gothic","Nanum Gothic",sans-serif;
+  --maxw:1080px;
+}
+html[data-theme="light"]{
+  --ink:#fdf3ef; --surface:#fffaf6; --surface2:#fbeee6; --surface3:#f5dfd6;
+  --border:#eccabb;
+  --text:#3a2530; --text-dim:#79576a; --text-faint:#a98a9c;
+  --vermilion:#c8546f; --vermilion-dim:#f6dae2;
+  --celadon:#3f7d63; --celadon-dim:#d9ece2;
+  --gold:#a4762b; --gold-dim:#f2e2c2;
+  --inkblue:#75509f; --inkblue-dim:#e7ddf2;
+  --petal:#e59fb2;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; color:var(--text); font-family:var(--sans);
+  font-size:16px; line-height:1.65; transition:background .3s,color .3s;
+  background:
+    radial-gradient(1100px 620px at 12% -8%, color-mix(in srgb, var(--vermilion) 16%, transparent), transparent 58%),
+    radial-gradient(900px 520px at 104% 6%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 55%),
+    var(--ink);
+  background-attachment:fixed;
+  min-height:100vh;
+}
+::selection{background:var(--vermilion); color:#fff;}
+h1,h2,h3{font-family:var(--serif); font-weight:600; letter-spacing:.2px; margin:0 0 .4em;}
+p{margin:0 0 1em;}
+a{color:var(--celadon);}
+.kr{font-family:var(--kr);}
+button{font-family:var(--sans); cursor:pointer;}
+
+/* Petals */
+.petals{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+.petal{position:absolute; top:-8%; will-change:transform; animation:petal-fall linear infinite;}
+.petal svg{display:block; filter:drop-shadow(0 1px 1px rgba(0,0,0,.08));}
+@keyframes petal-fall{
+  0%{transform:translate(0,-10vh) rotate(0deg);}
+  100%{transform:translate(var(--drift,50px), 112vh) rotate(340deg);}
+}
+@media (prefers-reduced-motion: reduce){ .petals{display:none;} }
+@media(max-width:900px){ .petals .petal:nth-child(even){display:none;} }
+
+/* ===== Topbar ===== */
+#topbar{
+  position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between;
+  max-width:var(--maxw); margin:0 auto; padding:20px 5vw 6px;
+}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
+.brand-block{
+  width:38px; height:38px; border-radius:10px; background:var(--surface2); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:1.2em;
+}
+.brand-txt{color:var(--text);}
+.brand-txt strong{display:block; font-family:var(--serif); font-size:1.3em; letter-spacing:.2px;}
+.brand-txt span{display:block; font-size:.68em; color:var(--text-faint); letter-spacing:.14em; text-transform:uppercase;}
+.top-actions{display:flex; align-items:center; gap:10px;}
+.topbtn{
+  background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); border-radius:8px;
+  padding:9px 14px; font-size:.85em; font-weight:600;
+}
+.topbtn:hover{color:var(--text); border-color:var(--text-faint);}
+
+/* ===== Page content ===== */
+.page{position:relative; z-index:2; max-width:760px; margin:0 auto; padding:40px 5vw 20px;}
+.eyebrow{font-size:.78em; letter-spacing:.16em; text-transform:uppercase; color:var(--vermilion); font-weight:700; margin-bottom:14px; text-align:center;}
+.page h1{font-size:clamp(2em,5vw,2.8em); text-align:center; margin-bottom:10px;}
+.page h1 .accent{color:var(--gold); font-style:italic;}
+.page .lead{color:var(--text-dim); font-size:1.1em; text-align:center; max-width:560px; margin:0 auto 40px;}
+
+.section{margin-bottom:36px;}
+.section h2{font-size:1.5em; margin-bottom:10px;}
+.section p{color:var(--text-dim);}
+
+.card-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin:24px 0 36px;}
+.about-card{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:22px 20px;
+}
+.about-card .icon{font-size:1.6em; margin-bottom:10px;}
+.about-card h3{font-size:1.05em; margin-bottom:6px;}
+.about-card p{color:var(--text-faint); font-size:.9em; margin:0;}
+
+.cta-row{text-align:center; margin:44px 0 20px;}
+.cta-btn{
+  display:inline-block; background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%));
+  color:#fff; font-weight:700; padding:13px 28px; border-radius:12px; text-decoration:none; font-size:.95em;
+}
+.cta-btn:hover{filter:brightness(1.06);}
+
+/* ===== Footer (matches index.html) ===== */
+footer{position:relative; z-index:2; text-align:center; padding:30px 5vw 50px; color:var(--text-faint); font-size:.82em;}
+footer .fnote{max-width:520px; margin:0 auto 10px;}
+footer a{color:var(--text-faint); text-decoration:underline;}
+.footer-links{list-style:none; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:8px 16px; margin:16px 0; padding:0;}
+.footer-links a{text-decoration:none;}
+.footer-links a:hover{color:var(--text-dim); text-decoration:underline;}
+.footer-links .fl-sep{color:var(--border);}
+footer .fcopyright{color:var(--text-faint); font-size:.92em; margin:14px 0 0;}
+</style>
+</head>
+<body>
+
+<div class="petals no-print" id="petals" aria-hidden="true"></div>
+
+<div id="topbar">
+  <a class="brand" href="index.html">
+    <div class="brand-block kr">虎</div>
+    <div class="brand-txt"><strong>Hookitlingo</strong><span>Korean &amp; Japanese, learned together</span></div>
+  </a>
+  <div class="top-actions">
+    <a class="topbtn" href="index.html">← Home</a>
+    <button class="topbtn" id="themeBtn">☾ Dark</button>
+  </div>
+</div>
+
+<div class="page">
+  <div class="eyebrow">Our Story</div>
+  <h1>Learning a language is better <span class="accent">together</span></h1>
+  <p class="lead">We started Hookitlingo because we were tired of apps that teach you grammar rules and then leave you on your own. A language isn't really learned until you're using it with another person.</p>
+
+  <div class="section">
+    <h2>What we're building</h2>
+    <p>Hookitlingo is a place to learn Korean and Japanese, and then actually use it. The lessons are structured with quizzes, flashcards, and audio, so you're not just reading, you're practicing from the first day. But the real point isn't the lessons. It's what comes after them: talking to a native speaker, meeting other learners, getting corrected by someone who actually knows the language instead of guessing at what an app tells you.</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="about-card">
+      <div class="icon">📚</div>
+      <h3>Interactive Lessons</h3>
+      <p>Structured courses with quizzes, flashcards, and audio, so you're practicing from day one instead of just reading.</p>
+    </div>
+    <div class="about-card">
+      <div class="icon">🌏</div>
+      <h3>Native Teachers &amp; Learners</h3>
+      <p>Connect with native Korean and Japanese speakers, plus other learners working through the same material.</p>
+    </div>
+    <div class="about-card">
+      <div class="icon">🪪</div>
+      <h3>Your Own Profile Card</h3>
+      <p>Sign up and get a shareable profile card with your social links, so people can find and connect with you.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Why it matters</h2>
+    <p>Maybe you're learning Korean because of a show you can't stop watching. Maybe it's Japanese for a trip you've been planning for years, or because of family, or a job, or honestly just because you like how it sounds. The reason doesn't really matter to us. What matters is that you get to speak it with someone before you've finished a whole textbook, not after.</p>
+  </div>
+
+  <div class="cta-row">
+    <a class="cta-btn" href="index.html">Start Learning →</a>
+  </div>
+</div>
+
+<footer>
+  <p class="fnote">Every lesson comes with quizzes, flashcards, and audio built right in. Progress, XP, and badges save locally in your browser as you work through each course.</p>
+  <p>Powered by Hookitlingo</p>
+
+  <ul class="footer-links">
+    <li><a href="about.html">About</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="terms-of-service.html">Terms of Service</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="cookie-policy.html">Cookie Policy</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="community-guidelines.html">Community Guidelines</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="contact.html">Contact</a></li>
+    <li class="fl-sep">&middot;</li>
+    <li><a href="report.html">Report a User</a></li>
+  </ul>
+
+  <p class="fcopyright">&copy; <span id="footerYear"></span> Hookitlingo. All rights reserved.</p>
+</footer>
+
+<script>
+/* Theme toggle, shares the hkl_site_theme key with index.html so the choice stays in sync across pages */
+const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', ThemeState.theme);
+  document.getElementById('themeBtn').textContent = ThemeState.theme === 'dark' ? '☾ Dark' : '☀ Light';
+}
+document.getElementById('themeBtn').onclick = () => {
+  ThemeState.theme = ThemeState.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('hkl_site_theme', ThemeState.theme);
+  applyTheme();
+};
+applyTheme();
+
+/* Petals */
+(function spawnPetals(){
+  const host = document.getElementById('petals');
+  if(!host) return;
+  const colors = ['var(--petal)','var(--vermilion)','var(--gold)'];
+  const count = window.innerWidth < 700 ? 10 : 18;
+  for(let i=0;i<count;i++){
+    const size = 10 + Math.random()*12;
+    const left = Math.random()*100;
+    const dur = 10 + Math.random()*12;
+    const delay = -(Math.random()*dur);
+    const drift = Math.round(Math.random()*90-45)+'px';
+    const fill = colors[Math.floor(Math.random()*colors.length)];
+    const rotStart = Math.round(Math.random()*360);
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${left}%; width:${size}px; height:${size}px; animation-duration:${dur}s; animation-delay:${delay}s; --drift:${drift}; transform:rotate(${rotStart}deg);`;
+    p.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 1c5 4.5 5 10.5 0 14-5-3.5-5-9.5 0-14Z" fill="${fill}" opacity="0.75"/></svg>`;
+    host.appendChild(p);
+  }
+})();
+
+/* Footer copyright year */
+const footerYearEl = document.getElementById('footerYear');
+if (footerYearEl) footerYearEl.textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
