@@ -129,9 +129,6 @@ app.get('/api/health', (req, res) => {
 // Remove this route once you've confirmed req.ip can't be spoofed
 // (see the curl commands you were given for how to test it) - it
 // leaks visitor IPs to anyone who requests it.
-app.get('/api/debug-ip', (req, res) => {
-  res.json({ ip: req.ip, xff: req.headers['x-forwarded-for'] });
-});
 
 // COURSE ACCESS - Airtable is the source of truth for which codes
 // unlock which lesson(s). Purchases happen manually via Gumroad; you
