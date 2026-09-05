@@ -17,14 +17,21 @@ const paymentRouter = require('./routes/payment');
 
 const app = express();
 
-// Render sits exactly one reverse-proxy hop in front of this app, so
-// trust exactly one hop of X-Forwarded-For. This makes Express parse
-// that header itself and populate req.ip with the real client IP,
-// while ignoring any X-Forwarded-For value a client tries to inject
-// before it reaches that first trusted hop. If you ever put
-// something like Cloudflare in front of Render too, this needs to
-// become 2, not 1.
-app.set('trust proxy', 1);
+// Render fronts even the default .onrender.com domain through 3
+// hops before it reaches this app: an edge/CDN layer, Render's own
+// internal routing layer, then this container. Confirmed empirically
+// via /api/debug-ip - the raw X-Forwarded-For header arrives with 3
+// addresses already in it, so trusting only 1 hop (as originally set)
+// resolved req.ip to Render's own internal, per-request address
+// instead of the real visitor - which is worse than not fixing it at
+// all, since it silently broke rate limiting rather than leaving it
+// spoofable. Trusting 3 hops correctly resolves to the real visitor
+// IP and still ignores anything a client tries to inject on the left
+// of the header. If you later add your own separate Cloudflare (or
+// anything else) in front of a custom domain, re-run the
+// /api/debug-ip test against that domain specifically - it may add
+// another hop, requiring 4 instead of 3.
+app.set('trust proxy', 3);
 
 // Only your own frontend(s) may call this API from a browser. Set
 // ALLOWED_ORIGINS in your environment to a comma-separated list of the
