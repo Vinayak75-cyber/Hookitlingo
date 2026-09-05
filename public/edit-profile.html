@@ -195,6 +195,26 @@ textarea{resize:vertical; min-height:90px;}
 }
 .take-down-btn:hover{filter:brightness(1.08);}
 .take-down-btn:disabled{opacity:.6; cursor:default;}
+
+/* Pending-approval overlay: same pattern as profile.html - the form
+   renders normally underneath but blurred, with a small lock card on
+   top saying it can't be edited until the first review is done. This
+   is purely the visual side of it; the actual rule is enforced by
+   the server refusing the save either way, so this can't be gotten
+   around by hiding the overlay in dev tools. */
+.pending-blur{filter:blur(14px) brightness(.55); pointer-events:none; user-select:none;}
+.pending-overlay{
+  position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center;
+  padding:24px; background:rgba(18,12,20,.35);
+}
+.pending-card{
+  max-width:340px; width:100%; text-align:center; border-radius:var(--radius);
+  background:var(--surface2); border:1px solid var(--border);
+  padding:28px 26px; box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+.pending-icon{font-size:1.8em; margin-bottom:10px;}
+.pending-card h2{font-family:var(--serif); font-weight:600; font-size:1.4em; margin:0 0 8px;}
+.pending-card p{margin:0; color:var(--text-dim); font-size:.92em;}
 </style>
 </head>
 <body>
@@ -433,6 +453,7 @@ function renderForm(me){
     <div class="sub">This is what ${audience} see once it's approved.</div>
     ${statusBanner(me.status, me.id, previewHref)}
 
+    <div class="editable-area" id="editableArea">
     ${p.type === 'teacher' ? `
       <div class="tab-toggle" id="editTabToggle">
         <button type="button" class="tab-btn active" id="tabBtnProfile" data-tab="profile">Edit Profile</button>
@@ -568,7 +589,22 @@ function renderForm(me){
     </div>
 
     ${p.type === 'teacher' ? `<div class="tab-panel" id="announcementPanel">${announcementCardHtml()}</div>` : ''}
+    </div>
   `;
+
+  if(me.status === 'Pending'){
+    document.getElementById('editableArea').classList.add('pending-blur');
+    const overlay = document.createElement('div');
+    overlay.className = 'pending-overlay';
+    overlay.innerHTML = `
+      <div class="pending-card">
+        <div class="pending-icon">🔒</div>
+        <h2>Approval pending</h2>
+        <p>Your profile is still waiting on its first review, so it can't be edited yet. Check back once it's been approved.</p>
+      </div>
+    `;
+    document.getElementById('pageHost').appendChild(overlay);
+  }
 
   document.getElementById('saveBtn').onclick = saveProfile;
   document.getElementById('fImageFile').addEventListener('change', handleImageFileChange);

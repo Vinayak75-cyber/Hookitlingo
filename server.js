@@ -1402,6 +1402,24 @@ app.put('/api/profile', async (req, res) => {
     return res.status(401).json({ error: 'Please log in to edit your profile.' });
   }
 
+  // Pulled up front, before touching anything else in the request -
+  // this is what decides whether editing is even allowed right now,
+  // so there's no point validating the rest of the form first. A
+  // Pending profile hasn't been reviewed yet, so it can't be edited
+  // until that first review happens (an Approved or Rejected profile
+  // can always be edited). This is the actual, only place that rule
+  // is enforced - the edit page hides its form for a Pending account
+  // too, but that's just for a better look and feel. Someone calling
+  // this endpoint straight from dev tools still hits this same check
+  // and gets turned away the same way.
+  const existingRecord = await fetchUserRecord(req.sessionUserId);
+  if (!existingRecord || !existingRecord.fields) {
+    return res.status(401).json({ error: 'Please log in to edit your profile.' });
+  }
+  if (existingRecord.fields.Status === 'Pending') {
+    return res.status(403).json({ error: 'Your profile is still awaiting its first review, so it can\'t be edited yet.' });
+  }
+
   const body = req.body || {};
   const links = body.links || {};
   const name = cleanStr(body.name, 100);
@@ -1424,13 +1442,9 @@ app.put('/api/profile', async (req, res) => {
     return res.status(400).json({ error: 'Instagram is required, please add your Instagram handle.' });
   }
 
-  // Grabbed before the update so we know what photo (if any) this
-  // save is about to replace - see the R2 cleanup after the write
-  // succeeds below. A record we can't read is treated the same as
-  // "no old photo": the update below still goes ahead, it just means
-  // there's nothing here for R2 cleanup to compare against.
-  const existingRecord = await fetchUserRecord(req.sessionUserId);
-  const oldImageUrl = existingRecord ? (existingRecord.fields.ImageURL || '') : '';
+  // The old photo (if any) this save is about to replace - see the R2
+  // cleanup after the write succeeds below.
+  const oldImageUrl = existingRecord.fields.ImageURL || '';
 
   const fields = {
     Name: name,
