@@ -17,6 +17,15 @@ const paymentRouter = require('./routes/payment');
 
 const app = express();
 
+// Render sits exactly one reverse-proxy hop in front of this app, so
+// trust exactly one hop of X-Forwarded-For. This makes Express parse
+// that header itself and populate req.ip with the real client IP,
+// while ignoring any X-Forwarded-For value a client tries to inject
+// before it reaches that first trusted hop. If you ever put
+// something like Cloudflare in front of Render too, this needs to
+// become 2, not 1.
+app.set('trust proxy', 1);
+
 // Only your own frontend(s) may call this API from a browser. Set
 // ALLOWED_ORIGINS in your environment to a comma-separated list of the
 // domains you actually serve the site from, e.g.:
@@ -107,6 +116,14 @@ const { verifyPayPalOrderCompleted, computeOrderTotal } = paymentRouter;
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// TEMPORARY - verifies the trust proxy fix is working on Render.
+// Remove this route once you've confirmed req.ip can't be spoofed
+// (see the curl commands you were given for how to test it) - it
+// leaks visitor IPs to anyone who requests it.
+app.get('/api/debug-ip', (req, res) => {
+  res.json({ ip: req.ip, xff: req.headers['x-forwarded-for'] });
 });
 
 // COURSE ACCESS - Airtable is the source of truth for which codes
@@ -287,7 +304,7 @@ function isSignupRateLimited(ip) {
 }
 
 function getClientIp(req) {
-  return req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+  return req.ip || req.socket.remoteAddress || 'unknown';
 }
 
 // ACCOUNT-BASED LESSON ACCESS - an Approved account grants full
