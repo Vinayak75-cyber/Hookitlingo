@@ -86,12 +86,6 @@ label{font-size:.82em; font-weight:600; color:var(--text-dim); display:block; ma
   margin-top:20px; padding-top:16px; border-top:1px solid var(--border);
   font-size:.8em; color:var(--text-faint); text-align:center;
 }
-.form-lead-in{
-  display:flex; align-items:center; gap:12px; margin:8px 0 26px;
-  color:var(--text-faint); font-size:.8em; text-transform:uppercase; letter-spacing:.1em; font-weight:700;
-}
-.form-lead-in::before, .form-lead-in::after{content:''; flex:1; height:1px; background:var(--border);}
-
 .form-card{
   background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:26px;
   display:flex; flex-direction:column; gap:16px;
@@ -153,15 +147,79 @@ textarea{resize:vertical; min-height:90px;}
 }
 .toggle-hint{font-size:.78em; color:var(--text-faint); margin:-6px 0 4px;}
 
-.form-actions{display:flex; gap:10px; align-items:center; margin-top:6px; flex-wrap:wrap;}
+.form-actions{display:flex; gap:10px; align-items:center; margin-top:6px; flex-wrap:wrap; justify-content:flex-end;}
+.form-actions.with-back{justify-content:space-between;}
 .save-btn{
   padding:12px 26px; border-radius:999px; font-weight:700; font-size:.9em; color:#fff; border:none;
   background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%));
 }
 .save-btn:hover{filter:brightness(1.06);}
 .save-btn:disabled{opacity:.6; cursor:default;}
+.back-btn{
+  padding:12px 22px; border-radius:999px; font-weight:700; font-size:.9em; color:var(--text-dim);
+  background:var(--surface2); border:1px solid var(--border);
+}
+.back-btn:hover{color:var(--text); border-color:var(--celadon);}
 .form-error{color:var(--vermilion); font-size:.85em; min-height:1.2em;}
 .form-note{text-align:center; font-size:.82em; color:var(--text-faint); margin-top:2px;}
+
+/* ===== Start-profile CTA that swaps the overview for the step flow ===== */
+.start-profile-row{display:flex; justify-content:center; margin:8px 0 30px;}
+.start-profile-btn{
+  padding:14px 30px; border-radius:999px; font-weight:700; font-size:.95em; color:#fff; border:none;
+  background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%));
+  box-shadow:0 6px 20px -8px color-mix(in srgb, var(--celadon) 70%, transparent);
+}
+.start-profile-btn:hover{filter:brightness(1.06);}
+.top-login-note{text-align:center; font-size:.88em; color:var(--text-dim); margin:0 0 22px;}
+.top-login-note a{font-weight:600;}
+
+/* ===== 4-step indicator ===== */
+.step-indicator{display:flex; align-items:flex-start; margin-bottom:24px;}
+.step-indicator .step-item{display:flex; flex-direction:column; align-items:center; gap:8px; flex:none; width:78px;}
+.step-indicator .step-circle{
+  width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-family:var(--serif); font-weight:700; font-size:.95em; color:var(--text-faint);
+  background:var(--surface2); border:1px solid var(--border);
+  transition:background .15s ease, color .15s ease, border-color .15s ease;
+}
+.step-indicator .step-label{font-size:.78em; font-weight:600; color:var(--text-faint); text-align:center; transition:color .15s ease;}
+.step-indicator .step-line{flex:1; height:1px; background:var(--border); margin-top:17px; transition:background .15s ease;}
+.step-indicator .step-item.done .step-circle, .step-indicator .step-item.active .step-circle{
+  background:linear-gradient(135deg,var(--celadon), color-mix(in srgb, var(--celadon) 55%, var(--gold) 45%));
+  border-color:transparent; color:#fff;
+}
+.step-indicator .step-item.active .step-label{color:var(--text);}
+.step-indicator .step-line.done{background:var(--celadon);}
+
+.step-panel{display:flex; flex-direction:column; gap:16px;}
+.step-panel.hidden{display:none;}
+
+/* ===== Payment intro (step 4 landing, before the PayPal buttons show) ===== */
+.payment-intro{text-align:center;}
+.payment-intro .form-actions{justify-content:center; margin-bottom:14px;}
+.payment-intro .back-btn{display:block; margin:0 auto;}
+.card-mode-note{
+  text-align:center; font-size:.8em; color:var(--gold); background:var(--gold-dim);
+  border:1px solid color-mix(in srgb, var(--gold) 45%, transparent); border-radius:10px;
+  padding:9px 12px; margin:4px 0 0; min-height:0;
+}
+.card-mode-note:empty{display:none; padding:0; margin:0; border:none;}
+
+/* ===== PayPal payment step ===== */
+.payment-summary{font-size:.92em; color:var(--text-dim); margin-bottom:14px; text-align:center;}
+.payment-summary b{color:var(--text); background:linear-gradient(135deg,var(--celadon), var(--gold));
+  -webkit-background-clip:text; background-clip:text; color:transparent;}
+#paypalButtonContainer{min-height:45px; margin-bottom:10px;}
+.edit-details-btn{
+  display:block; margin:6px auto 0; background:none; border:none; color:var(--text-faint);
+  font-size:.82em; text-decoration:underline; padding:4px;
+}
+.edit-details-btn:hover{color:var(--text-dim);}
+.retry-link{
+  background:none; border:none; color:var(--vermilion); font-size:.9em; text-decoration:underline;
+  padding:0; margin-left:6px; font-family:var(--sans); cursor:pointer;
+}
 
 /* Confirmation screen */
 .confirm-card{
@@ -198,69 +256,93 @@ textarea{resize:vertical; min-height:90px;}
 </div>
 
 <div class="wrap" id="pageHost">
-  <div class="join-hero">
-    <div class="eyebrow">🌸 Hookitlingo Community</div>
-    <h1>Be Part of the Community</h1>
-    <p class="join-lede">Join a growing circle of learners and native speakers building real language skills together structured lessons, honest conversation practice, and every profile personally reviewed by an actual human, never a bot.</p>
-    <div class="toggle-group hero-course-toggle" id="heroCourseToggle">
-      <button type="button" class="toggle-btn active" data-course="jp">日本語 Japanese</button>
-      <button type="button" class="toggle-btn" data-course="kr">한국어 Korean</button>
+  <div id="introSection">
+    <div class="join-hero">
+      <div class="eyebrow">🌸 Hookitlingo Community</div>
+      <h1>Be Part of the Community</h1>
+      <p class="join-lede">Join a growing circle of learners and native speakers building real language skills together structured lessons, honest conversation practice, and every profile personally reviewed by an actual human, never a bot.</p>
+      <div class="toggle-group hero-course-toggle" id="heroCourseToggle">
+        <button type="button" class="toggle-btn active" data-course="jp">日本語 Japanese</button>
+        <button type="button" class="toggle-btn" data-course="kr">한국어 Korean</button>
+      </div>
+    </div>
+
+    <div class="benefits-card">
+      <div class="benefits-price">
+        <span class="benefits-price-amount" id="priceAmountDisplay">$9.99</span>
+        <span class="benefits-price-note">One-time payment · No subscription · No hidden charges<br>Pay once, keep your access forever.</span>
+      </div>
+      <div class="price-limited-note" id="priceLimitedNote"><span class="pln-icon">⏳</span><span></span></div>
+      <ul class="benefits-list">
+        <li><span class="b-icon"></span><span id="benefit1Text"></span></li>
+        <li><span class="b-icon"></span><span><b>Connect with learners</b> tackling the same language as you, from anywhere in the world.</span></li>
+        <li><span class="b-icon"></span><span><b>Reach out to teachers and native speakers</b>, subject to their own availability.</span></li>
+        <li><span class="b-icon"></span><span><b>Every future course and resource</b> we release at Hookitlingo, included for as long as you're part of the community.</span></li>
+        <li><span class="b-icon"></span><span><b>Your own shareable profile card</b>, with all your links and socials attached in one clean place.</span></li>
+      </ul>
+      <div class="benefits-foot">One fee. One community. Yours for good.</div>
+    </div>
+
+    <div class="start-profile-row">
+      <button type="button" class="start-profile-btn" id="startProfileBtn">Create Your Profile →</button>
     </div>
   </div>
 
-  <div class="benefits-card">
-    <div class="benefits-price">
-      <span class="benefits-price-amount">$9.99</span>
-      <span class="benefits-price-note">One-time payment · No subscription · No hidden charges<br>Pay once, keep your access forever.</span>
-    </div>
-    <div class="price-limited-note" id="priceLimitedNote"><span class="pln-icon">⏳</span><span></span></div>
-    <ul class="benefits-list">
-      <li><span class="b-icon"></span><span id="benefit1Text"></span></li>
-      <li><span class="b-icon"></span><span><b>Connect with learners</b> tackling the same language as you, from anywhere in the world.</span></li>
-      <li><span class="b-icon"></span><span><b>Reach out to teachers and native speakers</b>, subject to their own availability.</span></li>
-      <li><span class="b-icon"></span><span><b>Every future course and resource</b> we release at Hookitlingo, included for as long as you're part of the community.</span></li>
-      <li><span class="b-icon"></span><span><b>Your own shareable profile card</b>, with all your links and socials attached in one clean place.</span></li>
-    </ul>
-    <div class="benefits-foot">One fee. One community. Yours for good.</div>
-  </div>
+  <div id="joinFlow" style="display:none;">
+    <div class="eyebrow jp" id="eyebrow">日本語 · プロフィール</div>
+    <h1 id="pageTitle">Join as a Learner</h1>
+    <div class="sub" id="pageSub">Tell us about yourself a real person reviews every profile before it goes live.</div>
+    <div class="top-login-note">Already have an account? <a href="#" id="loginLinkTop">Log in</a></div>
 
-  <div class="form-lead-in">Create your profile</div>
+    <div class="form-card" id="formCard">
+      <div class="step-indicator" id="stepIndicator">
+        <div class="step-item active" data-step="1"><div class="step-circle">1</div><div class="step-label">Account</div></div>
+        <div class="step-line"></div>
+        <div class="step-item" data-step="2"><div class="step-circle">2</div><div class="step-label">Profile</div></div>
+        <div class="step-line"></div>
+        <div class="step-item" data-step="3"><div class="step-circle">3</div><div class="step-label">Links</div></div>
+        <div class="step-line"></div>
+        <div class="step-item" data-step="4"><div class="step-circle">4</div><div class="step-label">Payment</div></div>
+      </div>
 
-  <div class="eyebrow jp" id="eyebrow">日本語 · プロフィール</div>
-  <h1 id="pageTitle">Join as a Learner</h1>
-  <div class="sub" id="pageSub">Tell us about yourself a real person reviews every profile before it goes live.</div>
+      <div class="step-panel" id="stepPanel1">
+        <div class="section-title first">I'm joining as</div>
+        <div class="toggle-group" id="roleToggle">
+          <button type="button" class="toggle-btn active" data-role="learner">Learner</button>
+          <button type="button" class="toggle-btn" data-role="teacher">Teacher / Native Speaker</button>
+        </div>
 
-  <div class="form-card" id="formCard">
-    <div class="section-title first">I'm joining as</div>
-    <div class="toggle-group" id="roleToggle">
-      <button type="button" class="toggle-btn active" data-role="learner">Learner</button>
-      <button type="button" class="toggle-btn" data-role="teacher">Teacher / Native Speaker</button>
-    </div>
+        <div class="section-title">Course</div>
+        <div class="toggle-group" id="courseToggle">
+          <button type="button" class="toggle-btn active" data-course="jp">日本語 Japanese</button>
+          <button type="button" class="toggle-btn" data-course="kr">한국어 Korean</button>
+        </div>
+        <div class="toggle-hint">This decides which directory your card shows up in once approved.</div>
 
-    <div class="section-title">Course</div>
-    <div class="toggle-group" id="courseToggle">
-      <button type="button" class="toggle-btn active" data-course="jp">日本語 Japanese</button>
-      <button type="button" class="toggle-btn" data-course="kr">한국어 Korean</button>
-    </div>
-    <div class="toggle-hint">This decides which directory your card shows up in once approved.</div>
+        <div class="section-title">Account</div>
+        <div class="field-group">
+          <label for="fEmail">Email</label>
+          <input type="email" id="fEmail" maxlength="200" autocomplete="email" placeholder="you@example.com">
+        </div>
+        <div class="field-group">
+          <label for="fPassword">Password</label>
+          <input type="password" id="fPassword" maxlength="200" autocomplete="new-password" placeholder="Min. 8 characters">
+        </div>
 
-    <div class="section-title">Account</div>
-    <div class="field-group">
-      <label for="fEmail">Email</label>
-      <input type="email" id="fEmail" maxlength="200" autocomplete="email" placeholder="you@example.com">
-    </div>
-    <div class="field-group">
-      <label for="fPassword">Password</label>
-      <input type="password" id="fPassword" maxlength="200" autocomplete="new-password" placeholder="Min. 8 characters">
-    </div>
+        <div class="form-error" id="step1Error"></div>
+        <div class="form-actions">
+          <button class="save-btn" id="step1ContinueBtn">Continue</button>
+        </div>
+      </div>
 
-    <div class="section-title">Profile</div>
-    <div class="field-group">
-      <label for="fName">Name</label>
-      <input type="text" id="fName" maxlength="100" autocomplete="name">
-    </div>
-    <div class="field-group">
-      <label for="fCountry">Country</label>
+      <div class="step-panel hidden" id="stepPanel2">
+        <div class="section-title first">Profile</div>
+        <div class="field-group">
+          <label for="fName">Name</label>
+          <input type="text" id="fName" maxlength="100" autocomplete="name">
+        </div>
+        <div class="field-group">
+          <label for="fCountry">Country</label>
       <select id="fCountry" onchange="this.classList.toggle('placeholder-selected', !this.value)">
         <option value="" class="placeholder-selected">Select your country</option>
         <option>Afghanistan</option><option>Albania</option><option>Algeria</option><option>Andorra</option><option>Angola</option>
@@ -320,7 +402,15 @@ textarea{resize:vertical; min-height:90px;}
       </div>
     </div>
 
-    <div class="section-title">Interests &amp; Hobbies (optional)</div>
+    <div class="form-error" id="step2Error"></div>
+    <div class="form-actions with-back">
+      <button type="button" class="back-btn" id="step2BackBtn">← Back</button>
+      <button class="save-btn" id="step2ContinueBtn">Continue</button>
+    </div>
+  </div>
+
+  <div class="step-panel hidden" id="stepPanel3">
+    <div class="section-title first">Interests &amp; Hobbies (optional)</div>
     <div class="field-hint" id="interestsHint" style="margin:-4px 0 4px;">Pick up to 5.</div>
     <div class="chip-grid" id="interestsGrid"><!-- populated by loadInterestOptions() from GET /api/interest-options --></div>
 
@@ -348,19 +438,56 @@ textarea{resize:vertical; min-height:90px;}
       <div class="field-group"><label for="fWebsite3Label">Website 3 button text</label><input type="text" id="fWebsite3Label" maxlength="40" placeholder="e.g. YouTube Channel"></div>
     </div>
 
-    <div class="form-error" id="formError"></div>
-    <div class="form-actions">
-      <button class="save-btn" id="submitBtn">Create Account</button>
+    <div class="form-error" id="step3Error"></div>
+    <div class="form-actions with-back">
+      <button type="button" class="back-btn" id="step3BackBtn">← Back</button>
+      <button class="save-btn" id="step3ContinueBtn">Continue</button>
     </div>
-    <div class="form-note">No payment needed yet, we'll send a secure payment link once your profile is approved.</div>
-    <div class="form-note">Already have an account? <a href="#" id="loginLink">Log in</a></div>
+  </div>
+
+  <div class="step-panel hidden" id="stepPanel4">
+    <div class="payment-intro" id="paymentIntro">
+      <p class="sub" style="margin-bottom:22px;">One last step. Complete payment below and you're in.</p>
+      <div class="form-actions">
+        <button class="save-btn" id="submitBtn">Continue to Payment</button>
+      </div>
+      <button type="button" class="back-btn" id="step4BackBtn">← Back</button>
+      <div class="form-error" id="formError"></div>
+      <div class="form-note" style="margin-top:14px;">Your profile still goes through manual review after payment, we'll email you once it's approved.</div>
+    </div>
+
+    <div id="paymentSection" style="display:none;">
+      <div class="coupon-row" style="display:flex; gap:8px; margin-bottom:14px;">
+        <input type="text" id="fCoupon" placeholder="Coupon code (optional)" style="flex:1;">
+        <button type="button" class="back-btn" id="applyCouponBtn">Apply</button>
+      </div>
+      <div class="form-note" id="couponMessage" style="margin-bottom:10px;"></div>
+
+      <div class="payment-summary" id="paymentSummaryPaid">Pay <b id="paymentSummaryAmount">$9.99</b> (incl. $0.99 processing fee) via PayPal to finish creating your account.</div>
+      <div class="payment-summary" id="paymentSummaryFree" style="display:none;">This coupon makes your signup <b>free</b> - no PayPal payment needed.</div>
+      <div id="paypalButtonContainer"></div>
+      <div class="card-mode-note" id="cardModeNote"></div>
+
+      <div id="freeSignupSection" style="display:none;">
+        <div class="form-actions">
+          <button class="save-btn" id="freeSignupBtn">Complete Signup</button>
+        </div>
+      </div>
+
+      <div class="form-error" id="paymentError"></div>
+      <button type="button" class="edit-details-btn" id="editDetailsBtn">← Edit details</button>
+    </div>
+  </div>
+
+    <div class="form-note">Secure checkout via PayPal. Your card details never touch our servers.</div>
+  </div>
   </div>
 </div>
 
 <script>
 // The profile link shown after signup should always read as the real
-// production domain — not whatever host/port happens to be serving
-// this page — since that's the link the person will actually use once
+// production domain - not whatever host/port happens to be serving
+// this page - since that's the link the person will actually use once
 // their profile is live. The one exception is local dev: keep it as
 // window.location.origin there so the printed link is still clickable
 // while testing on localhost.
@@ -398,11 +525,9 @@ applyTheme();
   }
 })();
 
-/* ============================================================
-   If someone's already logged in, skip straight to editing
-   their existing profile instead of letting them fill out a
-   second signup form.
-   ============================================================ */
+// If someone's already logged in, skip straight to editing
+// their existing profile instead of letting them fill out a
+// second signup form.
 async function redirectIfLoggedIn(){
   try {
     const res = await fetch('/api/me', { credentials: 'include' });
@@ -410,24 +535,21 @@ async function redirectIfLoggedIn(){
     if(data && data.loggedIn){
       window.location.href = 'edit-profile.html';
     }
-  } catch (err) { /* not logged in — carry on */ }
+  } catch (err) { /* not logged in - carry on */ }
 }
 redirectIfLoggedIn();
 
-/* ============================================================
-   Role + course selection drives the copy on the page, and which
-   listing page ("japanese-learners.html", "korean-teachers.html",
-   etc.) the back/login links point at — this same form now covers
-   every combination instead of there being a separate signup page
-   per course/type.
-   ============================================================ */
-/* ============================================================
-   Social links share one combined cap (MAX_SOCIAL_LINKS) — unlike
-   the three dedicated Website slots, there's no per-platform limit,
-   just a ceiling on how many of these can be filled in at once.
-   This mirrors the same limit enforced server-side in server.js, so
-   this is just a friendlier heads-up, not the only line of defense.
-   ============================================================ */
+// Role + course selection drives the copy on the page, and which
+// listing page ("japanese-learners.html", "korean-teachers.html",
+// etc.) the back/login links point at - this same form now covers
+// every combination instead of there being a separate signup page
+// per course/type.
+
+// Social links share one combined cap (MAX_SOCIAL_LINKS) - unlike
+// the three dedicated Website slots, there's no per-platform limit,
+// just a ceiling on how many of these can be filled in at once.
+// This mirrors the same limit enforced server-side in server.js, so
+// this is just a friendlier heads-up, not the only line of defense.
 const SOCIAL_FIELD_IDS = ['fInstagram', 'fDiscord', 'fWhatsapp', 'fTwitter', 'fFacebook', 'fTiktok', 'fYoutube', 'fTelegram', 'fLine'];
 const MAX_SOCIAL_LINKS = 6;
 
@@ -447,13 +569,11 @@ function enforceSocialLinkLimit(){
 SOCIAL_FIELD_IDS.forEach(id => document.getElementById(id).addEventListener('input', enforceSocialLinkLimit));
 enforceSocialLinkLimit();
 
-/* ============================================================
-   Interests & Hobbies — the pick-list itself lives only in
-   server.js (INTEREST_OPTIONS) so there's one place to edit it.
-   This fetches that list at page-load and builds the chip buttons
-   from it, instead of hardcoding a second copy here that could
-   silently drift out of sync.
-   ============================================================ */
+// Interests & Hobbies - the pick-list itself lives only in
+// server.js (INTEREST_OPTIONS) so there's one place to edit it.
+// This fetches that list at page-load and builds the chip buttons
+// from it, instead of hardcoding a second copy here that could
+// silently drift out of sync.
 let MAX_INTERESTS = 5; // overwritten with the server's value once fetched below
 
 function escapeAttrLite(s){
@@ -495,20 +615,33 @@ async function loadInterestOptions(){
     });
     enforceInterestLimit();
   } catch (err) {
-    // Leave the grid empty — interests are optional, so the rest of
+    // Leave the grid empty - interests are optional, so the rest of
     // the form still works fine even if this fetch fails.
   }
 }
 loadInterestOptions();
 
-/* ============================================================
-   Photo upload — uploads straight to R2 (via POST /api/upload-image)
-   the moment a file is chosen, rather than waiting for form submit.
-   The returned public URL is stashed in the hidden #fImage input,
-   which is what collectPayload() actually reads — so downstream
-   code didn't need to change at all, it just gets a real R2 URL now
-   instead of a pasted one.
-   ============================================================ */
+// Photo upload - uploads straight to R2 (via POST /api/upload-image)
+// the moment a file is chosen, rather than waiting for form submit.
+// The returned public URL is stashed in the hidden #fImage input,
+// which is what collectPayload() actually reads - so downstream
+// code didn't need to change at all, it just gets a real R2 URL now
+// instead of a pasted one.
+// Deletes a photo from R2. At this point in signup there's no
+// account yet, so anything sitting in the hidden #fImage input is
+// always a fresh upload from this session - nothing else could be
+// using it, so it's always safe to clean up once it's replaced or
+// removed. Fire-and-forget: nothing here should block the user or
+// surface as an error to them.
+function deleteStagedImage(url){
+  if(!url) return;
+  fetch('/api/delete-image', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url })
+  }).catch(() => {});
+}
+
 async function handleImageFileChange(){
   const fileInput = document.getElementById('fImageFile');
   const hiddenInput = document.getElementById('fImage');
@@ -518,7 +651,11 @@ async function handleImageFileChange(){
   const file = fileInput.files[0];
   if(!file) return;
 
-  // Show the picked file immediately via a local blob URL — no need
+  // Picking a new file replaces whatever was already uploaded and
+  // staged here, so clean that one up before moving on.
+  deleteStagedImage(hiddenInput.value);
+
+  // Show the picked file immediately via a local blob URL - no need
   // to wait for the network round-trip just to preview it.
   preview.src = URL.createObjectURL(file);
   previewWrap.style.display = 'inline-block';
@@ -547,23 +684,27 @@ async function handleImageFileChange(){
 document.getElementById('fImageFile').addEventListener('change', handleImageFileChange);
 
 // The ✕ button lets someone cancel/remove a chosen or already-uploaded
-// photo before submitting — clears the file input, the hidden R2 URL,
-// and the preview so the form goes back to "no photo selected".
+// photo before submitting - clears the file input, the hidden R2 URL,
+// and the preview so the form goes back to "no photo selected". Also
+// deletes it from R2, since at this point in signup it's always a
+// fresh upload nothing else could be using.
 function removeImage(){
   const fileInput = document.getElementById('fImageFile');
   const hiddenInput = document.getElementById('fImage');
   const previewWrap = document.getElementById('imagePreviewWrap');
   const preview = document.getElementById('imagePreview');
   const hint = document.getElementById('imageUploadHint');
+  deleteStagedImage(hiddenInput.value);
   fileInput.value = '';
   hiddenInput.value = '';
   preview.src = '';
   previewWrap.style.display = 'none';
-  hint.textContent = 'JPG, PNG, WEBP, or GIF — up to 5MB. Required.';
+  hint.textContent = 'JPG, PNG, WEBP, or GIF, up to 5MB. Required.';
 }
 document.getElementById('imageRemoveBtn').addEventListener('click', removeImage);
 
 const STATE = { role: 'learner', course: 'jp' };
+const PAYMENT = { config: null, coupon: null }; // coupon filled in by applyCoupon() below, once validated
 
 const COPY = {
   jp: {
@@ -596,7 +737,7 @@ function updateCopy(){
     ? `Tell us about yourself, a real person reviews every teacher profile before it goes live to ${c.courseLabel} learners.`
     : `Tell us about yourself, a real person reviews every profile before it goes live.`;
   document.getElementById('backLink').href = listingPage(STATE.course, STATE.role);
-  document.getElementById('loginLink').href = `${listingPage(STATE.course, STATE.role)}?login=1`;
+  document.getElementById('loginLinkTop').href = `${listingPage(STATE.course, STATE.role)}?login=1`;
   document.getElementById('benefit1Text').innerHTML = c.benefit1;
   document.getElementById('priceLimitedNote').lastElementChild.innerHTML = `<b>Limited-time price.</b> ${c.limitedNote}`;
 }
@@ -614,7 +755,7 @@ function wireToggle(groupId, key, onPick){
 }
 wireToggle('roleToggle', 'role', updateCopy);
 
-/* The course can be picked from two places now — the hero toggle up
+/* The course can be picked from two places now - the hero toggle up
    top and the "Course" toggle further down in the form. Both write
    to the same STATE.course, so picking one keeps the other in sync
    instead of the two drifting apart. */
@@ -661,11 +802,11 @@ function renderConfirmScreen(slug){
         </li>
         <li class="confirm-step">
           <span class="cs-num">2</span>
-          <span class="cs-text"><b>Secure payment link.</b> Once approved, we'll send you a secure link to complete payment.</span>
+          <span class="cs-text"><b>Payment's already done.</b> Your payment went through, so there's nothing more to pay.</span>
         </li>
         <li class="confirm-step">
           <span class="cs-num">3</span>
-          <span class="cs-text"><b>You're live.</b> Your profile activates as soon as payment is done, and appears in the directory.</span>
+          <span class="cs-text"><b>You're live.</b> Your profile appears in the directory as soon as it's approved.</span>
         </li>
       </ul>
       <div class="confirm-actions">
@@ -687,6 +828,7 @@ function collectPayload(){
     about: document.getElementById('fAbout').value.trim(),
     imageUrl: document.getElementById('fImage').value.trim(),
     interests: Array.from(document.querySelectorAll('#interestsGrid .chip.selected')).map(c => c.dataset.interest),
+    couponCode: PAYMENT.coupon ? PAYMENT.coupon.code : '',
     links: {
       instagram: document.getElementById('fInstagram').value.trim(),
       discord: document.getElementById('fDiscord').value.trim(),
@@ -707,49 +849,222 @@ function collectPayload(){
   };
 }
 
-async function submitSignup(){
-  const submitBtn = document.getElementById('submitBtn');
+/* Same checks the old submitSignup() ran before POSTing - now run
+   BEFORE payment, so nobody pays for a signup that was going to be
+   rejected anyway. Returns an error string, or '' if everything's
+   fine. */
+function validateForm(payload){
+  if(!payload.name) return 'Please enter your name.';
+  if(!payload.email) return 'Please enter your email.';
+  if(payload.password.length < 8) return 'Password must be at least 8 characters.';
+  const socialCount = SOCIAL_FIELD_IDS.filter(id => document.getElementById(id).value.trim()).length;
+  if(socialCount > MAX_SOCIAL_LINKS) return `Please limit yourself to ${MAX_SOCIAL_LINKS} social links.`;
+  if(payload.interests.length > MAX_INTERESTS) return `Please select up to ${MAX_INTERESTS} interests.`;
+  const imageFile = document.getElementById('fImageFile').files[0];
+  if(imageFile && !payload.imageUrl) return 'Please wait for your photo to finish uploading (or remove it) before submitting.';
+  if(!payload.imageUrl) return 'Please upload your profile picture.';
+  if(!payload.links.instagram) return 'Instagram is required, please add your Instagram handle.';
+  return '';
+}
+
+function formatUSD(n){
+  return '$' + Number(n).toFixed(2);
+}
+
+// 4-step wizard: Account -> Profile -> Links -> Payment.
+// Each step's own Continue button validates just that step's
+// fields (so people find out about a missing field right where
+// they are, not at the very end) - the full validateForm() check
+// still runs as a final safety net when leaving the Links step.
+let currentStep = 1;
+const TOTAL_STEPS = 4;
+
+function updateStepIndicator(step){
+  document.querySelectorAll('#stepIndicator .step-item').forEach(item => {
+    const n = Number(item.dataset.step);
+    item.classList.toggle('done', n < step);
+    item.classList.toggle('active', n === step);
+  });
+  document.querySelectorAll('#stepIndicator .step-line').forEach((line, idx) => {
+    line.classList.toggle('done', (idx + 1) < step);
+  });
+}
+
+function goToStep(step){
+  currentStep = step;
+  for(let i = 1; i <= TOTAL_STEPS; i++){
+    document.getElementById('stepPanel' + i).classList.toggle('hidden', i !== step);
+  }
+  updateStepIndicator(step);
+  document.getElementById('formCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function validateStep1(){
+  const email = document.getElementById('fEmail').value.trim();
+  const password = document.getElementById('fPassword').value;
+  if(!email) return 'Please enter your email.';
+  if(password.length < 8) return 'Password must be at least 8 characters.';
+  return '';
+}
+
+function validateStep2(){
+  const name = document.getElementById('fName').value.trim();
+  const imageUrl = document.getElementById('fImage').value.trim();
+  const imageFile = document.getElementById('fImageFile').files[0];
+  if(!name) return 'Please enter your name.';
+  if(imageFile && !imageUrl) return 'Please wait for your photo to finish uploading (or remove it) before continuing.';
+  if(!imageUrl) return 'Please upload your profile picture.';
+  return '';
+}
+
+document.getElementById('step1ContinueBtn').onclick = () => {
+  const box = document.getElementById('step1Error');
+  const err = validateStep1();
+  if(err){ box.textContent = err; return; }
+  box.textContent = '';
+  goToStep(2);
+};
+
+document.getElementById('step2BackBtn').onclick = () => goToStep(1);
+document.getElementById('step2ContinueBtn').onclick = () => {
+  const box = document.getElementById('step2Error');
+  const err = validateStep2();
+  if(err){ box.textContent = err; return; }
+  box.textContent = '';
+  goToStep(3);
+};
+
+document.getElementById('step3BackBtn').onclick = () => goToStep(2);
+document.getElementById('step3ContinueBtn').onclick = () => {
+  const box = document.getElementById('step3Error');
+  const payload = collectPayload();
+  const err = validateForm(payload);
+  if(err){ box.textContent = err; return; }
+  box.textContent = '';
+  // Reset step 4 back to its intro screen every time it's (re)entered.
+  document.getElementById('paymentIntro').style.display = 'block';
+  document.getElementById('paymentSection').style.display = 'none';
+  document.getElementById('paymentError').textContent = '';
+  document.getElementById('formError').textContent = '';
+  goToStep(4);
+};
+
+document.getElementById('step4BackBtn').onclick = () => goToStep(3);
+
+/* Stage 1: validate the profile fields one more time (in case
+   anything changed since Links), then swap the intro copy out for
+   the actual PayPal buttons. Nothing is sent to the server yet -
+   /api/signup only ever gets called once a real PayPal capture
+   exists (see finishSignup below). */
+function showPaymentStep(){
   const errorBox = document.getElementById('formError');
   const payload = collectPayload();
-
-  if(!payload.name){
-    errorBox.textContent = 'Please enter your name.';
+  const err = validateForm(payload);
+  if(err){
+    errorBox.textContent = err;
     return;
   }
-  if(!payload.email){
-    errorBox.textContent = 'Please enter your email.';
-    return;
-  }
-  if(payload.password.length < 8){
-    errorBox.textContent = 'Password must be at least 8 characters.';
-    return;
-  }
-  const socialCount = SOCIAL_FIELD_IDS.filter(id => document.getElementById(id).value.trim()).length;
-  if(socialCount > MAX_SOCIAL_LINKS){
-    errorBox.textContent = `Please limit yourself to ${MAX_SOCIAL_LINKS} social links.`;
-    return;
-  }
-  if(payload.interests.length > MAX_INTERESTS){
-    errorBox.textContent = `Please select up to ${MAX_INTERESTS} interests.`;
-    return;
-  }
-  const imageFile = document.getElementById('fImageFile').files[0];
-  if(imageFile && !payload.imageUrl){
-    errorBox.textContent = 'Please wait for your photo to finish uploading (or remove it) before submitting.';
-    return;
-  }
-  if(!payload.imageUrl){
-    errorBox.textContent = 'Please upload your profile picture.';
-    return;
-  }
-  if(!payload.links.instagram){
-    errorBox.textContent = 'Instagram is required, please add your Instagram handle.';
-    return;
-  }
-
   errorBox.textContent = '';
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Creating account...';
+  document.getElementById('paymentError').textContent = '';
+  document.getElementById('paymentIntro').style.display = 'none';
+  document.getElementById('paymentSection').style.display = 'block';
+  resetCouponState();
+  renderPaypalButtons(); // safe to call repeatedly - only renders once
+}
+
+/* Clears any previously-applied coupon and puts the payment step
+   back to its plain "pay the base price" state. Called whenever the
+   payment step is (re)entered, and after edits that could invalidate
+   an already-applied coupon. */
+function resetCouponState(){
+  PAYMENT.coupon = null;
+  const couponInput = document.getElementById('fCoupon');
+  if(couponInput) couponInput.value = '';
+  document.getElementById('couponMessage').textContent = '';
+  updatePaymentSummaryDisplay();
+}
+
+/* Reflects PAYMENT.coupon (or its absence) in the payment step's UI:
+   the amount shown, and whether the PayPal buttons or the plain
+   "Complete Signup" button are the one visible. The server always
+   recomputes this same total independently before anything is
+   charged or any account is created - this is display-only. */
+function updatePaymentSummaryDisplay(){
+  const free = PAYMENT.coupon && PAYMENT.coupon.free;
+  document.getElementById('paymentSummaryPaid').style.display = free ? 'none' : 'block';
+  document.getElementById('paymentSummaryFree').style.display = free ? 'block' : 'none';
+  document.getElementById('paypalButtonContainer').style.display = free ? 'none' : '';
+  document.getElementById('freeSignupSection').style.display = free ? 'block' : 'none';
+
+  const total = PAYMENT.coupon ? PAYMENT.coupon.total : (PAYMENT.config ? PAYMENT.config.total : 10.98);
+  document.getElementById('paymentSummaryAmount').textContent = formatUSD(total);
+}
+
+/* Validates the coupon code against the server (which is the only
+   place price is actually decided) and updates the payment step to
+   match. Doesn't create an order or charge anything. */
+async function applyCoupon(){
+  const codeInput = document.getElementById('fCoupon');
+  const messageEl = document.getElementById('couponMessage');
+  const code = codeInput.value.trim();
+  if(!code){
+    PAYMENT.coupon = null;
+    messageEl.textContent = '';
+    updatePaymentSummaryDisplay();
+    return;
+  }
+  messageEl.textContent = 'Checking code...';
+  try {
+    const res = await fetch('/api/validate-coupon', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code })
+    });
+    const data = await res.json();
+    if(!res.ok || !data.valid){
+      PAYMENT.coupon = null;
+      messageEl.textContent = (data && data.error) ? data.error : 'That coupon code is invalid or has expired.';
+      updatePaymentSummaryDisplay();
+      return;
+    }
+    PAYMENT.coupon = data; // {code, discountType, discountValue, itemPrice, fee, total, free}
+    messageEl.textContent = data.free
+      ? `Code "${data.code}" applied - your signup is free!`
+      : `Code "${data.code}" applied - new total ${formatUSD(data.total)}.`;
+    updatePaymentSummaryDisplay();
+  } catch (err) {
+    PAYMENT.coupon = null;
+    messageEl.textContent = 'Could not validate that coupon. Please try again.';
+    updatePaymentSummaryDisplay();
+  }
+}
+
+function backToDetails(){
+  document.getElementById('paymentSection').style.display = 'none';
+  document.getElementById('paymentIntro').style.display = 'block';
+  document.getElementById('paymentError').textContent = '';
+}
+
+/* "Create Your Profile" swaps the community overview straight for
+   the step flow - no scrolling past the benefits card needed. */
+document.getElementById('startProfileBtn').onclick = () => {
+  document.getElementById('introSection').style.display = 'none';
+  document.getElementById('joinFlow').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+/* Stage 2: called once PayPal has actually captured the payment
+   (see onApprove in renderPaypalButtons). Creates the account, now
+   carrying the paypalOrderId the server needs to verify payment
+   actually went through. If this fails for a reason unrelated to
+   payment (e.g. duplicate email), the payment itself is still held
+   server-side for a little while, so "Try again" just retries
+   account creation without charging a second time. */
+async function finishSignup(paypalOrderId){
+  const paymentError = document.getElementById('paymentError');
+  const payload = collectPayload();
+  if(paypalOrderId) payload.paypalOrderId = paypalOrderId;
+  paymentError.textContent = paypalOrderId ? 'Payment received, finishing up your account...' : 'Finishing up your account...';
 
   try {
     const res = await fetch('/api/signup', {
@@ -761,18 +1076,153 @@ async function submitSignup(){
     const data = await res.json();
     if(res.ok && data.ok){
       renderConfirmScreen(data.slug);
-    } else {
-      errorBox.textContent = (data && data.error) ? data.error : 'Something went wrong creating your account.';
+      return;
     }
+    showRetryableError(paypalOrderId, (data && data.error) ? data.error : 'Something went wrong creating your account.');
   } catch (err) {
-    errorBox.textContent = 'Something went wrong creating your account. Please try again.';
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Create Account';
+    showRetryableError(paypalOrderId, 'Something went wrong creating your account.');
   }
 }
 
-document.getElementById('submitBtn').onclick = submitSignup;
+function showRetryableError(paypalOrderId, message){
+  const paymentError = document.getElementById('paymentError');
+  paymentError.textContent = '';
+  paymentError.append(document.createTextNode(
+    message + (paypalOrderId ? ' Your payment already went through, so just ' : ' Just ')
+  ));
+  const retryBtn = document.createElement('button');
+  retryBtn.type = 'button';
+  retryBtn.className = 'retry-link';
+  retryBtn.textContent = 'try again';
+  retryBtn.onclick = () => finishSignup(paypalOrderId);
+  paymentError.append(retryBtn);
+  paymentError.append(document.createTextNode(
+    paypalOrderId ? ' and we won\'t charge you twice.' : '.'
+  ));
+}
+
+let paypalButtonsRendered = false;
+function renderPaypalButtons(){
+  if(paypalButtonsRendered || !window.paypal) return;
+  paypalButtonsRendered = true;
+
+  window.paypal.Buttons({
+    style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay' },
+
+    // If someone picks the "Debit or Credit Card" option while the
+    // site is in dark mode, PayPal's hosted card fields render with
+    // poor contrast - so just nudge them toward light mode. This is
+    // purely cosmetic messaging; it never blocks the actual flow.
+    onClick: (data, actions) => {
+      const note = document.getElementById('cardModeNote');
+      if(note){
+        note.textContent = (data.fundingSource === 'card' && ThemeState.theme === 'dark')
+          ? 'Please switch to light mode for better visibility.'
+          : '';
+      }
+      return actions.resolve();
+    },
+
+    // Server decides the price - never trust an amount from the
+    // client - so this just asks it to open an order and hands
+    // PayPal back the resulting order ID.
+    createOrder: async () => {
+      const res = await fetch('/api/paypal/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ couponCode: PAYMENT.coupon ? PAYMENT.coupon.code : '' })
+      });
+      const data = await res.json();
+      if(!res.ok || !data.id){
+        document.getElementById('paymentError').textContent = (data && data.error) ? data.error : 'Could not start payment. Please try again.';
+        throw new Error('create-order failed');
+      }
+      return data.id;
+    },
+
+    // Buyer approved the payment in the PayPal popup. Capture it
+    // server-side (this is the step that actually moves money), then
+    // only create the account once that capture is confirmed.
+    onApprove: async (data) => {
+      const paymentError = document.getElementById('paymentError');
+      paymentError.textContent = 'Confirming your payment...';
+      try {
+        const res = await fetch('/api/paypal/capture-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ orderID: data.orderID })
+        });
+        const captureData = await res.json();
+        if(!res.ok || !captureData.ok){
+          paymentError.textContent = (captureData && captureData.error) ? captureData.error : 'Payment could not be confirmed.';
+          return;
+        }
+        await finishSignup(data.orderID);
+      } catch (err) {
+        paymentError.textContent = 'Payment could not be confirmed. Please try again.';
+      }
+    },
+
+    onCancel: () => {
+      document.getElementById('paymentError').textContent = '';
+    },
+
+    onError: (err) => {
+      console.error('PayPal error:', err);
+      document.getElementById('paymentError').textContent = 'Something went wrong with PayPal. Please try again.';
+    }
+  }).render('#paypalButtonContainer');
+}
+
+/* Pulls the PayPal Client ID + current price from the server (the
+   price lives in Airtable and can change without a deploy - see
+   /api/paypal/config on the server), updates the price shown on the
+   page to match, then loads the PayPal SDK itself. */
+async function loadPaypalConfig(){
+  try {
+    const res = await fetch('/api/paypal/config');
+    const data = await res.json();
+    if(!res.ok || !data.clientId){
+      console.error('PayPal config unavailable:', data && data.error);
+      return;
+    }
+    PAYMENT.config = data; // {clientId, currency, price, fee, total}
+    const formatted = formatUSD(data.total);
+    document.getElementById('priceAmountDisplay').textContent = formatted;
+    updatePaymentSummaryDisplay();
+    // Keep each course's "limited-time $9.99" copy in sync with
+    // whatever the total (item price + fee) actually is.
+    Object.values(COPY).forEach(c => {
+      c.limitedNote = c.limitedNote.replace(/\$9\.99/g, formatted);
+    });
+    updateCopy();
+
+    const script = document.createElement('script');
+    script.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(data.clientId)}&currency=${encodeURIComponent(data.currency || 'USD')}&intent=capture`;
+    script.onload = renderPaypalButtons;
+    script.onerror = () => console.error('Failed to load the PayPal SDK.');
+    document.body.appendChild(script);
+  } catch (err) {
+    console.error('PayPal config error:', err);
+  }
+}
+
+document.getElementById('submitBtn').onclick = showPaymentStep;
+document.getElementById('editDetailsBtn').onclick = backToDetails;
+document.getElementById('applyCouponBtn').onclick = applyCoupon;
+document.getElementById('fCoupon').addEventListener('keydown', (e) => {
+  if(e.key === 'Enter'){ e.preventDefault(); applyCoupon(); }
+});
+
+/* Free path: a coupon has brought the total to $0, so there's no
+   PayPal order to create or capture - just create the account
+   directly, same as onApprove does for the paid path, just skipping
+   straight to it. */
+document.getElementById('freeSignupBtn').onclick = () => finishSignup(null);
+
+loadPaypalConfig();
 </script>
 </body>
 </html>

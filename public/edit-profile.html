@@ -71,18 +71,20 @@ input[type=file]{
   width:100%; padding:9px 12px; border-radius:10px; border:1px solid var(--border); background:var(--surface2);
   color:var(--text-dim); font-size:.86em; font-family:var(--sans);
 }
-input:focus, textarea:focus{outline:none; border-color:var(--celadon);}
+input:focus, textarea:focus{outline:none; border-color:var(--celadon); box-shadow:0 0 0 3px color-mix(in srgb, var(--celadon) 22%, transparent);}
 input:disabled{color:var(--text-faint); background:var(--surface); cursor:not-allowed; opacity:.75;}
 textarea{resize:vertical; min-height:90px;}
 .required-mark{color:var(--vermilion);}
-.image-preview-wrap{position:relative; display:inline-block; margin-top:8px;}
-.image-preview-wrap img{display:block; max-width:160px; border-radius:10px; border:1px solid var(--border);}
+.image-row{display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+.image-preview-wrap{position:relative; display:inline-block; flex-shrink:0;}
+.image-preview-wrap img{display:block; width:88px; height:88px; object-fit:cover; border-radius:50%; border:2px solid var(--border);}
 .image-remove-btn{
-  position:absolute; top:-9px; right:-9px; width:24px; height:24px; border-radius:50%;
+  position:absolute; top:-4px; right:-4px; width:24px; height:24px; border-radius:50%;
   background:var(--vermilion); color:#fff; border:2px solid var(--surface); font-size:.78em; line-height:1;
   display:flex; align-items:center; justify-content:center; padding:0; font-weight:700;
 }
 .image-remove-btn:hover{filter:brightness(1.1);}
+.image-picker{flex:1; min-width:180px;}
 
 .section-title{font-size:.72em; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--text-faint); margin:8px 0 -4px;}
 .links-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
@@ -119,6 +121,45 @@ textarea{resize:vertical; min-height:90px;}
 .save-btn:disabled{opacity:.6; cursor:default;}
 .preview-link{font-size:.85em; color:var(--text-dim); text-decoration:underline;}
 .form-error{color:var(--vermilion); font-size:.85em; min-height:1.2em;}
+
+/* ---- Progress meter ---- */
+.progress-row{display:flex; align-items:center; gap:12px; margin-bottom:22px;}
+.progress-track{flex:1; height:6px; border-radius:999px; background:var(--surface2); overflow:hidden;}
+.progress-fill{height:100%; border-radius:999px; background:linear-gradient(90deg,var(--celadon), var(--gold)); transition:width .4s ease;}
+.progress-label{font-size:.78em; color:var(--text-dim); white-space:nowrap;}
+
+/* ---- Accordion sections ---- */
+.accordion{display:flex; flex-direction:column; gap:12px;}
+.accordion-item{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;
+}
+.accordion-item.pinned{border-color:color-mix(in srgb, var(--celadon) 45%, var(--border));}
+.accordion-head{
+  width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px;
+  background:none; border:none; padding:20px 22px; text-align:left; color:var(--text);
+}
+.accordion-head-text h2{font-family:var(--sans); font-size:1em; font-weight:600; margin:0 0 2px;}
+.accordion-meta{font-size:.8em; color:var(--text-faint);}
+.accordion-chevron{
+  flex-shrink:0; width:20px; height:20px; color:var(--text-faint); transition:transform .2s ease;
+}
+.accordion-item.open .accordion-chevron{transform:rotate(180deg);}
+.accordion-body{
+  max-height:0; overflow:hidden; transition:max-height .3s ease;
+}
+.accordion-item.open .accordion-body{max-height:none;}
+.accordion-body-inner{padding:0 22px 24px; display:flex; flex-direction:column; gap:16px;}
+.accordion-item:not(.open) .accordion-body-inner{padding-bottom:0;}
+
+/* ---- Sticky save bar ---- */
+.save-bar{
+  position:sticky; bottom:0; z-index:5; margin:26px -5vw 0; padding:16px 5vw;
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  background:color-mix(in srgb, var(--ink) 88%, transparent); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  border-top:1px solid var(--border);
+}
+.save-bar .form-error{flex:1; min-width:160px; margin:0;}
+@media(max-width:640px){ .save-bar{margin-left:calc(-1 * 5vw); margin-right:calc(-1 * 5vw);} }
 
 .state-msg{
   position:relative; z-index:2; max-width:480px; margin:100px auto; padding:0 5vw; text-align:center; color:var(--text-faint); font-size:.92em;
@@ -172,13 +213,11 @@ textarea{resize:vertical; min-height:90px;}
 <div class="toast" id="toast"></div>
 
 <script>
-/* ============================================================
-   Social links share one combined cap (MAX_SOCIAL_LINKS) — unlike
-   the three dedicated Website slots, there's no per-platform limit,
-   just a ceiling on how many of these can be filled in at once.
-   This mirrors the same limit enforced server-side in server.js, so
-   this is just a friendlier heads-up, not the only line of defense.
-   ============================================================ */
+// Social links share one combined cap (MAX_SOCIAL_LINKS) - unlike
+// the three dedicated Website slots, there's no per-platform limit,
+// just a ceiling on how many of these can be filled in at once.
+// This mirrors the same limit enforced server-side in server.js, so
+// this is just a friendlier heads-up, not the only line of defense.
 const SOCIAL_FIELD_IDS = ['fInstagram', 'fDiscord', 'fWhatsapp', 'fTwitter', 'fFacebook', 'fTiktok', 'fYoutube', 'fTelegram', 'fLine'];
 const MAX_SOCIAL_LINKS = 6;
 
@@ -199,14 +238,12 @@ function enforceSocialLinkLimit(){
 
 const ThemeState = { theme: localStorage.getItem('hkl_site_theme') || 'dark' };
 
-/* ============================================================
-   Interests & Hobbies — the pick-list itself lives only in
-   server.js (INTEREST_OPTIONS) so there's one place to edit it.
-   loadInterestOptions() fetches that list once at page-load and
-   renderForm() builds the chip buttons from it, instead of
-   hardcoding a second copy here that could silently drift out of
-   sync.
-   ============================================================ */
+// Interests & Hobbies - the pick-list itself lives only in
+// server.js (INTEREST_OPTIONS) so there's one place to edit it.
+// loadInterestOptions() fetches that list once at page-load and
+// renderForm() builds the chip buttons from it, instead of
+// hardcoding a second copy here that could silently drift out of
+// sync.
 let INTEREST_OPTIONS = [];
 let MAX_INTERESTS = 5; // overwritten with the server's value once fetched
 
@@ -217,7 +254,7 @@ async function loadInterestOptions(){
     if(data && Array.isArray(data.options)) INTEREST_OPTIONS = data.options;
     if(data && typeof data.max === 'number') MAX_INTERESTS = data.max;
   } catch (err) {
-    // Leave INTEREST_OPTIONS empty — interests are optional, so the
+    // Leave INTEREST_OPTIONS empty - interests are optional, so the
     // rest of the form still works fine even if this fetch fails;
     // the chip grid just renders with nothing in it.
   }
@@ -238,13 +275,25 @@ function enforceInterestLimit(){
   }
 }
 
-/* ============================================================
-   Photo upload — uploads straight to R2 (via POST /api/upload-image)
-   the moment a file is chosen. The returned public URL is stashed
-   in the hidden #fImage input, which is what saveProfile() actually
-   reads — so that code didn't need to change at all, it just gets a
-   real R2 URL now instead of a pasted one.
-   ============================================================ */
+// Photo upload - uploads straight to R2 (via POST /api/upload-image)
+// the moment a file is chosen. The returned public URL is stashed
+// in the hidden #fImage input, which is what saveProfile() actually
+// reads - so that code didn't need to change at all, it just gets a
+// real R2 URL now instead of a pasted one.
+// Deletes a photo from R2, but only if it's actually a fresh upload
+// from this editing session (not the one still live on the saved
+// profile) - see ORIGINAL_IMAGE_URL above. Fire-and-forget: nothing
+// the user is doing should wait on this, and nothing about it should
+// ever surface as an error to them.
+function deleteStagedImage(url){
+  if(!url || url === ORIGINAL_IMAGE_URL) return;
+  fetch('/api/delete-image', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url })
+  }).catch(() => {});
+}
+
 async function handleImageFileChange(){
   const fileInput = document.getElementById('fImageFile');
   const hiddenInput = document.getElementById('fImage');
@@ -253,6 +302,11 @@ async function handleImageFileChange(){
   const preview = document.getElementById('imagePreview');
   const file = fileInput.files[0];
   if(!file) return;
+
+  // Picking a new file replaces whatever was staged before - if that
+  // was itself a fresh upload from this session (not the original
+  // saved photo), it's now orphaned, so clean it up.
+  deleteStagedImage(hiddenInput.value);
 
   preview.src = URL.createObjectURL(file);
   previewWrap.style.display = 'inline-block';
@@ -268,31 +322,36 @@ async function handleImageFileChange(){
       hiddenInput.value = data.url;
       hint.textContent = 'Uploaded ✓';
     } else {
-      hint.textContent = (data && data.error) ? data.error : 'Upload failed — please try a different image.';
+      hint.textContent = (data && data.error) ? data.error : 'Upload failed. Please try a different image.';
       previewWrap.style.display = 'none';
       fileInput.value = '';
     }
   } catch (err) {
-    hint.textContent = 'Upload failed — please try a different image.';
+    hint.textContent = 'Upload failed. Please try a different image.';
     previewWrap.style.display = 'none';
     fileInput.value = '';
   }
 }
 
 // The ✕ button lets someone cancel/remove a chosen or already-saved
-// photo before saving — clears the file input, the hidden R2 URL, and
-// the preview so the form goes back to "no photo selected".
+// photo before saving - clears the file input, the hidden R2 URL, and
+// the preview so the form goes back to "no photo selected". If what's
+// being cleared was a fresh upload from this session, it also gets
+// deleted from R2 - the original saved photo (if that's what's
+// showing) is left alone, since the profile is still using it until
+// something else actually gets saved over it.
 function removeImage(){
   const fileInput = document.getElementById('fImageFile');
   const hiddenInput = document.getElementById('fImage');
   const previewWrap = document.getElementById('imagePreviewWrap');
   const preview = document.getElementById('imagePreview');
   const hint = document.getElementById('imageUploadHint');
+  deleteStagedImage(hiddenInput.value);
   fileInput.value = '';
   hiddenInput.value = '';
   preview.src = '';
   previewWrap.style.display = 'none';
-  hint.textContent = 'JPG, PNG, WEBP, or GIF — up to 5MB. Required.';
+  hint.textContent = 'JPG, PNG, WEBP, or GIF, up to 5MB. Required.';
 }
 
 function applyTheme(){
@@ -350,12 +409,21 @@ function statusBanner(status, id, previewHref){
   return `<div class="status-banner pending">⏳ Your profile is pending review. It'll appear on the site once approved. <a class="preview-link" href="${previewHref}">Preview →</a></div>`;
 }
 
+// The photo already saved on this profile when the page loaded.
+// handleImageFileChange/removeImage check against this so they only
+// ever ask R2 to delete a fresh upload from *this* editing session -
+// never this original, still-live photo, even if someone clicks
+// around without saving. The server is what cleans that one up,
+// once a save actually replaces it (see PUT /api/profile).
+let ORIGINAL_IMAGE_URL = '';
+
 function renderForm(me){
   const p = me.profile || {};
   const links = p.links || {};
   const listing = listingPage(p.course, p.type);
   const previewHref = `profile.html?id=${encodeURIComponent(me.id)}&type=${encodeURIComponent(p.type || 'learner')}`;
   const audience = p.type === 'teacher' ? 'learners' : 'fellow learners';
+  ORIGINAL_IMAGE_URL = p.imageUrl || '';
 
   document.getElementById('backLink').href = listing;
 
@@ -373,68 +441,128 @@ function renderForm(me){
     ` : ''}
 
     <div class="tab-panel active" id="profilePanel">
-      <div class="form-card">
-        <div class="field-group">
-          <label for="fName">Name</label>
-          <input type="text" id="fName" maxlength="100" value="${escapeAttr(p.name || me.name || '')}">
-        </div>
-        <div class="field-group">
-          <label for="fCountry">Country</label>
-          <input type="text" id="fCountry" maxlength="60" value="${escapeAttr(p.country || '')}" disabled>
-          <div class="field-hint">Country can't be changed here — contact support if this needs to be corrected.</div>
-        </div>
-        <div class="field-group">
-          <label for="fTagline">Tagline</label>
-          <input type="text" id="fTagline" maxlength="140" value="${escapeAttr(p.tagline || '')}" placeholder="A short one-liner shown on your card">
-        </div>
-        <div class="field-group">
-          <label for="fAbout">About you</label>
-          <textarea id="fAbout" maxlength="1000">${escapeHtml(p.about || '')}</textarea>
-        </div>
-        <div class="field-group">
-          <label for="fImageFile">Photo <span class="required-mark">*</span></label>
-          <input type="file" id="fImageFile" accept="image/jpeg,image/png,image/webp,image/gif">
-          <input type="hidden" id="fImage" value="${escapeAttr(p.imageUrl || '')}">
-          <div class="field-hint" id="imageUploadHint">JPG, PNG, WEBP, or GIF — up to 5MB. Required.</div>
-          <div class="image-preview-wrap" id="imagePreviewWrap" style="${p.imageUrl ? '' : 'display:none;'}">
-            <img id="imagePreview" src="${escapeAttr(p.imageUrl || '')}" alt="Preview">
-            <button type="button" class="image-remove-btn" id="imageRemoveBtn" title="Remove photo" aria-label="Remove photo">✕</button>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill" id="profileProgressFill" style="width:0%"></div></div>
+        <span class="progress-label" id="profileProgressLabel">Getting started</span>
+      </div>
+
+      <div class="accordion" id="profileAccordion">
+        <div class="accordion-item open pinned" data-section="basic">
+          <button type="button" class="accordion-head">
+            <div class="accordion-head-text">
+              <h2>Basic info</h2>
+              <div class="accordion-meta">Your name, photo, and a short line about you</div>
+            </div>
+            <svg class="accordion-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <div class="field-group">
+                <label for="fName">Name <span class="required-mark">*</span></label>
+                <input type="text" id="fName" maxlength="100" value="${escapeAttr(p.name || me.name || '')}">
+              </div>
+              <div class="field-group">
+                <label for="fImageFile">Photo <span class="required-mark">*</span></label>
+                <div class="image-row">
+                  <div class="image-preview-wrap" id="imagePreviewWrap" style="${p.imageUrl ? '' : 'display:none;'}">
+                    <img id="imagePreview" src="${escapeAttr(p.imageUrl || '')}" alt="Preview">
+                    <button type="button" class="image-remove-btn" id="imageRemoveBtn" title="Remove photo" aria-label="Remove photo">✕</button>
+                  </div>
+                  <div class="image-picker">
+                    <input type="file" id="fImageFile" accept="image/jpeg,image/png,image/webp,image/gif">
+                    <input type="hidden" id="fImage" value="${escapeAttr(p.imageUrl || '')}">
+                    <div class="field-hint" id="imageUploadHint">JPG, PNG, WEBP, or GIF, up to 5MB. Required.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="field-group">
+                <label for="fTagline">Tagline</label>
+                <input type="text" id="fTagline" maxlength="140" value="${escapeAttr(p.tagline || '')}" placeholder="A short one-liner shown on your card">
+              </div>
+              <div class="field-group">
+                <label for="fAbout">About you</label>
+                <textarea id="fAbout" maxlength="1000">${escapeHtml(p.about || '')}</textarea>
+              </div>
+              <div class="field-group">
+                <label for="fCountry">Country</label>
+                <input type="text" id="fCountry" maxlength="60" value="${escapeAttr(p.country || '')}" disabled>
+                <div class="field-hint">Country can't be changed here. Contact support if this needs to be corrected.</div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="section-title">Interests &amp; Hobbies (optional)</div>
-        <div class="field-hint" id="interestsHint" style="margin:-4px 0 4px;">Pick up to 5.</div>
-        <div class="chip-grid" id="interestsGrid">
-          ${INTEREST_OPTIONS.map(opt => `<button type="button" class="chip${(p.interests || []).includes(opt) ? ' selected' : ''}" data-interest="${escapeAttr(opt)}">${escapeHtml(opt)}</button>`).join('')}
+        <div class="accordion-item" data-section="interests">
+          <button type="button" class="accordion-head">
+            <div class="accordion-head-text">
+              <h2>Interests &amp; hobbies</h2>
+              <div class="accordion-meta" id="interestsMeta">Optional, pick up to 5</div>
+            </div>
+            <svg class="accordion-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <div class="field-hint" id="interestsHint">Pick up to 5.</div>
+              <div class="chip-grid" id="interestsGrid">
+                ${INTEREST_OPTIONS.map(opt => `<button type="button" class="chip${(p.interests || []).includes(opt) ? ' selected' : ''}" data-interest="${escapeAttr(opt)}">${escapeHtml(opt)}</button>`).join('')}
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="section-title">Social Links</div>
-        <div class="field-hint" id="socialLinksHint" style="margin:-4px 0 4px;">Instagram is required. Add up to 6 total.</div>
-        <div class="links-grid" id="socialLinksGrid">
-          <div class="field-group"><label for="fInstagram">Instagram <span class="required-mark">*</span></label><input type="text" id="fInstagram" maxlength="100" value="${escapeAttr(links.instagram || '')}" placeholder="handle"></div>
-          <div class="field-group"><label for="fDiscord">Discord</label><input type="text" id="fDiscord" maxlength="100" value="${escapeAttr(links.discord || '')}" placeholder="discord.gg/..."></div>
-          <div class="field-group"><label for="fWhatsapp">WhatsApp</label><input type="text" id="fWhatsapp" maxlength="40" value="${escapeAttr(links.whatsapp || '')}" placeholder="+91 ..."></div>
-          <div class="field-group"><label for="fTwitter">X / Twitter</label><input type="text" id="fTwitter" maxlength="100" value="${escapeAttr(links.twitter || '')}" placeholder="handle"></div>
-          <div class="field-group"><label for="fFacebook">Facebook</label><input type="text" id="fFacebook" maxlength="100" value="${escapeAttr(links.facebook || '')}" placeholder="handle"></div>
-          <div class="field-group"><label for="fTiktok">TikTok</label><input type="text" id="fTiktok" maxlength="100" value="${escapeAttr(links.tiktok || '')}" placeholder="handle"></div>
-          <div class="field-group"><label for="fYoutube">YouTube</label><input type="text" id="fYoutube" maxlength="100" value="${escapeAttr(links.youtube || '')}" placeholder="handle"></div>
-          <div class="field-group"><label for="fTelegram">Telegram</label><input type="text" id="fTelegram" maxlength="100" value="${escapeAttr(links.telegram || '')}" placeholder="handle"></div>
-          <div class="field-group"><label for="fLine">LINE</label><input type="text" id="fLine" maxlength="100" value="${escapeAttr(links.line || '')}" placeholder="LINE ID"></div>
+        <div class="accordion-item open pinned" data-section="social">
+          <button type="button" class="accordion-head">
+            <div class="accordion-head-text">
+              <h2>Social links</h2>
+              <div class="accordion-meta" id="socialMeta">Instagram is required</div>
+            </div>
+            <svg class="accordion-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <div class="field-hint" id="socialLinksHint">Instagram is required. Add up to 6 total.</div>
+              <div class="links-grid" id="socialLinksGrid">
+                <div class="field-group"><label for="fInstagram">Instagram <span class="required-mark">*</span></label><input type="text" id="fInstagram" maxlength="100" value="${escapeAttr(links.instagram || '')}" placeholder="handle"></div>
+                <div class="field-group"><label for="fDiscord">Discord</label><input type="text" id="fDiscord" maxlength="100" value="${escapeAttr(links.discord || '')}" placeholder="discord.gg/..."></div>
+                <div class="field-group"><label for="fWhatsapp">WhatsApp</label><input type="text" id="fWhatsapp" maxlength="40" value="${escapeAttr(links.whatsapp || '')}" placeholder="+91 ..."></div>
+                <div class="field-group"><label for="fTwitter">X / Twitter</label><input type="text" id="fTwitter" maxlength="100" value="${escapeAttr(links.twitter || '')}" placeholder="handle"></div>
+                <div class="field-group"><label for="fFacebook">Facebook</label><input type="text" id="fFacebook" maxlength="100" value="${escapeAttr(links.facebook || '')}" placeholder="handle"></div>
+                <div class="field-group"><label for="fTiktok">TikTok</label><input type="text" id="fTiktok" maxlength="100" value="${escapeAttr(links.tiktok || '')}" placeholder="handle"></div>
+                <div class="field-group"><label for="fYoutube">YouTube</label><input type="text" id="fYoutube" maxlength="100" value="${escapeAttr(links.youtube || '')}" placeholder="handle"></div>
+                <div class="field-group"><label for="fTelegram">Telegram</label><input type="text" id="fTelegram" maxlength="100" value="${escapeAttr(links.telegram || '')}" placeholder="handle"></div>
+                <div class="field-group"><label for="fLine">LINE</label><input type="text" id="fLine" maxlength="100" value="${escapeAttr(links.line || '')}" placeholder="LINE ID"></div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="section-title">Website Links (optional)</div>
-        <div class="links-grid">
-          <div class="field-group"><label for="fWebsite1">Website 1</label><input type="text" id="fWebsite1" maxlength="200" value="${escapeAttr(links.website1 || '')}" placeholder="yoursite.com"></div>
-          <div class="field-group"><label for="fWebsite1Label">Website 1 button text</label><input type="text" id="fWebsite1Label" maxlength="40" value="${escapeAttr(links.website1Label || '')}" placeholder="e.g. My Portfolio"></div>
-          <div class="field-group"><label for="fWebsite2">Website 2</label><input type="text" id="fWebsite2" maxlength="200" value="${escapeAttr(links.website2 || '')}" placeholder="yoursite.com"></div>
-          <div class="field-group"><label for="fWebsite2Label">Website 2 button text</label><input type="text" id="fWebsite2Label" maxlength="40" value="${escapeAttr(links.website2Label || '')}" placeholder="e.g. My Shop"></div>
-          <div class="field-group"><label for="fWebsite3">Website 3</label><input type="text" id="fWebsite3" maxlength="200" value="${escapeAttr(links.website3 || '')}" placeholder="yoursite.com"></div>
-          <div class="field-group"><label for="fWebsite3Label">Website 3 button text</label><input type="text" id="fWebsite3Label" maxlength="40" value="${escapeAttr(links.website3Label || '')}" placeholder="e.g. YouTube Channel"></div>
+        <div class="accordion-item" data-section="websites">
+          <button type="button" class="accordion-head">
+            <div class="accordion-head-text">
+              <h2>Website links</h2>
+              <div class="accordion-meta" id="websitesMeta">Optional, up to 3 links</div>
+            </div>
+            <svg class="accordion-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <div class="links-grid">
+                <div class="field-group"><label for="fWebsite1">Website 1</label><input type="text" id="fWebsite1" maxlength="200" value="${escapeAttr(links.website1 || '')}" placeholder="yoursite.com"></div>
+                <div class="field-group"><label for="fWebsite1Label">Website 1 button text</label><input type="text" id="fWebsite1Label" maxlength="40" value="${escapeAttr(links.website1Label || '')}" placeholder="e.g. My Portfolio"></div>
+                <div class="field-group"><label for="fWebsite2">Website 2</label><input type="text" id="fWebsite2" maxlength="200" value="${escapeAttr(links.website2 || '')}" placeholder="yoursite.com"></div>
+                <div class="field-group"><label for="fWebsite2Label">Website 2 button text</label><input type="text" id="fWebsite2Label" maxlength="40" value="${escapeAttr(links.website2Label || '')}" placeholder="e.g. My Shop"></div>
+                <div class="field-group"><label for="fWebsite3">Website 3</label><input type="text" id="fWebsite3" maxlength="200" value="${escapeAttr(links.website3 || '')}" placeholder="yoursite.com"></div>
+                <div class="field-group"><label for="fWebsite3Label">Website 3 button text</label><input type="text" id="fWebsite3Label" maxlength="40" value="${escapeAttr(links.website3Label || '')}" placeholder="e.g. YouTube Channel"></div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
+      <div class="save-bar">
         <div class="form-error" id="formError"></div>
         <div class="form-actions">
-          <button class="save-btn" id="saveBtn">Save Changes</button>
+          <button class="save-btn" id="saveBtn">Save changes</button>
         </div>
       </div>
     </div>
@@ -455,6 +583,13 @@ function renderForm(me){
   });
   enforceInterestLimit();
 
+  initAccordions();
+  ['fName','fTagline','fAbout','fInstagram','fDiscord','fWhatsapp','fTwitter','fFacebook','fTiktok','fYoutube','fTelegram','fLine','fWebsite1','fWebsite2','fWebsite3'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updateProfileProgress);
+  });
+  document.querySelectorAll('#interestsGrid .chip').forEach(chip => chip.addEventListener('click', updateProfileProgress));
+  updateProfileProgress();
+
   if(p.type === 'teacher'){
     bindAnnouncementCard();
     loadAnnouncement();
@@ -462,8 +597,83 @@ function renderForm(me){
   }
 }
 
+// Accordion sections - purely a display convenience over the
+// same fields and IDs the rest of the script already reads and
+// writes. Sections that already have something filled in (or
+// that hold a required field) start open; empty optional
+// sections start collapsed so the page doesn't read as one long
+// form. Nothing here changes what gets saved.
+function initAccordions(){
+  document.querySelectorAll('#profileAccordion .accordion-head').forEach(head => {
+    head.onclick = () => {
+      head.closest('.accordion-item').classList.toggle('open');
+    };
+  });
+  updateInterestsMeta();
+  updateSocialMeta();
+  updateWebsitesMeta();
+}
+
+function updateInterestsMeta(){
+  const meta = document.getElementById('interestsMeta');
+  if(!meta) return;
+  const count = document.querySelectorAll('#interestsGrid .chip.selected').length;
+  meta.textContent = count ? `${count} selected` : 'Optional, pick up to 5';
+}
+
+function updateSocialMeta(){
+  const meta = document.getElementById('socialMeta');
+  if(!meta) return;
+  const filled = SOCIAL_FIELD_IDS.filter(id => document.getElementById(id).value.trim()).length;
+  meta.textContent = filled > 1 ? `${filled} links added` : 'Instagram is required';
+}
+
+function updateWebsitesMeta(){
+  const meta = document.getElementById('websitesMeta');
+  if(!meta) return;
+  const count = ['fWebsite1','fWebsite2','fWebsite3'].filter(id => document.getElementById(id).value.trim()).length;
+  meta.textContent = count ? `${count} of 3 added` : 'Optional, up to 3 links';
+}
+
+// Profile progress meter - a rough, purely visual sense of how
+// filled-in the form is, so the page gives some feedback instead
+// of feeling like an open-ended list. It doesn't gate saving or
+// affect what gets sent to the server.
+function updateProfileProgress(){
+  const fill = document.getElementById('profileProgressFill');
+  const label = document.getElementById('profileProgressLabel');
+  if(!fill || !label) return;
+
+  const weightedFields = [
+    document.getElementById('fName').value.trim(),
+    document.getElementById('fImage').value.trim(),
+    document.getElementById('fInstagram').value.trim(),
+    document.getElementById('fTagline').value.trim(),
+    document.getElementById('fAbout').value.trim()
+  ];
+  const bonusPoints = [
+    document.querySelectorAll('#interestsGrid .chip.selected').length > 0,
+    SOCIAL_FIELD_IDS.filter(id => document.getElementById(id).value.trim()).length > 1,
+    ['fWebsite1','fWebsite2','fWebsite3'].some(id => document.getElementById(id).value.trim())
+  ];
+
+  const core = weightedFields.filter(Boolean).length;
+  const bonus = bonusPoints.filter(Boolean).length;
+  const pct = Math.min(100, Math.round((core / weightedFields.length) * 80 + (bonus / bonusPoints.length) * 20));
+
+  fill.style.width = pct + '%';
+  updateInterestsMeta();
+  updateSocialMeta();
+  updateWebsitesMeta();
+
+  if(pct >= 100) label.textContent = 'Profile complete';
+  else if(pct >= 60) label.textContent = 'Almost there';
+  else if(pct > 0) label.textContent = 'Getting started';
+  else label.textContent = 'Fill in your details';
+}
+
 // Switches between the "Edit Profile" and "Create Announcement" panels
-// without navigating anywhere — both panels are already rendered in
+// without navigating anywhere - both panels are already rendered in
 // the DOM (so nothing needs re-fetching when you switch back and
 // forth), CSS just shows one and hides the other.
 function bindEditTabToggle(){
@@ -483,14 +693,12 @@ function bindEditTabToggle(){
   announcementBtn.onclick = () => activate('announcement');
 }
 
-/* ============================================================
-   Teacher announcements — a single, temporary post a teacher can
-   put up on their own listing page (japanese-teachers.html or
-   korean-teachers.html). Lives in its own card below the main
-   profile form since it saves via its own endpoint
-   (/api/announcements), independently of "Save Changes" above.
-   Only rendered at all when p.type === 'teacher'.
-   ============================================================ */
+// Teacher announcements - a single, temporary post a teacher can
+// put up on their own listing page (japanese-teachers.html or
+// korean-teachers.html). Lives in its own card below the main
+// profile form since it saves via its own endpoint
+// (/api/announcements), independently of "Save Changes" above.
+// Only rendered at all when p.type === 'teacher'.
 const ANNOUNCEMENT_DURATIONS_HOURS = [12, 18, 24, 30, 36, 42, 48];
 const ANNOUNCEMENT_MAX_WORDS = 150;
 let currentAnnouncement = null; // filled in by loadAnnouncement() once fetched
@@ -506,7 +714,7 @@ function announcementCardHtml(){
         <label for="aImageFile">Image <span class="required-mark">*</span></label>
         <input type="file" id="aImageFile" accept="image/jpeg,image/png,image/webp,image/gif">
         <input type="hidden" id="aImage" value="">
-        <div class="field-hint" id="aImageHint">JPG, PNG, WEBP, or GIF — up to 5MB. Required.</div>
+        <div class="field-hint" id="aImageHint">JPG, PNG, WEBP, or GIF, up to 5MB. Required.</div>
         <div class="image-preview-wrap" id="aImagePreviewWrap" style="display:none;">
           <img id="aImagePreview" src="" alt="Preview">
           <button type="button" class="image-remove-btn" id="aImageRemoveBtn" title="Remove image" aria-label="Remove image">✕</button>
@@ -593,12 +801,12 @@ async function handleAnnouncementImageChange(){
       hiddenInput.value = data.url;
       hint.textContent = 'Uploaded ✓';
     } else {
-      hint.textContent = (data && data.error) ? data.error : 'Upload failed — please try a different image.';
+      hint.textContent = (data && data.error) ? data.error : 'Upload failed. Please try a different image.';
       previewWrap.style.display = 'none';
       fileInput.value = '';
     }
   } catch (err) {
-    hint.textContent = 'Upload failed — please try a different image.';
+    hint.textContent = 'Upload failed. Please try a different image.';
     previewWrap.style.display = 'none';
     fileInput.value = '';
   }
@@ -609,7 +817,7 @@ function removeAnnouncementImage(){
   document.getElementById('aImage').value = '';
   document.getElementById('aImagePreview').src = '';
   document.getElementById('aImagePreviewWrap').style.display = 'none';
-  document.getElementById('aImageHint').textContent = 'JPG, PNG, WEBP, or GIF — up to 5MB. Required.';
+  document.getElementById('aImageHint').textContent = 'JPG, PNG, WEBP, or GIF, up to 5MB. Required.';
 }
 
 function formatExpiry(iso){
